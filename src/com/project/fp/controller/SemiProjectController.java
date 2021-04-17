@@ -14,7 +14,7 @@ import com.project.fp.biz.MemberBizImpl;
 import com.project.fp.dto.MemberDto;
 
 
-@WebServlet("/semi.do")
+@WebServlet("/SemiProjectController")
 public class SemiProjectController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -38,7 +38,7 @@ public class SemiProjectController extends HttpServlet {
 			dispatch(response, request, "memberselect.jsp");
 		} else if (command.equals("signup")) {
 			response.sendRedirect("memberinsert.jsp");
-		} else if (command.equals("singupres")) {
+		} else if (command.equals("signupres")) {
 			String member_id = request.getParameter("member_id");
 			String member_password = request.getParameter("member_password");
 			String member_name = request.getParameter("member_name");
@@ -59,7 +59,10 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				jsResponse(response, "회원가입 실패", "board.do?command=insert");
 			}
-		} 
+		}else {
+			System.out.println("맞는게 없다");
+		}
+		
 	}
 
 

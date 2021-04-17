@@ -34,9 +34,9 @@
 	<h1>일반회원 회원가입</h1>
 	<div class="join_box">
 		<div class="join_table">
-			<form action="semi.do?" method="POST"></form>
-			<input type="hidden" name="command" value="signup" />
-			<input type="hidden" name="member_notify" value="n" />
+			<form action="semi.do" method="POST">
+			<input type="hidden" name="command" value="signupres" />
+			<input type="hidden" name="member_notify" value="N" />
 			<table border="1">
 				<tr>
 					<th>아이디 *</th>
@@ -101,8 +101,8 @@
 				<tr>
                     <th>반려동물여부</th>
                     <td>
-                        <input type="radio" name="member_animal" value="y" checked>있음
-                		<input type="radio" name="member_animal" value="n" >없음
+                        <input type="radio" name="member_animal" value="Y" checked>있음
+                		<input type="radio" name="member_animal" value="N" >없음
                     </td>
                 </tr>
                 <tr>
@@ -112,6 +112,7 @@
 					</td>
 				</tr>
 			</table>
+			</form>
 		</div>
 	</div>
 	
