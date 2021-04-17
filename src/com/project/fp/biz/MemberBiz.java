@@ -1,10 +1,10 @@
-package com.project.fp.dao;
+package com.project.fp.biz;
 
 import java.util.List;
 
 import com.project.fp.dto.MemberDto;
 
-public interface MemberDao {
+public interface MemberBiz {
 
 	public List<MemberDto> selectList();
 	public MemberDto selectOne(String id);

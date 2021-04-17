@@ -20,24 +20,24 @@
 		WHERE MEMBER_ID = #{member_id}
 	</select>
 	
-	<select id="insert" parameterType="MemberDto">
+	<insert id="insert" parameterType="MemberDto">
 		INSERT INTO MEMBER
 		VALUES(#{member_id}, #{member_password}, #{member_name}, #{member_nickname}, 
 			   #{member_email}, #{member_phone}, #{member_addr}, #{member_grade}, 
 			   "Y", #{member_animal}, #{member_point}, #{member_dr_info}, 
 			   #{member_notify})
-	</select>
+	</insert>
 	
-	<select id="update" parameterType="MemberDto">
+	<update id="update" parameterType="MemberDto">
 		UPDATE MEMBER
 		SET MEMBER_PASSWORD = #{member_password}
 		WHERE MEMBER_ID = #{member_id}
-	</select>
+	</update>
 	
-	<select id="delete" parameterType="int">
+	<delete id="delete" parameterType="int">
 		UPDATE MEMBER
 		SET MEMBER_JOIN = 'N'
 		WHERE MEMBER_ID = #{member_id}
-	</select>
+	</delete>
 	
 </mapper>
