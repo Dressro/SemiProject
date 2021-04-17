@@ -38,7 +38,7 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			res = session.insert(namespace + "insert", dto);
 			if (res > 0) {
-				session.close();
+				session.commit();
 			}
 		}
 		return res;
@@ -51,7 +51,7 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			res = session.delete(namespace + "delete", id);
 			if (res > 0) {
-				session.close();
+				session.commit();
 			}
 		}
 		return res;

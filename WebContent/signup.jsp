@@ -32,10 +32,10 @@
 		<h1>Join Us</h1>
 		<div id="join_container">
 		<div class="box">
-			<input type="button" value="일반회원" onclick="location.href='general_signup.jsp'">
+			<input type="button" value="일반회원" onclick="location.href='semi.do?command=general_signup'">
 		</div>
 		<div class="box">
-			<input type="button" value="전문의 회원" onclick="location.href='doctor_signup.jsp'">
+			<input type="button" value="전문의 회원" onclick="location.href='semi.do?command=doctor_signup'">
 		</div>
 		</div>
 	</div>
