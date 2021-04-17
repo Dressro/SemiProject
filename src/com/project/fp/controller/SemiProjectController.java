@@ -36,9 +36,9 @@ public class SemiProjectController extends HttpServlet {
 			MemberDto dto = biz.selectOne(member_id);
 			request.setAttribute("dto", dto);
 			dispatch(response, request, "memberselect.jsp");
-		} else if (command.equals("member_insert")) {
+		} else if (command.equals("signup")) {
 			response.sendRedirect("memberinsert.jsp");
-		} else if (command.equals("member_insertres")) {
+		} else if (command.equals("singupres")) {
 			String member_id = request.getParameter("member_id");
 			String member_password = request.getParameter("member_password");
 			String member_name = request.getParameter("member_name");
@@ -48,17 +48,16 @@ public class SemiProjectController extends HttpServlet {
 			String member_addr = request.getParameter("member_addr");
 			String member_grade = request.getParameter("member_grade");
 			String member_animal = request.getParameter("member_animal");
-			int member_point = Integer.parseInt(request.getParameter("member_point"));
 			String member_dr_info = request.getParameter("member_dr_info");
 			String member_notify = request.getParameter("member_notify");
 			MemberDto dto = new MemberDto(member_id, member_password, member_name, member_nickname,
 										  member_email, member_phone, member_addr, member_grade, null,
-										  member_animal, member_point, member_dr_info, member_notify);
+										  member_animal, 0, member_dr_info, member_notify);
 			int res = biz.insert(dto);
 			if (res > 0) {
-				jsResponse(response, "ȸ�� ���� ����", "board.do?command=list");
+				jsResponse(response, "회원가입 성공", "board.do?command=list");
 			} else {
-				jsResponse(response, "ȸ�� ���� ����", "board.do?command=insert");
+				jsResponse(response, "회원가입 실패", "board.do?command=insert");
 			}
 		} 
 	}
