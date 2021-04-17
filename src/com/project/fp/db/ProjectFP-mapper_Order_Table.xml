@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.project.fp.order_table">
+
+	<select id="selectList" resultType="Order_TableDto">
+		SELECT ORDER_NUM, ORDER_DATE, ORDER_QUANTITY, ORDER_PRICE, ORDER_STEP, ORDER_PAY, PROD_NUM, MEMBER_ID
+		FROM ORDER_TABLE
+		ORDER BY ORDER_NUM DESC
+	</select>
+	
+	<select id="selectOne" parameterType="int" resultType="Order_TableDto">
+		SELECT ORDER_NUM, ORDER_DATE, ORDER_QUANTITY, ORDER_PRICE, ORDER_STEP, ORDER_PAY, PROD_NUM, MEMBER_ID
+		FROM ORDER_TABLE
+		WHERE ORDER_NUM = #{order_num}
+	</select>
+	
+	<select id="insert" parameterType="Order_TableDto">
+		INSERT INTO ORDER_TABLE
+		VALUES(ORDER_NUM_SEQ, SYSDATE, #{order_quantity}, #{order_price}, #{order_step}, #{order_pay}, #{prod_num}, #{member_id});
+	</select>
+
+
+
+	<delete id="delete" parameterType="Order_TableDto">
+		DELETE FROM ORDER_TABLE
+		WHERE ORDER_NUM = #{order_num}
+	</delete>
+
+</mapper>
