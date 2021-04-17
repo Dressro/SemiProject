@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.fp.board">
+  <select id="free_selectList" resultType="BoardDto">
+  	select b.board_free_no,b.board_title,b.board_regdate,b.board_readcount,
+  	b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname
+  	from board b,member m
+  	where board_category="F"
+  	and b.member_id = m.member_id
+  </select>
+  <select id="free_selectOne" parameterType="int" resultType="BoardDto" >
+  	select b.board_title,b.board_content,m.member_nicname
+  	form board b, member m
+  	where board_category="F"
+  	and b.member_id = m.member_id
+  	and board_free_no = #{board_free_no}
+  </select>
+  <insert id="free_insert" parameterType="BoardDto">
+  	insert into board
+  	values (board_no_seq.nextval,board_free_no_seq.nextval,null,null,null)
+  </insert>
+  <delete id="free_delete" parameterType="int">
+  	update board set board_delflag="N"
+  	where board_category="F"
+  	and board_free_no = #{board_free_no}
+  </delete>
+</mapper>
