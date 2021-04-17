@@ -14,7 +14,7 @@ import com.project.fp.biz.MemberBizImpl;
 import com.project.fp.dto.MemberDto;
 
 
-@WebServlet("/semi.do")
+@WebServlet("/SemiProjectController")
 public class SemiProjectController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
