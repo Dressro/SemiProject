@@ -42,7 +42,7 @@ public class SemiProjectController extends HttpServlet {
 			String member_id = request.getParameter("member_id");
 			String member_password = request.getParameter("member_password");
 			String member_name = request.getParameter("member_name");
-			String member_nickname = request.getParameter("member_nickname");
+			String member_nicname = request.getParameter("member_nicname");
 			String member_email = request.getParameter("member_email");
 			String member_phone = request.getParameter("member_phone");
 			String member_addr = request.getParameter("member_addr");
@@ -50,14 +50,14 @@ public class SemiProjectController extends HttpServlet {
 			String member_animal = request.getParameter("member_animal");
 			String member_dr_info = request.getParameter("member_dr_info");
 			String member_notify = request.getParameter("member_notify");
-			MemberDto dto = new MemberDto(member_id, member_password, member_name, member_nickname,
-										  member_email, member_phone, member_addr, member_grade, null,
+			MemberDto dto = new MemberDto(member_id, member_password, member_name, member_nicname,
+										  member_email, member_phone, member_addr, member_grade, "Y",
 										  member_animal, 0, member_dr_info, member_notify);
 			int res = biz.insert(dto);
 			if (res > 0) {
-				jsResponse(response, "회원가입 성공", "board.do?command=list");
+				jsResponse(response, "회원가입 성공", "index.html");
 			} else {
-				jsResponse(response, "회원가입 실패", "board.do?command=insert");
+				jsResponse(response, "회원가입 실패", "#");
 			}
 		}else {
 			System.out.println("맞는게 없다");
