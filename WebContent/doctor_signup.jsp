@@ -92,7 +92,7 @@
 					</td>
 				</tr>
 				<tr>
-                    <th>전문의소속 *</th>
+                    <th>전문의소속</th>
                     <td>
                         <input type="text" name="member_dr_info" maxlength="50" >
                     </td>
