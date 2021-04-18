@@ -66,7 +66,7 @@
 				<tr>
 					<th>닉네임 *</th>
 					<td>
-						<input type="text" name="member_nicname" maxlength="5" onclick="">
+						<input type="text" name="member_nicname" maxlength="6" onclick="">
 					</td>
 				</tr>
 				<tr>
