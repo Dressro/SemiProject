@@ -8,7 +8,7 @@ import com.project.fp.dto.MemberDto;
 public interface MemberBiz {
 
 	public List<MemberDto> selectList();
-	public MemberDto selectOne(String id, String password);
+	public MemberDto selectOne(MemberDto dto);
 	public int insert(MemberDto dto);
 	public int delete(String id);
 	public int update(MemberDto dto);

@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.project.fp.biz.AnimalBiz;
 import com.project.fp.biz.AnimalBizImpl;
@@ -41,7 +42,7 @@ public class SemiProjectController extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 
 		String command = request.getParameter("command");
-		
+
 		AnimalBiz a_biz = new AnimalBizImpl();
 		BoardBiz b_biz = new BoardBizImpl();
 		Chat_ContentBiz c_c_biz = new Chat_ContentBizImpl();
@@ -51,7 +52,7 @@ public class SemiProjectController extends HttpServlet {
 		Order_TableBiz o_t_biz = new Order_TableBizImpl();
 		ProductBiz p_biz = new ProductBizImpl();
 		ReceiveBiz r_biz = new ReceiveBizImpl();
-		
+
 		if (command.equals("general_signup")) {
 			response.sendRedirect("general_signup.jsp");
 		} else if (command.equals("doctor_signup")) {
@@ -93,17 +94,15 @@ public class SemiProjectController extends HttpServlet {
 			}
 		} else if (command.equals("login")) {
 			response.sendRedirect("login.jsp");
-		}
-		
-		if (command.equals("login")) {
-			response.sendRedirect("login.jsp");
-		}
-		
-		if (command.equals("#")) {
+		} else if (command.equals("#")) {
 			String member_id = request.getParameter("member_id");
 			String member_password = request.getParameter("member_password");
-			MemberDto dto = m_biz.selectOne(member_id, member_password);
-			request.setAttribute("dto", dto);
+			MemberDto m_dto = new MemberDto();
+			m_dto.setMember_id(member_id);
+			m_dto.setMember_password(member_password);
+			MemberDto dto = m_biz.selectOne(m_dto);
+			HttpSession session = request.getSession();
+			session.setAttribute("dto", dto);
 			dispatch(response, request, "#.jsp");
 		}
 

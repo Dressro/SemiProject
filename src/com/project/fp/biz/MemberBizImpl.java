@@ -17,9 +17,9 @@ public class MemberBizImpl implements MemberBiz {
 	}
 
 	@Override
-	public MemberDto selectOne(String id, String password) {
+	public MemberDto selectOne(MemberDto dto) {
 		// TODO Auto-generated method stub
-		return dao.selectOne(id, password);
+		return dao.selectOne(dto);
 	}
 
 	@Override
