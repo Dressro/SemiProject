@@ -11,8 +11,22 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.project.fp.biz.AnimalBiz;
 import com.project.fp.biz.AnimalBizImpl;
+import com.project.fp.biz.BoardBiz;
+import com.project.fp.biz.BoardBizImpl;
+import com.project.fp.biz.ChatBiz;
+import com.project.fp.biz.ChatBizImpl;
+import com.project.fp.biz.Chat_ContentBiz;
+import com.project.fp.biz.Chat_ContentBizImpl;
+import com.project.fp.biz.File_TableBiz;
+import com.project.fp.biz.File_TableBizImpl;
 import com.project.fp.biz.MemberBiz;
 import com.project.fp.biz.MemberBizImpl;
+import com.project.fp.biz.Order_TableBiz;
+import com.project.fp.biz.Order_TableBizImpl;
+import com.project.fp.biz.ProductBiz;
+import com.project.fp.biz.ProductBizImpl;
+import com.project.fp.biz.ReceiveBiz;
+import com.project.fp.biz.ReceiveBizImpl;
 import com.project.fp.dto.AnimalDto;
 import com.project.fp.dto.MemberDto;
 
@@ -26,13 +40,18 @@ public class SemiProjectController extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 
 		String command = request.getParameter("command");
-
+		
 		AnimalBiz a_biz = new AnimalBizImpl();
+		BoardBiz b_biz = new BoardBizImpl();
+		Chat_ContentBiz c_c_biz = new Chat_ContentBizImpl();
+		ChatBiz c_biz = new ChatBizImpl();
+		File_TableBiz f_t_biz = new File_TableBizImpl();
 		MemberBiz m_biz = new MemberBizImpl();
-
-		if (command.equals("signup")) {
-			response.sendRedirect("signup.jsp");
-		} else if (command.equals("general_signup")) {
+		Order_TableBiz o_t_biz = new Order_TableBizImpl();
+		ProductBiz p_biz = new ProductBizImpl();
+		ReceiveBiz r_biz = new ReceiveBizImpl();
+		
+		if (command.equals("general_signup")) {
 			response.sendRedirect("general_signup.jsp");
 		} else if (command.equals("doctor_signup")) {
 			response.sendRedirect("doctor_signup.jsp");
