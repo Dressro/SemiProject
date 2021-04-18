@@ -11,13 +11,13 @@
 		ORDER BY MEMBER_ID DESC
 	</select>
 	
-	<select id="selectOne" parameterType="int" resultType="MemberDto">
+	<select id="selectOne" parameterType="Map" resultType="MemberDto">
 		SELECT MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME, MEMBER_NICKNAME, 
 			   MEMBER_EMAIL, MEMBER_PHONE, MEMBER_ADDR, MEMBER_GRADE,
 			   MEMBER_JOIN, MEMBER_ANIMAL, MEMBER_POINT, MEMBER_DR_INFO,
 			   MEMBER_NOTIFY
 		FROM MEMBER
-		WHERE MEMBER_ID = #{member_id}
+		WHERE MEMBER_ID = #{member_id} AND MEMBER_PASSWORD = #{member_password}
 	</select>
 	
 	<insert id="insert" parameterType="MemberDto">
@@ -34,7 +34,7 @@
 		WHERE MEMBER_ID = #{member_id}
 	</update>
 	
-	<delete id="delete" parameterType="int">
+	<delete id="delete" parameterType="String">
 		UPDATE MEMBER
 		SET MEMBER_JOIN = 'N'
 		WHERE MEMBER_ID = #{member_id}
