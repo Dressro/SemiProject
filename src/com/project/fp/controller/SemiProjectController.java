@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.project.fp.biz.AnimalBiz;
+import com.project.fp.biz.AnimalBizImpl;
 import com.project.fp.biz.MemberBiz;
 import com.project.fp.biz.MemberBizImpl;
 import com.project.fp.dto.AnimalDto;
@@ -25,6 +27,7 @@ public class SemiProjectController extends HttpServlet {
 
 		String command = request.getParameter("command");
 		
+		AnimalBiz a_biz = new AnimalBizImpl(); 
 		MemberBiz m_biz = new MemberBizImpl();
 		
 		if (command.equals("general_signup")) {
@@ -57,7 +60,7 @@ public class SemiProjectController extends HttpServlet {
 			a_dto.setAnimal_weight(animal_weight);
 			a_dto.setAnimal_unq(animal_unq);
 			a_dto.setMember_id(member_id);
-			int a_res = 0;
+			int a_res = a_biz.insert(a_dto);
 			MemberDto m_dto = new MemberDto(member_id, member_password, member_name, member_nicname, member_email,
 					member_phone, member_addr, member_grade, "Y", member_animal, 0, member_dr_info, member_notify);
 			int res = m_biz.insert(m_dto);
