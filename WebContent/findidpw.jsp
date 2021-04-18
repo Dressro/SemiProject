@@ -51,6 +51,8 @@
 
 <div id="findid" class="tabcontent">
 <form action="semi.do" method="post">
+<input type="hidden" name="commamd" value="findidpw" />
+
 <h1>아이디 찾기</h1>
 <p>회원 정보에 등록된 이메일과 입력한 이메일이 같아야 아이디를 찾을 수 있습니다.</p>
 <table>
