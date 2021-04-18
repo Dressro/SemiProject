@@ -58,12 +58,17 @@
 <table>
 <tr>
 <th>이름</th>
-<td><input type="text" name="member_name" placeholder="이름" required="required"></td>
+<td><input type="text" name="member_name" required="required"></td>
 </tr>
 
 <tr>
 <th>이메일</th>
-<td><input type="text" name="member_email" placeholder="이메일" required="required"></td>
+<td><input type="text" name="member_email" maxlength="30" onclick="">@
+                        <select name="member_email_2">
+                            <option>naver.com</option>
+                            <option>daum.net</option>
+                            <option>gmail.com</option>
+                            <option>nate.com</option>     </select></td>
 </tr>
 <tr>
 <td colspan="2">
@@ -80,17 +85,22 @@
 <table>
 <tr>
 <th>아이디</th>
-<td><input type="text" name="member_id" placeholder="아이디" required="required"></td>
+<td><input type="text" name="member_id" required="required"></td>
 </tr>
 
 <tr>
 <th>이메일</th>
-<td><input type="text" name="member_email" placeholder="이메일" required="required"></td>
+<td><input type="text" name="member_email" maxlength="30" onclick="">@
+                        <select name="member_email_2">
+                            <option>naver.com</option>
+                            <option>daum.net</option>
+                            <option>gmail.com</option>
+                            <option>nate.com</option>     </select></td>
 </tr>
 
 <tr>
 <td colspan="2">
-<button type="submit">본인확인</button></td>
+<button type="button" id="searchid" onclick="sertchId()">아이디 조회</button></td>
 </tr>
 </table>
 </form>
@@ -111,8 +121,11 @@ function openTab(evt, tabName) {
   evt.currentTarget.className += " active";
 }
 
-// Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
+
+
+
+
 </script>
 </body>
 </html>
