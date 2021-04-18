@@ -92,16 +92,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th>주소 *</th>
-					<td>
-						<input type="text" maxlength="5" placeholder="우편번호" readonly="readonly">
-						<button type="button">우편번호</button>
-						<input type="text" readonly="readonly" maxlength="50" placeholder="기본주소">
-						<input type="text" name="member_addr" maxlength="50" placeholder="상세주소">
-					</td>
-				</tr>
-				<tr>
-                    <th>전문의소속*</th>
+                    <th>전문의소속 *</th>
                     <td>
                         <input type="text" name="member_dr_info" maxlength="50" >
                     </td>
