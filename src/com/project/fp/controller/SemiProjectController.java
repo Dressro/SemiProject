@@ -1,6 +1,7 @@
 package com.project.fp.controller;
 
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -92,6 +93,18 @@ public class SemiProjectController extends HttpServlet {
 			}
 		} else if (command.equals("login")) {
 			response.sendRedirect("login.jsp");
+		}
+		
+		if (command.equals("login")) {
+			response.sendRedirect("login.jsp");
+		}
+		
+		if (command.equals("#")) {
+			String member_id = request.getParameter("member_id");
+			String member_password = request.getParameter("member_password");
+			MemberDto dto = biz.selectOne(member_id, member_password);
+			request.setAttribute("dto", dto);
+			dispatch(response, request, "#.jsp");
 		}
 
 	}
