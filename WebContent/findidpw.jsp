@@ -123,7 +123,16 @@ function openTab(evt, tabName) {
 
 document.getElementById("defaultOpen").click();
 
-
+function searchId(){
+	
+	var name = document.getElementById("member_name").value;
+	var email = document.getElementByID("member_email").value;
+	
+	var popup = window.open();
+	
+	
+	
+}
 
 
 </script>
