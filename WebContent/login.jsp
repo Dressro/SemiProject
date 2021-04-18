@@ -28,7 +28,7 @@ input[type=submit] {
 	<div>
 	<form action="semi.do" method="post">
 	
-			<input type="hidden" name="commamd" value="login" />
+			<input type="hidden" name="command" value="loginres" />
 			<input type="text" name="member_id" placeholder="아이디 입력"
 					required="required"><br>
 					

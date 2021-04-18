@@ -96,7 +96,7 @@ public class SemiProjectController extends HttpServlet {
 			}
 		} else if (command.equals("login")) {
 			response.sendRedirect("login.jsp");
-		} else if (command.equals("#")) {
+		} else if (command.equals("loginres")) {
 			String member_id = request.getParameter("member_id");
 			String member_password = request.getParameter("member_password");
 			MemberDto m_dto = new MemberDto();
