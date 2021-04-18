@@ -61,7 +61,7 @@ public class SemiProjectController extends HttpServlet {
 			response.sendRedirect("doctor_signup.jsp");
 		} else if (command.equals("signupres")) {
 			String animal_name = request.getParameter("animal_name");
-			String animal_gen = request.getParameter("aniaml_gen");
+			String animal_gen = request.getParameter("animal_gen");
 			String animal_type = request.getParameter("animal_type");
 			int animal_age = Integer.parseInt(request.getParameter("animal_age"));
 			double animal_weight = Double.parseDouble(request.getParameter("animal_weight"));
@@ -85,10 +85,11 @@ public class SemiProjectController extends HttpServlet {
 			a_dto.setAnimal_weight(animal_weight);
 			a_dto.setAnimal_unq(animal_unq);
 			a_dto.setMember_id(member_id);
-			int a_res = a_biz.insert(a_dto);
 			MemberDto m_dto = new MemberDto(member_id, member_password, member_name, member_nicname, member_email,
 					member_phone, member_addr, member_grade, "Y", member_animal, 0, member_dr_info, member_notify);
-			int res = m_biz.insert(m_dto);
+			int m_res = m_biz.insert(m_dto);
+			int a_res = a_biz.insert(a_dto);
+			int res = m_res + a_res;
 			if (res > 0) {
 				jsResponse(response, "회원가입 성공", "index.html");
 			} else {

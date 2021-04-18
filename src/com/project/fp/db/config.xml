@@ -26,13 +26,7 @@
 	</environments>
 	<mappers>
 		<mapper resource="com/project/fp/db/ProjectFP-mapper_animal.xml"/>
-		<mapper resource="com/project/fp/db/ProjectFP-mapper_board.xml"/>
-		<mapper resource="com/project/fp/db/ProjectFP-mapper_Chat_Content.xml"/>
-		<mapper resource="com/project/fp/db/ProjectFP-mapper_chat.xml"/>
-		<mapper resource="com/project/fp/db/ProjectFP-mapper_File_Table.xml"/>
 		<mapper resource="com/project/fp/db/ProjectFP-mapper_member.xml"/>
-		<mapper resource="com/project/fp/db/ProjectFP-mapper_Order_Table.xml"/>
-		<mapper resource="com/project/fp/db/ProjectFP-mapper_Product.xml"/>
-		<mapper resource="com/project/fp/db/ProjectFP-mapper_Receive.xml"/>
+
 	</mappers>
 </configuration>
