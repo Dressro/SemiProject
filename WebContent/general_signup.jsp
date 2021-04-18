@@ -177,10 +177,11 @@
 				<tr>
 					<th>주소 *</th>
 					<td>
+						<input type="hidden" name="member_addr" value="">
 						<input type="text" id="postcode" placeholder="우편번호">
 						<input type="button" onclick="address();" value="우편번호 찾기"><br>
-						<input type="text" id="addr_1" placeholder="기본주소">
-						<input type="text" id="addr_2" placeholder="상세주소">
+						<input type="text" name="member_addr_1" id="addr_1" placeholder="기본주소">
+						<input type="text" name="member_addr_2" id="addr_2" placeholder="상세주소">
 					</td>
 				</tr>
 				<tr>
@@ -197,7 +198,7 @@
 				<tr class="animal">
 					<th>이름 *</th>
 					<td>
-						<input type="text" name="animal_name" required="required" />
+						<input type="text" name="animal_name" />
 					</td>
 				</tr>
 				<tr class="animal">
