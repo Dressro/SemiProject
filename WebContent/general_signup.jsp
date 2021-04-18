@@ -78,9 +78,13 @@
 	
 	function chk(value){
 		if(value == "Y"){
-			$(".animal").css("display","table-row");
+			$(".animal").toggle();
+			$("input[id=animal_gen_chk]").attr("checked","checked");
+			$("input[name=animal_name]").attr("required","true");
 		}else if(value == "N"){
-			$(".animal").remove();
+			$("input[name=animal_name]").attr("required","false");
+			$("input[id=animal_gen_chk]").attr("checked","unchecked");
+			$(".animal").toggle();
 		}
 	}
 	
@@ -204,7 +208,7 @@
 				<tr class="animal">
 					<th>성별 *</th>
 					<td>
-						<input type="radio" name="animal_gen" value="M"  checked><img src="resources/images/male.svg" style="width: 20px; height: 20px;">
+						<input type="radio" id="animal_gen_chk" name="animal_gen" value="M"><img src="resources/images/male.svg" style="width: 20px; height: 20px;">
                 		<input type="radio" name="animal_gen" value="F" ><img src="resources/images/female.svg" style="width: 20px; height: 20px;">
 					</td>
 				</tr>
