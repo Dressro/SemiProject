@@ -3,8 +3,15 @@
 <configuration>
 	<properties resource="com/project/fp/db/db.properties"></properties>
 	<typeAliases>
-		<typeAlias type="com.project.fp.dto.MemberDto" alias="MemberDto" />
+		<typeAlias type="com.project.fp.dto.AnimalDto" alias="AnimalDto" />
 		<typeAlias type="com.project.fp.dto.BoardDto" alias="BoardDto" />
+		<typeAlias type="com.project.fp.dto.Chat_ContentDto" alias="Chat_ContentDto" />
+		<typeAlias type="com.project.fp.dto.ChatDto" alias="ChatDto" />
+		<typeAlias type="com.project.fp.dto.File_TableDto" alias="File_TableDto" />
+		<typeAlias type="com.project.fp.dto.MemberDto" alias="MemberDto" />
+		<typeAlias type="com.project.fp.dto.Order_TableDto" alias="Order_TableDto" />
+		<typeAlias type="com.project.fp.dto.ProductDto" alias="ProductDto" />
+		<typeAlias type="com.project.fp.dto.ReceiveDto" alias="ReceiveDto" />
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -18,6 +25,14 @@
 		</environment>
 	</environments>
 	<mappers>
+		<mapper resource="com/project/fp/db/ProjectFP-mapper_animal.xml"/>
+		<mapper resource="com/project/fp/db/ProjectFP-mapper_board.xml"/>
+		<mapper resource="com/project/fp/db/ProjectFP-mapper_Chat_Content.xml"/>
+		<mapper resource="com/project/fp/db/ProjectFP-mapper_chat.xml"/>
+		<mapper resource="com/project/fp/db/ProjectFP-mapper_File_Table.xml"/>
 		<mapper resource="com/project/fp/db/ProjectFP-mapper_member.xml"/>
+		<mapper resource="com/project/fp/db/ProjectFP-mapper_Order_Table.xml"/>
+		<mapper resource="com/project/fp/db/ProjectFP-mapper_Product.xml"/>
+		<mapper resource="com/project/fp/db/ProjectFP-mapper_Receive.xml"/>
 	</mappers>
 </configuration>
