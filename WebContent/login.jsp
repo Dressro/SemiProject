@@ -28,6 +28,7 @@ input[type=submit] {
 	<div>
 	<form action="semi.do" method="post">
 	
+			<input type="hidden" name="commamd" value="login" />
 			<input type="text" name="member_id" placeholder="아이디 입력"
 					required="required"><br>
 					
@@ -35,14 +36,14 @@ input[type=submit] {
 					placeholder="비밀번호 입력" required="required"><br>
 			
 				<a href="#">아이디 비밀번호찾기</a><br>
-				<input type="submit" value="로그인"><br>
+				<input type="submit" value="login"><br>
 			
 			<!-- 로그인api이미지 적용 -->
 			<button type="button" id="snsloginBtn"><img src="#"/>카카오ID로그인</button><br>
 			<button type="button" id="snsloginBtn"><img src="#"/>네이버ID로그인</button><br>
 	</form>
 	<hr>
-	<button onclick="#'" type="button" class="button">회원가입</button>
+	<button onclick="#" type="button" class="button">회원가입</button>
 	</div>
 </body>
 </html>
