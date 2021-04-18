@@ -26,13 +26,15 @@ public class SemiProjectController extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 
 		String command = request.getParameter("command");
-		
-		AnimalBiz a_biz = new AnimalBizImpl(); 
+
+		AnimalBiz a_biz = new AnimalBizImpl();
 		MemberBiz m_biz = new MemberBizImpl();
-		
-		if (command.equals("general_signup")) {
+
+		if (command.equals("signup")) {
+			response.sendRedirect("signup.jsp");
+		} else if (command.equals("general_signup")) {
 			response.sendRedirect("general_signup.jsp");
-		} else if(command.equals("doctor_signup")) {
+		} else if (command.equals("doctor_signup")) {
 			response.sendRedirect("doctor_signup.jsp");
 		} else if (command.equals("signupres")) {
 			String animal_name = request.getParameter("animal_name");
@@ -69,6 +71,8 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				jsResponse(response, "회원가입 실패", "#");
 			}
+		} else if (command.equals("login")) {
+			response.sendRedirect("login.jsp");
 		}
 
 	}
