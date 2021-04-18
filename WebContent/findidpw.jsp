@@ -49,8 +49,8 @@
 <h1>계정정보 찾기</h1>
 
 <div class="tab">
-  <button class="tablinks" onclick="openCity(event, 'findid')" id="defaultOpen">아이디찾기</button>
-  <button class="tablinks" onclick="openCity(event, 'findpw')">비밀번호 찾기</button>
+  <button class="tablinks" onclick="openTab(event, 'findid')" id="defaultOpen">아이디찾기</button>
+  <button class="tablinks" onclick="openTab(event, 'findpw')">비밀번호 찾기</button>
 </div>
 
 <div id="findid" class="tabcontent">
@@ -99,7 +99,7 @@
 </div>
 
 <script>
-function openCity(evt, cityName) {
+function openTab(evt, tabName) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
   for (i = 0; i < tabcontent.length; i++) {
@@ -109,7 +109,7 @@ function openCity(evt, cityName) {
   for (i = 0; i < tablinks.length; i++) {
     tablinks[i].className = tablinks[i].className.replace(" active", "");
   }
-  document.getElementById(cityName).style.display = "block";
+  document.getElementById(tabName).style.display = "block";
   evt.currentTarget.className += " active";
 }
 
