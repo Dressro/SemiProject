@@ -7,7 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.project.fp.dto.ChatDto;
 
-public class ChatDaoImple extends SqlMapConfig implements ChatDao {
+public class ChatDaoImpl extends SqlMapConfig implements ChatDao {
 	
 	private String namespace = "com.project.fp.chat.";
 
