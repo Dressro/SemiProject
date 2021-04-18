@@ -177,6 +177,7 @@
 				<tr>
 					<th>주소 *</th>
 					<td>
+						<input type="hidden" name="member_addr" value="">
 						<input type="text" id="postcode" placeholder="우편번호">
 						<input type="button" onclick="address();" value="우편번호 찾기"><br>
 						<input type="text" id="addr_1" placeholder="기본주소">

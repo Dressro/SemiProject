@@ -167,3 +167,4 @@ CREATE TABLE FILE_TABLE(
 );
 
 select * from member;
+select * from animal;
