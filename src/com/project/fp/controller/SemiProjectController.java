@@ -53,7 +53,9 @@ public class SemiProjectController extends HttpServlet {
 		ProductBiz p_biz = new ProductBizImpl();
 		ReceiveBiz r_biz = new ReceiveBizImpl();
 
-		if (command.equals("general_signup")) {
+		if (command.equals("signup")) {
+			response.sendRedirect("signup.jsp");
+		} else if (command.equals("general_signup")) {
 			response.sendRedirect("general_signup.jsp");
 		} else if (command.equals("doctor_signup")) {
 			response.sendRedirect("doctor_signup.jsp");
