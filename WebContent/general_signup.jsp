@@ -37,6 +37,8 @@
 			<form action="semi.do" method="POST">
 			<input type="hidden" name="command" value="signupres" />
 			<input type="hidden" name="member_notify" value="N" />
+			<input type="hidden" name="member_grade" value="개인" />
+			<input type="hidden" name="member_dr_info" value="없음"/>
 			<table border="1">
 				<tr>
 					<th>아이디 *</th>

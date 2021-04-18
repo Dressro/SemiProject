@@ -24,7 +24,7 @@
 		INSERT INTO MEMBER
 		VALUES(#{member_id}, #{member_password}, #{member_name}, #{member_nickname}, 
 			   #{member_email}, #{member_phone}, #{member_addr}, #{member_grade}, 
-			   "Y", #{member_animal}, #{member_point}, #{member_dr_info}, 
+			   #{member_join}, #{member_animal}, #{member_point}, #{member_dr_info}, 
 			   #{member_notify})
 	</insert>
 	
