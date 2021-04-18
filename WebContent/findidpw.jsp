@@ -72,7 +72,7 @@
 </tr>
 <tr>
 <td colspan="2">
-<button type="submit">아이디 확인</button></td>
+<button type="button" id="searchid" onclick="searchId()">아이디 조회</button></td>
 </tr>
 </table>
 </form>
@@ -100,7 +100,7 @@
 
 <tr>
 <td colspan="2">
-<button type="button" id="searchid" onclick="sertchId()">아이디 조회</button></td>
+<button type="button" id="searchpw" onclick="searchPw()">본인확인</button></td>
 </tr>
 </table>
 </form>

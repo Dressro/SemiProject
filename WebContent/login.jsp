@@ -35,7 +35,7 @@ input[type=submit] {
 			<input type="password" name="member_password"
 					placeholder="비밀번호 입력" required="required"><br>
 			
-				<a href="#">아이디 비밀번호찾기</a><br>
+				<a href="findidpw.jsp">아이디 비밀번호찾기</a><br>
 				<input type="submit" value="login"><br>
 			
 			<!-- 로그인api이미지 적용 -->
