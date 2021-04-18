@@ -13,7 +13,6 @@
   background-color: #f1f1f1;
 }
 
-/* Style the buttons inside the tab */
 .tab button {
   background-color: inherit;
   float: left;
@@ -25,17 +24,14 @@
   font-size: 17px;
 }
 
-/* Change background color of buttons on hover */
 .tab button:hover {
   background-color: #ddd;
 }
 
-/* Create an active/current tablink class */
 .tab button.active {
   background-color: #ccc;
 }
 
-/* Style the tab content */
 .tabcontent {
   display: none;
   padding: 6px 12px;
@@ -69,7 +65,7 @@
 </tr>
 <tr>
 <td colspan="2">
-<button type="submit">인증번호 발송</button></td>
+<button type="submit">아이디 확인</button></td>
 </tr>
 </table>
 </form>
