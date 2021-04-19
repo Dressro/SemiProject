@@ -89,7 +89,7 @@
 	}
 	
 	$(function(){
-		alert(member_id);
+		
 	    $('input[name=member_password]').keyup(function(){
 	      $('#chkNotice').html('');
 	    });
