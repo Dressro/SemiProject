@@ -131,13 +131,13 @@
 				<tr>
 					<th>이름 *</th>
 					<td>
-						<input type="text" name="member_name" value=<%=dto.getMember_name() %> onclick="">
+						<input type="text" name="member_name"  onclick="">
 					</td>
 				</tr>
 				<tr>
 					<th>닉네임 *</th>
 					<td>
-						<input type="text" name="member_nicname" value=<%=dto.getMember_nicname() %> maxlength="10" onclick="">
+						<input type="text" name="member_nicname" maxlength="10" onclick="">
 					</td>
 				</tr>
 				<tr>
