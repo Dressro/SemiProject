@@ -168,5 +168,5 @@ CREATE TABLE FILE_TABLE(
 	CONSTRAINT FILE_TABLE_ANIMAL_NO_KF FOREIGN KEY (ANIMAL_NO) REFERENCES ANIMAL (ANIMAL_NO)
 );
 
-
-select * from member
+select * from member;
+select * from animal;

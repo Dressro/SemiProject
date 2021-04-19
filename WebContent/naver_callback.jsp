@@ -22,8 +22,6 @@
 		function naverSignInCallback() {
 
 			var member_id = naver_id_login.getProfileData('id');
-			var member_nicname = naver_id_login.getProfileData("nickname");
-			var member_name = naver_id_login.getProfileData('name');
 			
 			
 			var form = document.createElement('form');
@@ -33,16 +31,6 @@
 			objs_1.setAttribute('name', 'member_id');
 			objs_1.setAttribute('value', member_id);
 			form.appendChild(objs_1);
-			var objs_2 = document.createElement('input');
-			objs_2.setAttribute('type', 'hidden');
-			objs_2.setAttribute('name', 'member_nicname');
-			objs_2.setAttribute('value', member_nicname);
-			form.appendChild(objs_2);
-			var objs_3 = document.createElement('input');
-			objs_3.setAttribute('type', 'hidden');
-			objs_3.setAttribute('name', 'member_name');
-			objs_3.setAttribute('value', member_name);
-			form.appendChild(objs_3);
 			var objs_4 = document.createElement('input');
 			objs_4.setAttribute('type', 'hidden');
 			objs_4.setAttribute('name', 'command');

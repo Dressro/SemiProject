@@ -29,7 +29,7 @@
 	
 	<insert id="insert" parameterType="MemberDto">
 		INSERT INTO MEMBER
-		VALUES(#{member_loginroute}, #{member_id}, #{member_password}, #{member_name}, #{member_nicname}, 
+		VALUES(#{member_id}, #{member_password}, #{member_name}, #{member_nicname}, 
 			   #{member_email}, #{member_phone}, #{member_addr}, #{member_grade}, 
 			   #{member_join}, #{member_animal}, #{member_point}, #{member_dr_info}, 
 			   #{member_notify})
