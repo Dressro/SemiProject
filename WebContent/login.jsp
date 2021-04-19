@@ -21,6 +21,18 @@ input[type=submit] {
   border-radius: 4px;
   cursor: pointer;
 }
+#kakao_id_login {
+	padding: 0;
+	width: 185px;
+	height: 40px;
+}
+#kakao-login-btn {
+	width: 185px;
+	height: 40px;
+}
+#kakao_padding {
+	padding: 20px;
+}
 </style>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -98,7 +110,7 @@ $(function(){
 				<a href="findidpw.jsp">아이디 비밀번호찾기</a><br>
 				<input type="submit" value="login"><br>
 			
-			<div id="kakao_id_login"></div>
+			<div id="kakao_padding"><div id="kakao_id_login"></div></div>
   			<div id="naver_id_login"></div>
  			<script type="text/javascript">
   					var naver_id_login = new naver_id_login("3FogXXVNeg3aYw15VPrY", "http://localhost:8787/SemiProject/index.html");
