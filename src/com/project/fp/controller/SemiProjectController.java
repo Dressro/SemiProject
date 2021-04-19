@@ -60,13 +60,9 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("doctor_signup")) {
 			response.sendRedirect("doctor_signup.jsp");
 		} else if (command.equals("signupres")) {
-			String member_loginroute = request.getParameter("member_loginroute");
-			String animal_name = request.getParameter("animal_name");
-			String animal_gen = request.getParameter("animal_gen");
-			String animal_type = request.getParameter("animal_type");
-			int animal_age = Integer.parseInt(request.getParameter("animal_age"));
-			double animal_weight = Double.parseDouble(request.getParameter("animal_weight"));
-			String animal_unq = request.getParameter("animal_unq");
+			String member_notify = request.getParameter("member_notify");
+			String member_grade = request.getParameter("member_grade");
+			String member_dr_info = request.getParameter("member_dr_info");
 			String member_id = request.getParameter("member_id");
 			String member_password = request.getParameter("member_password");
 			String member_name = request.getParameter("member_name");
@@ -74,28 +70,53 @@ public class SemiProjectController extends HttpServlet {
 			String member_email = request.getParameter("member_email");
 			String member_phone = request.getParameter("member_phone");
 			String member_addr = request.getParameter("member_addr");
-			String member_grade = request.getParameter("member_grade");
 			String member_animal = request.getParameter("member_animal");
-			String member_dr_info = request.getParameter("member_dr_info");
-			String member_notify = request.getParameter("member_notify");
-			AnimalDto a_dto = new AnimalDto();
-			a_dto.setAnimal_name(animal_name);
-			a_dto.setAnimal_gen(animal_gen);
-			a_dto.setAnimal_type(animal_type);
-			a_dto.setAnimal_age(animal_age);
-			a_dto.setAnimal_weight(animal_weight);
-			a_dto.setAnimal_unq(animal_unq);
-			a_dto.setMember_id(member_id);
-			MemberDto m_dto = new MemberDto(member_loginroute, member_id, member_password, member_name, member_nicname, member_email,
-					member_phone, member_addr, member_grade, "Y", member_animal, 0, member_dr_info, member_notify);
-			int m_res = m_biz.insert(m_dto);
-			int a_res = a_biz.insert(a_dto);
-			int res = m_res + a_res;
-			if (res > 0) {
-				jsResponse(response, "회원가입 성공", "index.html");
-			} else {
-				jsResponse(response, "회원가입 실패", "#");
+			
+			String animal_name = request.getParameter("animal_name");
+			String animal_gen = request.getParameter("animal_gen");
+			String animal_type = request.getParameter("animal_type");
+			int animal_age = Integer.parseInt(request.getParameter("animal_age"));
+			double animal_weight = Double.parseDouble(request.getParameter("animal_weight"));
+			String animal_unq = request.getParameter("animal_unq");
+			
+			MemberDto m_dto = new MemberDto(member_id, member_password, member_name, member_nicname, member_email, member_phone, member_addr, member_grade, "Y", member_animal, 0, member_dr_info, member_notify);
+			
+			if (m_dto.getMember_grade().equals("전문의")) {
+				int m_res = m_biz.insert(m_dto);
+				if (m_res > 0) {
+					jsResponse(response, "전문의 회원가입 성공", "index.html");
+				} else {
+					jsResponse(response, "전문의 회원가입 실패", "#");
+				}
+			} else if (m_dto.getMember_grade().equals("일반")) {
+				if (m_dto.getMember_animal().equals("N")) {
+					int m_res = m_biz.insert(m_dto);
+					if (m_res > 0) {
+						jsResponse(response, "일반 (반려동물X) 회원가입 성공", "index.html");
+					} else {
+						jsResponse(response, "일반 (반려동물X) 회원가입 실패", "#");
+					}
+				} else if (m_dto.getMember_animal().equals("Y")) {
+					AnimalDto a_dto = new AnimalDto();
+					a_dto.setAnimal_name(animal_name);
+					a_dto.setAnimal_gen(animal_gen);
+					a_dto.setAnimal_type(animal_type);
+					a_dto.setAnimal_age(animal_age);
+					a_dto.setAnimal_weight(animal_weight);
+					a_dto.setAnimal_unq(animal_unq);
+					a_dto.setMember_id(member_id);
+
+					int m_res = m_biz.insert(m_dto);
+					int a_res = a_biz.insert(a_dto);
+					int res = m_res + a_res;
+					if (res > 0) {
+						jsResponse(response, "일반 (반려동물O) 회원가입 성공", "index.html");
+					} else {
+						jsResponse(response, "일반 (반려동물O) 회원가입 실패", "#");
+					}
+				}
 			}
+
 		} else if (command.equals("login")) {
 			response.sendRedirect("login.jsp");
 		} else if (command.equals("loginres")) {
@@ -111,7 +132,7 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("kakao")) {
 			String member_id = request.getParameter("member_id");
 			String member_password = "sdghjkhdkjfds";
-			MemberDto m_dto = new MemberDto("K", member_id, member_password, null, null, null, null, null, null, "Y", null, 0, null, null);
+			MemberDto m_dto = new MemberDto(member_id, member_password, null, null, null, null, null, null, "Y", null, 0, null, null);
 			
 			int res = m_biz.insert(m_dto);
 			if (res > 0) {
