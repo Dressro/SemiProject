@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.fp.product">
+
+	<select id="selectList" resultType="ProductDto">
+		SELECT PROD_NUM, PROD_NAME, PROD_EXPLAIN, PROD_SALE, PROD_PRICE, PROD_RECOMM, PROD_STOCK, PROD_CATEGORY, PROD_IN, PROD_OUT, PROD_INDATE, PROD_OUTDATE, PROD_MFR, PROD_CLIENT
+		FROM PRODUCT
+		ORDER BY SEQ DESC
+	</select>
+	
+	
+	
+	<select id="selectOne" resultType="ProductDto" parameterType="int">
+		SELECT PROD_NUM, PROD_NAME, PROD_EXPLAIN, PROD_SALE, PROD_PRICE, PROD_RECOMM, PROD_STOCK, PROD_CATEGORY, PROD_IN, PROD_OUT, PROD_INDATE, PROD_OUTDATE, PROD_MFR, PROD_CLIENT
+		FROM PRODUCT
+		WHERE PROD_NUM = #{prod_num}
+	</select>
+	
+	
+	
+	<select id="insert" parameterType="ProductDto">
+		INSERT INTO PRODUCT
+		VALUES(PRODUCT_NUM_SEQ.NEXTVAL, #{prod_name}, #{prod_explain}, #{prod_sale}, #{prod_price}, #{prod_recomm}, #{prod_stock}, #{prod_category}, #{prod_in}, #{prod_out}, #{prod_indate}, #{prod_outdate}, #{prod_mfr}, #{prod_client})
+	</select>
+	
+	
+	
+	<select id="update" parameterType="ProductDto">
+		UPDATE PRODUCT
+		SET PROD_NAME = #{prod_name}, PROD_EXPLAIN = #{prod_explain}, PROD_SALE = #{prod_sale}, PROD_PRICE = #{prod_price}, PROD_RECOMM = #{prod_recomm}, PROD_STOCK = #{prod_stock}, PROD_CATEGORY = #{prod_category}, PROD_IN = #{prod_in}, PROD_OUT = #{prod_out}, PROD_INDATE = #{prod_indate}, PROD_OUTDATE = #{prod_outdate}, PROD_MFR = #{prod_mfr}, PROD_CLIENT = #{prod_client}
+		WHERE PROD_NUM = #{prod_num}
+	</select>
+	
+	
+	
+	<delete id="delete" parameterType="ProductDto">
+		DELETE FROM PRODUCT
+		WHERE PROD_NUM = #{prod_num}
+	</delete>
+
+</mapper>

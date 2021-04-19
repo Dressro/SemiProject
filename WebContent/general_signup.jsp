@@ -16,22 +16,56 @@
 	}
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
 	
+	function address() {
+		new daum.Postcode({
+       		oncomplete: function(data) {
+            var roadAddr = data.roadAddress; 
+            var extraRoadAddr = ''; 
+
+            if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                extraRoadAddr += data.bname;
+            }
+            
+            if(data.buildingName !== '' && data.apartment === 'Y'){
+               extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+            }
+
+            if(extraRoadAddr !== ''){
+                extraRoadAddr = ' (' + extraRoadAddr + ')';
+            }
+
+            document.getElementById('postcode').value = data.zonecode;
+            document.getElementById("addr_1").value = roadAddr;
+            document.getElementById("addr_1").value = data.jibunAddress;
+            
+            if(data.autoRoadAddress) {
+            	document.getElementById("addr_1").value = roadAddr;
+            } else if(data.autoJibunAddress) {
+            	document.getElementById("addr_1").value = data.jibunAddress;
+            } else {
+            }
+        }
+    }).open();
+}
 	function idCheckConfirm(){
-	var chk = document.getElementsByName("myid")[0].title;
-	if(chk == "n") {
-		alert("id 중복체크를 먼저 해주세요.");
-		document.getElementsByName("myid")[0].focus();
+		var chk = document.getElementsByName("myid")[0].title;
+		if(chk == "n") {
+			alert("id 중복체크를 먼저 해주세요.");
+			document.getElementsByName("myid")[0].focus();
+		}
 	}
-	}
+	
 	function idCheck(){
-	var doc = document.getElementsByName("myid")[0];
-	if(doc.value.trim() =="" || doc.value == null){
-		alert("id를 입력해 주세요");
-	} else {
-		open("logincontroller.jsp?command=idchk&myid="+doc.value,"","width=200 , height= 200");
-	}
+		var doc = document.getElementsByName("myid")[0];
+		if(doc.value.trim() =="" || doc.value == null){
+			alert("id를 입력해 주세요");
+		} else {
+			open("logincontroller.jsp?command=idchk&myid="+doc.value,"","width=200 , height= 200");
+		}
+	
 	}
 	function check(){
 		var member_email = $('input[name=member_email_1]').val() +"@"+ $('select[name=member_email_2]').val();
@@ -41,17 +75,21 @@
 		var member_addr = $('input[name=member_addr_1]').val() + " " + $('input[name=member_addr_2]').val()
 		$('input[name=member_addr]').attr('value',member_addr);
 	}
+	
 	function chk(value){
 		if(value == "Y"){
-			$(".animal").css("display","table-row");
+			$(".animal").toggle();
+			$("input[id=animal_gen_chk]").attr("checked","checked");
+			$("input[name=animal_name]").attr("required","true");
 		}else if(value == "N"){
-			$(".animal").remove();
+			$("input[name=animal_name]").attr("required","false");
+			$("input[id=animal_gen_chk]").attr("checked","unchecked");
+			$(".animal").toggle();
 		}
 	}
+	
 	$(function(){
 		
-		
-			
 	    $('input[name=member_password]').keyup(function(){
 	      $('#chkNotice').html('');
 	    });
@@ -68,6 +106,10 @@
 	    });
 	    
 	});
+</script>
+
+<script>
+
 </script>
 </head>
 <body>
@@ -140,10 +182,10 @@
 					<th>주소 *</th>
 					<td>
 						<input type="hidden" name="member_addr" value="">
-						<input type="text" maxlength="5" placeholder="우편번호" readonly="readonly">
-						<button type="button">우편번호</button>
-						<input type="text" readonly="readonly" name="member_addr_1" maxlength="50" placeholder="기본주소">
-						<input type="text" name="member_addr_2" maxlength="50" placeholder="상세주소">
+						<input type="text" id="postcode" placeholder="우편번호">
+						<input type="button" onclick="address();" value="우편번호 찾기"><br>
+						<input type="text" name="member_addr_1" id="addr_1" placeholder="기본주소">
+						<input type="text" name="member_addr_2" id="addr_2" placeholder="상세주소">
 					</td>
 				</tr>
 				<tr>
@@ -160,13 +202,13 @@
 				<tr class="animal">
 					<th>이름 *</th>
 					<td>
-						<input type="text" name="animal_name" required="required" />
+						<input type="text" name="animal_name" />
 					</td>
 				</tr>
 				<tr class="animal">
 					<th>성별 *</th>
 					<td>
-						<input type="radio" name="animal_gen" value="M"  checked><img src="resources/images/male.svg" style="width: 20px; height: 20px;">
+						<input type="radio" id="animal_gen_chk" name="animal_gen" value="M"><img src="resources/images/male.svg" style="width: 20px; height: 20px;">
                 		<input type="radio" name="animal_gen" value="F" ><img src="resources/images/female.svg" style="width: 20px; height: 20px;">
 					</td>
 				</tr>
@@ -268,4 +310,5 @@
 	</div>
 	
 </body>
+
 </html>
