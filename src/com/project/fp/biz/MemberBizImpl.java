@@ -17,6 +17,7 @@ public class MemberBizImpl implements MemberBiz {
 	}
 
 	@Override
+
 	public MemberDto selectSerch(MemberDto dto) {
 		// TODO Auto-generated method stub
 		return dao.selectSerch(dto);

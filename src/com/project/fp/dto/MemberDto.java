@@ -18,6 +18,7 @@ public class MemberDto {
 	private String member_notify;
 	public MemberDto() {
 	}
+
 	public MemberDto(String member_id, String member_password, String member_name, String member_nicname,
 			String member_email, String member_phone, String member_addr, String member_grade, String member_join,
 			String member_animal, int member_point, String member_dr_info, String member_notify) {

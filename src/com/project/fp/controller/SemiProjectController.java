@@ -72,10 +72,10 @@ public class SemiProjectController extends HttpServlet {
 			String member_animal = request.getParameter("member_animal");
 			String member_dr_info = request.getParameter("member_dr_info");
 			String member_notify = request.getParameter("member_notify");
+
 			MemberDto m_dto = new MemberDto(member_id, member_password, member_name, member_nicname, member_email,
 					member_phone, member_addr, member_grade, "Y", member_animal, 0, member_dr_info, member_notify);
 			int m_res = m_biz.insert(m_dto);
-
 			int a_res = 0;
 			if (member_animal.equals("Y")) {
 				String animal_name = request.getParameter("animal_name");
@@ -168,11 +168,18 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				jsResponse(response, "회원가입 실패", "#");
 			}
-		} else {
-			System.out.println("command 확인");
 
+		} else if (command.equals("findidpw")) {
+			response.sendRedirect("findidpw.jsp");
+		} else if (command.equals("findidres")) {
+			String member_id = request.getParameter("member_id");
+			String member_email_1 = request.getParameter("member_email");
+			String member_email_2 = request.getParameter("member_email_2");
+			String member_email = member_email_1 + "@" + member_email_2;
+			request.setAttribute("member_id", member_id);
+			request.setAttribute("member_email", member_email);
+			dispatch(response, request, "findidres.jsp");
 		}
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
