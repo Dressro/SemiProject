@@ -60,6 +60,7 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("doctor_signup")) {
 			response.sendRedirect("doctor_signup.jsp");
 		} else if (command.equals("signupres")) {
+			String member_loginroute = request.getParameter("member_loginroute");
 			String animal_name = request.getParameter("animal_name");
 			String animal_gen = request.getParameter("animal_gen");
 			String animal_type = request.getParameter("animal_type");
@@ -85,6 +86,7 @@ public class SemiProjectController extends HttpServlet {
 			a_dto.setAnimal_weight(animal_weight);
 			a_dto.setAnimal_unq(animal_unq);
 			a_dto.setMember_id(member_id);
+
 			MemberDto m_dto = new MemberDto(null,member_id, member_password, member_name, member_nicname, member_email,
 					member_phone, member_addr, member_grade, "Y", member_animal, 0, member_dr_info, member_notify);
 			int m_res = m_biz.insert(m_dto);
@@ -122,6 +124,17 @@ public class SemiProjectController extends HttpServlet {
 				jsResponse(response, "로그인 실패", "#");
 			}
 
+		} else if (command.equals("kakao")) {
+			String member_id = request.getParameter("member_id");
+			String member_password = "sdghjkhdkjfds";
+			MemberDto m_dto = new MemberDto("K", member_id, member_password, null, null, null, null, null, null, "Y", null, 0, null, null);
+			
+			int res = m_biz.insert(m_dto);
+			if (res > 0) {
+				jsResponse(response, "카카오 로그인 성공", "index.html");
+			} else {
+				jsResponse(response, "카카오 로그인 실패", "#");
+			}
 		}
 
 	}
