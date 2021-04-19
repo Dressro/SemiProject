@@ -17,9 +17,10 @@ public class MemberBizImpl implements MemberBiz {
 	}
 
 	@Override
-	public MemberDto selectOne(String id, String password) {
+
+	public MemberDto selectOne(MemberDto dto) {
 		// TODO Auto-generated method stub
-		return dao.selectOne(id, password);
+		return dao.selectOne(dto);
 	}
 
 	@Override
@@ -29,9 +30,9 @@ public class MemberBizImpl implements MemberBiz {
 	}
 
 	@Override
-	public int delete(String id) {
+	public int delete(MemberDto dto) {
 		// TODO Auto-generated method stub
-		return dao.delete(id);
+		return dao.delete(dto);
 	}
 
 	@Override
