@@ -24,6 +24,7 @@ input[type=submit] {
 </style>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src='https://www.google.com/recaptcha/api.js'></script> 
 </head>
 <body>
 	<h1>Login</h1>
@@ -54,6 +55,9 @@ input[type=submit] {
   					//naver_id_login.setPopup();
   					naver_id_login.init_naver_id_login();
  			 </script>
+ 			 <!-- recaptcha -->
+			<div class="g-recaptcha" data-type="image" data-sitekey="6LfGNrAaAAAAACnlQAb1RFvF-DQJApSARniYjGki"/></div>
+ 			 
 	</form>
 	<hr>
 	<button onclick="#" type="button" class="button">회원가입</button>
