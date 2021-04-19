@@ -109,6 +109,7 @@ public class SemiProjectController extends HttpServlet {
 			dispatch(response, request, "#.jsp");
 		}	
 		if (command.equals("naver")) {
+			System.out.println("여기까지는 성공");
 			String member_id = request.getParameter("member_id");
 			String member_password = getRandomPassword(10);
 			MemberDto dto = new MemberDto("N", member_id, member_password, null, null, null, null,
@@ -120,6 +121,7 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				jsResponse(response, "로그인 실패", "#");
 			}
+
 		}
 
 	}

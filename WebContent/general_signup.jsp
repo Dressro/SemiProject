@@ -207,6 +207,7 @@
 				</tr>
 				<tr class="animal">
 					<th>성별 *</th>
+					<td>
 						<input type="radio" id="animal_gen_chk" name="animal_gen" value="M"><img src="resources/images/male.svg" style="width: 20px; height: 20px;">
                 		<input type="radio" name="animal_gen" value="F" ><img src="resources/images/female.svg" style="width: 20px; height: 20px;">
 					</td>
