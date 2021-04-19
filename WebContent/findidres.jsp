@@ -57,23 +57,20 @@
 <p>회원 정보에 등록된 이메일과 입력한 이메일이 같아야 아이디를 찾을 수 있습니다.</p>
 <table>
 <tr>
-<th>이름</th>
-<td><input type="text" name="member_name" required="required"></td>
-</tr>
+<th>
 
-<tr>
-<th>이메일</th>
-<td><input type="text" name="member_email" maxlength="30" onclick="">@
-                        <select name="member_email_2">
-                            <option>naver.com</option>
-                            <option>daum.net</option>
-                            <option>gmail.com</option>
-                            <option>nate.com</option>     </select></td>
-</tr>
-<tr>
-<td colspan="2">
-<button type="button" id="searchid" onclick="location.href='findidres.jsp'">아이디 조회</button></td>
-</tr>
+<%
+	String id = (String)request.getAttribute("id");
+	boolean check = id!=null;
+	String msg= check ? "고객님의 아이디는 다음과 같습니다.<br>"+id : "미등록 ID 입니다.";
+%></th>
+	<td><h4><%=msg%></h4></td>
+	
+	<td><input type="button" value="메인으로" onclick="location.href='index.html'">	</td>
+	<td><input type="button" value="로그인" onclick="location href='login.jsp'">	</td>
+	
+
+
 
 </table>
 </form>
@@ -85,24 +82,8 @@
 <p>아이디를 입력 후, 본인확인을 통해 비밀번호를 다시 설정할 수 있습니다.</p>
 <table>
 <tr>
-<th>아이디</th>
-<td><input type="text" name="member_id" required="required"></td>
-</tr>
-
-<tr>
-<th>이메일</th>
-<td><input type="text" name="member_email" maxlength="30" onclick="">@
-                        <select name="member_email_2">
-                            <option>naver.com</option>
-                            <option>daum.net</option>
-                            <option>gmail.com</option>
-                            <option>nate.com</option>     </select></td>
-</tr>
-
-<tr>
-<td colspan="2">
-<button type="button" id="searchpw" onclick="#">본인확인</button></td>
-</tr>
+<td><input type="button" value="비밀번호 재설정" onclick="#">	</td>
+	
 
 </table>
 </form>
