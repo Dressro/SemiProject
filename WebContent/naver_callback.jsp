@@ -13,8 +13,7 @@
 </head>
 <body>
 	<script type="text/javascript">
-		var naver_id_login = new naver_id_login("3FogXXVNeg3aYw15VPrY",
-				"http://localhost:8787/SemiProject/naver_callback.jsp");
+		var naver_id_login = new naver_id_login("3FogXXVNeg3aYw15VPrY","http://localhost:8787/SemiProject/naver_callback.jsp");
 		// 접근 토큰 값 출력
 		//alert(naver_id_login.oauthParams.access_token);
 		// 네이버 사용자 프로필 조회
@@ -25,6 +24,7 @@
 			var member_id = naver_id_login.getProfileData('id');
 			var member_nicname = naver_id_login.getProfileData("nickname");
 			var member_name = naver_id_login.getProfileData('name');
+			
 			
 			var form = document.createElement('form');
 			var objs_1;
@@ -46,13 +46,12 @@
 			var objs_4 = document.createElement('input');
 			objs_4.setAttribute('type', 'hidden');
 			objs_4.setAttribute('name', 'command');
-			objs_4.setAttribute('value', 'naver');
+			objs_4.setAttribute('value', 'sns_signup');
 			form.appendChild(objs_4);
 			form.setAttribute('method', 'post');
 			form.setAttribute('action', "semi.do");
 			document.body.appendChild(form);
 			form.submit();
-
 		}
 	</script>
 </body>

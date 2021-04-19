@@ -128,9 +128,12 @@ public class SemiProjectController extends HttpServlet {
 			}
 
 		} else if (command.equals("sns_signupres")) {
+				
+		} else {
+			System.out.println("command 확인");
 
 		}
-
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
