@@ -3,6 +3,7 @@
 <mapper namespace="com.project.fp.member">
 
 	<select id="selectList" resultType="MemberDto">
+
 		SELECT MEMBER_LOGINROUTE, MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME, MEMBER_NICNAME, 
 			   MEMBER_EMAIL, MEMBER_PHONE, MEMBER_ADDR, MEMBER_GRADE,
 			   MEMBER_JOIN, MEMBER_ANIMAL, MEMBER_POINT, MEMBER_DR_INFO,

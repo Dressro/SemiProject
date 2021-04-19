@@ -71,8 +71,8 @@ public class SemiProjectController extends HttpServlet {
 			String member_animal = request.getParameter("member_animal");
 			String member_dr_info = request.getParameter("member_dr_info");
 			String member_notify = request.getParameter("member_notify");
-			
-			MemberDto m_dto = new MemberDto(member_id, member_password, member_name, member_nicname, member_email,
+		
+			MemberDto m_dto = new MemberDto("W", member_id, member_password, member_name, member_nicname, member_email,
 					member_phone, member_addr, member_grade, "Y", member_animal, 0, member_dr_info, member_notify);
 			int m_res = m_biz.insert(m_dto);
 			
@@ -95,6 +95,7 @@ public class SemiProjectController extends HttpServlet {
 				a_res = a_biz.insert(a_dto);
 			}
 			
+
 			int res = m_res + a_res;
 			if (res > 0) {
 				jsResponse(response, "회원가입 성공", "index.html");
@@ -128,7 +129,6 @@ public class SemiProjectController extends HttpServlet {
 				jsResponse(response, "로그인 실패", "#");
 			}
 		}
-
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
