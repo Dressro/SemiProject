@@ -3,7 +3,7 @@
 <mapper namespace="com.project.fp.member">
 
 	<select id="selectList" resultType="MemberDto">
-		SELECT MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME, MEMBER_NICKNAME, 
+		SELECT MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME, MEMBER_NICNAME, 
 			   MEMBER_EMAIL, MEMBER_PHONE, MEMBER_ADDR, MEMBER_GRADE,
 			   MEMBER_JOIN, MEMBER_ANIMAL, MEMBER_POINT, MEMBER_DR_INFO,
 			   MEMBER_NOTIFY
@@ -11,18 +11,18 @@
 		ORDER BY MEMBER_ID DESC
 	</select>
 	
-	<select id="selectOne" parameterType="int" resultType="MemberDto">
-		SELECT MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME, MEMBER_NICKNAME, 
+	<select id="selectOne" parameterType="MemberDto" resultType="MemberDto">
+		SELECT MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME, MEMBER_NICNAME, 
 			   MEMBER_EMAIL, MEMBER_PHONE, MEMBER_ADDR, MEMBER_GRADE,
 			   MEMBER_JOIN, MEMBER_ANIMAL, MEMBER_POINT, MEMBER_DR_INFO,
 			   MEMBER_NOTIFY
 		FROM MEMBER
-		WHERE MEMBER_ID = #{member_id}
+		WHERE MEMBER_ID = #{member_id} AND MEMBER_PASSWORD = #{member_password}
 	</select>
 	
 	<insert id="insert" parameterType="MemberDto">
 		INSERT INTO MEMBER
-		VALUES(#{member_id}, #{member_password}, #{member_name}, #{member_nickname}, 
+		VALUES(#{member_id}, #{member_password}, #{member_name}, #{member_nicname}, 
 			   #{member_email}, #{member_phone}, #{member_addr}, #{member_grade}, 
 			   #{member_join}, #{member_animal}, #{member_point}, #{member_dr_info}, 
 			   #{member_notify})
@@ -34,7 +34,7 @@
 		WHERE MEMBER_ID = #{member_id}
 	</update>
 	
-	<delete id="delete" parameterType="int">
+	<delete id="delete" parameterType="String">
 		UPDATE MEMBER
 		SET MEMBER_JOIN = 'N'
 		WHERE MEMBER_ID = #{member_id}

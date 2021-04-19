@@ -1,5 +1,6 @@
 package com.project.fp.biz;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.project.fp.dao.MemberDao;
@@ -16,9 +17,9 @@ public class MemberBizImpl implements MemberBiz {
 	}
 
 	@Override
-	public MemberDto selectOne(String id) {
+	public MemberDto selectOne(MemberDto dto) {
 		// TODO Auto-generated method stub
-		return dao.selectOne(id);
+		return dao.selectOne(dto);
 	}
 
 	@Override

@@ -22,13 +22,15 @@ input[type=submit] {
   cursor: pointer;
 }
 </style>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 	<h1>Login</h1>
 	<div>
 	<form action="semi.do" method="post">
 	
-			<input type="hidden" name="commamd" value="login" />
+			<input type="hidden" name="command" value="loginres" />
 			<input type="text" name="member_id" placeholder="아이디 입력"
 					required="required"><br>
 					
@@ -40,7 +42,18 @@ input[type=submit] {
 			
 			<!-- 로그인api이미지 적용 -->
 			<button type="button" id="snsloginBtn"><img src="#"/>카카오ID로그인</button><br>
-			<button type="button" id="snsloginBtn"><img src="#"/>네이버ID로그인</button><br>
+			 <!-- 네이버아이디로로그인 버튼 노출 영역 -->
+  			<div id="naver_id_login"></div>
+ 			 <!-- //네이버아이디로로그인 버튼 노출 영역 -->
+ 			<script type="text/javascript">
+  					var naver_id_login = new naver_id_login("3FogXXVNeg3aYw15VPrY", "http://localhost:8787/SemiProject/index.html");
+  					var state = naver_id_login.getUniqState();
+  					naver_id_login.setButton("green", 3,40);
+  					naver_id_login.setDomain("http://localhost:8787/SemiProject/login.jsp");
+  					naver_id_login.setState(state);
+  					//naver_id_login.setPopup();
+  					naver_id_login.init_naver_id_login();
+ 			 </script>
 	</form>
 	<hr>
 	<button onclick="#" type="button" class="button">회원가입</button>

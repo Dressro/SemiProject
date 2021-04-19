@@ -22,13 +22,13 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 	}
 
 	@Override
-	public MemberDto selectOne(String id) {
+	public MemberDto selectOne(MemberDto dto) {
 		// TODO Auto-generated method stub
-		MemberDto dto = null;
+		MemberDto m_dto = null;
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
-			dto = session.selectOne(namespace + "selectOne", id);
+			m_dto = session.selectOne(namespace + "selectOne",dto);
 		}
-		return dto;
+		return m_dto;
 	}
 
 	@Override
