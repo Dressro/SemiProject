@@ -22,6 +22,7 @@ response.setContentType("text/html; charset=UTF-8");
 	<%
 		if(dto != null){
 	%>
+	
 	<input type="text" value="아이디가 존재합니다" readonly="readonly"/>
 	<%
 		} else {
