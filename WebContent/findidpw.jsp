@@ -101,7 +101,7 @@
 
 <tr>
 <td colspan="2">
-<button type="button" id="searchpw" onclick="#">본인확인</button></td>
+<button type="button" id="searchpw" onclick="location.href='findpwres.jsp'">본인확인</button></td>
 </tr>
 
 </table>
