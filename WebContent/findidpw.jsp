@@ -91,7 +91,7 @@
 <tr>
 <th>이메일</th>
 <td><input type="text" name="member_email" maxlength="30" onclick="">@
-                        <select name="member_email_2">
+                     	   <select name="member_email_2">
                             <option>naver.com</option>
                             <option>daum.net</option>
                             <option>gmail.com</option>
