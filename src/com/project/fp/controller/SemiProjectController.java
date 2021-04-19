@@ -88,7 +88,7 @@ public class SemiProjectController extends HttpServlet {
 			a_dto.setAnimal_unq(animal_unq);
 			a_dto.setMember_id(member_id);
 
-			MemberDto m_dto = new MemberDto(null,member_id, member_password, member_name, member_nicname, member_email,
+			MemberDto m_dto = new MemberDto(member_id, member_password, member_name, member_nicname, member_email,
 					member_phone, member_addr, member_grade, "Y", member_animal, 0, member_dr_info, member_notify);
 			int m_res = m_biz.insert(m_dto);
 			int a_res = a_biz.insert(a_dto);
@@ -109,42 +109,33 @@ public class SemiProjectController extends HttpServlet {
 			MemberDto dto = m_biz.selectOne(m_dto);
 			session.setAttribute("dto", dto);
 			dispatch(response, request, "#.jsp");
-		}	else if (command.equals("naver")) {
+		} else if (command.equals("sns_signup")) {
 			System.out.println("여기까지는 성공");
-			String member_id = request.getParameter("id");
-			String member_nicname = request.getParameter("nicname");
-			String member_name = request.getParameter("name");
-			String member_email = request.getParameter("email");
-			String member_phone = request.getParameter("mobile");
-			String member_loginroute = "N";
+			String member_id = request.getParameter("member_id");
+			String member_nicname = request.getParameter("member_nicname");
+			String member_name = request.getParameter("member_name");
+			String member_email = request.getParameter("member_email");
+			String member_phone = request.getParameter("member_phone");
+			System.out.println(member_name);
+			System.out.println(member_nicname);
 			MemberDto m_dto = new MemberDto();
 			m_dto.setMember_id(member_id);
-			m_dto.setMember_loginroute(member_loginroute);
 			m_dto.setMember_nicname(member_nicname);
 			m_dto.setMember_name(member_name);
 			m_dto.setMember_email(member_email);
 			m_dto.setMember_phone(member_phone);
 			MemberDto t_dto = null;
-			t_dto = m_biz.selectSerch(t_dto);
-			if(t_dto != null) {
+			t_dto = m_biz.selectSerch(m_dto);
+			if (t_dto != null) {
 				session.setAttribute("t_dto", t_dto);
 				jsResponse(response, "로그인 성공(네이버)", "index.html");
-			}else {
+			} else {
 				request.setAttribute("dto", m_dto);
-				dispatch(response, request, "#.jsp");
+				dispatch(response, request, "sns_signup.jsp");
 			}
 
-		} else if (command.equals("kakao")) {
-			String member_id = request.getParameter("member_id");
-			String member_password = "sdghjkhdkjfds";
-			MemberDto m_dto = new MemberDto("K", member_id, member_password, null, null, null, null, null, null, "Y", null, 0, null, null);
-			
-			int res = m_biz.insert(m_dto);
-			if (res > 0) {
-				jsResponse(response, "카카오 로그인 성공", "index.html");
-			} else {
-				jsResponse(response, "카카오 로그인 실패", "#");
-			}
+		} else if (command.equals("sns_signupres")) {
+				
 		}
 
 	}
@@ -164,18 +155,16 @@ public class SemiProjectController extends HttpServlet {
 				+ "';" + "</script>";
 		response.getWriter().print(responseText);
 	}
-	
-	private static String getRandomPassword(int len) { 
-		char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
-									  'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 
-									  'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 
-									  'V', 'W', 'X', 'Y', 'Z' }; 
-		int idx = 0; 
-		StringBuffer sb = new StringBuffer(); 
-		for (int i = 0; i < len; i++) { 
-			idx = (int) (charSet.length * Math.random()); 
-			sb.append(charSet[idx]); 
-		} 
-		return sb.toString(); 
+
+	private static String getRandomPassword(int len) {
+		char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
+				'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+		int idx = 0;
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < len; i++) {
+			idx = (int) (charSet.length * Math.random());
+			sb.append(charSet[idx]);
+		}
+		return sb.toString();
 	}
 }
