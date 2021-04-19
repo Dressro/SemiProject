@@ -10,6 +10,6 @@ public interface MemberDao {
 	public List<MemberDto> selectList();
 	public MemberDto selectOne(MemberDto dto);
 	public int insert(MemberDto dto);
-	public int delete(String id);
+	public int delete(MemberDto dto);
 	public int update(MemberDto dto);
 }

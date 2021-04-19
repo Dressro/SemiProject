@@ -10,6 +10,7 @@ import com.project.fp.dto.MemberDto;
 public class MemberBizImpl implements MemberBiz {
 
 	private MemberDao dao = new MemberDaoImpl();
+
 	@Override
 	public List<MemberDto> selectList() {
 		// TODO Auto-generated method stub
@@ -29,9 +30,9 @@ public class MemberBizImpl implements MemberBiz {
 	}
 
 	@Override
-	public int delete(String id) {
+	public int delete(MemberDto dto) {
 		// TODO Auto-generated method stub
-		return dao.delete(id);
+		return dao.delete(dto);
 	}
 
 	@Override

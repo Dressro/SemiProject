@@ -2,6 +2,7 @@ package com.project.fp.dto;
 
 public class MemberDto {
 
+	private String member_loginroute;
 	private String member_id;
 	private String member_password;
 	private String member_name;
@@ -17,9 +18,10 @@ public class MemberDto {
 	private String member_notify;
 	public MemberDto() {
 	}
-	public MemberDto(String member_id, String member_password, String member_name, String member_nicname,
+	public MemberDto(String member_loginroute, String member_id, String member_password, String member_name, String member_nicname,
 			String member_email, String member_phone, String member_addr, String member_grade, String member_join,
 			String member_animal, int member_point, String member_dr_info, String member_notify) {
+		this.member_loginroute = member_loginroute;
 		this.member_id = member_id;
 		this.member_password = member_password;
 		this.member_name = member_name;
@@ -33,6 +35,12 @@ public class MemberDto {
 		this.member_point = member_point;
 		this.member_dr_info = member_dr_info;
 		this.member_notify = member_notify;
+	}
+	public String getMember_loginroute() {
+		return member_loginroute;
+	}
+	public void setMember_loginroute(String member_loginroute) {
+		this.member_loginroute = member_loginroute;
 	}
 	public String getMember_id() {
 		return member_id;

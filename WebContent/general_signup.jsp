@@ -78,9 +78,13 @@
 	
 	function chk(value){
 		if(value == "Y"){
-			$(".animal").css("display","table-row");
+			$(".animal").toggle();
+			$("input[id=animal_gen_chk]").attr("checked","checked");
+			$("input[name=animal_name]").attr("required","true");
 		}else if(value == "N"){
-			$(".animal").remove();
+			$("input[name=animal_name]").attr("required","false");
+			$("input[id=animal_gen_chk]").attr("checked","unchecked");
+			$(".animal").toggle();
 		}
 	}
 	
@@ -180,8 +184,8 @@
 						<input type="hidden" name="member_addr" value="">
 						<input type="text" id="postcode" placeholder="우편번호">
 						<input type="button" onclick="address();" value="우편번호 찾기"><br>
-						<input type="text" id="addr_1" placeholder="기본주소">
-						<input type="text" id="addr_2" placeholder="상세주소">
+						<input type="text" name="member_addr_1" id="addr_1" placeholder="기본주소">
+						<input type="text" name="member_addr_2" id="addr_2" placeholder="상세주소">
 					</td>
 				</tr>
 				<tr>
@@ -198,13 +202,12 @@
 				<tr class="animal">
 					<th>이름 *</th>
 					<td>
-						<input type="text" name="animal_name" required="required" />
+						<input type="text" name="animal_name" />
 					</td>
 				</tr>
 				<tr class="animal">
 					<th>성별 *</th>
-					<td>
-						<input type="radio" name="animal_gen" value="M"  checked><img src="resources/images/male.svg" style="width: 20px; height: 20px;">
+						<input type="radio" id="animal_gen_chk" name="animal_gen" value="M"><img src="resources/images/male.svg" style="width: 20px; height: 20px;">
                 		<input type="radio" name="animal_gen" value="F" ><img src="resources/images/female.svg" style="width: 20px; height: 20px;">
 					</td>
 				</tr>
@@ -306,4 +309,5 @@
 	</div>
 	
 </body>
+
 </html>

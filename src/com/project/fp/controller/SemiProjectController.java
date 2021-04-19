@@ -85,7 +85,7 @@ public class SemiProjectController extends HttpServlet {
 			a_dto.setAnimal_weight(animal_weight);
 			a_dto.setAnimal_unq(animal_unq);
 			a_dto.setMember_id(member_id);
-			MemberDto m_dto = new MemberDto(member_id, member_password, member_name, member_nicname, member_email,
+			MemberDto m_dto = new MemberDto(null,member_id, member_password, member_name, member_nicname, member_email,
 					member_phone, member_addr, member_grade, "Y", member_animal, 0, member_dr_info, member_notify);
 			int m_res = m_biz.insert(m_dto);
 			int a_res = a_biz.insert(a_dto);
@@ -107,6 +107,19 @@ public class SemiProjectController extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("dto", dto);
 			dispatch(response, request, "#.jsp");
+		}	
+		if (command.equals("naver")) {
+			String member_id = request.getParameter("member_id");
+			String member_password = getRandomPassword(10);
+			MemberDto dto = new MemberDto("N", member_id, member_password, null, null, null, null,
+											null, null, "Y", null, 0, null, null);
+			int res = m_biz.insert(dto);
+			
+			if (res > 0) {
+				jsResponse(response, "로그인 성공(네이버)", "index.html");
+			} else {
+				jsResponse(response, "로그인 실패", "#");
+			}
 		}
 
 	}
@@ -125,5 +138,19 @@ public class SemiProjectController extends HttpServlet {
 		String responseText = "<script type='text/javascript'>" + "alert('" + msg + "');" + "location.href='" + url
 				+ "';" + "</script>";
 		response.getWriter().print(responseText);
+	}
+	
+	private static String getRandomPassword(int len) { 
+		char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
+									  'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 
+									  'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 
+									  'V', 'W', 'X', 'Y', 'Z' }; 
+		int idx = 0; 
+		StringBuffer sb = new StringBuffer(); 
+		for (int i = 0; i < len; i++) { 
+			idx = (int) (charSet.length * Math.random()); 
+			sb.append(charSet[idx]); 
+		} 
+		return sb.toString(); 
 	}
 }
