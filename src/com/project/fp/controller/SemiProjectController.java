@@ -107,6 +107,8 @@ public class SemiProjectController extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("dto", dto);
 			dispatch(response, request, "#.jsp");
+		} else if (command.equals("naver")) {
+			System.out.println("여기까지는 성공");
 		}
 
 	}
