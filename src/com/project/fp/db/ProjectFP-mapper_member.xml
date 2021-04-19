@@ -11,7 +11,7 @@
 		ORDER BY MEMBER_ID DESC
 	</select>
 	
-	<select id="selectOne" parameterType="Map" resultType="MemberDto">
+	<select id="selectOne" parameterType="MemberDto" resultType="map">
 		SELECT MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME, MEMBER_NICKNAME, 
 			   MEMBER_EMAIL, MEMBER_PHONE, MEMBER_ADDR, MEMBER_GRADE,
 			   MEMBER_JOIN, MEMBER_ANIMAL, MEMBER_POINT, MEMBER_DR_INFO,
