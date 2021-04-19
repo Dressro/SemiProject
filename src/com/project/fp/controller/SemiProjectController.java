@@ -107,7 +107,7 @@ public class SemiProjectController extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("dto", dto);
 			dispatch(response, request, "#.jsp");
-		}
+		} 
 
 	}
 

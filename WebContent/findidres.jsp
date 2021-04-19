@@ -46,7 +46,6 @@
 
 <div class="tab">
   <button class="tablinks" onclick="openTab(event, 'findid')" id="defaultOpen">아이디찾기</button>
-  <button class="tablinks" onclick="openTab(event, 'findpw')">비밀번호 찾기</button>
 </div>
 
 <div id="findid" class="tabcontent">
@@ -66,37 +65,23 @@
 %></th>
 	<td><h4><%=msg%></h4></td>
 	
-	<td><input type="button" value="메인으로" onclick="location.href='index.html'">	</td>
-	<td><input type="button" value="로그인" onclick="location href='login.jsp'">	</td>
+	<td><input type="button" value="메인으로" onclick="location.href='index.html'"></td>
+	<td><input type="button" value="로그인" onclick="location.href='login.jsp'"></td>
 	
-
 
 
 </table>
 </form>
 </div>
 
-<div id="findpw" class="tabcontent">
-  <form action="semi.do" method="post">
-<h1>비밀번호 찾기</h1>
-<p>아이디를 입력 후, 본인확인을 통해 비밀번호를 다시 설정할 수 있습니다.</p>
-<table>
-<tr>
-<td><input type="button" value="비밀번호 재설정" onclick="#">	</td>
-	
-
-</table>
-</form>
-
-
-</div>
 
 <script>
+
 function openTab(evt, tabName) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
   for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
+    tabcontent[i].style.display = "block";
   }
   tablinks = document.getElementsByClassName("tablinks");
   for (i = 0; i < tablinks.length; i++) {
