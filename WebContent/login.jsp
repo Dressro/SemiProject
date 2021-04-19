@@ -66,7 +66,7 @@ $(function(){
 						var objs_4 = document.createElement('input');
 						objs_4.setAttribute('type', 'hidden');
 						objs_4.setAttribute('name', 'command');
-						objs_4.setAttribute('value', 'sns_signup');
+						objs_4.setAttribute('value', 'sns_signupres');
 						form.appendChild(objs_4);
 					  form.setAttribute('method', 'post');
 					  form.setAttribute('action', "semi.do");
