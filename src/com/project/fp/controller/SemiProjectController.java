@@ -52,6 +52,7 @@ public class SemiProjectController extends HttpServlet {
 		Order_TableBiz o_t_biz = new Order_TableBizImpl();
 		ProductBiz p_biz = new ProductBizImpl();
 		ReceiveBiz r_biz = new ReceiveBizImpl();
+		HttpSession session = request.getSession();
 
 		if (command.equals("signup")) {
 			response.sendRedirect("signup.jsp");
@@ -106,22 +107,31 @@ public class SemiProjectController extends HttpServlet {
 			m_dto.setMember_id(member_id);
 			m_dto.setMember_password(member_password);
 			MemberDto dto = m_biz.selectOne(m_dto);
-			HttpSession session = request.getSession();
 			session.setAttribute("dto", dto);
 			dispatch(response, request, "#.jsp");
-		}	
-		if (command.equals("naver")) {
+		}	else if (command.equals("naver")) {
 			System.out.println("여기까지는 성공");
-			String member_id = request.getParameter("member_id");
-			String member_password = getRandomPassword(10);
-			MemberDto dto = new MemberDto("N", member_id, member_password, null, null, null, null,
-											null, null, "Y", null, 0, null, null);
-			int res = m_biz.insert(dto);
-			
-			if (res > 0) {
+			String member_id = request.getParameter("id");
+			String member_nicname = request.getParameter("nicname");
+			String member_name = request.getParameter("name");
+			String member_email = request.getParameter("email");
+			String member_phone = request.getParameter("mobile");
+			String member_loginroute = "N";
+			MemberDto m_dto = new MemberDto();
+			m_dto.setMember_id(member_id);
+			m_dto.setMember_loginroute(member_loginroute);
+			m_dto.setMember_nicname(member_nicname);
+			m_dto.setMember_name(member_name);
+			m_dto.setMember_email(member_email);
+			m_dto.setMember_phone(member_phone);
+			MemberDto t_dto = null;
+			t_dto = m_biz.selectSerch(t_dto);
+			if(t_dto != null) {
+				session.setAttribute("t_dto", t_dto);
 				jsResponse(response, "로그인 성공(네이버)", "index.html");
-			} else {
-				jsResponse(response, "로그인 실패", "#");
+			}else {
+				request.setAttribute("dto", m_dto);
+				dispatch(response, request, "#.jsp");
 			}
 
 		} else if (command.equals("kakao")) {
