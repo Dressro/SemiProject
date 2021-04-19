@@ -108,6 +108,17 @@ public class SemiProjectController extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("dto", dto);
 			dispatch(response, request, "#.jsp");
+		} else if (command.equals("kakao")) {
+			String member_id = request.getParameter("member_id");
+			String member_password = "sdghjkhdkjfds";
+			MemberDto m_dto = new MemberDto("K", member_id, member_password, null, null, null, null, null, null, "Y", null, 0, null, null);
+			
+			int res = m_biz.insert(m_dto);
+			if (res > 0) {
+				jsResponse(response, "카카오 로그인 성공", "index.html");
+			} else {
+				jsResponse(response, "카카오 로그인 실패", "#");
+			}
 		}
 
 	}
