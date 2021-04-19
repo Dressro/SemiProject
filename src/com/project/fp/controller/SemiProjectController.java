@@ -179,6 +179,18 @@ public class SemiProjectController extends HttpServlet {
 			request.setAttribute("member_id", member_id);
 			request.setAttribute("member_email", member_email);
 			dispatch(response, request, "findidres.jsp");
+		} else if (command.equals("idchk")) {
+			String member_id = request.getParameter("member_id");
+			MemberDto m_dto = new MemberDto();
+			m_dto.setMember_id(member_id);
+			MemberDto t_dto = null;
+			t_dto = m_biz.selectSerch(m_dto);
+			if(t_dto != null) {
+				request.setAttribute("dto", t_dto);
+				dispatch(response, request, "signup_idchk.jsp");
+			}else {
+				dispatch(response, request, "signup_idchk.jsp");
+			}
 		}
 	}
 
