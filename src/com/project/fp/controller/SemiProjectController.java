@@ -129,6 +129,20 @@ public class SemiProjectController extends HttpServlet {
 				jsResponse(response, "로그인 실패", "#");
 			}
 		}
+		
+		if (command.equals("findidpw")) {
+			response.sendRedirect("findidpw.jsp");
+		}
+		
+		if (command.equals("findidres")) {
+			String member_id = request.getParameter("member_id");
+			String member_email_1 = request.getParameter("member_email");
+			String member_email_2 = request.getParameter("member_email_2");
+			String member_email = member_email_1 + "@" + member_email_2;
+			request.setAttribute("member_id", member_id);
+			request.setAttribute("member_email", member_email);
+			dispatch(response, request, "findidres.jsp");
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
