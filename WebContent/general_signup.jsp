@@ -51,19 +51,19 @@
     }).open();
 }
 	function idCheckConfirm(){
-		var chk = document.getElementsByName("myid")[0].title;
+		var chk = document.getElementsByName("member_id")[0].title;
 		if(chk == "n") {
 			alert("id 중복체크를 먼저 해주세요.");
-			document.getElementsByName("myid")[0].focus();
+			document.getElementsByName("member_id")[0].focus();
 		}
 	}
 	
 	function idCheck(){
-		var doc = document.getElementsByName("myid")[0];
-		if(doc.value.trim() =="" || doc.value == null){
+		var member_id = document.getElementsByName("member_id")[0];
+		if(member_id.value.trim() =="" || member_id.value == null){
 			alert("id를 입력해 주세요");
 		} else {
-			open("logincontroller.jsp?command=idchk&myid="+doc.value,"","width=200 , height= 200");
+			open("semi.do?command=idchk&member_id="+member_id.value,"","width=200 , height= 200");
 		}
 	
 	}
@@ -128,39 +128,39 @@
 					<th>아이디 *</th>
 					<td>
 						<input type="text" name="member_id" title="n" required="required" />
-						<input type="button" value="중복체크" onclick="" />
+						<input type="button" value="중복체크" onclick="idCheck();" />
 					</td>
 				</tr>
 				<tr>
 					<th>비밀번호 *</th>
 					<td>
-						<input type="password" name="member_password" onclick="">
+						<input type="password" name="member_password" onclick="idCheckConfirm();">
 					</td>
 				</tr>
 				<tr>
 					<th>비밀번호확인 *</th>
 					<td>
-						<input type="password" name="member_password_chk" onclick="">
+						<input type="password" name="member_password_chk" onclick="idCheckConfirm();">
 						<font id="chkNotice" size="2"></font>
 					</td>
 				</tr>
 				<tr>
 					<th>이름 *</th>
 					<td>
-						<input type="text" name="member_name" onclick="">
+						<input type="text" name="member_name" onclick="idCheckConfirm();">
 					</td>
 				</tr>
 				<tr>
 					<th>닉네임 *</th>
 					<td>
-						<input type="text" name="member_nicname" maxlength="5" onclick="">
+						<input type="text" name="member_nicname" maxlength="5" onclick="idCheckConfirm();">
 					</td>
 				</tr>
 				<tr>
 					<th>이메일 *</th>
 					<td>
 						<input type="hidden" name="member_email" value="">
-						<input type="text" name="member_email_1" maxlength="30" onclick="">@
+						<input type="text" name="member_email_1" maxlength="30" onclick="idCheckConfirm();">@
                         <select name="member_email_2">
                             <option>naver.com</option>
                             <option>daum.net</option>
@@ -207,6 +207,7 @@
 					</td>
 				</tr>
 				<tr class="animal">
+>>>>>>> f88a6a2811d047115cdb8a13b1eb9f746cb51c3d
 					<th>성별 *</th>
 					<td>
 						<input type="radio" id="animal_gen_chk" name="animal_gen" value="M"><img src="resources/images/male.svg" style="width: 20px; height: 20px;">
