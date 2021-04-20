@@ -32,7 +32,7 @@ response.setContentType("text/html; charset=UTF-8");
 	}
 	%>
 	<h1>BOARD_INSERTFORM</h1>
-	<form action="semi.do">
+	<form action="semi.do" method="post">
 		<input type="hidden" name="member_id" value="<%=dto.getMember_id()%>" />
 		<input type="hidden" name="command" value="board_insertres" />
 		<div class="container">
@@ -76,7 +76,7 @@ response.setContentType("text/html; charset=UTF-8");
 					<div class="input-group mb-3">
 						<div class="custom-file">
 							&nbsp;
-							<input type="file" class="form-control-file" id="exampleFormControlFile1">
+							<input type="file" class="form-control-file" id="exampleFormControlFile1" name="file">
 							<button type="button" class="btn btn-outline-secondary" style="float: right; width: 10%; font-weight: bold" onclick="goback();">취 소</button>
 							<button type="submit" class="btn btn-outline-secondary" style="float: right; width: 10%; font-weight: bold; margin-right: 10px;">등 록</button>
 						</div>
@@ -86,5 +86,4 @@ response.setContentType("text/html; charset=UTF-8");
 		</div>
 	</form>
 </body>
->>>>>>> 3091d86ffc9e3d131894463eba496da512ff1a19
 </html>

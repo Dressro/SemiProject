@@ -55,6 +55,4 @@
 	</table>
 	
 </body>
-
->>>>>>> 3091d86ffc9e3d131894463eba496da512ff1a19
 </html>

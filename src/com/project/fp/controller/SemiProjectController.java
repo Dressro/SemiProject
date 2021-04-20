@@ -1,5 +1,6 @@
 package com.project.fp.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.util.List;
@@ -11,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import com.oreilly.servlet.multipart.FileRenamePolicy;
 import com.project.fp.biz.AnimalBiz;
 import com.project.fp.biz.AnimalBizImpl;
 import com.project.fp.biz.BoardBiz;
@@ -211,6 +215,7 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("board_insertform")) {
 			response.sendRedirect("board_insertform.jsp");
 		} else if (command.equals("board_insertres")) {
+			
 			String board_title = request.getParameter("board_title");
 			String board_content = request.getParameter("board_content");
 			String board_category = request.getParameter("board_category");
