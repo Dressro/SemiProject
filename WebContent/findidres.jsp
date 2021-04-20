@@ -59,6 +59,7 @@
 <th>
 
 <%
+
 	String id = (String)request.getAttribute("id");
 	boolean check = id!=null;
 	String msg= check ? "고객님의 아이디는 다음과 같습니다.<br>"+id : "미등록 ID 입니다.";
