@@ -55,9 +55,7 @@ $(function(){
 					  var useEmail = response.kakao_account.email;
 					  var userNickName = response.properties.nickname;
 					  
-					  console.log("userID",userID);
-					  console.log("useEmail",useEmail);
-					  console.log("useNickName",userNickName);
+		
 					  var form = document.createElement('form');
 					  var objs_1;
 					  objs_1 = document.createElement('input');
@@ -65,18 +63,13 @@ $(function(){
 					  objs_1.setAttribute('name', 'member_id');
 					  objs_1.setAttribute('value', userID);
 					  form.appendChild(objs_1);
-					  objs_2 = document.createElement('input');
-					  objs_2.setAttribute('type', 'hidden');
-					  objs_2.setAttribute('name', 'member_email');
-					  objs_2.setAttribute('value', useEmail);
-					  form.appendChild(objs_2);
-					  objs_3 = document.createElement('input');
-					  objs_3.setAttribute('type', 'hidden');
-					  objs_3.setAttribute('name', 'member_nicname');
-					  objs_3.setAttribute('value', userNickName);
-					  form.appendChild(objs_3);
+						var objs_4 = document.createElement('input');
+						objs_4.setAttribute('type', 'hidden');
+						objs_4.setAttribute('name', 'command');
+						objs_4.setAttribute('value', 'sns_signup');
+						form.appendChild(objs_4);
 					  form.setAttribute('method', 'post');
-					  form.setAttribute('action', "/semi.do");
+					  form.setAttribute('action', "semi.do");
 					  document.body.appendChild(form);
 					  form.submit();
 				  },
@@ -113,7 +106,7 @@ $(function(){
 			<div id="kakao_padding"><div id="kakao_id_login"></div></div>
   			<div id="naver_id_login"></div>
  			<script type="text/javascript">
-  					var naver_id_login = new naver_id_login("3FogXXVNeg3aYw15VPrY", "http://localhost:8787/SemiProject/index.html");
+  					var naver_id_login = new naver_id_login("3FogXXVNeg3aYw15VPrY", "http://localhost:8787/SemiProject/naver_callback.jsp");
   					var state = naver_id_login.getUniqState();
   					naver_id_login.setButton("green", 3,40);
   					naver_id_login.setDomain("http://localhost:8787/SemiProject/login.jsp");

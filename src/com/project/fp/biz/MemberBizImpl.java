@@ -1,6 +1,5 @@
 package com.project.fp.biz;
 
-import java.util.HashMap;
 import java.util.List;
 
 import com.project.fp.dao.MemberDao;
@@ -10,10 +9,18 @@ import com.project.fp.dto.MemberDto;
 public class MemberBizImpl implements MemberBiz {
 
 	private MemberDao dao = new MemberDaoImpl();
+
 	@Override
 	public List<MemberDto> selectList() {
 		// TODO Auto-generated method stub
 		return dao.selectList();
+	}
+
+	@Override
+
+	public MemberDto selectSerch(MemberDto dto) {
+		// TODO Auto-generated method stub
+		return dao.selectSerch(dto);
 	}
 
 	@Override
@@ -29,9 +36,9 @@ public class MemberBizImpl implements MemberBiz {
 	}
 
 	@Override
-	public int delete(String id) {
+	public int delete(MemberDto dto) {
 		// TODO Auto-generated method stub
-		return dao.delete(id);
+		return dao.delete(dto);
 	}
 
 	@Override
