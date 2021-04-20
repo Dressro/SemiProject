@@ -1,6 +1,7 @@
 package com.project.fp.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.util.List;
 
@@ -31,6 +32,7 @@ import com.project.fp.biz.ReceiveBiz;
 import com.project.fp.biz.ReceiveBizImpl;
 import com.project.fp.dto.AnimalDto;
 import com.project.fp.dto.MemberDto;
+import com.project.fp.gmail.SHA256;
 
 @WebServlet("/SemiProjectController")
 public class SemiProjectController extends HttpServlet {
@@ -72,7 +74,7 @@ public class SemiProjectController extends HttpServlet {
 			String member_dr_info = request.getParameter("member_dr_info");
 			String member_notify = request.getParameter("member_notify");
 		
-			MemberDto m_dto = new MemberDto("W", member_id, member_password, member_name, member_nicname, member_email,
+			MemberDto m_dto = new MemberDto(member_id, member_password, member_name, member_nicname, member_email,
 					member_phone, member_addr, member_grade, "Y", member_animal, 0, member_dr_info, member_notify);
 			int m_res = m_biz.insert(m_dto);
 			
@@ -119,7 +121,7 @@ public class SemiProjectController extends HttpServlet {
 		if (command.equals("naver")) {
 			String member_id = request.getParameter("member_id");
 			String member_password = getRandomPassword(10);
-			MemberDto dto = new MemberDto("N", member_id, member_password, null, null, null, null,
+			MemberDto dto = new MemberDto(member_id, member_password, null, null, null, null,
 											null, null, "Y", null, 0, null, null);
 			int res = m_biz.insert(dto);
 			
@@ -136,13 +138,36 @@ public class SemiProjectController extends HttpServlet {
 		
 		if (command.equals("findidres")) {
 			String member_id = request.getParameter("member_id");
-			String member_email_1 = request.getParameter("member_email");
-			String member_email_2 = request.getParameter("member_email_2");
-			String member_email = member_email_1 + "@" + member_email_2;
+			String member_email = request.getParameter("member_email");
 			request.setAttribute("member_id", member_id);
 			request.setAttribute("member_email", member_email);
 			dispatch(response, request, "findidres.jsp");
 		}
+		
+		if (command.equals("sendmail")) {
+			String member_email = request.getParameter("member_email");
+			request.setAttribute("member_email", member_email);
+			dispatch(response, request, "gmailSendAction.jsp");
+		}
+		
+		if (command.equals("mailcheck")) {
+			String code = request.getParameter("code");
+			boolean rightCode = 
+					SHA256.getEncrypt("codingspecialist@naver.com", "cos").equals(code) ? true : false;
+			PrintWriter script = response.getWriter();
+			if(rightCode == true){
+				script.println("<script>");
+				script.println("alert('이메일 인증에 성공하였습니다.')");
+				script.println("location.href='login.jsp'");
+				script.println("</script>");
+			} else{
+				script.println("<script>");
+				script.println("alert('이메일 인증을 실패하였습니다.')");
+				script.println("location.href='index.html'");
+				script.println("</script>");
+			}
+		}
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

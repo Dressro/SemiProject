@@ -167,6 +167,7 @@
                             <option>gmail.com</option>
                             <option>nate.com</option>                        
                         </select>
+                        <input type="button" value="이메일인증" onclick="check(); location.href='semi.do?command=sendmail'" />
 					</td>
 				</tr>
 				<tr>

@@ -45,11 +45,11 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 	}
 
 	@Override
-	public int delete(MemberDto dto) {
+	public int delete(String member_id) {
 		// TODO Auto-generated method stub
 		int res = 0;
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
-			res = session.delete(namespace + "delete", dto);
+			res = session.delete(namespace + "delete", member_id);
 			if (res > 0) {
 				session.commit();
 			}

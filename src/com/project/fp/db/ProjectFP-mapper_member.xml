@@ -4,7 +4,7 @@
 
 	<select id="selectList" resultType="MemberDto">
 
-		SELECT MEMBER_LOGINROUTE, MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME, MEMBER_NICNAME, 
+		SELECT MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME, MEMBER_NICNAME, 
 			   MEMBER_EMAIL, MEMBER_PHONE, MEMBER_ADDR, MEMBER_GRADE,
 			   MEMBER_JOIN, MEMBER_ANIMAL, MEMBER_POINT, MEMBER_DR_INFO,
 			   MEMBER_NOTIFY
@@ -13,7 +13,7 @@
 	</select>
 	
 	<select id="selectOne" parameterType="MemberDto" resultType="MemberDto">
-		SELECT MEMBER_LOGINROUTE, MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME, MEMBER_NICNAME, 
+		SELECT MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME, MEMBER_NICNAME, 
 			   MEMBER_EMAIL, MEMBER_PHONE, MEMBER_ADDR, MEMBER_GRADE,
 			   MEMBER_JOIN, MEMBER_ANIMAL, MEMBER_POINT, MEMBER_DR_INFO,
 			   MEMBER_NOTIFY
@@ -23,7 +23,7 @@
 	
 	<insert id="insert" parameterType="MemberDto">
 		INSERT INTO MEMBER
-		VALUES(#{member_loginroute}, #{member_id}, #{member_password}, #{member_name}, #{member_nicname}, 
+		VALUES(#{member_id}, #{member_password}, #{member_name}, #{member_nicname}, 
 			   #{member_email}, #{member_phone}, #{member_addr}, #{member_grade}, 
 			   #{member_join}, #{member_animal}, #{member_point}, #{member_dr_info}, 
 			   #{member_notify})
@@ -36,11 +36,10 @@
 	</update>
 	
 
-	<delete id="delete" parameterType="MemberDto">
+	<delete id="delete" parameterType="String">
 		UPDATE MEMBER
 		SET MEMBER_JOIN = 'N'
-		WHERE MEMBER_LOGINROUTE = #{member_loginroute}
-		AND MEMBER_ID = #{member_id}
+		WHERE MEMBER_ID = #{member_id}
 	</delete>
 	
 </mapper>
