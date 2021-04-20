@@ -29,6 +29,12 @@ public class BoardBizImpl implements BoardBiz {
 	}
 
 	@Override
+	public List<BoardDto> dec_selectList() {
+		// TODO Auto-generated method stub
+		return dao.dec_selectList();
+	}
+
+	@Override
 	public BoardDto free_selectOne(int board_free_no) {
 		// TODO Auto-generated method stub
 		return dao.free_selectOne(board_free_no);
@@ -47,6 +53,12 @@ public class BoardBizImpl implements BoardBiz {
 	}
 
 	@Override
+	public BoardDto dec_selectOne(int board_dec_no) {
+		// TODO Auto-generated method stub
+		return dao.dec_selectOne(board_dec_no);
+	}
+
+	@Override
 	public int free_insert(BoardDto dto) {
 		// TODO Auto-generated method stub
 		return dao.free_insert(dto);
@@ -62,6 +74,12 @@ public class BoardBizImpl implements BoardBiz {
 	public int qna_insert(BoardDto dto) {
 		// TODO Auto-generated method stub
 		return dao.qna_insert(dto);
+	}
+
+	@Override
+	public int dec_insert(BoardDto dto) {
+		// TODO Auto-generated method stub
+		return dao.dec_insert(dto);
 	}
 
 	@Override
@@ -97,7 +115,7 @@ public class BoardBizImpl implements BoardBiz {
 		int res = 0;
 		res = dao.qna_answerUpdate(dto.getBoard_qna_no());
 		res = dao.qna_answerInsert(dto);
-		return 0;
+		return res;
 	}
 
 }

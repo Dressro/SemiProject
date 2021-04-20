@@ -3,115 +3,163 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.fp.board">
-  <select id="free_selectList" resultType="BoardDto">
-  	select b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
-  	b.board_title,b.board_content,b.board_regdate,b.board_readcount,
-  	b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname
-  	from board b,member m
-  	where board_category="F"
-  	and b.member_id = m.member_id
-  	order by board.groupno desc , board.groupseq
-  </select>
-  <select id="notice_selectList" resultType="BoardDto">
-  	select b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
-  	b.board_title,b.board_content,b.board_regdate,b.board_readcount,
-  	b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname
-  	from board b, member m
-  	where board_category="N"
-  	and b.member_id = m.member_id
-  	order by board_notice_no desc
-  </select>
-  <select id="qna_selectList" resultType="BoardDto">
-  	select b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
-  	b.board_title,b.board_content,b.board_regdate,b.board_readcount,
-  	b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname
-  	from board b , member m
-  	where board_category="Q"
-  	and b.member_id = m.member_id
-  	order by board_qna_no desc
-  </select>
-  <select id="free_selectOne" parameterType="int" resultType="BoardDto" >
-  	select b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
-  	b.board_title,b.board_content,b.board_regdate,b.board_readcount,
-  	b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname
-  	from board b, member m
-  	where board_category="F"
-  	and b.member_id = m.member_id
-  	and board_free_no = #{board_free_no}
-  </select>
-  <select id="notice_selectOne" parameterType="int" resultType="BoardDto">
-  	select b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
-  	b.board_title,b.board_content,b.board_regdate,b.board_readcount,
-  	b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname
-  	from board b,member m
-  	where board_category="N"
-  	and b.member_id = m.member_id
-  	and board_notice_no = #{board_notice_no}
-  </select>
-  <select id="qna_selectOne" parameterType="int" resultType="BoardDto">
-  	select b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
-  	b.board_title,b.board_content,b.board_regdate,b.board_readcount,
-  	b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname
-  	from board b,member m
-  	where board_category="Q"
-  	and b.member_id = m.member_id
-  	and board_qna_no = #{board_qna_no}
-  </select>
-  <insert id="free_insert" parameterType="BoardDto">
-  	insert into board
-  	values (board_no_seq.nextval,board_free_no_seq.nextval,null,null,null,#{board_title},
-  	#{board_content},sysdate,0,board_groupno_seq.nextval,1,0,'N',#{board_category},#{member_id})
-  </insert>
-  <insert id="notice_insert" parameterType="BoardDto">
-  	insert into board
-  	values (board_no_seq.nextval,null,board_notice_no_seq.nextval,null,null,#{board_title},
-  	#{board_content},sysdate,0,0,0,0,'N',#{board_category},#{member_id})
-  </insert>
-  <insert id="qna_insert" parameterType="BoardDto">
-  	insert into board
-  	values (board_no_seq.nextval,null,null,board_qna_no_seq.nextval,null,#{board_title},
-  	#{board_content},sysdate,0,board_qna_groupno_seq.nextval,1,0,'N',#{board_category},#{member_id})
-  </insert>
-  <insert id="free_answerinsert" parameterType="BoardDto">
-  	insert into board
-  	values (board_no_seq.nextval,board_free_no_seq.nextval,null,null,null,#{board_title},
-  	#{board_content},sysdate,0,
-  	(select board_groupno from board where board_free_no = #{board_free_no}),
-  	(select board_groupseq from board where board_free_no = #{board_free_no}) + 1,
-  	(select board_titletab from board where board_free_no = #{board_free_no}) + 1,
-  	'N',#{board_category},#{member_id})
-  </insert>
-  <insert id="qna_answerinsert" parameterType="BoardDto">
-  	insert into board
-  	values (board_no_seq.nextval,null,null,board_qna_no_seq.nextval,null,#{board_title},
-  	#{board_content},sysdate,0,
-  	(select board_groupno from board where board_qna_no = #{board_qna_no}),
-  	(select board_groupseq from board where board_qna_no = #{board_qna_no}) + 1,
-  	(select board_titletab from board where board_qna_no = #{board_qna_no}) + 1,
-  	'N',#{board_category},#{member_id} )
-  </insert>
-  <update id="free_answerupdate" parameterType="int">
-  	update board set board_groupseq = board_groupseq + 1
-  	where board_groupno = (select board_groupno from board where board_free_no = #{board_free_no})
-  	and board_groupseq > (select board_groupseq from board where board_free_no = #{board_free_no})
-  </update>
-  <update id="qna_answerupdate" parameterType="int">
-  	update board set board_groupseq = board_groupseq + 1
-  	where board_groupno = (select board_groupno from board where board_qna_no = #{board_qna_no})
-  	and board_groupseq > (select board_groupseq from board where board_qna_no = #{board_qna_no})
-  </update>
-  <update id="readcountupdate" parameterType="int">
-  	update board set board_readcount = board_readcount + 1
-  	where board_no = #{board_no}
-  </update>
-  <delete id="free_delete" parameterType="int">
-  	update board set board_delflag="Y"
-  	where board_category="F"
-  	and board_free_no = #{board_free_no}
-  </delete>
-  <delete id="delete" parameterType="int">
-  	delete from board
-  	where board_no = #{board_no}
-  </delete>
-  
+	<select id="free_selectList" resultType="BoardDto">
+		select
+		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
+		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
+		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname
+		from board b,member m
+		where board_category="F"
+		and b.member_id = m.member_id
+		order by board.groupno desc , board.groupseq
+	</select>
+	<select id="notice_selectList" resultType="BoardDto">
+		select
+		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
+		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
+		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname
+		from board b, member m
+		where board_category="N"
+		and b.member_id = m.member_id
+		order by board_notice_no desc
+	</select>
+	<select id="qna_selectList" resultType="BoardDto">
+		select
+		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
+		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
+		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname
+		from board b , member m
+		where board_category="Q"
+		and b.member_id = m.member_id
+		order by board_qna_no desc
+	</select>
+	<select id="dec_selectList" resultType="BoardDto">
+		select
+		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
+		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
+		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname
+		from board b , member m
+		where board_category="D"
+		and b.member_id = m.member_id
+		order by board_dec_no desc
+	</select>
+	<select id="free_selectOne" parameterType="int"
+		resultType="BoardDto">
+		select
+		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
+		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
+		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname
+		from board b, member m
+		where board_category="F"
+		and b.member_id = m.member_id
+		and board_free_no = #{board_free_no}
+	</select>
+	<select id="notice_selectOne" parameterType="int"
+		resultType="BoardDto">
+		select
+		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
+		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
+		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname
+		from board b,member m
+		where board_category="N"
+		and b.member_id = m.member_id
+		and board_notice_no = #{board_notice_no}
+	</select>
+	<select id="qna_selectOne" parameterType="int"
+		resultType="BoardDto">
+		select
+		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
+		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
+		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname
+		from board b,member m
+		where board_category="Q"
+		and b.member_id = m.member_id
+		and board_qna_no = #{board_qna_no}
+	</select>
+	<select id="dec_selectOne" parameterType="int"
+		resultType="BoardDto">
+		select
+		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
+		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
+		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname
+		from board b, member m
+		where board_category="D"
+		and b.member_id = m.member_id
+		and board_dec_no = #{board_dec_no}
+	</select>
+	<insert id="free_insert" parameterType="BoardDto">
+		insert into board
+		values
+		(board_no_seq.nextval,board_free_no_seq.nextval,null,null,null,#{board_title},
+		#{board_content},sysdate,0,board_groupno_seq.nextval,1,0,'N',#{board_category},#{member_id})
+	</insert>
+	<insert id="notice_insert" parameterType="BoardDto">
+		insert into board
+		values
+		(board_no_seq.nextval,null,board_notice_no_seq.nextval,null,null,#{board_title},
+		#{board_content},sysdate,0,0,0,0,'N',#{board_category},#{member_id})
+	</insert>
+	<insert id="qna_insert" parameterType="BoardDto">
+		insert into board
+		values
+		(board_no_seq.nextval,null,null,board_qna_no_seq.nextval,null,#{board_title},
+		#{board_content},sysdate,0,board_qna_groupno_seq.nextval,1,0,'N',#{board_category},#{member_id})
+	</insert>
+	<insert id="dec_insert" parameterType="BoardDto">
+		insert into board
+		values
+		(board_no_seq.nextval,null,null,null,board_dec_no_seq.nextval,#{board_title},
+		#{board_content},sysdate,0,0,0,0,'N',#{board_category},#{member_id})
+	</insert>
+	<insert id="free_answerinsert" parameterType="BoardDto">
+		insert into board
+		values
+		(board_no_seq.nextval,board_free_no_seq.nextval,null,null,null,#{board_title},
+		#{board_content},sysdate,0,
+		(select board_groupno from board where board_free_no = #{board_free_no}),
+		(select board_groupseq from board where board_free_no =
+		#{board_free_no}) + 1,
+		(select board_titletab from board where board_free_no = #{board_free_no}) +
+		1,
+		'N',#{board_category},#{member_id})
+	</insert>
+	<insert id="qna_answerinsert" parameterType="BoardDto">
+		insert into board
+		values
+		(board_no_seq.nextval,null,null,board_qna_no_seq.nextval,null,#{board_title},
+		#{board_content},sysdate,0,
+		(select board_groupno from board where board_qna_no = #{board_qna_no}),
+		(select board_groupseq from board where board_qna_no =
+		#{board_qna_no}) + 1,
+		(select board_titletab from board where board_qna_no = #{board_qna_no}) + 1,
+		'N',#{board_category},#{member_id} )
+	</insert>
+	<update id="free_answerupdate" parameterType="int">
+		update board set board_groupseq = board_groupseq + 1
+		where board_groupno = (select board_groupno from board where board_free_no
+		= #{board_free_no})
+		and board_groupseq > (select board_groupseq from board where
+		board_free_no = #{board_free_no})
+	</update>
+	<update id="qna_answerupdate" parameterType="int">
+		update board set board_groupseq = board_groupseq + 1
+		where board_groupno = (select board_groupno from board where board_qna_no =
+		#{board_qna_no})
+		and board_groupseq > (select board_groupseq from board where board_qna_no
+		= #{board_qna_no})
+	</update>
+	<update id="readcountupdate" parameterType="int">
+		update board set board_readcount = board_readcount + 1
+		where board_no = #{board_no}
+	</update>
+	<delete id="free_delete" parameterType="int">
+		update board set board_delflag="Y"
+		where board_category="F"
+		and board_free_no = #{board_free_no}
+	</delete>
+	<delete id="delete" parameterType="int">
+		delete from board
+		where board_no = #{board_no}
+	</delete>
+
 </mapper>

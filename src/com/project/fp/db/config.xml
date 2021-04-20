@@ -27,6 +27,7 @@
 	<mappers>
 		<mapper resource="com/project/fp/db/ProjectFP-mapper_animal.xml"/>
 		<mapper resource="com/project/fp/db/ProjectFP-mapper_member.xml"/>
+		<mapper resource="com/project/fp/db/ProjectFP-mapper-board.xml"/>
 
 	</mappers>
 </configuration>

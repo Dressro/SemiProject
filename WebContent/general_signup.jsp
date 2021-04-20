@@ -63,7 +63,7 @@
 		if(member_id.value.trim() =="" || member_id.value == null){
 			alert("id를 입력해 주세요");
 		} else {
-			open("semi.do?command=idchk&member_id="+member_id.value,"","width=200 , height= 200");
+			open("semi.do?command=idchk&member_id="+member_id.value,"","width=300 , height= 300");
 		}
 	
 	}

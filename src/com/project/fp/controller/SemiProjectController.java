@@ -30,6 +30,7 @@ import com.project.fp.biz.ProductBizImpl;
 import com.project.fp.biz.ReceiveBiz;
 import com.project.fp.biz.ReceiveBizImpl;
 import com.project.fp.dto.AnimalDto;
+import com.project.fp.dto.BoardDto;
 import com.project.fp.dto.MemberDto;
 
 @WebServlet("/SemiProjectController")
@@ -186,10 +187,67 @@ public class SemiProjectController extends HttpServlet {
 			MemberDto t_dto = null;
 			t_dto = m_biz.selectSerch(m_dto);
 			if(t_dto != null) {
-				request.setAttribute("dto", t_dto);
+				request.setAttribute("idchk", false);
 				dispatch(response, request, "signup_idchk.jsp");
 			}else {
+				request.setAttribute("idchk", true);
 				dispatch(response, request, "signup_idchk.jsp");
+			}
+		} else if (command.equals("board_notice")) {
+			List<BoardDto> list = b_biz.notice_selectList(); 
+			request.setAttribute("list", list);
+			dispatch(response, request, "board_notice.jsp");
+		} else if (command.equals("board_free")) {
+			List<BoardDto> list = b_biz.free_selectList(); 
+			request.setAttribute("list", list);
+			dispatch(response, request, "board_free.jsp");
+		} else if (command.equals("board_dec")) {
+			List<BoardDto> list = b_biz.dec_selectList(); 
+			request.setAttribute("list", list);
+			dispatch(response, request, "board_dec.jsp");
+		} else if (command.equals("mypage")) {
+			
+		} else if (command.equals("shopping")) {
+			
+		} else if (command.equals("board_insertres")) {
+			String board_title = request.getParameter("board_title");
+			String board_content = request.getParameter("board_content");
+			String board_category = request.getParameter("board_category");
+			String member_id = request.getParameter("member_id");
+			BoardDto b_dto = new BoardDto();
+			b_dto.setBoard_title(board_title);
+			b_dto.setBoard_content(board_content);
+			b_dto.setBoard_category(board_category);
+			b_dto.setMember_id(member_id);
+			int res = 0;
+			if(board_category.equals("F")) {
+				res = b_biz.free_insert(b_dto);
+				if (res > 0) {
+					jsResponse(response, "등록 성공", "semi.do?command=board_free");
+				} else {
+					jsResponse(response, "등록 실패", "semi.do?command=board_free");
+				}
+			} else if (board_category.equals("N")) {
+				res = b_biz.notice_insert(b_dto);
+				if (res > 0) {
+					jsResponse(response, "등록 성공", "semi.do?command=board_notice");
+				} else {
+					jsResponse(response, "등록 실패", "semi.do?command=board_notice");
+				}
+			} else if (board_category.equals("Q")) {
+				res = b_biz.qna_insert(b_dto);
+				if (res > 0) {
+					jsResponse(response, "등록 성공", "semi.do?command=board_qna");
+				} else {
+					jsResponse(response, "등록 실패", "semi.do?command=board_qna");
+				}
+			} else if (board_category.equals("D")) {
+				res = b_biz.dec_insert(b_dto);
+				if (res > 0) {
+					jsResponse(response, "등록 성공", "semi.do?command=board_dec");
+				} else {
+					jsResponse(response, "등록 실패", "semi.do?command=board_dec");
+				}
 			}
 		}
 	}
