@@ -173,12 +173,15 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("findidpw")) {
 			response.sendRedirect("findidpw.jsp");
 		} else if (command.equals("findidres")) {
-			String member_id = request.getParameter("member_id");
-			String member_email_1 = request.getParameter("member_email");
-			String member_email_2 = request.getParameter("member_email_2");
-			String member_email = member_email_1 + "@" + member_email_2;
+			String member_name = request.getParameter("member_name");
+			String member_email = request.getParameter("member_email");
+			MemberDto m_dto = new MemberDto();
+			m_dto.setMember_name(member_name);
+			m_dto.setMember_email(member_email);
+			MemberDto t_dto = new MemberDto();
+			t_dto = m_biz.selectIdSerch(m_dto);
+			String member_id = t_dto.getMember_id();
 			request.setAttribute("member_id", member_id);
-			request.setAttribute("member_email", member_email);
 			dispatch(response, request, "findidres.jsp");
 		} else if (command.equals("idchk")) {
 			String member_id = request.getParameter("member_id");
@@ -206,9 +209,13 @@ public class SemiProjectController extends HttpServlet {
 			request.setAttribute("list", list);
 			dispatch(response, request, "board_dec.jsp");
 		} else if (command.equals("mypage")) {
-
+			response.sendRedirect("mypage.jsp");
 		} else if (command.equals("shopping")) {
-
+			response.sendRedirect("shopping.jsp");
+		} else if (command.equals("board_qna")) {
+			List<BoardDto> list = b_biz.qna_selectList();
+			request.setAttribute("list", list);
+			dispatch(response, request, "board_qna.jsp");
 		} else if (command.equals("board_insertform")) {
 			response.sendRedirect("board_insertform.jsp");
 		} else if (command.equals("board_insertres")) {

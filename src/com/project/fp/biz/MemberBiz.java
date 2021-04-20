@@ -10,6 +10,8 @@ public interface MemberBiz {
 
 	public MemberDto selectSerch(MemberDto dto);
 
+	public MemberDto selectIdSerch(MemberDto dto);
+
 	public MemberDto selectOne(MemberDto dto);
 
 	public int insert(MemberDto dto);

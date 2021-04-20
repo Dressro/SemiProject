@@ -18,6 +18,10 @@ public interface BoardDao {
 	public int notice_insert(BoardDto dto);
 	public int qna_insert(BoardDto dto);
 	public int dec_insert(BoardDto dto);
+	public int free_update(BoardDto dto);
+	public int notice_update(BoardDto dto);
+	public int qna_update(BoardDto dto);
+	public int dec_update(BoardDto dto);
 	public int free_answerInsert(BoardDto dto);
 	public int qna_answerInsert(BoardDto dto);
 	public int free_answerUpdate(int board_free_no);

@@ -4,52 +4,73 @@
 
 	<select id="selectList" resultType="MemberDto">
 
-		SELECT MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME, MEMBER_NICNAME, 
-			   MEMBER_EMAIL, MEMBER_PHONE, MEMBER_ADDR, MEMBER_GRADE,
-			   MEMBER_JOIN, MEMBER_ANIMAL, MEMBER_POINT, MEMBER_DR_INFO,
-			   MEMBER_NOTIFY
+		SELECT MEMBER_ID,
+		MEMBER_PASSWORD, MEMBER_NAME, MEMBER_NICNAME,
+		MEMBER_EMAIL, MEMBER_PHONE, MEMBER_ADDR, MEMBER_GRADE,
+		MEMBER_JOIN, MEMBER_ANIMAL, MEMBER_POINT, MEMBER_DR_INFO,
+		MEMBER_NOTIFY
 		FROM MEMBER
 		ORDER BY MEMBER_ID DESC
 	</select>
-	<select id="selectSerch" parameterType="MemberDto" resultType="MemberDto">
-		SELECT MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME, MEMBER_NICNAME, 
-			   MEMBER_EMAIL, MEMBER_PHONE, MEMBER_ADDR, MEMBER_GRADE,
-			   MEMBER_JOIN, MEMBER_ANIMAL, MEMBER_POINT, MEMBER_DR_INFO,
-			   MEMBER_NOTIFY
+	<select id="selectSerch" parameterType="MemberDto"
+		resultType="MemberDto">
+		SELECT MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME,
+		MEMBER_NICNAME,
+		MEMBER_EMAIL, MEMBER_PHONE, MEMBER_ADDR, MEMBER_GRADE,
+		MEMBER_JOIN, MEMBER_ANIMAL, MEMBER_POINT, MEMBER_DR_INFO,
+		MEMBER_NOTIFY
 		FROM MEMBER
 		WHERE MEMBER_ID = #{member_id}
 	</select>
-	<select id="selectOne" parameterType="MemberDto" resultType="MemberDto">
-
-		SELECT MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME, MEMBER_NICNAME, 
-			   MEMBER_EMAIL, MEMBER_PHONE, MEMBER_ADDR, MEMBER_GRADE,
-			   MEMBER_JOIN, MEMBER_ANIMAL, MEMBER_POINT, MEMBER_DR_INFO,
-			   MEMBER_NOTIFY
+	<select id="selectIdSerch" parameterType="MemberDto"
+		resultType="MemberDto">
+		SELECT MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME,
+		MEMBER_NICNAME,
+		MEMBER_EMAIL, MEMBER_PHONE, MEMBER_ADDR, MEMBER_GRADE,
+		MEMBER_JOIN, MEMBER_ANIMAL, MEMBER_POINT, MEMBER_DR_INFO,
+		MEMBER_NOTIFY
 		FROM MEMBER
-		WHERE MEMBER_ID = #{member_id} AND MEMBER_PASSWORD = #{member_password}
+		WHERE MEMBER_NAME = #{member_name}
+		AND MEMBER_EMAIL = #{member_email}
 	</select>
-	
+	<select id="selectOne" parameterType="MemberDto"
+		resultType="MemberDto">
+
+		SELECT MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME,
+		MEMBER_NICNAME,
+		MEMBER_EMAIL, MEMBER_PHONE, MEMBER_ADDR, MEMBER_GRADE,
+		MEMBER_JOIN, MEMBER_ANIMAL, MEMBER_POINT, MEMBER_DR_INFO,
+		MEMBER_NOTIFY
+		FROM MEMBER
+		WHERE MEMBER_ID = #{member_id} AND MEMBER_PASSWORD =
+		#{member_password}
+	</select>
+
 	<insert id="insert" parameterType="MemberDto">
 		INSERT INTO MEMBER
 
-		VALUES(#{member_id}, #{member_password}, #{member_name}, #{member_nicname}, 
-			   #{member_email}, #{member_phone}, #{member_addr}, #{member_grade}, 
-			   #{member_join}, #{member_animal}, #{member_point}, #{member_dr_info}, 
-			   #{member_notify})
+		VALUES(#{member_id}, #{member_password}, #{member_name},
+		#{member_nicname},
+		#{member_email}, #{member_phone}, #{member_addr}, #{member_grade},
+		#{member_join}, #{member_animal}, #{member_point}, #{member_dr_info},
+		#{member_notify})
 	</insert>
-	
+
 	<update id="update" parameterType="MemberDto">
 		UPDATE MEMBER
-		SET MEMBER_PASSWORD = #{member_password}
+		SET
+		MEMBER_PASSWORD = #{member_password}
 		WHERE MEMBER_ID = #{member_id}
 	</update>
-	
+
 
 	<delete id="delete" parameterType="MemberDto">
 		UPDATE MEMBER
-		SET MEMBER_JOIN = 'N'
+		SET MEMBER_JOIN =
+		'N'
 		WHERE MEMBER_LOGINROUTE = #{member_loginroute}
-		AND MEMBER_ID = #{member_id}
+		AND MEMBER_ID =
+		#{member_id}
 	</delete>
-	
+
 </mapper>

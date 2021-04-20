@@ -83,6 +83,30 @@ public class BoardBizImpl implements BoardBiz {
 	}
 
 	@Override
+	public int free_update(BoardDto dto) {
+		// TODO Auto-generated method stub
+		return dao.free_update(dto);
+	}
+
+	@Override
+	public int notice_update(BoardDto dto) {
+		// TODO Auto-generated method stub
+		return dao.notice_update(dto);
+	}
+
+	@Override
+	public int qna_update(BoardDto dto) {
+		// TODO Auto-generated method stub
+		return dao.qna_update(dto);
+	}
+
+	@Override
+	public int dec_update(BoardDto dto) {
+		// TODO Auto-generated method stub
+		return dao.dec_update(dto);
+	}
+
+	@Override
 	public int readcountupdate(int board_no) {
 		// TODO Auto-generated method stub
 		return dao.readcountupdate(board_no);
