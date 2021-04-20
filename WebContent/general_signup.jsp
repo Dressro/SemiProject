@@ -50,6 +50,7 @@
         }
     }).open();
 }
+	/*
 	function idCheckConfirm(){
 		var chk = document.getElementsByName("member_id")[0].title;
 		if(chk == "n") {
@@ -57,6 +58,7 @@
 			document.getElementsByName("member_id")[0].focus();
 		}
 	}
+	*/
 	
 	function idCheck(){
 		var member_id = document.getElementsByName("member_id")[0];
@@ -65,8 +67,8 @@
 		} else {
 			open("semi.do?command=idchk&member_id="+member_id.value,"","width=200 , height= 200");
 		}
-	
 	}
+	
 	function check(){
 		var member_email = $('input[name=member_email_1]').val() +"@"+ $('select[name=member_email_2]').val();
 		$('input[name=member_email]').attr('value',member_email);
@@ -85,6 +87,15 @@
 			$("input[name=animal_name]").attr("required","false");
 			$("input[id=animal_gen_chk]").attr("checked","unchecked");
 			$(".animal").toggle();
+		}
+	}
+	
+	function sendmailkey(){
+		var member_email = document.getElementsByName("member_email")[0];
+		if(member_email.value.trim() =="" || member_email.value == null){
+			alert("이메일을 입력해주세요.");
+		} else {
+			open("semi.do?command=mailsend&member_email="+member_email.value,"","width=200 , height= 200");
 		}
 	}
 	
@@ -159,7 +170,7 @@
 				<tr>
 					<th>이메일 *</th>
 					<td>
-						<input type="hidden" name="member_email" value="">
+						<input type="hidden" name="member_email" value="hdg951002@gmail.com">
 						<input type="text" name="member_email_1" maxlength="30" onclick="idCheckConfirm();">@
                         <select name="member_email_2">
                             <option>naver.com</option>
@@ -167,7 +178,7 @@
                             <option>gmail.com</option>
                             <option>nate.com</option>                        
                         </select>
-                        <input type="button" value="이메일인증" onclick="check(); location.href='semi.do?command=sendmail'" />
+                        <input type="button" value="test" onclick="sendmailkey();" />
 					</td>
 				</tr>
 				<tr>
@@ -207,7 +218,6 @@
 					</td>
 				</tr>
 				<tr class="animal">
->>>>>>> f88a6a2811d047115cdb8a13b1eb9f746cb51c3d
 					<th>성별 *</th>
 					<td>
 						<input type="radio" id="animal_gen_chk" name="animal_gen" value="M"><img src="resources/images/male.svg" style="width: 20px; height: 20px;">

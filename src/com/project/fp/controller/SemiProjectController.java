@@ -4,7 +4,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.util.List;
+import java.util.Properties;
 
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -193,28 +200,63 @@ public class SemiProjectController extends HttpServlet {
 			}
 		}
 		
-		if (command.equals("sendmail")) {
-			String member_email = request.getParameter("member_email");
-			request.setAttribute("member_email", member_email);
-			dispatch(response, request, "gmailSendAction.jsp");
+		if (command.equals("mailsend")) {
+			//mail server 설정
+            String host = "smtp.naver.com";
+            String user = "rhkgkrwk1002"; //자신의 네이버 계정
+            String password = "beyond-1002";//자신의 네이버 패스워드
+            
+            //메일 받을 주소
+            String member_email = request.getParameter("member_email");
+            
+            //SMTP 서버 정보를 설정한다.
+            Properties props = new Properties();
+            props.put("mail.smtp.host", host);
+            props.put("mail.smtp.port", 465);
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.ssl.enable", "true");
+            
+            //인증 번호 생성기
+            String AuthenticationKey = getRandomPassword(10);
+      
+            System.out.println(AuthenticationKey);
+            
+            Session session_mail = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(user,password);
+                }
+            });
+            
+            //email 전송
+            try {
+                MimeMessage msg = new MimeMessage(session_mail);
+                msg.setFrom(new InternetAddress(user, "Pet care"));
+                msg.addRecipient(Message.RecipientType.TO, new InternetAddress(member_email));
+                
+                //메일 제목
+                msg.setSubject("안녕하세요 petcare 인증 메일입니다.");
+                //메일 내용
+                msg.setText("인증 번호 :"+AuthenticationKey);
+                
+                Transport.send(msg);
+                System.out.println("이메일 전송");
+                
+            }catch (Exception e) {
+                e.printStackTrace();// TODO: handle exception
+            }
+            HttpSession saveKey = request.getSession();
+            saveKey.setAttribute("AuthenticationKey", AuthenticationKey);
+            dispatch(response, request, "signup_emailchk.jsp");
 		}
 		
 		if (command.equals("mailcheck")) {
-			String code = request.getParameter("code");
-			boolean rightCode = 
-					SHA256.getEncrypt("codingspecialist@naver.com", "cos").equals(code) ? true : false;
-			PrintWriter script = response.getWriter();
-			if(rightCode == true){
-				script.println("<script>");
-				script.println("alert('이메일 인증에 성공하였습니다.')");
-				script.println("location.href='login.jsp'");
-				script.println("</script>");
-			} else{
-				script.println("<script>");
-				script.println("alert('이메일 인증을 실패하였습니다.')");
-				script.println("location.href='index.html'");
-				script.println("</script>");
-			}
+			String AuthenticationKey = request.getParameter("AuthenticationKey");
+	        String AuthenticationUser = request.getParameter("AuthenticationUser");
+	        if(AuthenticationKey.equals(AuthenticationUser)){
+	            System.out.println("인증 성공");
+	        } else {
+	        	System.out.println("인증 실패");
+	        }
 		}
 		
 	}
