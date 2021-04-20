@@ -61,7 +61,7 @@
       <div class="row justify-content-md-center">
             <div class="input-group mb-3">
               <div class="custom-file">
-                  &nbsp;<input type="file" class="form-control-file" id="exampleFormControlFile1"> 
+                  &nbsp;<input type="file" class="form-control-file" id="exampleFormControlFile1" name="file"> 
                   <button type="button" class="btn btn-outline-secondary" style="float:right; width: 10%; font-weight: bold" onclick="goback();">취   소</button>
                    <button type="submit" class="btn btn-outline-secondary" style="float:right; width: 10%; font-weight: bold;margin-right: 10px;">등   록</button>
               </div>
