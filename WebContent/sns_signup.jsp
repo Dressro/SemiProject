@@ -1,3 +1,4 @@
+<%@page import="com.project.fp.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -51,19 +52,19 @@
     }).open();
 }
 	function idCheckConfirm(){
-		var chk = document.getElementsByName("member_id")[0].title;
+		var chk = document.getElementsByName("myid")[0].title;
 		if(chk == "n") {
 			alert("id 중복체크를 먼저 해주세요.");
-			document.getElementsByName("member_id")[0].focus();
+			document.getElementsByName("myid")[0].focus();
 		}
 	}
 	
 	function idCheck(){
-		var member_id = document.getElementsByName("member_id")[0];
-		if(member_id.value.trim() =="" || member_id.value == null){
+		var doc = document.getElementsByName("myid")[0];
+		if(doc.value.trim() =="" || doc.value == null){
 			alert("id를 입력해 주세요");
 		} else {
-			open("semi.do?command=idchk&member_id="+member_id.value,"","width=200 , height= 200");
+			open("logincontroller.jsp?command=idchk&myid="+doc.value,"","width=200 , height= 200");
 		}
 	
 	}
@@ -113,54 +114,37 @@
 </script>
 </head>
 <body>
-	
+	<%
+		MemberDto dto = (MemberDto) request.getAttribute("dto");
+	%>
 	<h1>일반회원 회원가입</h1>
 	
 		<div class="join_table">
 			<div id="member_join">
 			<form action="semi.do" method="POST">
-			<input type="hidden" name="command" value="signupres" />
+			<input type="hidden" name="member_id" value="<%=dto.getMember_id() %>"/>
+			<input type="hidden" name="command" value="sns_signupres" />
 			<input type="hidden" name="member_notify" value="N" />
 			<input type="hidden" name="member_grade" value="개인" />
 			<input type="hidden" name="member_dr_info" value="없음"/>
 			<table border="1">
 				<tr>
-					<th>아이디 *</th>
-					<td>
-						<input type="text" name="member_id" title="n" required="required" />
-						<input type="button" value="중복체크" onclick="idCheck();" />
-					</td>
-				</tr>
-				<tr>
-					<th>비밀번호 *</th>
-					<td>
-						<input type="password" name="member_password" onclick="idCheckConfirm();">
-					</td>
-				</tr>
-				<tr>
-					<th>비밀번호확인 *</th>
-					<td>
-						<input type="password" name="member_password_chk" onclick="idCheckConfirm();">
-						<font id="chkNotice" size="2"></font>
-					</td>
-				</tr>
-				<tr>
 					<th>이름 *</th>
 					<td>
-						<input type="text" name="member_name" onclick="idCheckConfirm();">
+						<input type="text" name="member_name"  onclick="">
 					</td>
 				</tr>
 				<tr>
 					<th>닉네임 *</th>
 					<td>
-						<input type="text" name="member_nicname" maxlength="5" onclick="idCheckConfirm();">
+						<input type="text" name="member_nicname" maxlength="10" onclick="">
 					</td>
 				</tr>
 				<tr>
 					<th>이메일 *</th>
 					<td>
 						<input type="hidden" name="member_email" value="">
-						<input type="text" name="member_email_1" maxlength="30" onclick="idCheckConfirm();">@
+						<input type="text" name="member_email_1" maxlength="30" onclick="">@
                         <select name="member_email_2">
                             <option>naver.com</option>
                             <option>daum.net</option>
