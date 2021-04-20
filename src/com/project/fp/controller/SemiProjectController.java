@@ -1,6 +1,7 @@
 package com.project.fp.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.util.List;
 
@@ -122,13 +123,21 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("loginres")) {
 			String member_id = request.getParameter("member_id");
 			String member_password = request.getParameter("member_password");
+			
 			MemberDto m_dto = new MemberDto();
 			m_dto.setMember_id(member_id);
 			m_dto.setMember_password(member_password);
 			MemberDto dto = m_biz.selectOne(m_dto);
 			HttpSession session = request.getSession();
-			session.setAttribute("dto", dto);
-			dispatch(response, request, "#.jsp");
+			
+			if(session.isNew() || session.getAttribute(member_id) == null) {
+				session.setAttribute("dto", dto);
+				dispatch(response, request, "#.jsp");
+			} else {
+				jsResponse(response, "이미 로그인 상태입니다.", "#");
+			}
+			
+			
 		} else if (command.equals("kakao")) {
 			String member_id = request.getParameter("member_id");
 			String member_password = "sdghjkhdkjfds";
