@@ -49,7 +49,7 @@
 		</c:choose>
 		<tr>
 			<td colspan="4" align="right">
-				<input type="button" value="글작성" onclick="location.href='semi.do?command=board_dec_insertform'" />
+				<input type="button" value="글작성" onclick="location.href='semi.do?command=board_insertform'" />
 			</td>
 		</tr>
 	</table>

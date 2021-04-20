@@ -7,19 +7,19 @@
 		select
 		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
 		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
-		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname
+		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname as member_id
 		from board b,member m
-		where board_category="F"
+		where board_category='F'
 		and b.member_id = m.member_id
-		order by board.groupno desc , board.groupseq
+		order by board_groupno desc , board_groupseq
 	</select>
 	<select id="notice_selectList" resultType="BoardDto">
 		select
 		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
 		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
-		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname
+		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname as member_id
 		from board b, member m
-		where board_category="N"
+		where board_category = 'N'
 		and b.member_id = m.member_id
 		order by board_notice_no desc
 	</select>
@@ -27,9 +27,9 @@
 		select
 		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
 		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
-		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname
+		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname as member_id
 		from board b , member m
-		where board_category="Q"
+		where board_category='Q'
 		and b.member_id = m.member_id
 		order by board_qna_no desc
 	</select>
@@ -37,9 +37,9 @@
 		select
 		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
 		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
-		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname
+		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname as member_id
 		from board b , member m
-		where board_category="D"
+		where board_category='D'
 		and b.member_id = m.member_id
 		order by board_dec_no desc
 	</select>
@@ -48,9 +48,9 @@
 		select
 		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
 		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
-		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname
+		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname as member_id
 		from board b, member m
-		where board_category="F"
+		where board_category='F'
 		and b.member_id = m.member_id
 		and board_free_no = #{board_free_no}
 	</select>
@@ -59,9 +59,9 @@
 		select
 		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
 		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
-		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname
+		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname as member_id
 		from board b,member m
-		where board_category="N"
+		where board_category='N'
 		and b.member_id = m.member_id
 		and board_notice_no = #{board_notice_no}
 	</select>
@@ -70,9 +70,9 @@
 		select
 		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
 		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
-		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname
+		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname as member_id
 		from board b,member m
-		where board_category="Q"
+		where board_category='Q'
 		and b.member_id = m.member_id
 		and board_qna_no = #{board_qna_no}
 	</select>
@@ -81,9 +81,9 @@
 		select
 		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
 		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
-		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname
+		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname as member_id
 		from board b, member m
-		where board_category="D"
+		where board_category='D'
 		and b.member_id = m.member_id
 		and board_dec_no = #{board_dec_no}
 	</select>
@@ -140,6 +140,7 @@
 		= #{board_free_no})
 		and board_groupseq > (select board_groupseq from board where
 		board_free_no = #{board_free_no})
+		and board_category = 'F'
 	</update>
 	<update id="qna_answerupdate" parameterType="int">
 		update board set board_groupseq = board_groupseq + 1
@@ -147,6 +148,7 @@
 		#{board_qna_no})
 		and board_groupseq > (select board_groupseq from board where board_qna_no
 		= #{board_qna_no})
+		and board_category = 'Q'
 	</update>
 	<update id="readcountupdate" parameterType="int">
 		update board set board_readcount = board_readcount + 1

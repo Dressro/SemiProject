@@ -186,29 +186,31 @@ public class SemiProjectController extends HttpServlet {
 			m_dto.setMember_id(member_id);
 			MemberDto t_dto = null;
 			t_dto = m_biz.selectSerch(m_dto);
-			if(t_dto != null) {
+			if (t_dto != null) {
 				request.setAttribute("idchk", false);
 				dispatch(response, request, "signup_idchk.jsp");
-			}else {
+			} else {
 				request.setAttribute("idchk", true);
 				dispatch(response, request, "signup_idchk.jsp");
 			}
 		} else if (command.equals("board_notice")) {
-			List<BoardDto> list = b_biz.notice_selectList(); 
+			List<BoardDto> list = b_biz.notice_selectList();
 			request.setAttribute("list", list);
 			dispatch(response, request, "board_notice.jsp");
 		} else if (command.equals("board_free")) {
-			List<BoardDto> list = b_biz.free_selectList(); 
+			List<BoardDto> list = b_biz.free_selectList();
 			request.setAttribute("list", list);
 			dispatch(response, request, "board_free.jsp");
 		} else if (command.equals("board_dec")) {
-			List<BoardDto> list = b_biz.dec_selectList(); 
+			List<BoardDto> list = b_biz.dec_selectList();
 			request.setAttribute("list", list);
 			dispatch(response, request, "board_dec.jsp");
 		} else if (command.equals("mypage")) {
-			
+
 		} else if (command.equals("shopping")) {
-			
+
+		} else if (command.equals("board_insertform")) {
+			response.sendRedirect("board_insertform.jsp");
 		} else if (command.equals("board_insertres")) {
 			String board_title = request.getParameter("board_title");
 			String board_content = request.getParameter("board_content");
@@ -220,7 +222,7 @@ public class SemiProjectController extends HttpServlet {
 			b_dto.setBoard_category(board_category);
 			b_dto.setMember_id(member_id);
 			int res = 0;
-			if(board_category.equals("F")) {
+			if (board_category.equals("F")) {
 				res = b_biz.free_insert(b_dto);
 				if (res > 0) {
 					jsResponse(response, "등록 성공", "semi.do?command=board_free");
