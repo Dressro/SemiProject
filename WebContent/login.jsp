@@ -30,7 +30,7 @@ input[type=submit] {
 	height: 40px;
 }
 #kakao_padding {
-	padding: 20px;
+	padding-top: 10px;
 }
 </style>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
@@ -141,8 +141,6 @@ $(function(){
 			}
 			</script>
 
-		<hr>
-		<button onclick="#" type="button" class="button">회원가입</button>
 	</div>
 </body>
 </html>

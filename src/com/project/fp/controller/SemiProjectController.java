@@ -98,7 +98,7 @@ public class SemiProjectController extends HttpServlet {
 
 			int res = m_res + a_res;
 			if (res > 0) {
-				jsResponse(response, "회원가입 성공", "index.html");
+				jsResponse(response, "회원가입 성공", "index.jsp");
 			} else {
 				jsResponse(response, "회원가입 실패", "#");
 			}
@@ -122,7 +122,7 @@ public class SemiProjectController extends HttpServlet {
 			t_dto = m_biz.selectSerch(m_dto);
 			if (t_dto != null) {
 				session.setAttribute("dto", t_dto);
-				jsResponse(response, "로그인 성공(SNS)", "index.html");
+				jsResponse(response, "로그인 성공(SNS)", "index.jsp");
 			} else {
 				request.setAttribute("dto", m_dto);
 				dispatch(response, request, "sns_signup.jsp");
@@ -165,7 +165,7 @@ public class SemiProjectController extends HttpServlet {
 
 			int res = m_res + a_res;
 			if (res > 0) {
-				jsResponse(response, "회원가입 성공", "index.html");
+				jsResponse(response, "회원가입 성공", "index.jsp");
 			} else {
 				jsResponse(response, "회원가입 실패", "#");
 			}
@@ -251,6 +251,9 @@ public class SemiProjectController extends HttpServlet {
 					jsResponse(response, "등록 실패", "semi.do?command=board_dec");
 				}
 			}
+		} else if (command.equals("logout")) {
+			session.invalidate();
+			response.sendRedirect("index.jsp");
 		}
 	}
 
