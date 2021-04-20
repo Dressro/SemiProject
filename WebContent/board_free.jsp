@@ -35,7 +35,7 @@
 				<c:forEach items="${list }" var="dto">
 					<tr>
 						<td>${dto.board_free_no }</td>
-						<td>${dto.member_nicname }</td>
+						<td>${dto.member_id }</td>
 						<td>
 							<c:forEach begin="1" end="${dto.board_titletab }">
 								&nbsp;
@@ -49,10 +49,12 @@
 		</c:choose>
 		<tr>
 			<td colspan="4" align="right">
-				<input type="button" value="글작성" onclick="location.href='board_insertform.jsp'" />
+				<input type="button" value="글작성" onclick="location.href='semi.do?command=board_insertform'" />
 			</td>
 		</tr>
 	</table>
 	
 </body>
+
+>>>>>>> 3091d86ffc9e3d131894463eba496da512ff1a19
 </html>

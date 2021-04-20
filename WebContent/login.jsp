@@ -1,25 +1,24 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-
 div {
-  border-radius: 5px;
-  padding: 20px;
+	border-radius: 5px;
+	padding: 5px;
 }
+
 input[type=submit] {
-  width: 200px;
-  background-color: #f0f0f0;
-  color: black;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+	width: 200px;
+	background-color: #f0f0f0;
+	color: black;
+	padding: 14px 20px;
+	margin: 8px 0;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
 }
 #kakao_id_login {
 	padding: 0;
@@ -36,9 +35,9 @@ input[type=submit] {
 </style>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="https://www.google.com/recaptcha/api.js" defer></script>
 <script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript">
-
 $(function(){
 	Kakao.init('5c95aa7ad857e55475bed627ba9faf99');
 	Kakao.isInitialized();
@@ -85,28 +84,35 @@ $(function(){
 		});
 	 
 });
-
 </script>
 </head>
 <body>
 	<h1>Login</h1>
 	<div>
-	<form action="semi.do" method="post">
-	
+		<form action="semi.do" method="post" onsubmit="return submitUserForm();">
+
 			<input type="hidden" name="command" value="loginres" />
-			<input type="text" name="member_id" placeholder="아이디 입력"
-					required="required"><br>
-					
-			<input type="password" name="member_password"
-					placeholder="비밀번호 입력" required="required"><br>
-			
-				<a href="findidpw.jsp">아이디 비밀번호찾기</a><br>
-				<input type="submit" value="login"><br>
-			
-			<div id="kakao_padding"><div id="kakao_id_login"></div></div>
-  			<div id="naver_id_login"></div>
- 			<script type="text/javascript">
-  					var naver_id_login = new naver_id_login("3FogXXVNeg3aYw15VPrY", "http://localhost:8787/SemiProject/naver_callback.jsp");
+			<input type="text" name="member_id" placeholder="아이디 입력" required="required">
+			<br>
+			<input type="password" name="member_password" placeholder="비밀번호 입력" required="required">
+			<br>
+
+			<a href="findidpw.jsp">아이디 비밀번호찾기</a>
+			<br>
+			<div id="g-recaptcha-error"></div>
+			<input type="submit" value="login">
+			<br>
+
+			<!-- 로그인api이미지 적용 -->
+			<div id="kakao_padding">
+				<div id="kakao_id_login"></div>
+			</div>
+			<br>
+			<!-- 네이버아이디로로그인 버튼 노출 영역 -->
+			<div id="naver_id_login"></div>
+			<!-- //네이버아이디로로그인 버튼 노출 영역 -->
+			<script type="text/javascript">
+  					var naver_id_login = new naver_id_login("3FogXXVNeg3aYw15VPrY", "http://localhost:8787/SemiProject/index.html");
   					var state = naver_id_login.getUniqState();
   					naver_id_login.setButton("green", 3,40);
   					naver_id_login.setDomain("http://localhost:8787/SemiProject/login.jsp");
@@ -114,9 +120,29 @@ $(function(){
   					//naver_id_login.setPopup();
   					naver_id_login.init_naver_id_login();
  			 </script>
-	</form>
-	<hr>
-	<button onclick="#" type="button" class="button">회원가입</button>
+		</form>
+
+		<!-- google reCaptcha -->
+		<div class="g-recaptcha" data-sitekey="6LfGNrAaAAAAACnlQAb1RFvF-DQJApSARniYjGki" data-callback="verifyCaptcha"></div>
+
+
+		<script type="text/javascript">
+			function submitUserForm() {
+			    var response = grecaptcha.getResponse();
+			    if(response.length == 0) {
+			        document.getElementById('g-recaptcha-error').innerHTML = '<span style="color:red;">reCaptcha 인증실패</span>';
+			        return false;
+			    }
+			    return true;
+			}
+			 
+			function verifyCaptcha() {
+			    document.getElementById('g-recaptcha-error').innerHTML = '';
+			}
+			</script>
+
+		<hr>
+		<button onclick="#" type="button" class="button">회원가입</button>
 	</div>
 </body>
 </html>

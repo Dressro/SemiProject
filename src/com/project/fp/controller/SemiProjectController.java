@@ -191,7 +191,7 @@ public class SemiProjectController extends HttpServlet {
 			}else {
 				dispatch(response, request, "signup_idchk.jsp");
 			}
-		} 
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
