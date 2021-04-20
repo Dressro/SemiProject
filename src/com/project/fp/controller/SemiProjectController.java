@@ -114,7 +114,6 @@ public class SemiProjectController extends HttpServlet {
 			session.setAttribute("dto", dto);
 			dispatch(response, request, "#.jsp");
 		} else if (command.equals("sns_signup")) {
-			System.out.println("여기까지는 성공");
 			String member_id = request.getParameter("member_id");
 			MemberDto m_dto = new MemberDto();
 			m_dto.setMember_id(member_id);
@@ -175,13 +174,14 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("findidres")) {
 			String member_name = request.getParameter("member_name");
 			String member_email = request.getParameter("member_email");
+			System.out.println(member_name);
+			System.out.println(member_email);
 			MemberDto m_dto = new MemberDto();
 			m_dto.setMember_name(member_name);
 			m_dto.setMember_email(member_email);
-			MemberDto t_dto = new MemberDto();
+			MemberDto t_dto = null;
 			t_dto = m_biz.selectIdSerch(m_dto);
-			String member_id = t_dto.getMember_id();
-			request.setAttribute("member_id", member_id);
+			request.setAttribute("dto", t_dto);
 			dispatch(response, request, "findidres.jsp");
 		} else if (command.equals("idchk")) {
 			String member_id = request.getParameter("member_id");

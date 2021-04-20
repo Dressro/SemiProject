@@ -37,6 +37,7 @@
 	border-top: none;
 }
 </style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 function check(){
 	var member_email = $('input[name=member_email_1]').val() +"@"+ $('select[name=member_email_2]').val();
@@ -55,7 +56,7 @@ function check(){
 
 	<div id="findid" class="tabcontent">
 		<form action="semi.do" method="post">
-			<input type="hidden" name="commamd" value="findidres" />
+			<input type="hidden" name="command" value="findidres" />
 
 			<h1>아이디 찾기</h1>
 			<p>회원 정보에 등록된 이메일과 입력한 이메일이 같아야 아이디를 찾을 수 있습니다.</p>
@@ -83,7 +84,7 @@ function check(){
 				</tr>
 				<tr>
 					<td colspan="2">
-						<button type="submit" onclick="check();">아이디 조회</button>
+						<input type="submit" value="조회하기" onclick="check();"/>
 					</td>
 				</tr>
 

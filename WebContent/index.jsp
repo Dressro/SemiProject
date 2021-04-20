@@ -11,8 +11,8 @@
 
 <style type="text/css">
 * {
-	margin: 0;
-	padding: 0;
+	margin: 0px;
+	padding: 0px;
 }
 
 body {
@@ -32,7 +32,7 @@ a {
 }
 
 img {
-	max-width: 100%;
+	min-width: 100%;
 }
 
 .dot {
@@ -120,7 +120,6 @@ ul {
 	list-style-type: none;
 	margin: 0;
 	overflow: hidden;
-	background-color: #ffffff;
 }
 
 li {
@@ -135,22 +134,33 @@ li a {
 	text-decoration: none;
 }
 
+
 .menu {
 	margin-top: 20px;
 }
-
-.footer {
-	padding: 10px;
-	text-align: center;
+#body {
+	width: 1200px;
+	margin: 0 auto;
+}
+#semi_footer{
 	background-color: #f0f0f0;
-	text-align: center;
 }
 
-.footer a {
-	text-decoration: none;
-	color: black;
-	padding: 0px 14px;
-	border-right: #888 solid 1px;
+.footer {
+	width:1200px;
+	margin: 0 auto;
+}
+
+.footer_content{
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 20px;
+}
+.footer_content:first-child{
+	margin-left:0px;
+}
+.liremove{
+	padding:0px;
 }
 </style>
 <script type="text/javascript">
@@ -200,6 +210,12 @@ li a {
 
 		slides[n].style.display = "block";
 		dots[n].className += " active";
+	}
+	function gofacebook() {
+		location.href = "https://www.facebook.com/";
+	}
+	function goinstagram() {
+		location.href = "https://www.instagram.com/";
 	}
 </script>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
@@ -276,31 +292,24 @@ li a {
 			<div id="section_3"></div>
 			<div id="section_4"></div>
 			<div id="section_5"></div>
+				<h1>body</h1>
 		</div>
-		<div id="footer"></div>
 
 
 
-		<h1>body</h1>
-		<div id="footer">
-		<footer>
 
-
-			<ul class="footer_link">
-				<li style="float: right"><a href="#" target="_blank" class="facebook" title="페이스북">페이스북</a></li>
-				<li style="float: right"><a href="#" target="_blank" class="instagram" title="인스타그램">인스타그램</a></li>
-			</ul>
+		<div id="semi_footer">
 			<div class="footer">
-				<h1>Family Pet</h1>
-				<a href="#">이용약관</a>
-				<a href="#">개인정보처리방침</a>
-				<a href="#">제휴문의</a>
-				<address>
-					<br> Famliy Pet | 대표이사 : 이민형 | 서울특별시 강남구 삼성로 648<br> 사업자 등록번호 : 000-00-000000 | 통신판매업신고 : 2021-서울강남-0000
-				</address>
+				<h2>Family Pet</h2>
+				<ul class="footer_ul">
+					<li class = "footer_content"><a href="#" class = "liremove">이용약관</a></li>
+					<li class = "footer_content"><a href="#" class = "liremove">개인정보처리방침</a></li>
+					<li class = "footer_content"><a href="#" class = "liremove">제휴문의</a></li>
+				</ul>
+				<div>
+					
+				</div>
 			</div>
-
-		</footer>
 		</div>
 	</div>
 </body>
