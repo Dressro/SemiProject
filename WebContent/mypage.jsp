@@ -24,7 +24,6 @@ $(function(){
 	    $(this).find('a').addClass('active');
 	    $('.mypage').hide();		   
 		var i = $(this).index();
-		console.log(i);
 		$('.mypage').eq(i).show();
 	});
 		$('.mymenus li').eq(0).trigger('click');
@@ -36,18 +35,11 @@ $(function(){
 
 nav {
   float: left;
+  padding: 20px;
   }
   
- #title {
- list-style:none;
- font-weight: bold;
- }
- 
- table {
-  padding: 10px;
-  width: 800px;
-}
 </style>
+
 
 </head>
 <body>
@@ -56,9 +48,9 @@ nav {
 <section>
   <nav>
     <ul class="mymenus">
-      <li><a class="mymenu" href="#" > MY 쇼핑 </a></li>
+      <li><a class="mymenu" href="#">마이페이지</a></li>
       <li><a class="mymenu" href="#">주문내역</a></li>
-      <li><a class="mymenu" href="#"> 취소/반품/교환/환불내역</a></li>
+      <li><a class="mymenu" href="#">취소/반품/교환/환불내역</a></li>
       <li><a class="mymenu" href="#">회원정보수정</a></li>
      <li><a class="mymenu" href="#">회원탈퇴</a></li>
     </ul>
