@@ -1,10 +1,19 @@
 package com.project.fp.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,6 +46,7 @@ import com.project.fp.biz.ReceiveBizImpl;
 import com.project.fp.dto.AnimalDto;
 import com.project.fp.dto.BoardDto;
 import com.project.fp.dto.MemberDto;
+import com.project.fp.gmail.MailSend;
 
 @WebServlet("/SemiProjectController")
 public class SemiProjectController extends HttpServlet {
@@ -271,6 +281,40 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("test")) {
 			response.sendRedirect("test.html");
 		}
+		
+		if (command.equals("mailsend")) {
+			String member_email = request.getParameter("member_email"); // 수신자
+			String from = "ejsdnlcl@gmail.com"; // 발신자
+			String cc = "scientist-1002@hanmail.net";  // 참조
+			String subject= "PetCare 회원가입 이메일 인증번호 입니다.";
+			String content = getRandomPassword(10);	
+			try {
+				MailSend ms = new MailSend();
+				ms.sendEmail(from, member_email, cc, subject, content);
+				System.out.println("전송 성공");
+				request.setAttribute("content", content);
+				dispatch(response, request, "signup_emailchk.jsp");
+			} catch(MessagingException me) {
+			    System.out.println("메일 전송에 실패하였습니다.");
+			    System.out.println("실패 이유 : " + me.getMessage());
+			    me.printStackTrace();
+			} catch (Exception e) {
+				System.out.println("메일 전송에 실패하였습니다.");
+				System.out.println("실패 이유 : " + e.getMessage());
+				e.printStackTrace();
+			} 
+		}
+		
+		if (command.equals("mailcheck")) {
+			String AuthenticationKey = request.getParameter("AuthenticationKey");
+	        String AuthenticationUser = request.getParameter("AuthenticationUser");
+	        if(AuthenticationKey.equals(AuthenticationUser)){
+	            System.out.println("인증 성공");
+	        } else {
+	        	System.out.println("인증 실패");
+	        }
+		}
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

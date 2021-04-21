@@ -42,9 +42,9 @@ public class MemberBizImpl implements MemberBiz {
 	}
 
 	@Override
-	public int delete(MemberDto dto) {
+	public int delete(String member_id) {
 		// TODO Auto-generated method stub
-		return dao.delete(dto);
+		return dao.delete(member_id);
 	}
 
 	@Override
