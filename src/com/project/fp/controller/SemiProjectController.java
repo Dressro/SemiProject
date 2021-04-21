@@ -2,15 +2,19 @@ package com.project.fp.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.ResultSet;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -38,6 +42,11 @@ import com.project.fp.dto.BoardDto;
 import com.project.fp.dto.MemberDto;
 
 @WebServlet("/SemiProjectController")
+@MultipartConfig(
+	      location = "",
+	      maxFileSize = -1,
+	      maxRequestSize = -1,
+	     fileSizeThreshold = 1024)
 public class SemiProjectController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -215,7 +224,25 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("board_insertform")) {
 			response.sendRedirect("board_insertform.jsp");
 		} else if (command.equals("board_insertres")) {
-			
+			String file_path = request.getSession().getServletContext().getRealPath("fileupload");
+	        String file_type = request.getContentType();
+	 
+	        if (file_type != null &&  file_type.toLowerCase().startsWith("multipart/")) {
+	            Collection<Part> parts = request.getParts();
+	            String file_name = "123 ";
+	            for (Part part : parts) {
+	                if  (part.getHeader("Content-Disposition").contains("filename=")) {
+	                    String file_name_1 =  extractFileName(part.getHeader("Content-Disposition"));
+	                    if (part.getSize() > 0) {
+	                    	String file_size = Long.toString(part.getSize());
+	                        part.write(file_path + File.separator  + file_name);
+	                        part.delete();
+	                    }
+	                }
+	            }
+	        }
+	        System.out.println(file_name);
+	        System.out.println(file_path,file_type,file_name,file_size);
 			String board_title = request.getParameter("board_title");
 			String board_content = request.getParameter("board_content");
 			String board_category = request.getParameter("board_category");
@@ -285,4 +312,14 @@ public class SemiProjectController extends HttpServlet {
 		}
 		return sb.toString();
 	}
+	 private String extractFileName(String partHeader) {
+	        for (String cd : partHeader.split(";")) {
+	            if (cd.trim().startsWith("filename")) {
+	                String fileName = cd.substring(cd.indexOf("=") +  1).trim().replace("\"", "");;
+	                int index = fileName.lastIndexOf(File.separator);
+	                return fileName.substring(index + 1);
+	            }
+	        }
+	        return null;
+	    }
 }

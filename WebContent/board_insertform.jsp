@@ -32,7 +32,7 @@ response.setContentType("text/html; charset=UTF-8");
 	}
 	%>
 	<h1>BOARD_INSERTFORM</h1>
-	<form action="semi.do" method="post">
+	<form action="semi.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="member_id" value="<%=dto.getMember_id()%>" />
 		<input type="hidden" name="command" value="board_insertres" />
 		<div class="container">
