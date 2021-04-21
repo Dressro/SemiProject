@@ -1,3 +1,8 @@
+<%@page import="com.project.fp.dto.BoardDto"%>
+<%@page import="com.project.fp.biz.BoardBizImpl"%>
+<%@page import="com.project.fp.biz.BoardBiz"%>
+<%@page import="com.project.fp.biz.MemberBizImpl"%>
+<%@page import="com.project.fp.biz.MemberBiz"%>
 <%@page import="java.util.List"%>
 <%@page import="com.project.fp.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -61,26 +66,31 @@ nav {
 <div class = "adminpage-body">
 <section class="adminpage">
 
-<%--
-	List<MemberDto> list = (List<MemberDto>) request.getAttribute("list");
---%>
+<%
+	MemberBiz biz = new MemberBizImpl();
+	List<MemberDto> list = biz.selectList();
+%>
 
 <h1>회원정보관리</h1>
+<form action="semi.do" method="post" id="memberlist">
 <table border="1">
+	<col width="30"/>
 	<col width="100"/>
 	<col width="100"/>
-	<col width="200"/>
+	<col width="100"/>
 	<col width="150"/>
-	<col width="300"/>
+	<col width="150"/>
+	<col width="250"/>
 	<col width="50"/>
 	<col width="50"/>
 	<col width="50"/>
-	<col width="100"/>
-	<col width="100"/>
+	<col width="50"/>
 	
 	<tr>
+		<th><input type="checkbox" name="all" value=""/></th>
 		<th>ID</th>
-		<th>NICNAME</th>
+		<th>이름</th>
+		<th>닉네임</th>
 		<th>EMAIL</th>
 		<th>PHONE</th>
 		<th>ADDR</th>
@@ -88,16 +98,16 @@ nav {
 		<th>ANIMAL</th>
 		<th>POINT</th>
 		<th>DR_INFO</th>
-		<th>등급변경</th>
 	</tr>
 
 
-<%--
+
 <%
 	for (MemberDto dto : list ) {
 %>
 
 	<tr>
+		<td><input type="checkbox" name="chk" value=""></td>
 		<td><%=dto.getMember_id() %></td>
 		<td><%=dto.getMember_name() %></td>
 		<td><%=dto.getMember_nicname() %></td>
@@ -108,18 +118,25 @@ nav {
 		<td><%=dto.getMember_animal() %></td>
 		<td><%=dto.getMember_point() %></td>
 		<td><%=dto.getMember_dr_info() %></td>
-		<td><input type="button" value="변경"	 onclick="updateRole(<%=dto.getMember_id() %>);"/></td>
 	</tr>
 
 <%
 	}
-%> --%>
+%> 
 
+	<tr>
+		<td colspan="11" align="right">
+			<input type="submit" value="선택변경">
+			<input type="button" value="글작성" onclick="" />
+		</td>
+	</tr>
 </table>
+</form>
 </section>
 <section class="adminpage">
 <h1>전체주문조회</h1>
 <table border="1">
+	<col width="30"/>
 	<col width="60"/>
 	<col width="100"/>
 	<col width="100"/>
@@ -129,9 +146,9 @@ nav {
 	<col width="100"/>
 	<col width="200"/>
 	<col width="50"/>
-	<col width="60"/>
 	
 	<tr>
+		<th><input type="checkbox" name="all" value=""/></th>
 		<th>주문번호</th>
 		<th>회원ID</th>
 		<th>주문일</th>
@@ -141,14 +158,21 @@ nav {
 		<th>주문상태</th>
 		<th>배송지</th>
 		<th>POINT</th>
-		<th>상태변경</th>
 	</tr>
 </table>
 </section>
 
 <section class="adminpage">
+
+
+<%
+	BoardBiz bbiz = new BoardBizImpl();
+	List<BoardDto> freelist = bbiz.free_selectList();
+%>
+
 <h1>게시글관리</h1>
 <table border="1">
+	<col width="30"/>
 	<col width="60"/>
 	<col width="150"/>
 	<col width="200"/>
@@ -157,6 +181,7 @@ nav {
 	<col width="70"/>
 	
 	<tr>
+		<th><input type="checkbox" name="all" value=""/></th>
 		<th>글번호</th>
 		<th>게시판명</th>
 		<th>제목</th>
@@ -164,12 +189,35 @@ nav {
 		<th>작성일</th>
 		<th>조회수</th>
 	</tr>
+	
+	
+
+<%
+	for (BoardDto dto : freelist ) {
+%>
+
+	<tr>
+		<td><input type="checkbox" name="chk" value=""></td>
+		<td><%=dto.getBoard_no() %></td>
+		<td><%=dto.getBoard_category() %></td>
+		<td><%=dto.getBoard_title() %></td>
+		<td></td>
+		<td><%=dto.getBoard_regdate() %></td>
+		<td><%=dto.getBoard_readcount() %></td>
+	</tr>
+
+<%
+	}
+%> 
+	
+	
 </table>
 </section>
 
 <section class="adminpage">
 <h1>상품관리</h1>
 <table border="1">
+	<col width="30"/>
 	<col width="60"/>
 	<col width="100"/>
 	<col width="200"/>
@@ -178,6 +226,7 @@ nav {
 	<col width="70"/>
 	
 	<tr>
+		<th><input type="checkbox" name="all" value=""/></th>
 		<th>상품번호</th>
 		<th>분류</th>
 		<th>상품명</th>
