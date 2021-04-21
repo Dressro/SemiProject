@@ -91,12 +91,12 @@
 	}
 	
 	function sendmailkey(){
-		var member_email = document.getElementsByName("member_email")[0];
-		if(member_email.value.trim() =="" || member_email.value == null){
-			alert("이메일을 입력해주세요.");
+		var member_email = $('input[name=member_email_1]').val() +"@"+ $('select[name=member_email_2]').val();
+		if($('input[name=member_email_1]').val().trim() == "" || $('input[name=member_email_1]').val() == null){
+			alert("이메일을 입력해 주세요");
 		} else {
-			open("semi.do?command=mailsend&member_email="+member_email.value,"","width=200 , height= 200");
-		}
+			open("semi.do?command=mailsend&member_email=" + member_email,"","width=200 , height= 200");
+		}	
 	}
 	
 	$(function(){
@@ -170,7 +170,7 @@
 				<tr>
 					<th>이메일 *</th>
 					<td>
-						<input type="hidden" name="member_email" value="hdg951002@gmail.com">
+						<input type="hidden" name="member_email" value="">
 						<input type="text" name="member_email_1" maxlength="30" onclick="idCheckConfirm();">@
                         <select name="member_email_2">
                             <option>naver.com</option>
@@ -178,7 +178,7 @@
                             <option>gmail.com</option>
                             <option>nate.com</option>                        
                         </select>
-                        <input type="button" value="test" onclick="sendmailkey();" />
+                        <input type="button" value="인증번호 전송" onclick="sendmailkey();" />
 					</td>
 				</tr>
 				<tr>

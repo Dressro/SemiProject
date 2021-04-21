@@ -10,13 +10,13 @@
 </head>
 <body>
 	<%
-		String AuthenticationKey = (String)request.getSession().getAttribute("AuthenticationKey");
+		String key = (String) request.getAttribute("content");
 	%>
-	인증번호입력
+	인증번호입력!
 	<br/>
 	<form action="semi.do" method="post">
 		<input type="hidden" name="command" value="mailcheck" />
-		<input type="hidden" name="AuthenticationKey" value="${AuthenticationKey }" />
+		<input type="hidden" name="AuthenticationKey" value="<%=key%>"/>
 		<input type="text" name="AuthenticationUser" />
 		<br/>
 		<input type="submit" value="확인" />
