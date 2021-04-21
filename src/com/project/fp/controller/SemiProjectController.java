@@ -227,7 +227,6 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("board_insertres")) {
 			String file_path = request.getSession().getServletContext().getRealPath("fileupload");
 	        String contentType = request.getContentType();
-	        int file_res = 0;
 	        
 	        if (contentType != null &&  contentType.toLowerCase().startsWith("multipart/")) {
 	            Collection<Part> parts = request.getParts();
@@ -247,7 +246,8 @@ public class SemiProjectController extends HttpServlet {
 	                        f_dto.setFile_new_name(file_new_name_str);
 	                        f_dto.setFile_type(file_type);
 	                        f_dto.setFile_size(file_size);
-	                        file_res = f_t_biz.insert(f_dto);
+	                        System.out.println("여기까지 성공");
+	                        int res = f_t_biz.insert(f_dto);
 	                    }
 	                }
 	            }
