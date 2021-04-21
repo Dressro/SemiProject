@@ -80,6 +80,7 @@ public class SemiProjectController extends HttpServlet {
 		ProductBiz p_biz = new ProductBizImpl();
 		ReceiveBiz r_biz = new ReceiveBizImpl();
 		HttpSession session = request.getSession();
+		session.setMaxInactiveInterval(3600);
 
 		if (command.equals("signup")) {
 			response.sendRedirect("signup.jsp");
@@ -138,7 +139,7 @@ public class SemiProjectController extends HttpServlet {
 			m_dto.setMember_password(member_password);
 			MemberDto dto = m_biz.selectOne(m_dto);
 			session.setAttribute("dto", dto);
-			dispatch(response, request, "#.jsp");
+			dispatch(response, request, "index.jsp");
 		} else if (command.equals("sns_signup")) {
 			String member_id = request.getParameter("member_id");
 			MemberDto m_dto = new MemberDto();
@@ -247,14 +248,11 @@ public class SemiProjectController extends HttpServlet {
 			String file_path = request.getSession().getServletContext().getRealPath("fileupload");
 			String contentType = request.getContentType();
 			String member_id = request.getParameter("member_id");
-			System.out.println(contentType);
-			System.out.println(file_path);
 			if (contentType != null && contentType.toLowerCase().startsWith("multipart/")) {
 				Collection<Part> parts = request.getParts();
 				File_TableDto f_dto = new File_TableDto();
 
 				for (Part part : parts) {
-					System.out.println(part);
 					if (part.getHeader("Content-Disposition").contains("filename=")) {
 						String file_name = extractFileName(part.getHeader("Content-Disposition"));
 						if (part.getSize() > 0) {
@@ -272,7 +270,7 @@ public class SemiProjectController extends HttpServlet {
 							f_dto.setBoard_no(2);
 							int res = f_t_biz.board_insert(f_dto);
 							if (res > 0) {
-								
+
 							}
 						}
 					}
@@ -283,6 +281,10 @@ public class SemiProjectController extends HttpServlet {
 			String board_title = request.getParameter("board_title");
 			String board_content = request.getParameter("board_content");
 			String board_category = request.getParameter("board_category");
+			System.out.println(member_id);
+			System.out.println(board_title);
+			System.out.println(board_content);
+			System.out.println(board_category);
 			BoardDto b_dto = new BoardDto();
 			b_dto.setBoard_title(board_title);
 			b_dto.setBoard_content(board_content);

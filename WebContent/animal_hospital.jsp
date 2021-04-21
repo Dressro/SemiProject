@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6cb234998221d5b514c1db1f8c50cf56&libraries=services,clusterer,drawing"></script>
+<link href="resources/css/head.css" rel=stylesheet type="text/css" />
 <style>
 .map_wrap, .map_wrap * {
 	margin: 0;

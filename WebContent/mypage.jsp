@@ -1,3 +1,4 @@
+<%@page import="com.project.fp.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -30,19 +31,46 @@ $(function(){
 });
 
 </script>
-<style>
-
-
-nav {
-  float: left;
-  padding: 20px;
-  }
-  
-</style>
-
+<link href="resources/css/head.css" rel=stylesheet type="text/css" />
 
 </head>
 <body>
+<%
+MemberDto dto = (MemberDto) session.getAttribute("dto");
+%>
+<div id="semipage">
+<header>
+
+			<nav>
+				<ul>
+					<li><a href="#">
+							<img src="https://www.onium.in/wp-content/uploads/2019/03/sample-logo-png-6-1.png" width="160" height="60" alt="메인화면" />
+						</a></li>
+
+					<li class="menu"><a href="semi.do?command=board_notice">공지사항</a>
+					<li class="menu"><a href="semi.do?command=board_free">자유게시판</a>
+					<li class="menu"><a href="semi.do?command=animal_hospital">동물병원검색</a>
+					<li class="menu"><a href="semi.do?command=board_dec">실종신고</a>
+					<li class="menu"><a href="semi.do?command=mypage">마이페이지</a>
+					<li class="menu"><a href="semi.do?command=shopping">쇼핑</a>
+					<li class="menu"><a href="semi.do?command=board_qna">상품문의</a> 
+					<%
+ 						if (dto == null) {
+ 					%>
+					<li class="li_right" id="login"><a class="li_rigit_a" href="semi.do?command=login">로그인</a></li>
+					<%
+					} else {
+					%>
+					<li class="li_right"><a class="li_rigit_a" href="semi.do?command=logout">로그아웃</a> 
+					<%
+ 					}
+ 					%>
+					<li class="li_right"><a class="li_rigit_a" href="semi.do?command=signup">회원가입</a></li>
+
+				</ul>
+			</nav>
+
+		</header>
 	
 
 <section>
@@ -324,6 +352,6 @@ nav {
 </table>
 </section>
 </div>
-
+</div>
 </body>
 </html>

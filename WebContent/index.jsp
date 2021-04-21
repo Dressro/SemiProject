@@ -11,27 +11,11 @@ response.setContentType("text/html; charset=UTF-8");
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<link href="resources/css/head.css" rel=stylesheet type="text/css" />
 <style type="text/css">
-* {
-	margin: 0px;
-	padding: 0px;
-}
 
 body {
 	width: 100%;
-}
-
-ul {
-	list-style: none;
-}
-
-a:hover, a:visited, a:link {
-	color: black;
-}
-
-a {
-	text-decoration: none;
 }
 
 img {
@@ -95,9 +79,7 @@ img {
 	animation-name: fade;
 	animation-duration: 0.5s;
 }
-.li_right{
-	float: right;
-}
+
 #section_1 {
 	height: 300px;
 	width: 100%;
@@ -120,27 +102,7 @@ img {
   		from {opacity: .2}
  		to {opacity: 1}
 	}
-ul {
-	list-style-type: none;
-	margin: 0;
-	overflow: hidden;
-}
 
-li {
-	float: left;
-}
-
-li a {
-	display: block;
-	color: black;
-	text-align: center;
-	padding: 15px 20px;
-	text-decoration: none;
-}
-
-.menu {
-	margin-top: 20px;
-}
 
 #body {
 	width: 1200px;
@@ -263,19 +225,18 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 					<li class="menu"><a href="semi.do?command=mypage">마이페이지</a>
 					<li class="menu"><a href="semi.do?command=shopping">쇼핑</a>
 					<li class="menu"><a href="semi.do?command=board_qna">상품문의</a> 
-					<li class="menu"><a href="semi.do?command=test">test</a>
 					<%
  						if (dto == null) {
  					%>
-					<li style="float: right" id="login"><a href="semi.do?command=login">로그인</a></li>
+					<li class="li_right" id="login"><a class="li_rigit_a" href="semi.do?command=login">로그인</a></li>
 					<%
 					} else {
 					%>
-					<li class="li_right"><a href="semi.do?command=logout">로그아웃</a> 
+					<li class="li_right"><a class="li_rigit_a" href="semi.do?command=logout">로그아웃</a> 
 					<%
  					}
  					%>
-					<li class="li_right"><a href="semi.do?command=signup">회원가입</a></li>
+					<li class="li_right"><a class="li_rigit_a" href="semi.do?command=signup">회원가입</a></li>
 
 				</ul>
 			</nav>
