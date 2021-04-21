@@ -9,7 +9,7 @@ import com.project.fp.dto.File_TableDto;
 
 public class File_TableDaoImpl extends SqlMapConfig implements File_TableDao {
 	
-	private String namespace = "com.project.fp.file_table";
+	private String namespace = "com.project.fp.file_table.";
 
 	@Override
 	public List<File_TableDto> selectList() {

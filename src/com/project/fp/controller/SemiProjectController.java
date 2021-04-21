@@ -39,6 +39,7 @@ import com.project.fp.biz.ReceiveBiz;
 import com.project.fp.biz.ReceiveBizImpl;
 import com.project.fp.dto.AnimalDto;
 import com.project.fp.dto.BoardDto;
+import com.project.fp.dto.File_TableDto;
 import com.project.fp.dto.MemberDto;
 
 @WebServlet("/SemiProjectController")
@@ -49,7 +50,7 @@ import com.project.fp.dto.MemberDto;
 	     fileSizeThreshold = 1024)
 public class SemiProjectController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private int file_new_name_int = 1;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
@@ -225,24 +226,34 @@ public class SemiProjectController extends HttpServlet {
 			response.sendRedirect("board_insertform.jsp");
 		} else if (command.equals("board_insertres")) {
 			String file_path = request.getSession().getServletContext().getRealPath("fileupload");
-	        String file_type = request.getContentType();
-	 
-	        if (file_type != null &&  file_type.toLowerCase().startsWith("multipart/")) {
+	        String contentType = request.getContentType();
+	        int file_res = 0;
+	        
+	        if (contentType != null &&  contentType.toLowerCase().startsWith("multipart/")) {
 	            Collection<Part> parts = request.getParts();
-	            String file_name = "123 ";
+	            File_TableDto f_dto = new File_TableDto();
+	            
 	            for (Part part : parts) {
 	                if  (part.getHeader("Content-Disposition").contains("filename=")) {
-	                    String file_name_1 =  extractFileName(part.getHeader("Content-Disposition"));
+	                    String file_name =  extractFileName(part.getHeader("Content-Disposition"));
+	                    String file_type = file_name.substring(file_name.lastIndexOf("."));
 	                    if (part.getSize() > 0) {
 	                    	String file_size = Long.toString(part.getSize());
 	                        part.write(file_path + File.separator  + file_name);
 	                        part.delete();
+	                        f_dto.setFile_path(file_path);
+	                        f_dto.setFile_ori_name(file_name);
+	                        String file_new_name_str = String.valueOf(file_new_name_int);
+	                        f_dto.setFile_new_name(file_new_name_str);
+	                        f_dto.setFile_type(file_type);
+	                        f_dto.setFile_size(file_size);
+	                        file_res = f_t_biz.insert(f_dto);
 	                    }
 	                }
 	            }
 	        }
-	        System.out.println(file_name);
-	        System.out.println(file_path,file_type,file_name,file_size);
+	        
+	        file_new_name_int++;
 			String board_title = request.getParameter("board_title");
 			String board_content = request.getParameter("board_content");
 			String board_category = request.getParameter("board_category");
