@@ -8,7 +8,9 @@ public interface File_TableDao {
 	
 	public List<File_TableDto> selectList();
 	public File_TableDto selectOne(int file_num);
-	public int insert(File_TableDto dto);
+	public int board_insert(File_TableDto dto);
+	public int animal_insert(File_TableDto dto);
+	public int ch_insert(File_TableDto dto);
 	public int update(File_TableDto dto);
 	public int delete(int file_num);
 

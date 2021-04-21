@@ -16,24 +16,24 @@
 		WHERE CH_NUM = #{ch_num}
 	</select>
 
-	<select id="insert" parameterType="ChatDto">
+	<insert id="insert" parameterType="ChatDto">
 		INSERT INTO CHAT
 		VALUES(CHAT_NUM_SEQ.NEXTVAL, #{ch_name}, SYSDATE, #{member_id})
-	</select>
+	</insert>
 
-	<select id="update" parameterType="ChatDto">
+	<update id="update" parameterType="ChatDto">
 		UPDATE CHAT
 		SET CH_NAME =
 		#{ch_name}, CH_DATE = SYSDATE, MEMBER_ID = #{member_id}
 		WHERE CHAT_NUM
 		= #{chat_num}
-	</select>
+	</update>
 
-	<select id="delete" parameterType="int">
+	<delete id="delete" parameterType="int">
 		DELETE CHAT
 		WHERE CHAT_NUM =
 		#{chat_num}
-	</select>
+	</delete>
 
 </mapper>
 

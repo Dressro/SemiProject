@@ -247,16 +247,18 @@ public class SemiProjectController extends HttpServlet {
 			String file_path = request.getSession().getServletContext().getRealPath("fileupload");
 			String contentType = request.getContentType();
 			String member_id = request.getParameter("member_id");
-
+			System.out.println(contentType);
+			System.out.println(file_path);
 			if (contentType != null && contentType.toLowerCase().startsWith("multipart/")) {
 				Collection<Part> parts = request.getParts();
 				File_TableDto f_dto = new File_TableDto();
 
 				for (Part part : parts) {
+					System.out.println(part);
 					if (part.getHeader("Content-Disposition").contains("filename=")) {
 						String file_name = extractFileName(part.getHeader("Content-Disposition"));
-						String file_type = file_name.substring(file_name.lastIndexOf("."));
 						if (part.getSize() > 0) {
+							String file_type = file_name.substring(file_name.lastIndexOf("."));
 							String file_size = Long.toString(part.getSize());
 							part.write(file_path + File.separator + file_name);
 							part.delete();
@@ -267,8 +269,8 @@ public class SemiProjectController extends HttpServlet {
 							f_dto.setFile_type(file_type);
 							f_dto.setFile_size(file_size);
 							f_dto.setMember_id(member_id);
-							System.out.println("여기까지 성공");
-							int res = f_t_biz.insert(f_dto);
+							f_dto.setBoard_no(2);
+							int res = f_t_biz.board_insert(f_dto);
 							if (res > 0) {
 								
 							}

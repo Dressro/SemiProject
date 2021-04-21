@@ -20,25 +20,25 @@
 		ANIMAL_NO = #{animal_no}
 	</select>
 
-	<select id="insert" parameterType="AnimalDto">
+	<insert id="insert" parameterType="AnimalDto">
 		INSERT INTO ANIMAL
 		VALUES(ANIMAL_NO_SEQ.NEXTVAL, #{animal_name}, #{animal_gen},
 		#{animal_type},
 		#{animal_age}, #{animal_weight}, #{animal_unq}, #{member_id})
-	</select>
+	</insert>
 
-	<select id="update" parameterType="AnimalDto">
+	<update id="update" parameterType="AnimalDto">
 		UPDATE ANIMAL
 		SET ANIMAL_NAME =
 		#{animal_name}
 		WHERE ANIMAL_NO = #{animal_no}
-	</select>
+	</update>
 
-	<select id="delete" parameterType="int">
+	<delete id="delete" parameterType="int">
 		DELETE ANIMAL
 		WHERE ANIMAL_NO =
 		#{animal_no}
-	</select>
+	</delete>
 
 
 </mapper>
