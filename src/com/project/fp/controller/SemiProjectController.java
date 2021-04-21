@@ -246,6 +246,7 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("board_insertres")) {
 			String file_path = request.getSession().getServletContext().getRealPath("fileupload");
 			String contentType = request.getContentType();
+			String member_id = request.getParameter("member_id");
 
 			if (contentType != null && contentType.toLowerCase().startsWith("multipart/")) {
 				Collection<Part> parts = request.getParts();
@@ -265,8 +266,12 @@ public class SemiProjectController extends HttpServlet {
 							f_dto.setFile_new_name(file_new_name_str);
 							f_dto.setFile_type(file_type);
 							f_dto.setFile_size(file_size);
+							f_dto.setMember_id(member_id);
 							System.out.println("여기까지 성공");
 							int res = f_t_biz.insert(f_dto);
+							if (res > 0) {
+								
+							}
 						}
 					}
 				}
@@ -276,7 +281,6 @@ public class SemiProjectController extends HttpServlet {
 			String board_title = request.getParameter("board_title");
 			String board_content = request.getParameter("board_content");
 			String board_category = request.getParameter("board_category");
-			String member_id = request.getParameter("member_id");
 			BoardDto b_dto = new BoardDto();
 			b_dto.setBoard_title(board_title);
 			b_dto.setBoard_content(board_content);

@@ -167,23 +167,6 @@ CREATE TABLE FILE_TABLE(
 	CONSTRAINT FILE_TABLE_CH_NUM_FK FOREIGN KEY (CH_NUM) REFERENCES CHAT (CH_NUM),
 	CONSTRAINT FILE_TABLE_ANIMAL_NO_KF FOREIGN KEY (ANIMAL_NO) REFERENCES ANIMAL (ANIMAL_NO)
 );
-<<<<<<< HEAD
 
-<<<<<<< HEAD
-CREATE TABLE HOSPITAL(
-	HOSPITAL VARCHAR(200) NOT NULL,
-	LATITUDE NUMBER ,
-	LONGITUDE NUMBER
-	
-);
-select * from hospital;
-select * from member;
-=======
-SELECT * FROM MEMBER
-DELETE FROM MEMBER WHERE MEMBER_ID = '12'
-
->>>>>>> 25ea4bf620be4cb94073bfcca7d6070b6b1f274f
-=======
-select * from member;  dhksdn486  dhksdn
-select * from file
->>>>>>> 4d2f077af4c22e12ee53cf01496e0de1c8006594
+select * from member;  
+select * from file_table;
