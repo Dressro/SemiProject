@@ -140,7 +140,7 @@ nav {
 				<tr>
 					<th>아이디 *</th>
 					<td>
-						<input type="text" name="member_id" title="n"  />
+						<input type="text" name="member_id" title="n" />
 						<input type="button" value="중복체크" onclick="idCheck();" />
 					</td>
 				</tr>
@@ -313,7 +313,7 @@ nav {
 				</tr>
                 <tr>
 					<td colspan="9" align="right">
-						<input type="submit" value="회원가입" onclick="check();"/>
+						<input type="submit" value="회원정보수정" onclick="#"/>
 						<input type="button" value="취소" onclick="location.href='index.html'" />
 					</td>
 				</tr>
