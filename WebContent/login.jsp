@@ -112,7 +112,7 @@ $(function(){
 			<div id="naver_id_login"></div>
 			<!-- //네이버아이디로로그인 버튼 노출 영역 -->
 			<script type="text/javascript">
-  					var naver_id_login = new naver_id_login("3FogXXVNeg3aYw15VPrY", "http://localhost:8787/SemiProject/index.html");
+  					var naver_id_login = new naver_id_login("3FogXXVNeg3aYw15VPrY", "http://localhost:8787/SemiProject/naver_callback.jsp");
   					var state = naver_id_login.getUniqState();
   					naver_id_login.setButton("green", 3,40);
   					naver_id_login.setDomain("http://localhost:8787/SemiProject/login.jsp");

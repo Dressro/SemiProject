@@ -2,6 +2,7 @@ package com.project.fp.controller;
 
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -11,6 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.project.fp.biz.AnimalBiz;
 import com.project.fp.biz.AnimalBizImpl;
 import com.project.fp.biz.BoardBiz;
@@ -261,6 +266,10 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("logout")) {
 			session.invalidate();
 			response.sendRedirect("index.jsp");
+		} else if (command.equals("animal_hospital")) {
+			response.sendRedirect("animal_hospital.jsp");
+		} else if (command.equals("test")) {
+			response.sendRedirect("test.html");
 		}
 	}
 
