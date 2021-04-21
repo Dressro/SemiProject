@@ -15,11 +15,10 @@
 		WHERE FILE_NUM = #{file_num}
 	</select>
 	
-	<select id="insert" parameterType="File_TableDto">
+	<insert id="insert" parameterType="File_TableDto">
 		INSERT INTO FILE_TABLE
-		VALUES(FILE_NUM_SEQ, #{file_path}, #{file_ori_name}, #{file_new_name}, #{file_type}, SYSDATE, #{file_size}, '1', '1', '1', '1')
-	</select>
-	
+		VALUES(FILE_NUM_SEQ.NEXTVAL, #{file_path}, #{file_ori_name}, #{file_new_name}, #{file_type}, SYSDATE, #{file_size}, 'Dressro', '2', '1', '1')
+	</insert>
 	<delete id="delete" parameterType="File_TableDto">
 		DELETE FROM FILE_TABLE
 		WHERE FILE_NUM = #{file_num}

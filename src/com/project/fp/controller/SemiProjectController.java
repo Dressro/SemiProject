@@ -228,6 +228,12 @@ public class SemiProjectController extends HttpServlet {
 			String file_path = request.getSession().getServletContext().getRealPath("fileupload");
 	        String contentType = request.getContentType();
 	        
+	       /* File fileSaveDir = new File(file_path);
+			
+			if (!fileSaveDir.exists()) {
+				fileSaveDir.mkdirs();
+			}
+			*/
 	        if (contentType != null &&  contentType.toLowerCase().startsWith("multipart/")) {
 	            Collection<Part> parts = request.getParts();
 	            File_TableDto f_dto = new File_TableDto();
