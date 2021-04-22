@@ -13,6 +13,8 @@
 
 	<div id = "paging">
 		
+		<!-- 게시판 별로 command 수정해줘야 함! -->
+		
 		<!-- value에 서블릿 주소 추가하기 -->
 		<c:url var="action" value="/semi.do" />
 		
@@ -25,7 +27,7 @@
 		<c:forEach begin="${param.blockBegin }" end="${param.blockEnd }" var="index">
 			<c:choose>
 				<c:when test="${param.nowPage == index }">
-					<span>${index }</span>
+					${index }
 				</c:when>
 				<c:otherwise>
 					<a href="${action }?command=board_notice&nowPage=${index}">${index }</a>

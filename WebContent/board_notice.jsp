@@ -54,5 +54,13 @@
 		</tr>
 	</table>
 	
+	<jsp:include page="/board_notice_paging.jsp">
+		<jsp:param value="${Pdto.prev }" name="prev"/>
+		<jsp:param value="${Pdto.blockBegin }" name="blockBegin"/>
+		<jsp:param value="${Pdto.blockEnd }" name="blockEnd"/>
+		<jsp:param value="${Pdto.nowPage }" name="nowPage"/>
+		<jsp:param value="${Pdto.next }" name="next"/>
+	</jsp:include>
+	
 </body>
 </html>

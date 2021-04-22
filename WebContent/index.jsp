@@ -218,7 +218,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 							<img src="https://www.onium.in/wp-content/uploads/2019/03/sample-logo-png-6-1.png" width="160" height="60" alt="메인화면" />
 						</a></li>
 
-					<li class="menu"><a href="semi.do?command=board_notice">공지사항</a>
+					<li class="menu"><a href="semi.do?command=board_notice&nowPage=1">공지사항</a>
 					<li class="menu"><a href="semi.do?command=board_free">자유게시판</a>
 					<li class="menu"><a href="semi.do?command=animal_hospital">동물병원검색</a>
 					<li class="menu"><a href="semi.do?command=board_dec">실종신고</a>
