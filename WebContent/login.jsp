@@ -141,6 +141,7 @@ $(function(){
 			    document.getElementById('g-recaptcha-error').innerHTML = '';
 			}
 			</script>
+			<input type="submit" value="회원가입" onclick="location.href='semi.do?command=signup'" >
 
 	</div>
 </body>

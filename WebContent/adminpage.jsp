@@ -1,3 +1,9 @@
+<%@page import="com.project.fp.dto.ProductDto"%>
+<%@page import="com.project.fp.biz.ProductBizImpl"%>
+<%@page import="com.project.fp.biz.ProductBiz"%>
+<%@page import="com.project.fp.dto.Order_TableDto"%>
+<%@page import="com.project.fp.biz.Order_TableBizImpl"%>
+<%@page import="com.project.fp.biz.Order_TableBiz"%>
 <%@page import="com.project.fp.dto.BoardDto"%>
 <%@page import="com.project.fp.biz.BoardBizImpl"%>
 <%@page import="com.project.fp.biz.BoardBiz"%>
@@ -44,7 +50,7 @@ nav {
   float: left;
   padding: 20px;
   }
-  
+
 </style>
 
 </head>
@@ -126,8 +132,8 @@ nav {
 
 	<tr>
 		<td colspan="11" align="right">
-			<input type="submit" value="선택변경">
-			<input type="button" value="글작성" onclick="" />
+			<input type="submit" value="등급변경">
+			<input type="button" value="회원등록" onclick="" />
 		</td>
 	</tr>
 </table>
@@ -215,6 +221,13 @@ nav {
 </section>
 
 <section class="adminpage">
+
+
+<%
+ ProductBiz pbiz = new ProductBizImpl();
+	List<ProductDto> productlist = pbiz.selectList();
+%>
+
 <h1>상품관리</h1>
 <table border="1">
 	<col width="30"/>
@@ -232,11 +245,35 @@ nav {
 		<th>상품명</th>
 		<th>정가</th>
 		<th>재고수량</th>
-		<th>판매량</th>
+		<th>입고날짜</th>
+		<th>출고날짜</th>
 	</tr>
+	
+		
+
+<%
+	for (ProductDto dto : productlist ) {
+%>
+
+	<tr>
+		<td><input type="checkbox" name="chk" value=""></td>
+		<td><%=dto.getProd_num() %></td>
+		<td><%=dto.getProd_category() %></td>
+		<td><%=dto.getProd_name() %></td>
+		<td><%=dto.getProd_price() %></td>
+		<td><%=dto.getProd_stock() %></td>
+		<td><%=dto.getProd_indate() %></td>
+		<td><%=dto.getProd_outdate() %></td>
+	</tr>
+
+<%
+	}
+%> 
+	
 </table>
 </section>
 </div>
 
 </body>
+
 </html>

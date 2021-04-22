@@ -363,7 +363,7 @@ public class SemiProjectController extends HttpServlet {
 		}
 		
 		if(command.equals("test")) {
-			File fi = new File("C://Users//alahx/test.csv");
+			File fi = new File("C://Users//alahx/test123123123123123.csv");
 			BufferedReader br = new BufferedReader(new BufferedReader(new FileReader(fi)));
 			String line = "";
 			String[] str = new String[3];
