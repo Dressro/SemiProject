@@ -87,6 +87,7 @@ public class SemiProjectController extends HttpServlet {
 		HospitalBiz h_biz = new HospitalBizImpl();
 		HttpSession session = request.getSession();
 
+
 		if (command.equals("signup")) {
 			response.sendRedirect("signup.jsp");
 		} else if (command.equals("general_signup")) {
@@ -333,7 +334,12 @@ public class SemiProjectController extends HttpServlet {
 			}
 
 			file_new_name_int++;
-		} else if (command.equals("logout")) {
+		}else if(command.equals("board_dec_detail")){
+			int board_no = Integer.parseInt(request.getParameter("board_no"));
+			BoardDto b_dto = b_biz.board_selectOne(board_no);
+			request.setAttribute("dto", b_dto);
+			dispatch(response, request, "board_detail.jsp");
+		}else if (command.equals("logout")) {
 			session.invalidate();
 			response.sendRedirect("index.jsp");
 		} else if (command.equals("animal_hospital")) {
@@ -343,7 +349,9 @@ public class SemiProjectController extends HttpServlet {
 			dispatch(response, request, "animal_hospital.jsp");
 		} else if (command.equals("test")) {
 			response.sendRedirect("test.html");
-		} else if (command.equals("mailsend")) {
+		}
+
+		if (command.equals("mailsend")) {
 			String member_email = request.getParameter("member_email"); // 수신자
 			String from = "ejsdnlcl@gmail.com"; // 발신자
 			String cc = "scientist-1002@hanmail.net"; // 참조
@@ -364,7 +372,9 @@ public class SemiProjectController extends HttpServlet {
 				System.out.println("실패 이유 : " + e.getMessage());
 				e.printStackTrace();
 			}
-		} else if (command.equals("mailcheck")) {
+		}
+
+		if (command.equals("mailcheck")) {
 			String AuthenticationKey = request.getParameter("AuthenticationKey");
 			String AuthenticationUser = request.getParameter("AuthenticationUser");
 			if (AuthenticationKey.equals(AuthenticationUser)) {
@@ -373,6 +383,7 @@ public class SemiProjectController extends HttpServlet {
 				System.out.println("인증 실패");
 			}
 		}
+
 		
 		if(command.equals("test")) {
 			File fi = new File("C://Users//alahx/test123123123123123.csv");
@@ -400,6 +411,7 @@ public class SemiProjectController extends HttpServlet {
 				
 			}
 		}
+
 
 	}
 

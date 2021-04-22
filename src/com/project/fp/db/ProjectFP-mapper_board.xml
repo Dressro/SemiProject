@@ -57,6 +57,15 @@
 		and b.member_id = m.member_id
 		order by board_dec_no desc
 	</select>
+	<select id="board_selectOne" parameterType="int" resultType="BoardDto">
+		select
+		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
+		board_title,b.board_content,b.board_regdate,b.board_readcount,
+		b.board_groupno,b.board_groupseq,b.board_titletab,b.board_category,m.member_nicname as member_id
+		from board b, member m
+		where b.board_no = #{board_no}
+		and b.member_id = m.member_id
+	</select>
 	<select id="free_selectOne" parameterType="int"
 		resultType="BoardDto">
 		select
