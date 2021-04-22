@@ -205,6 +205,8 @@ public class SemiProjectController extends HttpServlet {
 
 			int res = m_res + a_res;
 			if (res > 0) {
+				session.setAttribute("dto", m_dto);
+				session.setMaxInactiveInterval(3600);
 				jsResponse(response, "회원가입 성공", "index.jsp");
 			} else {
 				jsResponse(response, "회원가입 실패", "#");
