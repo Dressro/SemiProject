@@ -60,6 +60,16 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		}
 		return list;
 	}
+	
+	@Override
+	public BoardDto board_selectOne(int board_no) {
+		// TODO Auto-generated method stub
+		BoardDto dto = null;
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			dto = session.selectOne(namespace + "board_selectOne", board_no);
+		}
+		return dto;
+	}
 
 	@Override
 	public BoardDto free_selectOne(int board_free_no) {
@@ -301,4 +311,5 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		return res;
 	}
 
+	
 }

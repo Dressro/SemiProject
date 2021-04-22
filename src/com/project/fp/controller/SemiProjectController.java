@@ -1,8 +1,6 @@
 package com.project.fp.controller;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
@@ -45,8 +43,6 @@ import com.project.fp.biz.Chat_ContentBiz;
 import com.project.fp.biz.Chat_ContentBizImpl;
 import com.project.fp.biz.File_TableBiz;
 import com.project.fp.biz.File_TableBizImpl;
-import com.project.fp.biz.HospitalBiz;
-import com.project.fp.biz.HospitalBizImpl;
 import com.project.fp.biz.MemberBiz;
 import com.project.fp.biz.MemberBizImpl;
 import com.project.fp.biz.Order_TableBiz;
@@ -58,7 +54,6 @@ import com.project.fp.biz.ReceiveBizImpl;
 import com.project.fp.dto.AnimalDto;
 import com.project.fp.dto.BoardDto;
 import com.project.fp.dto.File_TableDto;
-import com.project.fp.dto.HospitalDto;
 import com.project.fp.dto.MemberDto;
 import com.project.fp.gmail.MailSend;
 
@@ -84,8 +79,8 @@ public class SemiProjectController extends HttpServlet {
 		Order_TableBiz o_t_biz = new Order_TableBizImpl();
 		ProductBiz p_biz = new ProductBizImpl();
 		ReceiveBiz r_biz = new ReceiveBizImpl();
-		HospitalBiz h_biz = new HospitalBizImpl();
 		HttpSession session = request.getSession();
+		session.setMaxInactiveInterval(3600);
 
 		if (command.equals("signup")) {
 			response.sendRedirect("signup.jsp");
@@ -144,8 +139,7 @@ public class SemiProjectController extends HttpServlet {
 			m_dto.setMember_password(member_password);
 			MemberDto dto = m_biz.selectOne(m_dto);
 			session.setAttribute("dto", dto);
-			session.setMaxInactiveInterval(3600);
-			jsResponse(response, "로그인 성공", "index.jsp");
+			dispatch(response, request, "index.jsp");
 		} else if (command.equals("sns_signup")) {
 			String member_id = request.getParameter("member_id");
 			MemberDto m_dto = new MemberDto();	
@@ -154,7 +148,6 @@ public class SemiProjectController extends HttpServlet {
 			t_dto = m_biz.selectSerch(m_dto);
 			if (t_dto != null) {
 				session.setAttribute("dto", t_dto);
-				session.setMaxInactiveInterval(3600);
 				jsResponse(response, "로그인 성공(SNS)", "index.jsp");
 			} else {
 				request.setAttribute("dto", m_dto);
@@ -331,14 +324,21 @@ public class SemiProjectController extends HttpServlet {
 			}
 
 			file_new_name_int++;
-		} else if (command.equals("logout")) {
+		}else if(command.equals("board_dec_detail")){
+			int board_no = Integer.parseInt(request.getParameter("board_no"));
+			BoardDto b_dto = b_biz.board_selectOne(board_no);
+			request.setAttribute("dto", b_dto);
+			dispatch(response, request, "board_detail.jsp");
+		}else if (command.equals("logout")) {
 			session.invalidate();
 			response.sendRedirect("index.jsp");
 		} else if (command.equals("animal_hospital")) {
 			response.sendRedirect("animal_hospital.jsp");
 		} else if (command.equals("test")) {
 			response.sendRedirect("test.html");
-		} else if (command.equals("mailsend")) {
+		}
+
+		if (command.equals("mailsend")) {
 			String member_email = request.getParameter("member_email"); // 수신자
 			String from = "ejsdnlcl@gmail.com"; // 발신자
 			String cc = "scientist-1002@hanmail.net"; // 참조
@@ -359,40 +359,15 @@ public class SemiProjectController extends HttpServlet {
 				System.out.println("실패 이유 : " + e.getMessage());
 				e.printStackTrace();
 			}
-		} else if (command.equals("mailcheck")) {
+		}
+
+		if (command.equals("mailcheck")) {
 			String AuthenticationKey = request.getParameter("AuthenticationKey");
 			String AuthenticationUser = request.getParameter("AuthenticationUser");
 			if (AuthenticationKey.equals(AuthenticationUser)) {
 				System.out.println("인증 성공");
 			} else {
 				System.out.println("인증 실패");
-			}
-		}
-		
-		if(command.equals("test")) {
-			File fi = new File("C://Users//alahx/test.csv");
-			BufferedReader br = new BufferedReader(new BufferedReader(new FileReader(fi)));
-			String line = "";
-			String[] str = new String[3];
-			HospitalDto h_dto = null;
-			int res = 0;
-			while ((line = br.readLine()) != null) { //한 라인씩 읽어오기.
-				h_dto = new HospitalDto();
-				System.out.println(line);
-				str = line.split(",");
-				System.out.println(str[0]);
-				System.out.println(str[1]);
-				System.out.println(str[2]);
-				
-				h_dto.setHospital_name(str[0]);
-				h_dto.setHospital_addr(str[1]);
-				h_dto.setHospital_phone(str[2]);
-				
-				res = h_biz.insert(h_dto);
-				if(res > 0) {
-					break;
-				}
-				
 			}
 		}
 
