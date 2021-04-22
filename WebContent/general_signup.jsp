@@ -66,14 +66,13 @@
 		} else {
 			open("semi.do?command=idchk&member_id="+member_id.value,"","width=300 , height= 300");
 		}
-	
 	}
 	function check(){
 		var member_email = $('input[name=member_email_1]').val() +"@"+ $('select[name=member_email_2]').val();
 		$('input[name=member_email]').attr('value',member_email);
 		var member_phone = $('input[name=member_phone_1]').val() +"-"+ $('input[name=member_phone_2]').val() +"-"+$('input[name=member_phone_3]').val(); 
 		$('input[name=member_phone]').attr('value',member_phone);
-		var member_addr = $('input[name=member_addr_1]').val() + " " + $('input[name=member_addr_2]').val()
+		var member_addr = $('input[name=member_addr_1]').val() + " " + $('input[name=member_addr_2]').val();
 		$('input[name=member_addr]').attr('value',member_addr);
 	}
 	
@@ -115,6 +114,7 @@
 			open("semi.do?command=mailsend&member_email=" + member_email,"","width=200 , height= 200");
 		}	
 	}
+	
 </script>
 
 <script>
@@ -122,7 +122,6 @@
 </script>
 </head>
 <body>
-	
 	<h1>일반회원 회원가입</h1>
 	
 		<div class="join_table">
@@ -132,12 +131,12 @@
 			<input type="hidden" name="member_notify" value="N" />
 			<input type="hidden" name="member_grade" value="개인" />
 			<input type="hidden" name="member_dr_info" value="없음"/>
-			<table border="1">
+			<table border="1" id="member_table">
 				<tr>
 					<th>아이디 *</th>
 					<td>
-						<input type="text" name="member_id" title="n" required="required" />
-						<input type="button" value="중복체크" onclick="idCheck();" />
+						<input type="text" title="n" name="member_id" required="required"/>
+						<input type="button" name="member_id_chk" value="중복체크" onclick="idCheck();" />
 					</td>
 				</tr>
 				<tr>
@@ -176,7 +175,7 @@
                             <option>gmail.com</option>
                             <option>nate.com</option>                        
                         </select>
-                        <input type="button" value="인증번호 전송" onclick="sendmailkey();" />
+                        <input type="button" name="email_send" value="인증번호 전송" onclick="sendmailkey();" />
 					</td>
 				</tr>
 				<tr>
@@ -192,10 +191,10 @@
 					<th>주소 *</th>
 					<td>
 						<input type="hidden" name="member_addr" value="">
-						<input type="text" id="postcode" placeholder="우편번호">
+						<input type="text" id="postcode" placeholder="우편번호" readonly="readonly">
 						<input type="button" onclick="address();" value="우편번호 찾기"><br>
-						<input type="text" name="member_addr_1" id="addr_1" placeholder="기본주소">
-						<input type="text" name="member_addr_2" id="addr_2" placeholder="상세주소">
+						<input type="text" name="member_addr_1" id="addr_1" placeholder="기본주소" readonly="readonly">
+						<input type="text" name="member_addr_2" id="addr_2" placeholder="상세주소" required="required">
 					</td>
 				</tr>
 				<tr>

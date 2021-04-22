@@ -142,7 +142,7 @@ public class SemiProjectController extends HttpServlet {
 			dispatch(response, request, "index.jsp");
 		} else if (command.equals("sns_signup")) {
 			String member_id = request.getParameter("member_id");
-			MemberDto m_dto = new MemberDto();
+			MemberDto m_dto = new MemberDto();	
 			m_dto.setMember_id(member_id);
 			MemberDto t_dto = null;
 			t_dto = m_biz.selectSerch(m_dto);
@@ -153,8 +153,15 @@ public class SemiProjectController extends HttpServlet {
 				request.setAttribute("dto", m_dto);
 				dispatch(response, request, "sns_signup.jsp");
 			}
-
-		} else if (command.equals("sns_signupres")) {
+		}else if (command.equals("sns_general_signup")) {
+			String member_id = request.getParameter("member_id");
+			request.setAttribute("member_id", member_id);
+			dispatch(response, request, "sns_general_signup.jsp");
+		} else if (command.equals("sns_doctor_signup")) {
+			String member_id = request.getParameter("member_id");
+			request.setAttribute("member_id", member_id);
+			dispatch(response, request, "sns_doctor_signup.jsp"); 
+		}else if (command.equals("sns_signupres")) {
 			String member_id = request.getParameter("member_id");
 			String member_password = getRandomPassword(10);
 			String member_name = request.getParameter("member_name");
