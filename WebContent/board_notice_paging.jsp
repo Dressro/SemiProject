@@ -11,36 +11,34 @@
 </head>
 <body>
 
-	<div id = "paging">
-		
-		<!-- 게시판 별로 command 수정해줘야 함! -->
-		
-		<!-- value에 서블릿 주소 추가하기 -->
-		<c:url var="action" value="/semi.do" />
-		
-		<!-- 이전 페이지 블록으로 이동 -->
-		<c:if test="${param.prev }">
-			<a href="${action }?command=board_notice&nowPage=${param.blockBegin-1}">[이전]</a>
-		</c:if>
-		
-		<!-- 현재 페이지 블록에 해당하는 페이지 출력 -->
-		<c:forEach begin="${param.blockBegin }" end="${param.blockEnd }" var="index">
-			<c:choose>
-				<c:when test="${param.nowPage == index }">
-					${index }
-				</c:when>
-				<c:otherwise>
-					<a href="${action }?command=board_notice&nowPage=${index}">${index }</a>
-				</c:otherwise>
-			</c:choose>
-		</c:forEach>
+<div id = "paging">
 	
-		<!-- 다음 페이지 블록으로 이동 -->
-		<c:if test="${param.next }">
-			<a href="${action }?command=board_notice&nowPage=${param.blockEnd+1}">[다음]</a>
-		</c:if>
+  	  <!-- value에 서블릿 주소 넣기 -->
+	  <c:url var = "action" value="/semi.do" />
+
+	  <!-- 이전 페이지 블록으로 이동 -->
+	  <c:if test="${param.nowBlock > 1}">
+		    <a href="${action}?command=board_notice&nowPage=${param.blockBegin-1}">◀</a>
+	  </c:if>
 	
-	</div>
+	  <!-- 현재 페이지 블록에 해당하는 페이지 출력 -->
+	  <c:forEach begin="${param.blockBegin}" end="${param.blockEnd}" var="index">
+		    <c:choose>
+			    <c:when test="${param.nowPage == index}">
+				     ${index}
+			    </c:when>
+			    <c:otherwise>
+             <a href="${action}?command=board_notice&nowPage=${index}">${index}</a>
+			    </c:otherwise>
+		    </c:choose>
+	  </c:forEach>
+
+	  <!-- 다음 페이지 블록으로 이동 -->
+	  <c:if test="${param.nowBlock <= param.totalBlock}">
+		    <a href="${action}?command=board_notice&nowPage=${param.blockEnd+1}">▶</a>
+	  </c:if>
+
+</div>
 
 </body>
 </html>

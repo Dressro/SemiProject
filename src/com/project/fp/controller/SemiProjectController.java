@@ -228,9 +228,7 @@ public class SemiProjectController extends HttpServlet {
 			int nowPage = Integer.parseInt(request.getParameter("nowPage"));
 			int count = b_biz.notice_allCount();
 			
-			PagingDto Pdto = new PagingDto();
-			Pdto.setTotalBoard(count);
-			Pdto.setNowPage(nowPage);
+			PagingDto Pdto = new PagingDto(count, nowPage);
 			
 			List<BoardDto> list = b_biz.notice_selectList(Pdto);
 			request.setAttribute("list", list);

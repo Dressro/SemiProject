@@ -8,30 +8,59 @@ public class PagingDto {
 	public static final int DISPLAY_PAGE = 5;
 	
 	private int nowPage;		// 현재 페이지
-	private int totalBoard;		// 총 게시글 수
+	private int prevPage;		// 이전 페이지
+	private int nextPage;		// 다음 페이지
+	private int totalPage;		// 전체 페이지 갯수
 	
+	private int totalBlock;		// 전체 블록 갯수
+	private int nowBlock;		// 현제 페이지 블록
+	private int prevBlock;		// 이전 페이지 블록
+	private int nextBlock;		// 다음 페이지 블록
+	
+	private int pageBegin;			// 해당 페이지의 첫번째 게시글 no
+	private int pageEnd;			// 해당 페이지의 마지막 게시글 no
+
 	private int blockBegin;		// 현재 블록의 시작 페이지 번호
 	private int blockEnd;		// 현재 블록의 마지막 페이지 번호
 	
-	boolean prev;				// [이전] 버튼
-	boolean next;				// [다음] 버튼
+	// 파라미터 없는 생성자
+	public PagingDto() {}
 	
-	private void paging() {
-		// 현재 블록의 마지막 페이지 번호 구하기
-		blockEnd = ((int)Math.ceil(nowPage/(double)DISPLAY_PAGE))*DISPLAY_PAGE;
-		// 현재 블록의 시작 페이지 번호 구하기
-		blockBegin = blockEnd - (DISPLAY_PAGE - 1);
-		// 총 페이지 수 구하기
-	    int totalPage = (int)Math.ceil(totalBoard / (double)DISPLAY_BOARD);
-		// [이전] 버튼 (첫번째 블록에서는 이전 버튼 비활성화)
-		prev = (blockBegin == 1)? false:true;
-		// [다음] 버튼 (마지막 블록에서는 다음 버튼 비활성화)
-		if (totalPage < blockEnd) {
+	
+	// 생성자
+	public PagingDto(int count, int nowPage) {
+		nowBlock = 1;				// 현재 페이지 블록
+		this.nowPage = nowPage;		// 현재 페이지
+		setTotalPage(count);		// 전체 페이지 수 구하기
+		setPageRange();				// 페이지 번호 계산
+		setTotalBlock();			// 전체 블록 수 계산
+		setBlockRange();			// 페이지 블록 계산
+	}
+	
+	// 페이지 블록 계산
+	public void setBlockRange() {
+		// 1. 현재 페이지가 몇 번째 페이지 블록에 속하는지 계산
+		nowBlock = (int)Math.ceil((nowPage-1)/DISPLAY_PAGE) + 1;
+		// 2. 현재 페이지 블록의 시작 페이지, 마지막 페이지 계산
+		blockBegin = (nowBlock-1) * DISPLAY_PAGE + 1;
+		blockEnd = blockBegin + DISPLAY_PAGE - 1;
+		// 3. 마지막 블록이 범위를 초과하지 않도록 계산
+		if (blockEnd > totalPage) {
 			blockEnd = totalPage;
-			next = false;
-		} else {
-			next = true;
 		}
+		// 4. 이전을 눌렀을 때 이동할 페이지 번호
+		prevPage = (nowPage == 1)? 1: (nowBlock-1)*DISPLAY_PAGE;
+		// 5. 다음을 눌렀을 때 이동할 페이지 번호
+		nextPage = (nowBlock > totalBlock)? (nowBlock*DISPLAY_PAGE) : (nowBlock*DISPLAY_PAGE) + 1;
+		if (nextPage >= totalPage) {
+			nextPage = totalPage;
+		}
+	}
+	
+	// 페이지 범위 계산
+	public void setPageRange() {
+		pageBegin = (nowPage-1) * DISPLAY_BOARD + 1;
+		pageEnd = pageBegin + DISPLAY_BOARD - 1;
 	}
 	
 	
@@ -41,12 +70,59 @@ public class PagingDto {
 	public void setNowPage(int nowPage) {
 		this.nowPage = nowPage;
 	}
-	public int getTotalBoard() {
-		return totalBoard;
+	public int getPrevPage() {
+		return prevPage;
 	}
-	public void setTotalBoard(int totalBoard) {
-		this.totalBoard = totalBoard;
-		paging();
+	public void setPrevPage(int prevPage) {
+		this.prevPage = prevPage;
+	}
+	public int getNextPage() {
+		return nextPage;
+	}
+	public void setNextPage(int nextPage) {
+		this.nextPage = nextPage;
+	}
+	public int getTotalPage() {
+		return totalPage;
+	}
+	public void setTotalPage(int totalPage) {
+		this.totalPage = totalPage;
+	}
+	public int getTotalBlock() {
+		return totalBlock;
+	}
+	public void setTotalBlock() {
+		this.totalBlock = (int)Math.ceil(totalPage/DISPLAY_PAGE);
+	}
+	public int getNowBlock() {
+		return nowBlock;
+	}
+	public void setNowBlock(int nowBlock) {
+		this.nowBlock = nowBlock;
+	}
+	public int getPrevBlock() {
+		return prevBlock;
+	}
+	public void setPrevBlock(int prevBlock) {
+		this.prevBlock = prevBlock;
+	}
+	public int getNextBlock() {
+		return nextBlock;
+	}
+	public void setNextBlock(int nextBlock) {
+		this.nextBlock = nextBlock;
+	}
+	public int getPageBegin() {
+		return pageBegin;
+	}
+	public void setPageBegin(int pageBegin) {
+		this.pageBegin = pageBegin;
+	}
+	public int getPageEnd() {
+		return pageEnd;
+	}
+	public void setPageEnd(int pageEnd) {
+		this.pageEnd = pageEnd;
 	}
 	public int getBlockBegin() {
 		return blockBegin;
@@ -60,18 +136,6 @@ public class PagingDto {
 	public void setBlockEnd(int blockEnd) {
 		this.blockEnd = blockEnd;
 	}
-	public boolean isPrev() {
-		return prev;
-	}
-	public void setPrev(boolean prev) {
-		this.prev = prev;
-	}
-	public boolean isNext() {
-		return next;
-	}
-	public void setNext(boolean next) {
-		this.next = next;
-	}
 	public static int getDisplayBoard() {
 		return DISPLAY_BOARD;
 	}
@@ -79,5 +143,11 @@ public class PagingDto {
 		return DISPLAY_PAGE;
 	}
 	
-
+	
 }
+	
+	
+	
+
+	
+	
