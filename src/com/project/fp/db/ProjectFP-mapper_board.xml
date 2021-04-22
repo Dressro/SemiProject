@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.fp.board">
+
 	<select id="board_selectList" parameterType="BoardDto" resultType="BoardDto">
 		select
 		board_no,board_free_no,board_notice_no,board_qna_no,board_dec_no,
@@ -27,36 +28,92 @@
 		and b.member_id = m.member_id
 		order by board_groupno desc , board_groupseq
 	</select>
-	<select id="notice_selectList" resultType="BoardDto">
-		select
-		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
-		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
-		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname as member_id
-		from board b, member m
-		where board_category = 'N'
-		and b.member_id = m.member_id
-		order by board_notice_no desc
+
+	<select id="free_allCount" resultType="int">
+		SELECT COUNT(BOARD_FREE_NO) AS cnt
+		FROM BOARD
+		WHERE BOARD_CATEGORY = 'F'
 	</select>
-	<select id="qna_selectList" resultType="BoardDto">
-		select
-		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
-		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
-		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname as member_id
-		from board b , member m
-		where board_category='Q'
-		and b.member_id = m.member_id
-		order by board_qna_no desc
+
+	<select id="notice_allCount" resultType="int">
+		SELECT COUNT(BOARD_NOTICE_NO) AS cnt
+		FROM BOARD
+		WHERE BOARD_CATEGORY = 'N'
 	</select>
-	<select id="dec_selectList" resultType="BoardDto">
-		select
-		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
-		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
-		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname as member_id
-		from board b , member m
-		where board_category='D'
-		and b.member_id = m.member_id
-		order by board_dec_no desc
+	
+	<select id="qna_allCount" resultType="int">
+		SELECT COUNT(BOARD_QNA_NO) AS cnt
+		FROM BOARD
+		WHERE BOARD_CATEGORY = 'Q'
 	</select>
+	
+	<select id="dec_allCount" resultType="int">
+		SELECT COUNT(BOARD_DEC_NO) AS cnt
+		FROM BOARD
+		WHERE BOARD_CATEGORY = 'D'
+	</select>
+
+
+	<select id="free_selectList" parameterType="com.project.fp.dto.PagingDto" resultType="BoardDto">
+		 SELECT X.*
+	     FROM (
+	     SELECT ROWNUM AS rnum, A.*
+	     FROM (
+	     SELECT BOARD_FREE_NO, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_READCOUNT, BOARD_GROUPNO, BOARD_GROUPSEQ, BOARD_TITLETAB, BOARD_CATEGORY
+	     FROM BOARD
+	     WHERE BOARD_CATEGORY = 'F'
+	     ORDER BY BOARD_REGDATE DESC
+	     ) A
+	     WHERE ROWNUM <![CDATA[ <= ]]> #{blockEnd}
+		   ) X
+	     WHERE X.rnum <![CDATA[ >= ]]> #{blockBegin}
+	</select>
+	
+	<select id="notice_selectList" parameterType="com.project.fp.dto.PagingDto" resultType="BoardDto">
+		 SELECT X.*
+	     FROM (
+	     SELECT ROWNUM AS rnum, A.*
+	     FROM (
+	     SELECT BOARD_NOTICE_NO, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_READCOUNT, BOARD_GROUPNO, BOARD_GROUPSEQ, BOARD_TITLETAB, BOARD_CATEGORY
+	     FROM BOARD
+	     WHERE BOARD_CATEGORY = 'N'
+	     ORDER BY BOARD_REGDATE DESC
+	     ) A
+	     WHERE ROWNUM <![CDATA[ <= ]]> #{blockEnd}
+		   ) X
+	     WHERE X.rnum <![CDATA[ >= ]]> #{blockBegin}
+	</select>
+	
+	<select id="qna_selectList" parameterType="com.project.fp.dto.PagingDto" resultType="BoardDto">
+		 SELECT X.*
+	     FROM (
+	     SELECT ROWNUM AS rnum, A.*
+	     FROM (
+	     SELECT BOARD_QNA_NO, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_READCOUNT, BOARD_GROUPNO, BOARD_GROUPSEQ, BOARD_TITLETAB, BOARD_CATEGORY
+	     FROM BOARD
+	     WHERE BOARD_CATEGORY = 'Q'
+	     ORDER BY BOARD_REGDATE DESC
+	     ) A
+	     WHERE ROWNUM <![CDATA[ <= ]]> #{blockEnd}
+		   ) X
+	     WHERE X.rnum <![CDATA[ >= ]]> #{blockBegin}
+	</select>
+	
+	<select id="dec_selectList" parameterType="com.project.fp.dto.PagingDto" resultType="BoardDto">
+		 SELECT X.*
+	     FROM (
+	     SELECT ROWNUM AS rnum, A.*
+	     FROM (
+	     SELECT BOARD_DEC_NO, BOARD_TITLE, BOARD_CONTENT, BOARD_REGDATE, BOARD_READCOUNT, BOARD_GROUPNO, BOARD_GROUPSEQ, BOARD_TITLETAB, BOARD_CATEGORY
+	     FROM BOARD
+	     WHERE BOARD_CATEGORY = 'D'
+	     ORDER BY BOARD_REGDATE DESC
+	     ) A
+	     WHERE ROWNUM <![CDATA[ <= ]]> #{blockEnd}
+		   ) X
+	     WHERE X.rnum <![CDATA[ >= ]]> #{blockBegin}
+	</select>
+
 	<select id="board_selectOne" parameterType="int" resultType="BoardDto">
 		select
 		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,

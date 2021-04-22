@@ -5,10 +5,17 @@ import java.util.List;
 import com.project.fp.dao.BoardDao;
 import com.project.fp.dao.BoardDaoImpl;
 import com.project.fp.dto.BoardDto;
+import com.project.fp.dto.PagingDto;
 
 public class BoardBizImpl implements BoardBiz {
 
 	private BoardDao dao = new BoardDaoImpl();
+	
+	@Override
+	public int free_allCount() {
+
+		return dao.free_allCount();
+	}
 
 	@Override
 	public List<BoardDto> board_selectList(BoardDto dto) {
@@ -16,28 +23,45 @@ public class BoardBizImpl implements BoardBiz {
 		return dao.board_selectList(dto);
 	}
 
-	@Override
-	public List<BoardDto> free_selectList() {
-		// TODO Auto-generated method stub
-		return dao.free_selectList();
+	public int notice_allCount() {
+
+		return dao.notice_allCount();
 	}
 
 	@Override
-	public List<BoardDto> notice_selectList() {
-		// TODO Auto-generated method stub
-		return dao.notice_selectList();
+	public int qna_allCount() {
+
+		return dao.qna_allCount();
 	}
 
 	@Override
-	public List<BoardDto> qna_selectList() {
-		// TODO Auto-generated method stub
-		return dao.qna_selectList();
+	public int dec_allCount() {
+
+		return dao.dec_allCount();
 	}
 
 	@Override
-	public List<BoardDto> dec_selectList() {
+	public List<BoardDto> free_selectList(PagingDto Pdto) {
 		// TODO Auto-generated method stub
-		return dao.dec_selectList();
+		return dao.free_selectList(Pdto);
+	}
+
+	@Override
+	public List<BoardDto> notice_selectList(PagingDto Pdto) {
+		// TODO Auto-generated method stub
+		return dao.notice_selectList(Pdto);
+	}
+
+	@Override
+	public List<BoardDto> qna_selectList(PagingDto Pdto) {
+		// TODO Auto-generated method stub
+		return dao.qna_selectList(Pdto);
+	}
+
+	@Override
+	public List<BoardDto> dec_selectList(PagingDto Pdto) {
+		// TODO Auto-generated method stub
+		return dao.dec_selectList(Pdto);
 	}
 
 	@Override
@@ -129,5 +153,33 @@ public class BoardBizImpl implements BoardBiz {
 		res = dao.qna_answerInsert(dto);
 		return res;
 	}
+
+	@Override
+	public List<BoardDto> free_selectList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<BoardDto> notice_selectList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<BoardDto> qna_selectList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<BoardDto> dec_selectList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
 
 }

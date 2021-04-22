@@ -60,6 +60,7 @@ import com.project.fp.dto.BoardDto;
 import com.project.fp.dto.File_TableDto;
 import com.project.fp.dto.HospitalDto;
 import com.project.fp.dto.MemberDto;
+import com.project.fp.dto.PagingDto;
 import com.project.fp.gmail.MailSend;
 
 @WebServlet("/SemiProjectController")
@@ -240,15 +241,26 @@ public class SemiProjectController extends HttpServlet {
 				dispatch(response, request, "signup_idchk.jsp");
 			}
 		} else if (command.equals("board_notice")) {
-			List<BoardDto> list = b_biz.notice_selectList();
+			
+			int nowPage = Integer.parseInt(request.getParameter("nowPage"));
+			int count = b_biz.notice_allCount();
+			
+			PagingDto Pdto = new PagingDto(count, nowPage);
+			
+			List<BoardDto> list = b_biz.notice_selectList(Pdto);
 			request.setAttribute("list", list);
+			request.setAttribute("Pdto", Pdto);
 			dispatch(response, request, "board_notice.jsp");
 		} else if (command.equals("board_free")) {
-			List<BoardDto> list = b_biz.free_selectList();
+			PagingDto Pdto = new PagingDto();
+			
+			List<BoardDto> list = b_biz.free_selectList(Pdto);
 			request.setAttribute("list", list);
 			dispatch(response, request, "board_free.jsp");
 		} else if (command.equals("board_dec")) {
-			List<BoardDto> list = b_biz.dec_selectList();
+			PagingDto Pdto = new PagingDto();
+			
+			List<BoardDto> list = b_biz.dec_selectList(Pdto);
 			request.setAttribute("list", list);
 			dispatch(response, request, "board_dec.jsp");
 		} else if (command.equals("mypage")) {
@@ -256,7 +268,9 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("shopping")) {
 			response.sendRedirect("shopping.jsp");
 		} else if (command.equals("board_qna")) {
-			List<BoardDto> list = b_biz.qna_selectList();
+			PagingDto Pdto = new PagingDto();
+			
+			List<BoardDto> list = b_biz.qna_selectList(Pdto);
 			request.setAttribute("list", list);
 			dispatch(response, request, "board_qna.jsp");
 		} else if (command.equals("board_insertform")) {
