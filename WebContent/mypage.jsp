@@ -1,3 +1,7 @@
+<%@page import="com.project.fp.dao.MemberDao"%>
+<%@page import="java.util.List"%>
+<%@page import="com.project.fp.biz.MemberBizImpl"%>
+<%@page import="com.project.fp.biz.MemberBiz"%>
 <%@page import="com.project.fp.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -90,6 +94,9 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 <section class="mypage">
 <table border="1">
 
+	<col width="200"/>
+	<col width="200"/>
+
 	<tr>
 
 	<th>등급</th>
@@ -122,20 +129,21 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 <section class="mypage">
 
 <table border="1">
-<tr>
-	<th colspan="2">주문내역</th>
+	<col width="200"/>
+	<tr>
+		<th colspan="2">주문내역</th>
+		
+		<tr>
+		<td colspan="2">배송현황</td>
+		</tr>
 	
-	<tr>
-	<td colspan="2">배송현황</td>
-	</tr>
-
-
-	<tr>
-	<th colspan="2">주문내역</th>
 	
-	<tr>
-	<td colspan="2">주문내역</td>
-	</tr>
+		<tr>
+		<th colspan="2">주문내역</th>
+		
+		<tr>
+		<td colspan="2">주문내역</td>
+		</tr>
 
 
 </table>
@@ -143,6 +151,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 
 <section class="mypage">
 <table border="1">
+	<col width="200"/>
 <tr>
 	<th colspan="2">취소/반품/교환/환불내역</th>
 	<tr>
@@ -152,6 +161,11 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 </section>
 
 <section class="mypage">
+<%
+
+
+
+%>
 
 			<table border="1">
 			<tr>
@@ -160,8 +174,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 				<tr>
 					<th>아이디 *</th>
 					<td>
-						<input type="text" name="member_id" title="n" />
-						<input type="button" value="중복체크" onclick="idCheck();" />
+						<input type="text" name="member_id" title="n" readonly="readonly" value="<%=dto.getMember_id() %>" />
 					</td>
 				</tr>
 				<tr>
@@ -180,35 +193,26 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 				<tr>
 					<th>이름 *</th>
 					<td>
-						<input type="text" name="member_name" onclick="idCheckConfirm();">
+						<input type="text" name="member_name" onclick="idCheckConfirm();" readonly="readonly" value="<%=dto.getMember_name() %>" >
 					</td>
 				</tr>
 				<tr>
 					<th>닉네임 *</th>
 					<td>
-						<input type="text" name="member_nicname" maxlength="5" onclick="idCheckConfirm();">
+						<input type="text" name="member_nicname" maxlength="5" onclick="idCheckConfirm();" value="<%=dto.getMember_nicname() %>">
 					</td>
 				</tr>
 				<tr>
 					<th>이메일 *</th>
 					<td>
 						<input type="hidden" name="member_email" value="">
-						<input type="text" name="member_email_1" maxlength="30" onclick="idCheckConfirm();">@
-                        <select name="member_email_2">
-                            <option>naver.com</option>
-                            <option>daum.net</option>
-                            <option>gmail.com</option>
-                            <option>nate.com</option>                        
-                        </select>
+						<input type="text" name="member_email_1" maxlength="30" onclick="idCheckConfirm();" value="<%=dto.getMember_email() %>" >
 					</td>
 				</tr>
 				<tr>
 					<th>휴대폰 *</th>
 					<td>
-						<input type="hidden" name="member_phone" value="">
-						<input type="text" name="member_phone_1" maxlength="3" size="3" >-
-						<input type="text" name="member_phone_2" maxlength="4" size="3" >-
-						<input type="text" name="member_phone_3" maxlength="4" size="3" >
+						<input type="text" name="member_phone" readonly="readonly" value="<%=dto.getMember_phone() %>">
 					</td>
 				</tr>
 				<tr>
@@ -217,15 +221,28 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 						<input type="hidden" name="member_addr" value="">
 						<input type="text" id="postcode" placeholder="우편번호">
 						<input type="button" onclick="address();" value="우편번호 찾기"><br>
-						<input type="text" name="member_addr_1" id="addr_1" placeholder="기본주소">
+						<input type="text" name="member_addr_1" id="addr_1" placeholder="기본주소"  value="<%=dto.getMember_addr() %>" >
 						<input type="text" name="member_addr_2" id="addr_2" placeholder="상세주소">
 					</td>
 				</tr>
 				<tr>
                     <th>반려동물여부</th>
                     <td>
-                        <input type="radio" name="member_animal" value="N" onclick="chk(this.value);" checked>없음
-                		<input type="radio" name="member_animal" value="Y" onclick="chk(this.value);">있음
+                    <%
+					if(dto.getMember_animal()== "N"){ 
+					%>
+						<input type="radio" name="member_animal" value="N" checked>없음
+						<input type="radio" name="member_animal" value="Y" >있음
+					 <%
+					 }else{ 
+					 %>
+						<input type="radio" name="member_animal" value="N" >없음
+						<input type="radio" name="member_animal" value="Y" checked >있음					
+					 <%
+					 } 
+					 %>
+                        
+                		
                     </td>
                 </tr>
              
@@ -241,14 +258,33 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 				<tr class="animal">
 					<th>성별 *</th>
 					<td>
-						<input type="radio" id="animal_gen_chk" name="animal_gen" value="M"><img src="resources/images/male.svg" style="width: 20px; height: 20px;">
-                		<input type="radio" name="animal_gen" value="F" ><img src="resources/images/female.svg" style="width: 20px; height: 20px;">
-					</td>
+					<%
+					if(dto.getMember_animal()== "M"){ 
+					%>
+					 	<input type="radio" id="animal_gen_chk" name="animal_gen" value="M" checked><img src="resources/images/male.svg" style="width: 20px; height: 20px;">
+					 	<input type="radio" name="animal_gen" value="F" ><img src="resources/images/female.svg" style="width: 20px; height: 20px;">
+					
+					 <%
+					 }else if (dto.getMember_animal()== "F"){ 
+					 %>
+					  	<input type="radio" id="animal_gen_chk" name="animal_gen" value="M"><img src="resources/images/male.svg" style="width: 20px; height: 20px;">
+					 	<input type="radio" name="animal_gen" value="F" checked ><img src="resources/images/female.svg" style="width: 20px; height: 20px;">
+					
+					 <%
+					 } else {
+					 %>
+						 <input type="radio" id="animal_gen_chk" name="animal_gen" value="M"><img src="resources/images/male.svg" style="width: 20px; height: 20px;">
+						 <input type="radio" name="animal_gen" value="F" ><img src="resources/images/female.svg" style="width: 20px; height: 20px;">
+					
+					 <%	
+					 }
+					 %>
+                	</td>
 				</tr>
 				<tr class="animal">
 					<th>품종</th>
 					<td>
-						<input type="text" name="animal_type" maxlength="20"/>
+						<input type="text" name="animal_type" maxlength="20" value=""/>
 					</td>
 				</tr>
 				<tr class="animal">
@@ -343,11 +379,12 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 <section class="mypage">
 
 <table border="1">
-<tr>
-	<th>회원탈퇴</th>
+	<col width="200"/>
 	<tr>
-	<td>회원정보</td>
-	</tr>
+		<th>회원탈퇴</th>
+		<tr>
+		<td>회원정보</td>
+		</tr>
 
 </table>
 </section>
