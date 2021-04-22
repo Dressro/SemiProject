@@ -12,6 +12,16 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 	private String namespace = "com.project.fp.board.";
 
 	@Override
+	public List<BoardDto> board_selectList(BoardDto dto) {
+		// TODO Auto-generated method stub
+		List<BoardDto> list = new ArrayList<BoardDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "board_selectList", dto);
+		}
+		return list;
+	}
+
+	@Override
 	public List<BoardDto> free_selectList() {
 		// TODO Auto-generated method stub
 		List<BoardDto> list = new ArrayList<BoardDto>();
@@ -55,8 +65,8 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 	public BoardDto free_selectOne(int board_free_no) {
 		// TODO Auto-generated method stub
 		BoardDto dto = null;
-		try (SqlSession session = getSqlSessionFactory().openSession(false)){
-			dto = session.selectOne(namespace+"free_selectOne", board_free_no);
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			dto = session.selectOne(namespace + "free_selectOne", board_free_no);
 		}
 		return dto;
 	}
@@ -65,8 +75,8 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 	public BoardDto notice_selectOne(int board_notice_no) {
 		// TODO Auto-generated method stub
 		BoardDto dto = null;
-		try (SqlSession session = getSqlSessionFactory().openSession(false)){
-			dto = session.selectOne(namespace+"notice_selectOne", board_notice_no);
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			dto = session.selectOne(namespace + "notice_selectOne", board_notice_no);
 		}
 		return dto;
 	}
@@ -75,8 +85,8 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 	public BoardDto qna_selectOne(int board_qna_no) {
 		// TODO Auto-generated method stub
 		BoardDto dto = null;
-		try (SqlSession session = getSqlSessionFactory().openSession(false)){
-			dto = session.selectOne(namespace+"qna_selectOne", board_qna_no);
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			dto = session.selectOne(namespace + "qna_selectOne", board_qna_no);
 		}
 		return dto;
 	}
@@ -85,8 +95,8 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 	public BoardDto dec_selectOne(int board_dec_no) {
 		// TODO Auto-generated method stub
 		BoardDto dto = null;
-		try (SqlSession session = getSqlSessionFactory().openSession(false)){
-			dto = session.selectOne(namespace+"dec_selectOne", board_dec_no);
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			dto = session.selectOne(namespace + "dec_selectOne", board_dec_no);
 		}
 		return dto;
 	}
@@ -95,8 +105,8 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 	public int free_insert(BoardDto dto) {
 		// TODO Auto-generated method stub
 		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
-			res = session.insert(namespace+"free_insert",dto);
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.insert(namespace + "free_insert", dto);
 			if (res > 0) {
 				session.commit();
 			}
@@ -111,8 +121,8 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 	public int notice_insert(BoardDto dto) {
 		// TODO Auto-generated method stub
 		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
-			res = session.insert(namespace+"notice_insert",dto);
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.insert(namespace + "notice_insert", dto);
 			if (res > 0) {
 				session.commit();
 			}
@@ -127,8 +137,8 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 	public int qna_insert(BoardDto dto) {
 		// TODO Auto-generated method stub
 		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
-			res = session.insert(namespace+"qna_insert",dto);
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.insert(namespace + "qna_insert", dto);
 			if (res > 0) {
 				session.commit();
 			}
@@ -143,8 +153,8 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 	public int dec_insert(BoardDto dto) {
 		// TODO Auto-generated method stub
 		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
-			res = session.insert(namespace+"dec_insert",dto);
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.insert(namespace + "dec_insert", dto);
 			if (res > 0) {
 				session.commit();
 			}
@@ -154,6 +164,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 
 		return res;
 	}
+
 	@Override
 	public int free_update(BoardDto dto) {
 		// TODO Auto-generated method stub
@@ -182,8 +193,8 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 	public int free_answerInsert(BoardDto dto) {
 		// TODO Auto-generated method stub
 		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
-			res = session.insert(namespace+"free_answerinsert",dto);
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.insert(namespace + "free_answerinsert", dto);
 			if (res > 0) {
 				session.commit();
 			}
@@ -198,8 +209,8 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 	public int qna_answerInsert(BoardDto dto) {
 		// TODO Auto-generated method stub
 		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
-			res = session.insert(namespace+"qna_answerinsert",dto);
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.insert(namespace + "qna_answerinsert", dto);
 			if (res > 0) {
 				session.commit();
 			}
@@ -214,8 +225,8 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 	public int free_answerUpdate(int board_free_no) {
 		// TODO Auto-generated method stub
 		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
-			res = session.insert(namespace+"free_answerupdate",board_free_no);
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.insert(namespace + "free_answerupdate", board_free_no);
 			if (res > 0) {
 				session.commit();
 			}
@@ -230,8 +241,8 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 	public int qna_answerUpdate(int board_qna_no) {
 		// TODO Auto-generated method stub
 		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
-			res = session.insert(namespace+"qna_answerupdate",board_qna_no);
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.insert(namespace + "qna_answerupdate", board_qna_no);
 			if (res > 0) {
 				session.commit();
 			}
@@ -246,8 +257,8 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 	public int readcountupdate(int board_no) {
 		// TODO Auto-generated method stub
 		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
-			res = session.insert(namespace+"readcountupdate",board_no);
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.insert(namespace + "readcountupdate", board_no);
 			if (res > 0) {
 				session.commit();
 			}
@@ -262,8 +273,8 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 	public int free_delete(int board_free_no) {
 		// TODO Auto-generated method stub
 		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
-			res = session.insert(namespace+"free_delete",board_free_no);
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.insert(namespace + "free_delete", board_free_no);
 			if (res > 0) {
 				session.commit();
 			}
@@ -278,8 +289,8 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 	public int delete(int board_no) {
 		// TODO Auto-generated method stub
 		int res = 0;
-		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
-			res = session.insert(namespace+"delete",board_no);
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.insert(namespace + "delete", board_no);
 			if (res > 0) {
 				session.commit();
 			}
@@ -289,7 +300,5 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 
 		return res;
 	}
-
-
 
 }

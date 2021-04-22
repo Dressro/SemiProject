@@ -165,4 +165,15 @@ public class BoardDto {
 		this.member_id = member_id;
 	}
 
+	@Override
+	public String toString() {
+		return "BoardDto [board_no=" + board_no + ", board_free_no=" + board_free_no + ", board_notice_no="
+				+ board_notice_no + ", board_qna_no=" + board_qna_no + ", board_dec_no=" + board_dec_no
+				+ ", board_title=" + board_title + ", board_content=" + board_content + ", board_regdate="
+				+ board_regdate + ", board_readcount=" + board_readcount + ", board_groupno=" + board_groupno
+				+ ", board_groupseq=" + board_groupseq + ", board_titletab=" + board_titletab + ", board_delflag="
+				+ board_delflag + ", board_category=" + board_category + ", member_id=" + member_id + "]";
+	}
+
+	
 }

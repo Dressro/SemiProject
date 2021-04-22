@@ -9,6 +9,13 @@ import com.project.fp.dto.BoardDto;
 public class BoardBizImpl implements BoardBiz {
 
 	private BoardDao dao = new BoardDaoImpl();
+	
+	@Override
+	public List<BoardDto> board_selectList(BoardDto dto) {
+		// TODO Auto-generated method stub
+		return dao.board_selectList(dto);
+	}
+
 
 	@Override
 	public List<BoardDto> free_selectList() {
@@ -141,5 +148,6 @@ public class BoardBizImpl implements BoardBiz {
 		res = dao.qna_answerInsert(dto);
 		return res;
 	}
+
 
 }

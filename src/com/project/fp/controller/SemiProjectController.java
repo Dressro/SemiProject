@@ -1,6 +1,8 @@
 package com.project.fp.controller;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
@@ -43,6 +45,8 @@ import com.project.fp.biz.Chat_ContentBiz;
 import com.project.fp.biz.Chat_ContentBizImpl;
 import com.project.fp.biz.File_TableBiz;
 import com.project.fp.biz.File_TableBizImpl;
+import com.project.fp.biz.HospitalBiz;
+import com.project.fp.biz.HospitalBizImpl;
 import com.project.fp.biz.MemberBiz;
 import com.project.fp.biz.MemberBizImpl;
 import com.project.fp.biz.Order_TableBiz;
@@ -54,6 +58,7 @@ import com.project.fp.biz.ReceiveBizImpl;
 import com.project.fp.dto.AnimalDto;
 import com.project.fp.dto.BoardDto;
 import com.project.fp.dto.File_TableDto;
+import com.project.fp.dto.HospitalDto;
 import com.project.fp.dto.MemberDto;
 import com.project.fp.gmail.MailSend;
 
@@ -79,8 +84,8 @@ public class SemiProjectController extends HttpServlet {
 		Order_TableBiz o_t_biz = new Order_TableBizImpl();
 		ProductBiz p_biz = new ProductBizImpl();
 		ReceiveBiz r_biz = new ReceiveBizImpl();
+		HospitalBiz h_biz = new HospitalBizImpl();
 		HttpSession session = request.getSession();
-		session.setMaxInactiveInterval(3600);
 
 		if (command.equals("signup")) {
 			response.sendRedirect("signup.jsp");
@@ -139,7 +144,8 @@ public class SemiProjectController extends HttpServlet {
 			m_dto.setMember_password(member_password);
 			MemberDto dto = m_biz.selectOne(m_dto);
 			session.setAttribute("dto", dto);
-			dispatch(response, request, "index.jsp");
+			session.setMaxInactiveInterval(3600);
+			jsResponse(response, "로그인 성공", "index.jsp");
 		} else if (command.equals("sns_signup")) {
 			String member_id = request.getParameter("member_id");
 			MemberDto m_dto = new MemberDto();
@@ -148,6 +154,7 @@ public class SemiProjectController extends HttpServlet {
 			t_dto = m_biz.selectSerch(m_dto);
 			if (t_dto != null) {
 				session.setAttribute("dto", t_dto);
+				session.setMaxInactiveInterval(3600);
 				jsResponse(response, "로그인 성공(SNS)", "index.jsp");
 			} else {
 				request.setAttribute("dto", m_dto);
@@ -248,43 +255,9 @@ public class SemiProjectController extends HttpServlet {
 			String file_path = request.getSession().getServletContext().getRealPath("fileupload");
 			String contentType = request.getContentType();
 			String member_id = request.getParameter("member_id");
-			if (contentType != null && contentType.toLowerCase().startsWith("multipart/")) {
-				Collection<Part> parts = request.getParts();
-				File_TableDto f_dto = new File_TableDto();
-
-				for (Part part : parts) {
-					if (part.getHeader("Content-Disposition").contains("filename=")) {
-						String file_name = extractFileName(part.getHeader("Content-Disposition"));
-						if (part.getSize() > 0) {
-							String file_type = file_name.substring(file_name.lastIndexOf("."));
-							String file_size = Long.toString(part.getSize());
-							part.write(file_path + File.separator + file_name);
-							part.delete();
-							f_dto.setFile_path(file_path);
-							f_dto.setFile_ori_name(file_name);
-							String file_new_name_str = String.valueOf(file_new_name_int);
-							f_dto.setFile_new_name(file_new_name_str);
-							f_dto.setFile_type(file_type);
-							f_dto.setFile_size(file_size);
-							f_dto.setMember_id(member_id);
-							f_dto.setBoard_no(2);
-							int res = f_t_biz.board_insert(f_dto);
-							if (res > 0) {
-
-							}
-						}
-					}
-				}
-			}
-
-			file_new_name_int++;
 			String board_title = request.getParameter("board_title");
 			String board_content = request.getParameter("board_content");
 			String board_category = request.getParameter("board_category");
-			System.out.println(member_id);
-			System.out.println(board_title);
-			System.out.println(board_content);
-			System.out.println(board_category);
 			BoardDto b_dto = new BoardDto();
 			b_dto.setBoard_title(board_title);
 			b_dto.setBoard_content(board_content);
@@ -320,6 +293,37 @@ public class SemiProjectController extends HttpServlet {
 					jsResponse(response, "등록 실패", "semi.do?command=board_dec");
 				}
 			}
+			List<BoardDto> b_list = b_biz.board_selectList(b_dto);
+			int board_no = b_list.get(0).getBoard_no();
+
+			if (contentType != null && contentType.toLowerCase().startsWith("multipart/")) {
+				Collection<Part> parts = request.getParts();
+				File_TableDto f_dto = new File_TableDto();
+
+				for (Part part : parts) {
+					if (part.getHeader("Content-Disposition").contains("filename=")) {
+						String file_name = extractFileName(part.getHeader("Content-Disposition"));
+						if (part.getSize() > 0) {
+							String file_type = file_name.substring(file_name.lastIndexOf("."));
+							String file_size = Long.toString(part.getSize());
+							part.write(file_path + File.separator + file_name);
+							part.delete();
+							f_dto.setFile_path(file_path);
+							f_dto.setFile_ori_name(file_name);
+							String file_new_name_str = String.valueOf(file_new_name_int);
+							f_dto.setFile_new_name(file_new_name_str);
+							f_dto.setFile_type(file_type);
+							f_dto.setFile_size(file_size);
+							f_dto.setMember_id(member_id);
+							f_dto.setBoard_no(board_no);
+							int f_res = f_t_biz.board_insert(f_dto);
+							
+						}
+					}
+				}
+			}
+
+			file_new_name_int++;
 		} else if (command.equals("logout")) {
 			session.invalidate();
 			response.sendRedirect("index.jsp");
@@ -327,9 +331,7 @@ public class SemiProjectController extends HttpServlet {
 			response.sendRedirect("animal_hospital.jsp");
 		} else if (command.equals("test")) {
 			response.sendRedirect("test.html");
-		}
-
-		if (command.equals("mailsend")) {
+		} else if (command.equals("mailsend")) {
 			String member_email = request.getParameter("member_email"); // 수신자
 			String from = "ejsdnlcl@gmail.com"; // 발신자
 			String cc = "scientist-1002@hanmail.net"; // 참조
@@ -350,15 +352,40 @@ public class SemiProjectController extends HttpServlet {
 				System.out.println("실패 이유 : " + e.getMessage());
 				e.printStackTrace();
 			}
-		}
-
-		if (command.equals("mailcheck")) {
+		} else if (command.equals("mailcheck")) {
 			String AuthenticationKey = request.getParameter("AuthenticationKey");
 			String AuthenticationUser = request.getParameter("AuthenticationUser");
 			if (AuthenticationKey.equals(AuthenticationUser)) {
 				System.out.println("인증 성공");
 			} else {
 				System.out.println("인증 실패");
+			}
+		}
+		
+		if(command.equals("test")) {
+			File fi = new File("C://Users//alahx/test.csv");
+			BufferedReader br = new BufferedReader(new BufferedReader(new FileReader(fi)));
+			String line = "";
+			String[] str = new String[3];
+			HospitalDto h_dto = null;
+			int res = 0;
+			while ((line = br.readLine()) != null) { //한 라인씩 읽어오기.
+				h_dto = new HospitalDto();
+				System.out.println(line);
+				str = line.split(",");
+				System.out.println(str[0]);
+				System.out.println(str[1]);
+				System.out.println(str[2]);
+				
+				h_dto.setHospital_name(str[0]);
+				h_dto.setHospital_addr(str[1]);
+				h_dto.setHospital_phone(str[2]);
+				
+				res = h_biz.insert(h_dto);
+				if(res > 0) {
+					break;
+				}
+				
 			}
 		}
 
