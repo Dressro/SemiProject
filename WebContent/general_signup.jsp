@@ -51,6 +51,7 @@
         }
     }).open();
 }
+	/*
 	function idCheckConfirm(){
 		var chk = document.getElementsByName("member_id")[0].title;
 		if(chk == "n") {
@@ -58,7 +59,7 @@
 			document.getElementsByName("member_id")[0].focus();
 		}
 	}
-	
+	*/
 	function idCheck(){
 		var member_id = document.getElementsByName("member_id")[0];
 		if(member_id.value.trim() =="" || member_id.value == null){
@@ -115,6 +116,16 @@
 			open("semi.do?command=mailsend&member_email=" + member_email,"","width=200 , height= 200");
 		}	
 	}
+	
+	function sendsms(){
+		var member_phone = $('input[name=member_phone_1]').val() +"-"+ $('input[name=member_phone_2]').val() +"-"+$('input[name=member_phone_3]').val();
+		if($('input[name=member_phone_1]').val().trim() == "" || $('input[name=member_phone_1]').val() == null){
+			alert("전화번로를 입력해 주세요");
+		} else {
+			open("semi.do?command=smssend&member_phone=","","width=200 , height= 200");
+		}	
+	}
+	
 </script>
 
 <script>
@@ -186,6 +197,7 @@
 						<input type="text" name="member_phone_1" maxlength="3" size="3" >-
 						<input type="text" name="member_phone_2" maxlength="4" size="3" >-
 						<input type="text" name="member_phone_3" maxlength="4" size="3" >
+						<input type="button" value="문자 전송" onclick="sendsms();" />
 					</td>
 				</tr>
 				<tr>

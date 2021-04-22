@@ -56,6 +56,7 @@ import com.project.fp.dto.BoardDto;
 import com.project.fp.dto.File_TableDto;
 import com.project.fp.dto.MemberDto;
 import com.project.fp.gmail.MailSend;
+import com.project.fp.sms.SMS;
 
 @WebServlet("/SemiProjectController")
 @MultipartConfig(location = "", maxFileSize = -1, maxRequestSize = -1, fileSizeThreshold = 1024)
@@ -360,6 +361,12 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				System.out.println("인증 실패");
 			}
+		}
+		
+		if (command.equals("smssend")) {
+			String member_phone = request.getParameter("member_phone");
+			SMS sms = new SMS();
+			sms.sendSMS(member_phone);
 		}
 
 	}
