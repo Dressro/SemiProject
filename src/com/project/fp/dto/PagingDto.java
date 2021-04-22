@@ -22,7 +22,7 @@ public class PagingDto {
 		// 현재 블록의 시작 페이지 번호 구하기
 		blockBegin = blockEnd - (DISPLAY_PAGE - 1);
 		// 총 페이지 수 구하기
-		int totalPage = (int)Math.ceil(totalBoard / (double)DISPLAY_BOARD);
+	    int totalPage = (int)Math.ceil(totalBoard / (double)DISPLAY_BOARD);
 		// [이전] 버튼 (첫번째 블록에서는 이전 버튼 비활성화)
 		prev = (blockBegin == 1)? false:true;
 		// [다음] 버튼 (마지막 블록에서는 다음 버튼 비활성화)
