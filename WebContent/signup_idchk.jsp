@@ -25,7 +25,11 @@ response.setContentType("text/html; charset=UTF-8");
 </head>
 <body>
 	<%
-	boolean idchk = (boolean) request.getAttribute("idchk");
+	MemberDto dto = (MemberDto)request.getAttribute("dto");
+	boolean idchk = false;
+	if(dto==null){
+		idchk = true;
+	}
 	String member_id = request.getParameter("member_id");
 	%>
 	<table border="1">
