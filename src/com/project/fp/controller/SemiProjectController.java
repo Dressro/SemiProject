@@ -337,7 +337,10 @@ public class SemiProjectController extends HttpServlet {
 			session.invalidate();
 			response.sendRedirect("index.jsp");
 		} else if (command.equals("animal_hospital")) {
-			response.sendRedirect("animal_hospital.jsp");
+			List<HospitalDto> list = new ArrayList<HospitalDto>();
+			list = h_biz.selectList();
+			request.setAttribute("list", list);
+			dispatch(response, request, "animal_hospital.jsp");
 		} else if (command.equals("test")) {
 			response.sendRedirect("test.html");
 		} else if (command.equals("mailsend")) {

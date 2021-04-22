@@ -225,7 +225,6 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 					<li class="menu"><a href="semi.do?command=mypage">마이페이지</a>
 					<li class="menu"><a href="semi.do?command=shopping">쇼핑</a>
 					<li class="menu"><a href="semi.do?command=board_qna">상품문의</a> 
-					<li class="menu"><a href="semi.do?command=test">test</a>
 					<%
  						if (dto == null) {
  					%>

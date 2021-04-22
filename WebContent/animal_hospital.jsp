@@ -1,5 +1,8 @@
+<%@page import="java.util.List"%>
+<%@page import="com.project.fp.dto.HospitalDto"%>
 <%@page import="com.project.fp.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,9 +33,9 @@
 
 	// 주소-좌표 변환 객체를 생성합니다
 	var geocoder = new kakao.maps.services.Geocoder();
-
+	<c:forEach items="${list }" var="h_dto">
 	// 주소로 좌표를 검색합니다
-	geocoder.addressSearch('서울특별시 용산구 후암로 51, 지상1층 ', function(result, status) {
+	geocoder.addressSearch('${h_dto.hospital_addr}', function(result, status) {
 
 	    // 정상적으로 검색이 완료됐으면 
 	     if (status === kakao.maps.services.Status.OK) {
@@ -47,7 +50,7 @@
 
 	        // 인포윈도우로 장소에 대한 설명을 표시합니다
 	        var infowindow = new kakao.maps.InfoWindow({
-	            content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+	            content: '<div style="width:150px;text-align:center;padding:6px 0;">${h_dto.hospital_name}</div>'
 	        });
 	        infowindow.open(map, marker);
 
@@ -55,6 +58,7 @@
 	        map.setCenter(coords);
 	    } 
 	});
+	</c:forEach>
 	</script>
 </body>
 </html>

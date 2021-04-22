@@ -3,6 +3,11 @@
 
 <mapper namespace="com.project.fp.hospital">
 
+	<select id="hospital_selectList" resultType="HospitalDto">
+		select hospital_num,hospital_name,hospital_addr,hospital_phone
+		from hospital
+		order by hospital_num desc
+	</select>
 	<insert id="hospital_insert" parameterType="HospitalDto">
 		insert into hospital
 		values(hospital_num_seq.nextval,#{hospital_name},#{hospital_addr},#{hospital_phone})

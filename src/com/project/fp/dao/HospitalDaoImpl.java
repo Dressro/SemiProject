@@ -1,5 +1,6 @@
 package com.project.fp.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -12,7 +13,11 @@ public class HospitalDaoImpl extends SqlMapConfig implements HospitalDao {
 	@Override
 	public List<HospitalDto> selectList() {
 		// TODO Auto-generated method stub
-		return null;
+		List<HospitalDto> list = new ArrayList<HospitalDto>();
+		try(SqlSession session = getSqlSessionFactory().openSession(false)){
+			list = session.selectList(namespace+"hospital_selectList");
+		}
+		return list;
 	}
 
 	@Override
