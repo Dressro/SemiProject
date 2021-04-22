@@ -28,14 +28,14 @@
 					<span>${index }</span>
 				</c:when>
 				<c:otherwise>
-					<a href="${action }?command=board_notice?nowPage=${index}">${index }</a>
+					<a href="${action }?command=board_notice&nowPage=${index}">${index }</a>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
 	
 		<!-- 다음 페이지 블록으로 이동 -->
 		<c:if test="${param.next }">
-			<a href="${action }?command=board_notice?nowPage=${param.blockEnd+1}">[다음]</a>
+			<a href="${action }?command=board_notice&nowPage=${param.blockEnd+1}">[다음]</a>
 		</c:if>
 	
 	</div>
