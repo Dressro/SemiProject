@@ -166,10 +166,6 @@ CREATE TABLE FILE_TABLE(
 	CONSTRAINT FILE_TABLE_CH_NUM_FK FOREIGN KEY (CH_NUM) REFERENCES CHAT (CH_NUM),
 	CONSTRAINT FILE_TABLE_ANIMAL_NO_KF FOREIGN KEY (ANIMAL_NO) REFERENCES ANIMAL (ANIMAL_NO)
 );
-select * from member;  dhksdn486  
-select * from board;
-select * from file_table
-SELECT * FROM ANIMAL;
 
 
 CREATE TABLE HOSPITAL(
@@ -183,4 +179,3 @@ select * from hospital order by hospital_num desc;
 select * from member;  
 select * from file_table;
 select * from board order by board_no desc;
-delete from member where member_id='1702707258'

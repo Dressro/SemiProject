@@ -9,13 +9,12 @@ import com.project.fp.dto.BoardDto;
 public class BoardBizImpl implements BoardBiz {
 
 	private BoardDao dao = new BoardDaoImpl();
-	
+
 	@Override
 	public List<BoardDto> board_selectList(BoardDto dto) {
 		// TODO Auto-generated method stub
 		return dao.board_selectList(dto);
 	}
-
 
 	@Override
 	public List<BoardDto> free_selectList() {
@@ -40,35 +39,11 @@ public class BoardBizImpl implements BoardBiz {
 		// TODO Auto-generated method stub
 		return dao.dec_selectList();
 	}
-	
+
 	@Override
 	public BoardDto board_selectOne(int board_no) {
 		// TODO Auto-generated method stub
 		return dao.board_selectOne(board_no);
-	}
-	
-	@Override
-	public BoardDto free_selectOne(int board_free_no) {
-		// TODO Auto-generated method stub
-		return dao.free_selectOne(board_free_no);
-	}
-
-	@Override
-	public BoardDto notice_selectOne(int board_notice_no) {
-		// TODO Auto-generated method stub
-		return dao.notice_selectOne(board_notice_no);
-	}
-
-	@Override
-	public BoardDto qna_selectOne(int board_qna_no) {
-		// TODO Auto-generated method stub
-		return dao.qna_selectOne(board_qna_no);
-	}
-
-	@Override
-	public BoardDto dec_selectOne(int board_dec_no) {
-		// TODO Auto-generated method stub
-		return dao.dec_selectOne(board_dec_no);
 	}
 
 	@Override
@@ -154,9 +129,5 @@ public class BoardBizImpl implements BoardBiz {
 		res = dao.qna_answerInsert(dto);
 		return res;
 	}
-
-
-	
-
 
 }

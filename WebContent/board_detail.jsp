@@ -45,7 +45,16 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group mb-3">
-							카테고리 : <input type="text" name="board_category" value="<%=dto.getBoard_category()%>">
+							카테고리 :
+							<%if(dto.getBoard_category().equals("F")){ %> 
+							<input type="text" name="board_category" value="자유게시판" readonly="readonly">
+							<%} else if(dto.getBoard_category().equals("N")){ %>
+							<input type="text" name="board_category" value="공지사항" readonly="readonly">
+							<%} else if(dto.getBoard_category().equals("Q")){ %>
+							<input type="text" name="board_category" value="상품문의" readonly="readonly">
+							<%} else if(dto.getBoard_category().equals("D")){ %>
+							<input type="text" name="board_category" value="실종신고" readonly="readonly">
+							<%} %>
 						</div>
 						<div align="right">
 							<a href="#">다운로드</a>

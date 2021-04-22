@@ -71,45 +71,6 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		return dto;
 	}
 
-	@Override
-	public BoardDto free_selectOne(int board_free_no) {
-		// TODO Auto-generated method stub
-		BoardDto dto = null;
-		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
-			dto = session.selectOne(namespace + "free_selectOne", board_free_no);
-		}
-		return dto;
-	}
-
-	@Override
-	public BoardDto notice_selectOne(int board_notice_no) {
-		// TODO Auto-generated method stub
-		BoardDto dto = null;
-		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
-			dto = session.selectOne(namespace + "notice_selectOne", board_notice_no);
-		}
-		return dto;
-	}
-
-	@Override
-	public BoardDto qna_selectOne(int board_qna_no) {
-		// TODO Auto-generated method stub
-		BoardDto dto = null;
-		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
-			dto = session.selectOne(namespace + "qna_selectOne", board_qna_no);
-		}
-		return dto;
-	}
-
-	@Override
-	public BoardDto dec_selectOne(int board_dec_no) {
-		// TODO Auto-generated method stub
-		BoardDto dto = null;
-		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
-			dto = session.selectOne(namespace + "dec_selectOne", board_dec_no);
-		}
-		return dto;
-	}
 
 	@Override
 	public int free_insert(BoardDto dto) {
