@@ -1,34 +1,21 @@
 <%@page import="com.project.fp.dto.MemberDto"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <% request.setCharacterEncoding("UTF-8"); %>
-<% response.setContentType("text/html; charset=UTF-8"); %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+request.setCharacterEncoding("UTF-8");
+%>
+<%
+response.setContentType("text/html; charset=UTF-8");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<link href="resources/css/head.css" rel=stylesheet type="text/css" />
 <style type="text/css">
-* {
-	margin: 0px;
-	padding: 0px;
-}
 
 body {
 	width: 100%;
-}
-
-ul {
-	list-style: none;
-}
-
-a:hover, a:visited, a:link {
-	color: black;
-}
-
-a {
-	text-decoration: none;
 }
 
 img {
@@ -99,68 +86,70 @@ img {
 	padding-bottom: 50px;
 }
 
-#semipage{
-	min-width:1200px;
+#semipage {
+	min-width: 1200px;
 	min-height: 100%;
-	position:relative;
-	overflow:hidden;
+	position: relative;
+	overflow: hidden;
 }
+
 
 @-webkit-keyframes fade {
   		from {opacity: .2}
   		to {opacity: 1}
 	}
-
 	@keyframes fade {
   		from {opacity: .2}
  		to {opacity: 1}
 	}
 
-ul {
-	list-style-type: none;
-	margin: 0;
-	overflow: hidden;
-}
 
-li {
-	float: left;
-}
-
-li a {
-	display: block;
-	color: black;
-	text-align: center;
-	padding: 15px 20px;
-	text-decoration: none;
-}
-
-
-.menu {
-	margin-top: 20px;
-}
 #body {
 	width: 1200px;
 	margin: 0 auto;
 }
-#semi_footer{
-	background-color: #f0f0f0;
+
+#semi_footer {
+	background-color: #a0a0a0;
+	position: relative;
 }
 
 .footer {
-	width:1200px;
+	width: 1200px;
 	margin: 0 auto;
 }
 
-.footer_content{
+.footer_content {
 	display: inline-block;
 	vertical-align: middle;
 	margin-left: 20px;
 }
-.footer_content:first-child{
-	margin-left:0px;
+
+.footer_content:first-child {
+	margin-left: 0px;
 }
-.liremove{
-	padding:0px;
+.footer_ul {
+	margin-top: 5px;
+}
+.footer_ul_a {
+	padding: 0px;
+	font-weight: bold;
+}
+.footer_div{
+	margin-top: 5px;
+    line-height: 1.5;
+    width: 1000px
+}
+.footer_sns{
+	margin-top: -20px;
+    line-height: 16px;
+    text-align: right;
+
+}
+.footer_sns_a{
+	display: inline-block;
+	padding: 0px;
+	margin-left: 10px;
 }
 </style>
 <script type="text/javascript">
@@ -211,19 +200,13 @@ li a {
 		slides[n].style.display = "block";
 		dots[n].className += " active";
 	}
-	function gofacebook() {
-		location.href = "https://www.facebook.com/";
-	}
-	function goinstagram() {
-		location.href = "https://www.instagram.com/";
-	}
 </script>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
 <%
-	MemberDto dto = (MemberDto) session.getAttribute("dto");
+MemberDto dto = (MemberDto) session.getAttribute("dto");
 %>
 <body>
 	<div id="semipage">
@@ -237,23 +220,23 @@ li a {
 
 					<li class="menu"><a href="semi.do?command=board_notice">공지사항</a>
 					<li class="menu"><a href="semi.do?command=board_free">자유게시판</a>
-					<li class="menu"><a href="#">동물병원검색</a>
+					<li class="menu"><a href="semi.do?command=animal_hospital">동물병원검색</a>
 					<li class="menu"><a href="semi.do?command=board_dec">실종신고</a>
 					<li class="menu"><a href="semi.do?command=mypage">마이페이지</a>
 					<li class="menu"><a href="semi.do?command=shopping">쇼핑</a>
-					<li class="menu"><a href="semi.do?command=board_qna">상품문의</a>
+					<li class="menu"><a href="semi.do?command=board_qna">상품문의</a> 
 					<%
-						if(dto == null){
-					%>
-					<li style="float: right " id="login"><a href="semi.do?command=login">로그인</a></li>
+ 						if (dto == null) {
+ 					%>
+					<li class="li_right" id="login"><a class="li_rigit_a" href="semi.do?command=login">로그인</a></li>
 					<%
-						} else {
+					} else {
 					%>
-					<li style="float: right "><a href="semi.do?command=logout">로그아웃</a>
+					<li class="li_right"><a class="li_rigit_a" href="semi.do?command=logout">로그아웃</a> 
 					<%
-						}
-					%>
-					<li style="float: right"><a href="semi.do?command=signup">회원가입</a></li>
+ 					}
+ 					%>
+					<li class="li_right"><a class="li_rigit_a" href="semi.do?command=signup">회원가입</a></li>
 
 				</ul>
 			</nav>
@@ -292,7 +275,7 @@ li a {
 			<div id="section_3"></div>
 			<div id="section_4"></div>
 			<div id="section_5"></div>
-				<h1>body</h1>
+			<h1>body</h1>
 		</div>
 
 
@@ -302,13 +285,25 @@ li a {
 			<div class="footer">
 				<h2>Family Pet</h2>
 				<ul class="footer_ul">
-					<li class = "footer_content"><a href="#" class = "liremove">이용약관</a></li>
-					<li class = "footer_content"><a href="#" class = "liremove">개인정보처리방침</a></li>
-					<li class = "footer_content"><a href="#" class = "liremove">제휴문의</a></li>
+					<li class="footer_content"><a href="#" class="footer_ul_a">이용약관</a></li>
+					<li class="footer_content"><a href="#" class="footer_ul_a">개인정보처리방침</a></li>
+					<li class="footer_content"><a href="#" class="footer_ul_a">제휴문의</a></li>
 				</ul>
-				<div>
-					
+				<div class ="footer_div">
+					Famliy Pet | 대표이사 : 이민형 | 서울특별시 강남구 삼성로 648<br> 사업자 등록번호 : 000-00-000000 | 통신판매업신고 : 2021-서울강남-0000
 				</div>
+				<ul class ="footer_sns">
+					<li class="li_right">
+					 	<a href="https://www.facebook.com" class="footer_sns_a">
+					 		<img src="https://opgg-static.akamaized.net/images/site/sns/facebook_icon_white.png" />
+					 	</a>
+					</li>
+					<li class="li_right">
+           			 	<a href="https://www.instagram.com" class="footer_sns_a">
+           			 		<img src="https://opgg-static.akamaized.net/images/site/sns/instagram_icon_white.png" />
+           			 	</a>
+           			</li>
+				</ul>
 			</div>
 		</div>
 	</div>

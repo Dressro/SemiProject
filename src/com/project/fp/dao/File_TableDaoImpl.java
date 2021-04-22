@@ -8,17 +8,17 @@ import org.apache.ibatis.session.SqlSession;
 import com.project.fp.dto.File_TableDto;
 
 public class File_TableDaoImpl extends SqlMapConfig implements File_TableDao {
-	
-	private String namespace = "com.project.fp.file_table";
+
+	private String namespace = "com.project.fp.File_Table.";
 
 	@Override
 	public List<File_TableDto> selectList() {
-		
+
 		List<File_TableDto> list = new ArrayList<File_TableDto>();
-		
-		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
-			list = session.selectList(namespace+"selectList");
-		} catch(Exception e) {
+
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "selectList");
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -27,12 +27,12 @@ public class File_TableDaoImpl extends SqlMapConfig implements File_TableDao {
 
 	@Override
 	public File_TableDto selectOne(int file_num) {
-		
+
 		File_TableDto dto = null;
-		
-		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
-			dto = session.selectOne(namespace+"selectOne", file_num);
-		} catch(Exception e) {
+
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			dto = session.selectOne(namespace + "selectOne", file_num);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -40,16 +40,53 @@ public class File_TableDaoImpl extends SqlMapConfig implements File_TableDao {
 	}
 
 	@Override
-	public int insert(File_TableDto dto) {
-		
+	public int board_insert(File_TableDto dto) {
+
 		int res = 0;
-		
-		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
-			res = session.insert(namespace+"insert",dto);
+		System.out.println(dto.getAnimal_no());
+		System.out.println(dto.getCh_num());
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.insert(namespace + "board_insert", dto);
 			if (res > 0) {
 				session.commit();
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	}
+
+	@Override
+	public int animal_insert(File_TableDto dto) {
+
+		int res = 0;
+		System.out.println(dto.getAnimal_no());
+		System.out.println(dto.getCh_num());
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.insert(namespace + "animal_insert", dto);
+			if (res > 0) {
+				session.commit();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	}
+
+	@Override
+	public int ch_insert(File_TableDto dto) {
+
+		int res = 0;
+		System.out.println(dto.getAnimal_no());
+		System.out.println(dto.getCh_num());
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.insert(namespace + "ch_insert", dto);
+			if (res > 0) {
+				session.commit();
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -58,32 +95,20 @@ public class File_TableDaoImpl extends SqlMapConfig implements File_TableDao {
 
 	@Override
 	public int update(File_TableDto dto) {
-		
-		int res = 0;
-		
-		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
-			res = session.update(namespace+"update", dto);
-			if (res > 0) {
-				session.commit();
-			}
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-
-		return res;
+		return 0;
 	}
 
 	@Override
 	public int delete(int file_num) {
-		
+
 		int res = 0;
-		
-		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
-			res = session.delete(namespace+"delete",file_num);
+
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.delete(namespace + "delete", file_num);
 			if (res > 0) {
 				session.commit();
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

@@ -15,10 +15,10 @@
 		WHERE ORDER_NUM = #{order_num}
 	</select>
 	
-	<select id="insert" parameterType="ReceiveDto">
+	<insert id="insert" parameterType="ReceiveDto">
 		INSERT INTO RECEIVE
 		VALUES(#{order_num}, #{receive_name}, #{receive_addr}, #{receive_phone}, #{receive_memo})
-	</select>
+	</insert>
 	
 	<delete id="delete" parameterMap="ReceiveDto">
 		DELETE FROM RECEIVE

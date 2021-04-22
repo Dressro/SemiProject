@@ -7,7 +7,7 @@ import com.project.fp.dao.File_TableDaoImpl;
 import com.project.fp.dto.File_TableDto;
 
 public class File_TableBizImpl implements File_TableBiz {
-	
+
 	private File_TableDao dao = new File_TableDaoImpl();
 
 	@Override
@@ -23,9 +23,21 @@ public class File_TableBizImpl implements File_TableBiz {
 	}
 
 	@Override
-	public int insert(File_TableDto dto) {
+	public int board_insert(File_TableDto dto) {
 
-		return dao.insert(dto);
+		return dao.board_insert(dto);
+	}
+
+	@Override
+	public int animal_insert(File_TableDto dto) {
+
+		return dao.animal_insert(dto);
+	}
+
+	@Override
+	public int ch_insert(File_TableDto dto) {
+
+		return dao.ch_insert(dto);
 	}
 
 	@Override
