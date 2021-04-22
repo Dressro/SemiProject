@@ -5,7 +5,7 @@ public class PagingDto {
 	// 한 페이지에 출력할 게시글 수
 	public static final int DISPLAY_BOARD = 10;
 	// 한 블록에 출력할 페이지 수
-	public static final int DISPLAY_PAGE = 10;
+	public static final int DISPLAY_PAGE = 5;
 
 	private int nowPage; // 현재 페이지
 	private int prevPage; // 이전 페이지
