@@ -6,6 +6,7 @@ import com.project.fp.dto.BoardDto;
 
 public interface BoardDao {
 
+	public List<BoardDto> board_selectList(BoardDto dto);
 	public List<BoardDto> free_selectList();
 	public List<BoardDto> notice_selectList();
 	public List<BoardDto> qna_selectList();

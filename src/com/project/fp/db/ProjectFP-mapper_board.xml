@@ -3,6 +3,20 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.fp.board">
+	<select id="board_selectList" parameterType="BoardDto" resultType="BoardDto">
+		select
+		board_no,board_free_no,board_notice_no,board_qna_no,board_dec_no,
+		board_title,board_content,board_regdate,board_readcount,
+		board_groupno,board_groupseq,board_titletab,member_id
+		from board 
+		where board_category=#{board_category}
+		and board_title=#{board_title}
+		and board_content=#{board_content}
+		and member_id=#{member_id}
+		order by board_no desc
+		
+		
+	</select>
 	<select id="free_selectList" resultType="BoardDto">
 		select
 		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
