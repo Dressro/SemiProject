@@ -244,7 +244,8 @@ public class SemiProjectController extends HttpServlet {
 			
 			int nowPage = Integer.parseInt(request.getParameter("nowPage"));
 			int count = b_biz.notice_allCount();
-			
+			System.out.println(nowPage);
+			System.out.println(count);
 			PagingDto Pdto = new PagingDto(count, nowPage);
 			
 			List<BoardDto> list = b_biz.notice_selectList(Pdto);
@@ -252,13 +253,20 @@ public class SemiProjectController extends HttpServlet {
 			request.setAttribute("Pdto", Pdto);
 			dispatch(response, request, "board_notice.jsp");
 		} else if (command.equals("board_free")) {
-			PagingDto Pdto = new PagingDto();
-			
+			int nowPage = Integer.parseInt(request.getParameter("nowPage"));
+			int count = b_biz.free_allCount();
+			PagingDto Pdto = new PagingDto(count, nowPage);
+			System.out.println("나왔다");
+			System.out.println(nowPage);
+			System.out.println(count);
 			List<BoardDto> list = b_biz.free_selectList(Pdto);
 			request.setAttribute("list", list);
+			request.setAttribute("Pdto", Pdto);
 			dispatch(response, request, "board_free.jsp");
 		} else if (command.equals("board_dec")) {
-			PagingDto Pdto = new PagingDto();
+			int nowPage = Integer.parseInt(request.getParameter("nowPage"));
+			int count = b_biz.free_allCount();
+			PagingDto Pdto = new PagingDto(count, nowPage);
 			
 			List<BoardDto> list = b_biz.dec_selectList(Pdto);
 			request.setAttribute("list", list);
@@ -268,7 +276,9 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("shopping")) {
 			response.sendRedirect("shopping.jsp");
 		} else if (command.equals("board_qna")) {
-			PagingDto Pdto = new PagingDto();
+			int nowPage = Integer.parseInt(request.getParameter("nowPage"));
+			int count = b_biz.free_allCount();
+			PagingDto Pdto = new PagingDto(count, nowPage);
 			
 			List<BoardDto> list = b_biz.qna_selectList(Pdto);
 			request.setAttribute("list", list);
@@ -291,30 +301,30 @@ public class SemiProjectController extends HttpServlet {
 			if (board_category.equals("F")) {
 				res = b_biz.free_insert(b_dto);
 				if (res > 0) {
-					jsResponse(response, "등록 성공", "semi.do?command=board_free");
+					jsResponse(response, "등록 성공", "semi.do?command=board_free&nowPage=1");
 				} else {
-					jsResponse(response, "등록 실패", "semi.do?command=board_free");
+					jsResponse(response, "등록 실패", "semi.do?command=board_free&nowPage=1");
 				}
 			} else if (board_category.equals("N")) {
 				res = b_biz.notice_insert(b_dto);
 				if (res > 0) {
-					jsResponse(response, "등록 성공", "semi.do?command=board_notice");
+					jsResponse(response, "등록 성공", "semi.do?command=board_notice&nowPage=1");
 				} else {
-					jsResponse(response, "등록 실패", "semi.do?command=board_notice");
+					jsResponse(response, "등록 실패", "semi.do?command=board_notice&nowPage=1");
 				}
 			} else if (board_category.equals("Q")) {
 				res = b_biz.qna_insert(b_dto);
 				if (res > 0) {
-					jsResponse(response, "등록 성공", "semi.do?command=board_qna");
+					jsResponse(response, "등록 성공", "semi.do?command=board_qna&nowPage=1");
 				} else {
-					jsResponse(response, "등록 실패", "semi.do?command=board_qna");
+					jsResponse(response, "등록 실패", "semi.do?command=board_qna&nowPage=1");
 				}
 			} else if (board_category.equals("D")) {
 				res = b_biz.dec_insert(b_dto);
 				if (res > 0) {
-					jsResponse(response, "등록 성공", "semi.do?command=board_dec");
+					jsResponse(response, "등록 성공", "semi.do?command=board_dec&nowPage=1");
 				} else {
-					jsResponse(response, "등록 실패", "semi.do?command=board_dec");
+					jsResponse(response, "등록 실패", "semi.do?command=board_dec&nowPage=1");
 				}
 			}
 			List<BoardDto> b_list = b_biz.board_selectList(b_dto);

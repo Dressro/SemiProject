@@ -214,17 +214,17 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 
 			<nav>
 				<ul>
-					<li><a href="#">
+					<li><a href="index.jsp">
 							<img src="https://www.onium.in/wp-content/uploads/2019/03/sample-logo-png-6-1.png" width="160" height="60" alt="메인화면" />
 						</a></li>
 
 					<li class="menu"><a href="semi.do?command=board_notice&nowPage=1">공지사항</a>
-					<li class="menu"><a href="semi.do?command=board_free">자유게시판</a>
+					<li class="menu"><a href="semi.do?command=board_free&nowPage=1">자유게시판</a>
 					<li class="menu"><a href="semi.do?command=animal_hospital">동물병원검색</a>
-					<li class="menu"><a href="semi.do?command=board_dec">실종신고</a>
+					<li class="menu"><a href="semi.do?command=board_dec&nowPage=1">실종신고</a>
 					<li class="menu"><a href="semi.do?command=mypage">마이페이지</a>
 					<li class="menu"><a href="semi.do?command=shopping">쇼핑</a>
-					<li class="menu"><a href="semi.do?command=board_qna">상품문의</a> 
+					<li class="menu"><a href="semi.do?command=board_qna&nowPage=1">상품문의</a> 
 					<%
  						if (dto == null) {
  					%>

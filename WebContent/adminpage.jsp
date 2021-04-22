@@ -140,6 +140,13 @@ nav {
 </form>
 </section>
 <section class="adminpage">
+
+
+<%
+	Order_TableBiz obiz = new Order_TableBizImpl();
+	List<Order_TableDto> orderlist = obiz.selectList();
+%>
+
 <h1>전체주문조회</h1>
 <table border="1">
 	<col width="30"/>
@@ -163,8 +170,29 @@ nav {
 		<th>결제금액</th>
 		<th>주문상태</th>
 		<th>배송지</th>
-		<th>POINT</th>
 	</tr>
+	
+	
+<%
+	for (Order_TableDto dto : orderlist ) {
+%>
+
+	<tr>
+		<td><input type="checkbox" name="chk" value=""></td>
+		<td><%=dto.getOrder_num() %></td>
+		<td><%=dto.getMember_id() %></td>
+		<td><%=dto.getOrder_date() %></td>
+		<td></td>
+		<td><%=dto.getOrder_quantity() %></td>
+		<td><%=dto.getOrder_price() %></td>
+		<td><%=dto.getOrder_step() %></td>
+		<td></td>
+	</tr>
+
+<%
+	}
+%> 
+	
 </table>
 </section>
 
@@ -173,7 +201,7 @@ nav {
 
 <%
 	BoardBiz bbiz = new BoardBizImpl();
-	List<BoardDto> freelist = bbiz.free_selectList();
+	//List<BoardDto> freelist = bbiz.free_selectList();
 %>
 
 <h1>게시글관리</h1>
@@ -199,9 +227,9 @@ nav {
 	
 
 <%
-	for (BoardDto dto : freelist ) {
+	//for (BoardDto dto : freelist ) {
 %>
-
+	<%--
 	<tr>
 		<td><input type="checkbox" name="chk" value=""></td>
 		<td><%=dto.getBoard_no() %></td>
@@ -211,9 +239,10 @@ nav {
 		<td><%=dto.getBoard_regdate() %></td>
 		<td><%=dto.getBoard_readcount() %></td>
 	</tr>
+	--%>
 
 <%
-	}
+	//}
 %> 
 	
 	
@@ -275,5 +304,4 @@ nav {
 </div>
 
 </body>
-
 </html>

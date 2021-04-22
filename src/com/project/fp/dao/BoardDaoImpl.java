@@ -311,28 +311,4 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		return res;
 	}
 
-	@Override
-	public List<BoardDto> free_selectList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<BoardDto> notice_selectList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<BoardDto> qna_selectList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<BoardDto> dec_selectList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

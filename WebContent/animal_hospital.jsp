@@ -22,7 +22,7 @@
 
 			<nav>
 				<ul>
-					<li><a href="#">
+					<li><a href="index.jsp">
 							<img src="https://www.onium.in/wp-content/uploads/2019/03/sample-logo-png-6-1.png" width="160" height="60" alt="메인화면" />
 						</a></li>
 

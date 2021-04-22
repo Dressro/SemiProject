@@ -14,10 +14,6 @@ public interface BoardDao {
 
 
 	public List<BoardDto> board_selectList(BoardDto dto);
-	public List<BoardDto> free_selectList();
-	public List<BoardDto> notice_selectList();
-	public List<BoardDto> qna_selectList();
-	public List<BoardDto> dec_selectList();
 	public BoardDto board_selectOne(int board_no);
 	public List<BoardDto> free_selectList(PagingDto Pdto);
 	public List<BoardDto> notice_selectList(PagingDto Pdto);
