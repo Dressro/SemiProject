@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="resources/css/head.css" rel=stylesheet type="text/css" />
 <style>
 div {
 	border-radius: 5px;
@@ -30,7 +31,7 @@ input[type=submit] {
 	height: 40px;
 }
 #kakao_padding {
-	padding: 20px;
+	padding-top: 10px;
 }
 </style>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
@@ -112,7 +113,7 @@ $(function(){
 			<div id="naver_id_login"></div>
 			<!-- //네이버아이디로로그인 버튼 노출 영역 -->
 			<script type="text/javascript">
-  					var naver_id_login = new naver_id_login("3FogXXVNeg3aYw15VPrY", "http://localhost:8787/SemiProject/index.html");
+  					var naver_id_login = new naver_id_login("3FogXXVNeg3aYw15VPrY", "http://localhost:8787/SemiProject/naver_callback.jsp");
   					var state = naver_id_login.getUniqState();
   					naver_id_login.setButton("green", 3,40);
   					naver_id_login.setDomain("http://localhost:8787/SemiProject/login.jsp");
@@ -141,8 +142,6 @@ $(function(){
 			}
 			</script>
 
-		<hr>
-		<button onclick="#" type="button" class="button">회원가입</button>
 	</div>
 </body>
 </html>

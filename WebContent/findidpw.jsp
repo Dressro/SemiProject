@@ -37,6 +37,13 @@
 	border-top: none;
 }
 </style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+function check(){
+	var member_email = $('input[name=member_email_1]').val() +"@"+ $('select[name=member_email_2]').val();
+	$('input[name=member_email]').attr('value',member_email);
+}
+</script>
 </head>
 <body>
 
@@ -49,7 +56,7 @@
 
 	<div id="findid" class="tabcontent">
 		<form action="semi.do" method="post">
-			<input type="hidden" name="commamd" value="findidpw" />
+			<input type="hidden" name="command" value="findidres" />
 
 			<h1>아이디 찾기</h1>
 			<p>회원 정보에 등록된 이메일과 입력한 이메일이 같아야 아이디를 찾을 수 있습니다.</p>
@@ -64,7 +71,8 @@
 				<tr>
 					<th>이메일</th>
 					<td>
-						<input type="text" name="member_email" maxlength="30" onclick="">
+						<input type="hidden" name="member_email" value=""/>
+						<input type="text" name="member_email_1" maxlength="30">
 						@
 						<select name="member_email_2">
 							<option>naver.com</option>
@@ -76,7 +84,7 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-						<button type="button" id="searchid" onclick="location.href='findidres.jsp'">아이디 조회</button>
+						<input type="submit" value="조회하기" onclick="check();"/>
 					</td>
 				</tr>
 

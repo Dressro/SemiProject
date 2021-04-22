@@ -30,6 +30,16 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 		}
 		return m_dto;
 	}
+	
+	@Override
+	public MemberDto selectIdSerch(MemberDto dto) {
+		// TODO Auto-generated method stub
+		MemberDto m_dto = null;
+		try(SqlSession session = getSqlSessionFactory().openSession(false)){
+			m_dto = session.selectOne(namespace+"selectIdSerch", dto);
+		}
+		return m_dto;
+	}
 
 	@Override
 	public MemberDto selectOne(MemberDto dto) {
@@ -55,11 +65,11 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 	}
 
 	@Override
-	public int delete(MemberDto dto) {
+	public int delete(String member_id) {
 		// TODO Auto-generated method stub
 		int res = 0;
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
-			res = session.delete(namespace + "delete", dto);
+			res = session.delete(namespace + "delete", member_id);
 			if (res > 0) {
 				session.commit();
 			}
@@ -72,5 +82,7 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
 
 }

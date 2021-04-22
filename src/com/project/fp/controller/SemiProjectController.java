@@ -4,9 +4,18 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Properties;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +24,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -41,16 +55,14 @@ import com.project.fp.dto.AnimalDto;
 import com.project.fp.dto.BoardDto;
 import com.project.fp.dto.File_TableDto;
 import com.project.fp.dto.MemberDto;
+import com.project.fp.gmail.MailSend;
 
 @WebServlet("/SemiProjectController")
-@MultipartConfig(
-	      location = "",
-	      maxFileSize = -1,
-	      maxRequestSize = -1,
-	     fileSizeThreshold = 1024)
+@MultipartConfig(location = "", maxFileSize = -1, maxRequestSize = -1, fileSizeThreshold = 1024)
 public class SemiProjectController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private int file_new_name_int = 1;
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
@@ -68,6 +80,7 @@ public class SemiProjectController extends HttpServlet {
 		ProductBiz p_biz = new ProductBizImpl();
 		ReceiveBiz r_biz = new ReceiveBizImpl();
 		HttpSession session = request.getSession();
+		session.setMaxInactiveInterval(3600);
 
 		if (command.equals("signup")) {
 			response.sendRedirect("signup.jsp");
@@ -112,7 +125,7 @@ public class SemiProjectController extends HttpServlet {
 
 			int res = m_res + a_res;
 			if (res > 0) {
-				jsResponse(response, "회원가입 성공", "index.html");
+				jsResponse(response, "회원가입 성공", "index.jsp");
 			} else {
 				jsResponse(response, "회원가입 실패", "#");
 			}
@@ -126,9 +139,8 @@ public class SemiProjectController extends HttpServlet {
 			m_dto.setMember_password(member_password);
 			MemberDto dto = m_biz.selectOne(m_dto);
 			session.setAttribute("dto", dto);
-			dispatch(response, request, "#.jsp");
+			dispatch(response, request, "index.jsp");
 		} else if (command.equals("sns_signup")) {
-			System.out.println("여기까지는 성공");
 			String member_id = request.getParameter("member_id");
 			MemberDto m_dto = new MemberDto();
 			m_dto.setMember_id(member_id);
@@ -136,7 +148,7 @@ public class SemiProjectController extends HttpServlet {
 			t_dto = m_biz.selectSerch(m_dto);
 			if (t_dto != null) {
 				session.setAttribute("dto", t_dto);
-				jsResponse(response, "로그인 성공(SNS)", "index.html");
+				jsResponse(response, "로그인 성공(SNS)", "index.jsp");
 			} else {
 				request.setAttribute("dto", m_dto);
 				dispatch(response, request, "sns_signup.jsp");
@@ -179,7 +191,7 @@ public class SemiProjectController extends HttpServlet {
 
 			int res = m_res + a_res;
 			if (res > 0) {
-				jsResponse(response, "회원가입 성공", "index.html");
+				jsResponse(response, "회원가입 성공", "index.jsp");
 			} else {
 				jsResponse(response, "회원가입 실패", "#");
 			}
@@ -187,12 +199,16 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("findidpw")) {
 			response.sendRedirect("findidpw.jsp");
 		} else if (command.equals("findidres")) {
-			String member_id = request.getParameter("member_id");
-			String member_email_1 = request.getParameter("member_email");
-			String member_email_2 = request.getParameter("member_email_2");
-			String member_email = member_email_1 + "@" + member_email_2;
-			request.setAttribute("member_id", member_id);
-			request.setAttribute("member_email", member_email);
+			String member_name = request.getParameter("member_name");
+			String member_email = request.getParameter("member_email");
+			System.out.println(member_name);
+			System.out.println(member_email);
+			MemberDto m_dto = new MemberDto();
+			m_dto.setMember_name(member_name);
+			m_dto.setMember_email(member_email);
+			MemberDto t_dto = null;
+			t_dto = m_biz.selectIdSerch(m_dto);
+			request.setAttribute("dto", t_dto);
 			dispatch(response, request, "findidres.jsp");
 		} else if (command.equals("idchk")) {
 			String member_id = request.getParameter("member_id");
@@ -200,13 +216,13 @@ public class SemiProjectController extends HttpServlet {
 			m_dto.setMember_id(member_id);
 			MemberDto t_dto = null;
 			t_dto = m_biz.selectSerch(m_dto);
-			if(t_dto != null) {
+			if (t_dto != null) {
 				request.setAttribute("dto", t_dto);
 				dispatch(response, request, "signup_idchk.jsp");
-			}else {
+			} else {
 				dispatch(response, request, "signup_idchk.jsp");
 			}
-		}else if (command.equals("board_notice")) {
+		} else if (command.equals("board_notice")) {
 			List<BoardDto> list = b_biz.notice_selectList();
 			request.setAttribute("list", list);
 			dispatch(response, request, "board_notice.jsp");
@@ -219,51 +235,56 @@ public class SemiProjectController extends HttpServlet {
 			request.setAttribute("list", list);
 			dispatch(response, request, "board_dec.jsp");
 		} else if (command.equals("mypage")) {
-
+			response.sendRedirect("mypage.jsp");
 		} else if (command.equals("shopping")) {
-
+			response.sendRedirect("shopping.jsp");
+		} else if (command.equals("board_qna")) {
+			List<BoardDto> list = b_biz.qna_selectList();
+			request.setAttribute("list", list);
+			dispatch(response, request, "board_qna.jsp");
 		} else if (command.equals("board_insertform")) {
 			response.sendRedirect("board_insertform.jsp");
 		} else if (command.equals("board_insertres")) {
 			String file_path = request.getSession().getServletContext().getRealPath("fileupload");
-	        String contentType = request.getContentType();
-	        
-	       /* File fileSaveDir = new File(file_path);
-			
-			if (!fileSaveDir.exists()) {
-				fileSaveDir.mkdirs();
+			String contentType = request.getContentType();
+			String member_id = request.getParameter("member_id");
+			if (contentType != null && contentType.toLowerCase().startsWith("multipart/")) {
+				Collection<Part> parts = request.getParts();
+				File_TableDto f_dto = new File_TableDto();
+
+				for (Part part : parts) {
+					if (part.getHeader("Content-Disposition").contains("filename=")) {
+						String file_name = extractFileName(part.getHeader("Content-Disposition"));
+						if (part.getSize() > 0) {
+							String file_type = file_name.substring(file_name.lastIndexOf("."));
+							String file_size = Long.toString(part.getSize());
+							part.write(file_path + File.separator + file_name);
+							part.delete();
+							f_dto.setFile_path(file_path);
+							f_dto.setFile_ori_name(file_name);
+							String file_new_name_str = String.valueOf(file_new_name_int);
+							f_dto.setFile_new_name(file_new_name_str);
+							f_dto.setFile_type(file_type);
+							f_dto.setFile_size(file_size);
+							f_dto.setMember_id(member_id);
+							f_dto.setBoard_no(2);
+							int res = f_t_biz.board_insert(f_dto);
+							if (res > 0) {
+
+							}
+						}
+					}
+				}
 			}
-			*/
-	        if (contentType != null &&  contentType.toLowerCase().startsWith("multipart/")) {
-	            Collection<Part> parts = request.getParts();
-	            File_TableDto f_dto = new File_TableDto();
-	            
-	            for (Part part : parts) {
-	                if  (part.getHeader("Content-Disposition").contains("filename=")) {
-	                    String file_name =  extractFileName(part.getHeader("Content-Disposition"));
-	                    String file_type = file_name.substring(file_name.lastIndexOf("."));
-	                    if (part.getSize() > 0) {
-	                    	String file_size = Long.toString(part.getSize());
-	                        part.write(file_path + File.separator  + file_name);
-	                        part.delete();
-	                        f_dto.setFile_path(file_path);
-	                        f_dto.setFile_ori_name(file_name);
-	                        String file_new_name_str = String.valueOf(file_new_name_int);
-	                        f_dto.setFile_new_name(file_new_name_str);
-	                        f_dto.setFile_type(file_type);
-	                        f_dto.setFile_size(file_size);
-	                        System.out.println("여기까지 성공");
-	                        int res = f_t_biz.insert(f_dto);
-	                    }
-	                }
-	            }
-	        }
-	        
-	        file_new_name_int++;
+
+			file_new_name_int++;
 			String board_title = request.getParameter("board_title");
 			String board_content = request.getParameter("board_content");
 			String board_category = request.getParameter("board_category");
-			String member_id = request.getParameter("member_id");
+			System.out.println(member_id);
+			System.out.println(board_title);
+			System.out.println(board_content);
+			System.out.println(board_category);
 			BoardDto b_dto = new BoardDto();
 			b_dto.setBoard_title(board_title);
 			b_dto.setBoard_content(board_content);
@@ -299,7 +320,48 @@ public class SemiProjectController extends HttpServlet {
 					jsResponse(response, "등록 실패", "semi.do?command=board_dec");
 				}
 			}
+		} else if (command.equals("logout")) {
+			session.invalidate();
+			response.sendRedirect("index.jsp");
+		} else if (command.equals("animal_hospital")) {
+			response.sendRedirect("animal_hospital.jsp");
+		} else if (command.equals("test")) {
+			response.sendRedirect("test.html");
 		}
+
+		if (command.equals("mailsend")) {
+			String member_email = request.getParameter("member_email"); // 수신자
+			String from = "ejsdnlcl@gmail.com"; // 발신자
+			String cc = "scientist-1002@hanmail.net"; // 참조
+			String subject = "PetCare 회원가입 이메일 인증번호 입니다.";
+			String content = getRandomPassword(10);
+			try {
+				MailSend ms = new MailSend();
+				ms.sendEmail(from, member_email, cc, subject, content);
+				System.out.println("전송 성공");
+				request.setAttribute("content", content);
+				dispatch(response, request, "signup_emailchk.jsp");
+			} catch (MessagingException me) {
+				System.out.println("메일 전송에 실패하였습니다.");
+				System.out.println("실패 이유 : " + me.getMessage());
+				me.printStackTrace();
+			} catch (Exception e) {
+				System.out.println("메일 전송에 실패하였습니다.");
+				System.out.println("실패 이유 : " + e.getMessage());
+				e.printStackTrace();
+			}
+		}
+
+		if (command.equals("mailcheck")) {
+			String AuthenticationKey = request.getParameter("AuthenticationKey");
+			String AuthenticationUser = request.getParameter("AuthenticationUser");
+			if (AuthenticationKey.equals(AuthenticationUser)) {
+				System.out.println("인증 성공");
+			} else {
+				System.out.println("인증 실패");
+			}
+		}
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -329,14 +391,16 @@ public class SemiProjectController extends HttpServlet {
 		}
 		return sb.toString();
 	}
-	 private String extractFileName(String partHeader) {
-	        for (String cd : partHeader.split(";")) {
-	            if (cd.trim().startsWith("filename")) {
-	                String fileName = cd.substring(cd.indexOf("=") +  1).trim().replace("\"", "");;
-	                int index = fileName.lastIndexOf(File.separator);
-	                return fileName.substring(index + 1);
-	            }
-	        }
-	        return null;
-	    }
+
+	private String extractFileName(String partHeader) {
+		for (String cd : partHeader.split(";")) {
+			if (cd.trim().startsWith("filename")) {
+				String fileName = cd.substring(cd.indexOf("=") + 1).trim().replace("\"", "");
+				;
+				int index = fileName.lastIndexOf(File.separator);
+				return fileName.substring(index + 1);
+			}
+		}
+		return null;
+	}
 }

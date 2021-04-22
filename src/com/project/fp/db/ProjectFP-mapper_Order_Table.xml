@@ -15,10 +15,10 @@
 		WHERE ORDER_NUM = #{order_num}
 	</select>
 	
-	<select id="insert" parameterType="Order_TableDto">
+	<insert id="insert" parameterType="Order_TableDto">
 		INSERT INTO ORDER_TABLE
 		VALUES(ORDER_NUM_SEQ, SYSDATE, #{order_quantity}, #{order_price}, #{order_step}, #{order_pay}, #{prod_num}, #{member_id});
-	</select>
+	</insert>
 
 
 

@@ -24,6 +24,12 @@ public class MemberBizImpl implements MemberBiz {
 	}
 
 	@Override
+	public MemberDto selectIdSerch(MemberDto dto) {
+		// TODO Auto-generated method stub
+		return dao.selectIdSerch(dto);
+	}
+	
+	@Override
 	public MemberDto selectOne(MemberDto dto) {
 		// TODO Auto-generated method stub
 		return dao.selectOne(dto);
@@ -36,9 +42,9 @@ public class MemberBizImpl implements MemberBiz {
 	}
 
 	@Override
-	public int delete(MemberDto dto) {
+	public int delete(String member_id) {
 		// TODO Auto-generated method stub
-		return dao.delete(dto);
+		return dao.delete(member_id);
 	}
 
 	@Override
@@ -46,5 +52,7 @@ public class MemberBizImpl implements MemberBiz {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
 
 }

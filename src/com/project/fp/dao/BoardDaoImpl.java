@@ -154,6 +154,29 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 
 		return res;
 	}
+	@Override
+	public int free_update(BoardDto dto) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int notice_update(BoardDto dto) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int qna_update(BoardDto dto) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int dec_update(BoardDto dto) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 	@Override
 	public int free_answerInsert(BoardDto dto) {
@@ -266,5 +289,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 
 		return res;
 	}
+
+
 
 }

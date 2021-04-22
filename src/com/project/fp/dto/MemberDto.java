@@ -2,7 +2,6 @@ package com.project.fp.dto;
 
 public class MemberDto {
 
-
 	private String member_id;
 	private String member_password;
 	private String member_name;

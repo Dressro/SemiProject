@@ -1,3 +1,4 @@
+<%@page import="com.project.fp.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -59,9 +60,13 @@
 <th>
 
 <%
-	String id = (String)request.getAttribute("id");
-	boolean check = id!=null;
-	String msg= check ? "고객님의 아이디는 다음과 같습니다.<br>"+id : "미등록 ID 입니다.";
+	MemberDto dto = (MemberDto) request.getAttribute("dto");
+	String msg = "";
+	if(dto == null){
+		msg = "조회되는 아이디가 없습니다.";
+	}else {
+		msg = "고객님의 아이디는 " + dto.getMember_id() + " 입니다"; 
+	}
 %></th>
 	<td><h4><%=msg%></h4></td>
 	

@@ -15,10 +15,10 @@
 		ORDER BY CH_NUM = #{ch_num}
 	</select>
 	
-	<select id="insert" parameterType="Chat_ContentDto">
+	<insert id="insert" parameterType="Chat_ContentDto">
 		INSERT INTO CHAT_CONTENT
 		VALUES(CHAT_NUM_SEQ, #{member_nickname}, #{ch_content}, SYSDATE)
-	</select>
+	</insert>
 
 
 	<delete id="delete" parameterType="Chat_ContentDto">

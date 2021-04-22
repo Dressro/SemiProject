@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	overflow: hidden;
+	list-style: none;
+}
+
+.menu {
+	margin-top: 20px;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover, a:visited, a:link {
+	color: black;
+}
+
+li {
+	float: left;
+}
+
+li a {
+	display: block;
+	color: black;
+	text-align: center;
+	padding: 15px 20px;
+	text-decoration: none;
+}
+
+.li_right {
+	float: right;
+}
+
+.li_rigit_a {
+	padding: 15px 20px 15px 0px;
+}
+
+#semipage {
+	min-width: 1200px;
+	min-height: 100%;
+	position: relative;
+	overflow: hidden;
+}
