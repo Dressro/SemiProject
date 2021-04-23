@@ -145,7 +145,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 					</table>
 					
 					<div class="orderIng">
-					<ol>
+					<ol style="padding: 25px">
 						<li class="step1">
 			             	입금대기중
 						</li>
@@ -162,9 +162,67 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 			                배송완료
 						</li>
 					</ol>
-				</div>
+				</div><br>
 				
-				
+				<table border="1">
+					<colgroup>
+		            <col width="100">
+		            <col width="20%">
+		            <col width="20%">
+		            <col width="20%">
+		            <col width="20%">
+		            
+					</colgroup>
+					<tr>
+						<th colspan="5">최근 본 상품</th>
+					</tr>
+					<tr>
+						<td>최근 본 상품</td>
+						<td>최근 본 상품</td>
+						<td>최근 본 상품</td>
+						<td>최근 본 상품</td>
+						<td>최근 본 상품</td>
+					</tr>
+					
+					</table>
+					
+					
+				<table border="1">
+					<colgroup>
+		            <col width="100">
+		            <col width="20%">
+		            <col width="20%">
+		            <col width="20%">
+		            <col width="20%">
+		            
+					</colgroup>
+					<tr>
+						<th colspan="5">주문내역</th>
+					</tr>
+					<tr>
+						<th>주문일</th>
+						<th>상품명</th>
+						<th>결제금액</th>
+						<th>주문상태</th>
+						<th>상세보기</th>
+						
+					</tr>
+					<tr>
+						<td>date</td>
+						<td>상품명</td>
+						<td>금액</td>
+						<td>상태</td>
+						<td>상세보기링크</td>
+					</tr>
+					<tr>
+						<td>date</td>
+						<td>상품명</td>
+						<td>금액</td>
+						<td>상태</td>
+						<td>상세보기링크</td>
+					</tr>
+					
+					</table>
 				
 				
 			</section>
@@ -177,7 +235,6 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 
 			<h1>전체주문조회</h1>
 			<table border="1">
-				<col width="30"/>
 				<col width="60"/>
 				<col width="60"/>
 				<col width="200"/>
@@ -187,7 +244,6 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 				<col width="200"/>
 				
 				<tr>
-					<th><input type="checkbox" name="all" value=""/></th>
 					<th>주문번호</th>
 					<th>주문일</th>
 					<th>상품명</th>
@@ -196,8 +252,6 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 					<th>주문상태</th>
 					<th>배송지</th>
 				</tr>
-				
-									
 								
 				
 			<%
@@ -205,7 +259,6 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 			%>
 			
 				<tr>
-					<td><input type="checkbox" name="chk" value=""></td>
 					<td><%=odto.getOrder_num() %></td>
 					<td><%=odto.getOrder_date() %></td>
 					<td></td>
@@ -227,7 +280,6 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 				
 			<h1>취소/반품/교환/환불내역</h1>
 			<table border="1">
-				<col width="30"/>
 				<col width="60"/>
 				<col width="60"/>
 				<col width="200"/>
@@ -237,7 +289,6 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 				<col width="200"/>
 				
 				<tr>
-					<th><input type="checkbox" name="all" value=""/></th>
 					<th>주문번호</th>
 					<th>주문일</th>
 					<th>상품명</th>
@@ -259,8 +310,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 
 						<tr>
 							<th>아이디 *</th>
-							<td><input type="text" name="member_id" title="n"
-								readonly="readonly" value="<%=dto.getMember_id()%>" /></td>
+							<td><%=dto.getMember_id()%></td>
 						</tr>
 						<tr>
 							<th>비밀번호 *</th>
@@ -275,9 +325,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 						</tr>
 						<tr>
 							<th>이름 *</th>
-							<td><input type="text" name="member_name"
-								onclick="idCheckConfirm();" readonly="readonly"
-								value="<%=dto.getMember_name()%>"></td>
+							<td><%=dto.getMember_name()%></td>
 						</tr>
 						<tr>
 							<th>닉네임 *</th>
@@ -294,8 +342,8 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 						</tr>
 						<tr>
 							<th>휴대폰 *</th>
-							<td><input type="text" name="member_phone"
-								readonly="readonly" value="<%=dto.getMember_phone()%>">
+							<td><input type="text" name="member_phone" maxlength="5"
+								value="<%=dto.getMember_phone()%>">
 							</td>
 						</tr>
 						<tr>

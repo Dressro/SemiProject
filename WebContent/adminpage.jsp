@@ -12,7 +12,6 @@
 <%@page import="java.util.List"%>
 <%@page import="com.project.fp.dto.MemberDto"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -63,7 +62,7 @@ $(function(){
  
     /* 하위 전체 선택시 전체버튼 선택 */
     $checkBody.click(function(){
-        var tdInput_Length = $checkBody.length; // td 에 있는 input 갯수
+        var tdInput_Length = $checkBody.length; 
         var tdInput_Check_Length = $("#adminBoard tr td input[type='checkbox']:checked").length;
  
         console.log(tdInput_Length);
@@ -122,6 +121,8 @@ function insertPopup() {
 
 <h1>회원정보관리</h1>
 <form action="semi.do" method="post" id="memberlist">
+<input type="hidden" name="command" value="memberdetail">
+
 <table border="1" id="adminBoard">
 	<col width="30"/>
 	<col width="100"/>
@@ -246,10 +247,6 @@ function insertPopup() {
 <section class="adminpage">
 
 
-<%
-	BoardBiz bbiz = new BoardBizImpl();
-	//List<BoardDto> freelist = bbiz.free_selectList();
-%>
 
 <h1>게시글관리</h1>
 <table border="1" id="adminBoard">
@@ -259,7 +256,7 @@ function insertPopup() {
 	<col width="200"/>
 	<col width="150"/>
 	<col width="100"/>
-	<col width="70"/>
+	
 	
 	<tr>
 		<th><input type="checkbox" value=""/></th>
@@ -268,29 +265,17 @@ function insertPopup() {
 		<th>제목</th>
 		<th>글쓴이</th>
 		<th>작성일</th>
-		<th>조회수</th>
 	</tr>
 	
 	
-
-<%
-	//for (BoardDto dto : freelist ) {
-%>
-	<%--
 	<tr>
 		<td><input type="checkbox" value=""></td>
-		<td><%=dto.getBoard_no() %></td>
-		<td><%=dto.getBoard_category() %></td>
-		<td><%=dto.getBoard_title() %></td>
+		<td>${dto.board_free_no }</td>
 		<td></td>
-		<td><%=dto.getBoard_regdate() %></td>
-		<td><%=dto.getBoard_readcount() %></td>
+		<td>${dto.board_title }</td>
+		<td>${dto.member_id }</td>
+		<td>${dto.board_regdate }</td>
 	</tr>
-	--%>
-
-<%
-	//}
-%> 
 	<tr>
 	<td colspan="7" align="right">
 	<input type="submit"value="글삭제" onclick="#" />

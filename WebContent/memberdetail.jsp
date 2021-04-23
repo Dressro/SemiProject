@@ -15,9 +15,7 @@
 </head>
 
 <body>
-<%
-MemberDto dto = (MemberDto) session.getAttribute("dto");
-%>
+
 		<form action="semi.do" method="post">
 					<input type="hidden" name="command" value="memberdetail">
 					<table border="1">
@@ -27,19 +25,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 
 						<tr>
 							<th>아이디 *</th>
-							<td><input type="text" name="member_id" title="n"
-								readonly="readonly" value="${member_id}" /></td>
-						</tr>
-						<tr>
-							<th>비밀번호 *</th>
-							<td><input type="password" name="member_password"
-								onclick="idCheckConfirm();"></td>
-						</tr>
-						<tr>
-							<th>비밀번호확인 *</th>
-							<td><input type="password" name="member_password_chk"
-								onclick="idCheckConfirm();"> <font id="chkNotice"
-								size="2"></font></td>
+							<td>${member_id}</td>
 						</tr>
 						<tr>
 							<th>이름 *</th>
