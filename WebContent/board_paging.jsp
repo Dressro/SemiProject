@@ -34,7 +34,7 @@
 	  </c:forEach>
 
 	  <!-- 다음 페이지 블록으로 이동 -->
-	  <c:if test="${param.nowBlock <= param.totalBlock}">
+	  <c:if test="${param.nowBlock < param.totalBlock}">
 		    <a href="${action}?command=${param.command}&nowPage=${param.blockEnd+1}">▶</a>
 	  </c:if>
 

@@ -291,9 +291,9 @@ public class SemiProjectController extends HttpServlet {
 			if(request.getParameter("nowPage") != null) {
 				nowPage = Integer.parseInt(request.getParameter("nowPage"));
 			}
-			int count = b_biz.free_allCount();
+			int count = b_biz.qna_allCount();
 			PagingDto Pdto = new PagingDto(count, nowPage);
-			
+			request.setAttribute("BoardCommand", command);
 			List<BoardDto> list = b_biz.qna_selectList(Pdto);
 			request.setAttribute("list", list);
 			dispatch(response, request, "board_qna.jsp");
