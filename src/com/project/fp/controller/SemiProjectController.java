@@ -379,35 +379,21 @@ public class SemiProjectController extends HttpServlet {
 			session.invalidate();
 			response.sendRedirect("index.jsp");
 		} else if (command.equals("animal_hospital")) {
-			//List<HospitalDto> list = new ArrayList<HospitalDto>();
-			///list = h_biz.selectList();
-			//request.setAttribute("list", list);
+			List<HospitalDto> list = new ArrayList<HospitalDto>();
+			list = h_biz.selectList();
+			request.setAttribute("list", list);
 			dispatch(response, request, "animal_hospital.jsp");
 		} else if (command.equals("test")) {
 			response.sendRedirect("test.html");
 		} else if (command.equals("animal_hospital_search")) {
-			System.out.println("여기까지는 성공");
 			String hospital_name = request.getParameter("hospitial_name");
 			System.out.println(hospital_name);
 			HospitalDto h_dto = new HospitalDto();
 			h_dto.setHospital_name(hospital_name);
 			List<HospitalDto> list = new ArrayList<HospitalDto>();
 			list = h_biz.selectSearchList(h_dto);
-			JsonArray resultArray = new JsonArray();
-			if (list.size() == 0) {
-				response.getWriter().append("검색되는 병원이 존재하지 않습니다" + "");
-			} else {
-				for (HospitalDto dto : list) {
-					System.out.println(dto);
-					Gson gson = new Gson();
-					String jsonString = gson.toJson(dto);
-					resultArray.add(JsonParser.parseString(jsonString));
-				}
-				JsonObject result = new JsonObject();
-				result.add("result", resultArray);
-				System.out.println(result.toString());
-				response.getWriter().append(result.toString());
-			}
+			request.setAttribute("list", list);
+			dispatch(response, request, "animal_hospital.jsp");
 		}
 
 		if (command.equals("mailsend")) {
