@@ -10,12 +10,23 @@ import com.project.fp.dto.HospitalDto;
 public class HospitalDaoImpl extends SqlMapConfig implements HospitalDao {
 
 	private String namespace = "com.project.fp.hospital.";
+
 	@Override
 	public List<HospitalDto> selectList() {
 		// TODO Auto-generated method stub
 		List<HospitalDto> list = new ArrayList<HospitalDto>();
-		try(SqlSession session = getSqlSessionFactory().openSession(false)){
-			list = session.selectList(namespace+"hospital_selectList");
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "hospital_selectList");
+		}
+		return list;
+	}
+
+	@Override
+	public List<HospitalDto> selectSearchList(HospitalDto dto) {
+		// TODO Auto-generated method stub
+		List<HospitalDto> list = new ArrayList<HospitalDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "hospital_search_selectList",dto);
 		}
 		return list;
 	}

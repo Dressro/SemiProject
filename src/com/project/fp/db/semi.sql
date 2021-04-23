@@ -175,6 +175,8 @@ CREATE TABLE HOSPITAL(
 	HOSPITAL_PHONE VARCHAR2(100)
 );
 
+
+
 select * from hospital order by hospital_num desc;
 select * from member;  
 select * from file_table;

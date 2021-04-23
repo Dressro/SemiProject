@@ -14,6 +14,13 @@ public class HospitalBizImpl implements HospitalBiz {
 		// TODO Auto-generated method stub
 		return dao.selectList();
 	}
+	
+	@Override
+	public List<HospitalDto> selectSearchList(HospitalDto dto) {
+		// TODO Auto-generated method stub
+		return dao.selectSearchList(dto);
+	}
+
 
 	@Override
 	public int insert(HospitalDto dto) {

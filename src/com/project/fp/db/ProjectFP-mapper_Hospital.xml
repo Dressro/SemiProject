@@ -8,6 +8,11 @@
 		from hospital
 		order by hospital_num desc
 	</select>
+	<select id="hospital_search_selectList" parameterType="HospitalDto" resultType="HospitalDto">
+		select hospital_num,hospital_name,hospital_addr,hospital_phone
+		from hospital
+		where hospital_name like '%' || #{hospital_name} || '%'
+	</select>
 	<insert id="hospital_insert" parameterType="HospitalDto">
 		insert into hospital
 		values(hospital_num_seq.nextval,#{hospital_name},#{hospital_addr},#{hospital_phone})
