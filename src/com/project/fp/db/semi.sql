@@ -177,7 +177,7 @@ CREATE TABLE HOSPITAL(
 
 
 
-select * from hospital order by hospital_num desc;
+select count(*) from hospital order by hospital_num desc;
 select * from member;  
 select * from file_table;
 select * from board order by board_no desc;
@@ -203,3 +203,20 @@ SELECT X.rnum, X.board_no,X.board_free_no,X.board_notice_no,X.board_qna_no,X.boa
 		) X
 		WHERE X.rnum >= 1
 
+		select
+		b.rnum,b.hospital_num,b.hospital_name,b.hospital_addr,b.hospital_phone
+		from
+		(select rownum as rnum ,
+		a.hospital_num,a.hospital_name,a.hospital_addr,a.hospital_phone
+		from
+		(select
+		hospital_num,hospital_name,hospital_addr,hospital_phone
+		from
+		hospital
+		order by hospital_num desc)a
+		where rownum <=
+		20)b
+		where b.rnum >=
+		11
+
+		

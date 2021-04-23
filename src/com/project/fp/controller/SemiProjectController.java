@@ -382,9 +382,17 @@ public class SemiProjectController extends HttpServlet {
 			session.invalidate();
 			response.sendRedirect("index.jsp");
 		} else if (command.equals("animal_hospital")) {
+			int nowPage = 1;
+			if(request.getParameter("nowPage") != null) {
+				nowPage = Integer.parseInt(request.getParameter("nowPage"));
+			}
+			int count = h_biz.count();
+			PagingDto pdto = new PagingDto(count,nowPage);
 			List<HospitalDto> list = new ArrayList<HospitalDto>();
-			list = h_biz.selectList();
+			list = h_biz.selectList(pdto);
+			request.setAttribute("Animal_hospital_Command", command);
 			request.setAttribute("list", list);
+			request.setAttribute("Pdto", pdto);
 			dispatch(response, request, "animal_hospital.jsp");
 		} else if (command.equals("test")) {
 			response.sendRedirect("test.html");
