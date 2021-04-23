@@ -7,65 +7,72 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.net.http.HttpHeaders;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+//import java.util.Base64;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.commons.codec.binary.Base64;
-import org.json.simple.JSONObject;
+import org.apache.tomcat.util.codec.binary.Base64;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 
 public class SMS {
 
-	public static void sendSMS(String phonenumber) {
+	public static void sendSMS(String phonenumber, String content) throws UnsupportedEncodingException {
 		String hostNameUrl = "https://sens.apigw.ntruss.com";
 		String requestUrl = "/sms/v2/services/";
 		String requestUrlType = "/messages";
 		String accessKey = "MgnNQBLZWYDmVIWB9A86";
 		String secretKey = "bukxizrgBdgLY4Gs6qIynKtLnqOeLjfCrNoS9Lh5";
 		String serviceId = "ncp:sms:kr:266284043003:semiproject";
-		String method = "GET";
 		String timestamp = Long.toString(System.currentTimeMillis());
 		requestUrl += serviceId + requestUrlType;
 		String apiUrl = hostNameUrl + requestUrl;
 		
-		JSONObject bodyJson = new JSONObject();
-		JSONObject toJson = new JSONObject();
+		JsonObject bodyJson = new JsonObject();
+		JsonObject toJson = new JsonObject();
+		JsonArray Jsarr = new JsonArray();
+			    
+		toJson.addProperty("subject", "test");			// 메시지 제목 (적용안됨/lms만 적용)
+		toJson.addProperty("content", content);  		// 메시지 내용	(실제내용)
+		toJson.addProperty("to", phonenumber);			// 수신번호
+		Jsarr.add(toJson);	
 		
-		toJson.put("to", phonenumber);		    // 수신번호
-		toJson.put("content", "test1234");		// 메시지 내용
+		bodyJson.addProperty("type", "SMS");			// 메시지 type sms/lms
+		bodyJson.addProperty("countryCode", "82");		// 국가 전화번호
+		bodyJson.addProperty("contentType", "COMM");	// 메시지 내용 type ad/comm
+		bodyJson.addProperty("from", "01064244977");	// 발신번호 (사전에 인증/등록된 번호만 사용가능)
+		bodyJson.addProperty("subject", "test");		// 메시지 제목(적용안됨/lms만 적용)
+		bodyJson.addProperty("content", "test2");		// 메시지 내용
+		bodyJson.add("messages", Jsarr);
 		
-		bodyJson.put("type", "sms");			// 메시지 type sms/lms
-		bodyJson.put("contentType", "COMM"); 	// 메시지 내용 type ad/comm
-		bodyJson.put("countryCode", "82");  	// 국가 전화번호
-		bodyJson.put("from", "01064244977");	// 발신번호 (사전에 인증/등록된 번호만 사용가능)
-		bodyJson.put("content", "test123");		// 메시지 내용(실제내용)
-		bodyJson.put("messages", toJson);
+		String body = bodyJson.toString();
 		
-		String body = bodyJson.toJSONString();
+		System.out.println(body);
+		System.out.println(requestUrl);
+		System.out.println(apiUrl);
 		
-		System.out.println("body");
-		String auth = "rhkgkrwk1002@naver.com:951002";
-		
-		try {
-			
+		try {	
 			URL url = new URL(apiUrl);
-			
 			HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
+			
+			urlConnection.setRequestMethod("POST");	
 
-			byte[] authEncBytes = Base64.encodeBase64(auth.getBytes());
-			String authStringEnc = new String(authEncBytes);
-				 
-			urlConnection.setUseCaches(false);
-			urlConnection.setDoOutput(true);
-			urlConnection.setDoInput(true);
-			urlConnection.setRequestProperty("Authorization", "Basic " + authStringEnc);
-			urlConnection.setRequestProperty("content-type", "application/json");
+			urlConnection.setRequestProperty("Content-Type", "application/json");
 			urlConnection.setRequestProperty("x-ncp-apigw-timestamp", timestamp);
 			urlConnection.setRequestProperty("x-ncp-iam-access-key", accessKey);
-			urlConnection.setRequestProperty("x-ncp-apigw-signature-v2", makeSignature(requestUrl, timestamp, method, accessKey, secretKey));
-			urlConnection.setRequestMethod(method);
+			urlConnection.setRequestProperty("x-ncp-apigw-signature-v2", makeSignature(requestUrl, timestamp, accessKey, secretKey));
+			urlConnection.setDoInput(true);
+			urlConnection.setUseCaches(false);
 			urlConnection.setDoOutput(true);
 			DataOutputStream wr = new DataOutputStream(urlConnection.getOutputStream());
 			
@@ -76,6 +83,7 @@ public class SMS {
 			int responseCode = urlConnection.getResponseCode();
 			BufferedReader br;
 			System.out.println("responseCode" + " " + responseCode);
+			System.out.println("responsemessage : " + urlConnection.getResponseMessage());
 			if(responseCode==202) { // 정상 호출
 				br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));	
 			} else { // 에러 발생
@@ -97,10 +105,11 @@ public class SMS {
 		
 	}
 	
-	public static String makeSignature(String url, String timestamp, String method, String accessKey, String secretKey) throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException {
+	public static String makeSignature(String url, String timestamp, String accessKey, String secretKey) throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException {
 		String space = " ";					// one space
 		String newLine = "\n";				// new line
-
+		String method = "POST";
+		
 		String message = new StringBuilder()
 			.append(method)
 			.append(space)
@@ -111,13 +120,13 @@ public class SMS {
 			.append(accessKey)
 			.toString();
 
-		SecretKeySpec signingKey = new SecretKeySpec(secretKey.getBytes("UTF-8"), "HmacSHA256");
-		Mac mac = Mac.getInstance("HmacSHA256");
-		mac.init(signingKey);
+		SecretKeySpec signingKey = new SecretKeySpec(secretKey.getBytes("UTF-8"), "HmacSHA256"); 
+		Mac mac = Mac.getInstance("HmacSHA256"); 
+		mac.init(signingKey); 
 		
-		byte[] rawHmac = mac.doFinal(message.getBytes("UTF-8"));
+		byte[] rawHmac = mac.doFinal(message.getBytes("UTF-8")); 
 		String encodeBase64String = Base64.encodeBase64String(rawHmac);
-			
+		
 	  return encodeBase64String;
 	}
 	

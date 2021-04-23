@@ -118,11 +118,11 @@
 	}
 	
 	function sendsms(){
-		var member_phone = $('input[name=member_phone_1]').val() +"-"+ $('input[name=member_phone_2]').val() +"-"+$('input[name=member_phone_3]').val();
+		var member_phone = $('input[name=member_phone_1]').val() + $('input[name=member_phone_2]').val() + $('input[name=member_phone_3]').val();
 		if($('input[name=member_phone_1]').val().trim() == "" || $('input[name=member_phone_1]').val() == null){
 			alert("전화번로를 입력해 주세요");
 		} else {
-			open("semi.do?command=smssend&member_phone=","","width=200 , height= 200");
+			open("semi.do?command=smssend&member_phone="+member_phone,"","width=200 , height= 200");
 		}	
 	}
 	

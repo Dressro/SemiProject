@@ -365,10 +365,9 @@ public class SemiProjectController extends HttpServlet {
 		
 		if (command.equals("smssend")) {
 			String member_phone = request.getParameter("member_phone");
-			SMS sms = new SMS();
-			sms.sendSMS(member_phone);
+			String content = "문자 내용 작성"; 
+			SMS.sendSMS(member_phone, content);
 		}
-
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
