@@ -157,6 +157,11 @@
 		(select board_titletab from board where board_qna_no = #{board_qna_no}) + 1,
 		'N',#{board_category},#{member_id} )
 	</insert>
+	<update id="board_update" parameterType="BoardDto">
+		update board set board_title=#{board_title},board_content=#{board_content},
+		board_category=#{board_category},board_regdate=sysdate
+		where board_no = #{board_no}
+	</update>
 	<update id="free_answerupdate" parameterType="int">
 		update board set board_groupseq = board_groupseq + 1
 		where board_groupno = (select board_groupno from board where board_free_no

@@ -20,6 +20,7 @@ public interface BoardDao {
 	public int notice_insert(BoardDto dto);
 	public int qna_insert(BoardDto dto);
 	public int dec_insert(BoardDto dto);
+	public int board_update(BoardDto dto);
 	public int free_update(BoardDto dto);
 	public int notice_update(BoardDto dto);
 	public int qna_update(BoardDto dto);

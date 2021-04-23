@@ -60,6 +60,8 @@ import com.project.fp.dto.File_TableDto;
 import com.project.fp.dto.MemberDto;
 import com.project.fp.gmail.MailSend;
 
+import oracle.net.aso.b;
+
 @WebServlet("/SemiProjectController")
 @MultipartConfig(location = "", maxFileSize = -1, maxRequestSize = -1, fileSizeThreshold = 1024)
 public class SemiProjectController extends HttpServlet {
@@ -252,6 +254,62 @@ public class SemiProjectController extends HttpServlet {
 			List<BoardDto> list = b_biz.qna_selectList();
 			request.setAttribute("list", list);
 			dispatch(response, request, "board_qna.jsp");
+		} else if(command.equals("board_updateform")){
+			int board_no = Integer.parseInt(request.getParameter("board_no"));
+			BoardDto b_dto = b_biz.board_selectOne(board_no);
+			File_TableDto f_dto = f_t_biz.board_selectOne(board_no);
+			request.setAttribute("b_dto", b_dto);
+			request.setAttribute("f_dto", f_dto);
+			dispatch(response, request, "board_updateform.jsp");
+		} else if(command.equals("board_updateres")) {
+			String file_path = request.getSession().getServletContext().getRealPath("fileupload");
+			
+			File Folder = new File(file_path);
+			if (!Folder.exists()) {
+				    Folder.mkdir();
+			}
+			
+			String contentType = request.getContentType();
+			String member_id = request.getParameter("member_id");
+			String board_title = request.getParameter("board_title");
+			String board_content = request.getParameter("board_content");
+			String board_category = request.getParameter("board_category");
+			BoardDto b_dto = new BoardDto();
+			b_dto.setBoard_title(board_title);
+			b_dto.setBoard_content(board_content);
+			b_dto.setBoard_category(board_category);
+			b_dto.setMember_id(member_id);
+			int res = 0;
+			if (board_category.equals("F")) {
+				res = b_biz.board_update(b_dto);
+				if (res > 0) {
+					jsResponse(response, "등록 성공", "semi.do?command=board_free");
+				} else {
+					jsResponse(response, "등록 실패", "semi.do?command=board_free");
+				}
+			} else if (board_category.equals("N")) {
+				res = b_biz.notice_update(b_dto);
+				if (res > 0) {
+					jsResponse(response, "등록 성공", "semi.do?command=board_notice");
+				} else {
+					jsResponse(response, "등록 실패", "semi.do?command=board_notice");
+				}
+			} else if (board_category.equals("Q")) {
+				res = b_biz.qna_update(b_dto);
+				if (res > 0) {
+					jsResponse(response, "등록 성공", "semi.do?command=board_qna");
+				} else {
+					jsResponse(response, "등록 실패", "semi.do?command=board_qna");
+				}
+			} else if (board_category.equals("D")) {
+				res = b_biz.dec_update(b_dto);
+				if (res > 0) {
+					jsResponse(response, "등록 성공", "semi.do?command=board_dec");
+				} else {
+					jsResponse(response, "등록 실패", "semi.do?command=board_dec");
+				}
+			}
+			
 		} else if (command.equals("board_insertform")) {
 			response.sendRedirect("board_insertform.jsp");
 		} else if (command.equals("board_insertres")) {
@@ -275,6 +333,7 @@ public class SemiProjectController extends HttpServlet {
 			int res = 0;
 			if (board_category.equals("F")) {
 				res = b_biz.free_insert(b_dto);
+				System.out.println(res);
 				if (res > 0) {
 					jsResponse(response, "등록 성공", "semi.do?command=board_free");
 				} else {
@@ -330,7 +389,7 @@ public class SemiProjectController extends HttpServlet {
 					}
 				}
 			}
-		}else if(command.equals("board_dec_detail")){
+		}else if(command.equals("board_detail")){
 			int board_no = Integer.parseInt(request.getParameter("board_no"));
 			BoardDto b_dto = b_biz.board_selectOne(board_no);
 			File_TableDto f_dto = f_t_biz.board_selectOne(board_no);

@@ -174,6 +174,20 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 
 		return res;
 	}
+	@Override
+	public int board_update(BoardDto dto) {
+		int res = 0;
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.insert(namespace + "board_update", dto);
+			if (res > 0) {
+				session.commit();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	}
 
 	@Override
 	public int free_update(BoardDto dto) {
@@ -310,6 +324,8 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 
 		return res;
 	}
+
+	
 
 	
 }
