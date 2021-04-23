@@ -251,6 +251,7 @@ public class SemiProjectController extends HttpServlet {
 			PagingDto Pdto = new PagingDto(count, nowPage);
 			
 			List<BoardDto> list = b_biz.notice_selectList(Pdto);
+			request.setAttribute("BoardCommand", command);
 			request.setAttribute("list", list);
 			request.setAttribute("Pdto", Pdto);
 			dispatch(response, request, "board_notice.jsp");
@@ -266,6 +267,7 @@ public class SemiProjectController extends HttpServlet {
 			System.out.println(nowPage);
 			System.out.println(count);
 			List<BoardDto> list = b_biz.free_selectList(Pdto);
+			request.setAttribute("BoardCommand", command);
 			request.setAttribute("list", list);
 			request.setAttribute("Pdto", Pdto);
 			dispatch(response, request, "board_free.jsp");

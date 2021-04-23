@@ -18,7 +18,7 @@
 
 	  <!-- 이전 페이지 블록으로 이동 -->
 	  <c:if test="${param.nowBlock > 1}">
-		    <a href="${action}?command=board_free&nowPage=${param.blockBegin-1}">◀</a>
+		    <a href="${action}?command=${param.command}&nowPage=${param.blockBegin-1}">◀</a>
 	  </c:if>
 	
 	  <!-- 현재 페이지 블록에 해당하는 페이지 출력 -->
@@ -28,14 +28,14 @@
 				     ${index}
 			    </c:when>
 			    <c:otherwise>
-            		 <a href="${action}?command=board_free&nowPage=${index}">${index}</a>
+            		 <a href="${action}?command=${param.command}&nowPage=${index}">${index}</a>
 			    </c:otherwise>
 		    </c:choose>
 	  </c:forEach>
 
 	  <!-- 다음 페이지 블록으로 이동 -->
 	  <c:if test="${param.nowBlock <= param.totalBlock}">
-		    <a href="${action}?command=board_free&nowPage=${param.blockEnd+1}">▶</a>
+		    <a href="${action}?command=${param.command}&nowPage=${param.blockEnd+1}">▶</a>
 	  </c:if>
 
 </div>

@@ -54,7 +54,8 @@
 		</tr>
 	</table>
 	
-	<jsp:include page="/board_free_paging.jsp">
+	<jsp:include page="/board_paging.jsp">
+		<jsp:param value="${BoardCommand }" name="command"/>
 		<jsp:param value="${Pdto.nowBlock}" name="nowBlock" />
 		<jsp:param value="${Pdto.blockBegin }" name="blockBegin"/>
 		<jsp:param value="${Pdto.blockEnd }" name="blockEnd"/>
