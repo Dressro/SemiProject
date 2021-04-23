@@ -11,6 +11,8 @@
 <%@page import="com.project.fp.biz.MemberBiz"%>
 <%@page import="java.util.List"%>
 <%@page import="com.project.fp.dto.MemberDto"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -27,7 +29,6 @@ response.setContentType("text/html; charset=UTF-8");
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="resources/css/head.css" rel=stylesheet type="text/css" />
-
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 
@@ -42,14 +43,56 @@ $(function(){
 		$('.adminmenus li').eq(0).trigger('click');
 });
 
+$(function(){
+	 
+    var $checkHead = $("#adminBoard tr th input[type='checkbox']"); 
+    var $checkBody = $("#adminBoard tr td input[type='checkbox']"); 
+ 
+    /* 전체선택 */
+    $checkHead.click(function(){
+        var $bodyPutCk = $checkHead.is(":checked");
+ 
+        if ( $bodyPutCk == true ) {
+            $checkBody.attr("checked", true);
+            $checkBody.prop("checked", true);
+        }else {
+            $checkBody.attr("checked", false);
+            $checkBody.prop("checked", false);
+        }
+    });
+ 
+    /* 하위 전체 선택시 전체버튼 선택 */
+    $checkBody.click(function(){
+        var tdInput_Length = $checkBody.length; // td 에 있는 input 갯수
+        var tdInput_Check_Length = $("#adminBoard tr td input[type='checkbox']:checked").length;
+ 
+        console.log(tdInput_Length);
+        console.log(tdInput_Check_Length);
+ 
+        if (tdInput_Length == tdInput_Check_Length) {
+            $checkHead.attr("checked", true);
+            $checkHead.prop("checked", true);
+        }else {
+            $checkHead.attr("checked", false);
+            $checkHead.prop("checked", false);
+        }
+    });
+ 
+});
+
+function insertPopup() {
+    window.name = "adminpage.jsp";
+    window.open("memberdetail.jsp", "insert",
+            "width = 550, height = 800, resizable = no, scrollbars = no, status = no");
+}
+
+
 </script>
 <style>
 
-
-nav {
-  float: left;
-  padding: 20px;
-  }
+#detailpop {
+	text-decoration:  underline;
+}
 
 </style>
 
@@ -79,7 +122,7 @@ nav {
 
 <h1>회원정보관리</h1>
 <form action="semi.do" method="post" id="memberlist">
-<table border="1">
+<table border="1" id="adminBoard">
 	<col width="30"/>
 	<col width="100"/>
 	<col width="100"/>
@@ -93,7 +136,7 @@ nav {
 	<col width="50"/>
 	
 	<tr>
-		<th><input type="checkbox" name="all" value=""/></th>
+		<th><input type="checkbox" value=""/></th>
 		<th>ID</th>
 		<th>이름</th>
 		<th>닉네임</th>
@@ -113,8 +156,8 @@ nav {
 %>
 
 	<tr>
-		<td><input type="checkbox" name="chk" value=""></td>
-		<td><%=dto.getMember_id() %></td>
+		<td><input type="checkbox" value=""></td>
+		<td><a id="detailpop" href="javascript:insertPopup();"><%=dto.getMember_id() %></a></td>
 		<td><%=dto.getMember_name() %></td>
 		<td><%=dto.getMember_nicname() %></td>
 		<td><%=dto.getMember_email() %></td>
@@ -133,7 +176,7 @@ nav {
 	<tr>
 		<td colspan="11" align="right">
 			<input type="submit" value="등급변경">
-			<input type="button" value="회원등록" onclick="" />
+			<input type="button" value="회원등록" onclick="#" />
 		</td>
 	</tr>
 </table>
@@ -148,7 +191,7 @@ nav {
 %>
 
 <h1>전체주문조회</h1>
-<table border="1">
+<table border="1" id="adminBoard">
 	<col width="30"/>
 	<col width="60"/>
 	<col width="100"/>
@@ -161,7 +204,7 @@ nav {
 	<col width="50"/>
 	
 	<tr>
-		<th><input type="checkbox" name="all" value=""/></th>
+		<th><input type="checkbox" value=""/></th>
 		<th>주문번호</th>
 		<th>회원ID</th>
 		<th>주문일</th>
@@ -178,7 +221,7 @@ nav {
 %>
 
 	<tr>
-		<td><input type="checkbox" name="chk" value=""></td>
+		<td><input type="checkbox" value=""></td>
 		<td><%=dto.getOrder_num() %></td>
 		<td><%=dto.getMember_id() %></td>
 		<td><%=dto.getOrder_date() %></td>
@@ -192,6 +235,10 @@ nav {
 <%
 	}
 %> 
+	<tr>
+	<td colspan="9" align="right">
+	<input type="submit"value="주문상태변경" onclick="#" />
+	</td></tr>
 	
 </table>
 </section>
@@ -205,7 +252,7 @@ nav {
 %>
 
 <h1>게시글관리</h1>
-<table border="1">
+<table border="1" id="adminBoard">
 	<col width="30"/>
 	<col width="60"/>
 	<col width="150"/>
@@ -215,7 +262,7 @@ nav {
 	<col width="70"/>
 	
 	<tr>
-		<th><input type="checkbox" name="all" value=""/></th>
+		<th><input type="checkbox" value=""/></th>
 		<th>글번호</th>
 		<th>게시판명</th>
 		<th>제목</th>
@@ -231,7 +278,7 @@ nav {
 %>
 	<%--
 	<tr>
-		<td><input type="checkbox" name="chk" value=""></td>
+		<td><input type="checkbox" value=""></td>
 		<td><%=dto.getBoard_no() %></td>
 		<td><%=dto.getBoard_category() %></td>
 		<td><%=dto.getBoard_title() %></td>
@@ -244,7 +291,10 @@ nav {
 <%
 	//}
 %> 
-	
+	<tr>
+	<td colspan="7" align="right">
+	<input type="submit"value="글삭제" onclick="#" />
+	</td></tr>
 	
 </table>
 </section>
@@ -258,7 +308,7 @@ nav {
 %>
 
 <h1>상품관리</h1>
-<table border="1">
+<table border="1" id="adminBoard">
 	<col width="30"/>
 	<col width="60"/>
 	<col width="100"/>
@@ -268,7 +318,7 @@ nav {
 	<col width="70"/>
 	
 	<tr>
-		<th><input type="checkbox" name="all" value=""/></th>
+		<th><input type="checkbox" value=""/></th>
 		<th>상품번호</th>
 		<th>분류</th>
 		<th>상품명</th>
@@ -285,7 +335,7 @@ nav {
 %>
 
 	<tr>
-		<td><input type="checkbox" name="chk" value=""></td>
+		<td><input type="checkbox" value=""></td>
 		<td><%=dto.getProd_num() %></td>
 		<td><%=dto.getProd_category() %></td>
 		<td><%=dto.getProd_name() %></td>
@@ -298,6 +348,12 @@ nav {
 <%
 	}
 %> 
+	
+	<tr>
+	<td colspan="8" align="right">
+	<input type="submit"value="상품등록" onclick="#" />
+	<input type="submit"value="상품삭제" onclick="#" />
+	</td></tr>
 	
 </table>
 </section>
