@@ -18,6 +18,7 @@
 	width: 100%;
 	height: 400px;
 	margin-bottom: 15px;
+	margin-top: 25px;
 }
 #animal_mid_con{
 	width: 1200px;
@@ -69,10 +70,7 @@
 	font-weight: bolder;
 }
 </style>
-<script type="text/javascript">
 
-
-</script>
 </head>
 <body>
 	<%
@@ -126,8 +124,10 @@
 			
 
 			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6cb234998221d5b514c1db1f8c50cf56"></script>
-			<script>
+			
 				
+		
+			<script>
 			<%--
 			var latitude = 0;
 			var longitude = 0;
@@ -150,6 +150,7 @@
 			}
 			alert(latitude + ' ' + longitude);
 			--%>
+
 			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 			mapOption = {
 				center : new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -203,6 +204,7 @@
 				}
 			});
 			</script>
+
 			<div>
 				<div>
 					<div class ="animal_hospital_name">
