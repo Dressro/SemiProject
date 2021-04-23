@@ -105,8 +105,8 @@ public class PagingDto {
 		return totalPage;
 	}
 
-	public void setTotalPage(int totalPage) {
-		this.totalPage = totalPage;
+	public void setTotalPage(int count) {
+		this.totalPage = (int) Math.ceil(count / (double)DISPLAY_BOARD);
 	}
 
 	public int getTotalBlock() {
