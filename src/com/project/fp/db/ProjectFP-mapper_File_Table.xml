@@ -20,7 +20,14 @@
 		FROM FILE_TABLE
 		WHERE FILE_NUM = #{file_num}
 	</select>
-
+	<select id="board_selectOne" parameterType="int"
+		resultType="File_TableDto">
+		SELECT FILE_NUM, FILE_PATH, FILE_ORI_NAME, FILE_NEW_NAME,
+		FILE_TYPE, FILE_DATE, FILE_SIZE, MEMBER_ID, BOARD_NO, CH_NUM,
+		ANIMAL_NO
+		FROM FILE_TABLE
+		WHERE BOARD_NO = #{board_no}
+	</select>
 	<insert id="board_insert" parameterType="File_TableDto">
 		INSERT INTO FILE_TABLE
 		VALUES(FILE_NUM_SEQ.nextval, #{file_path}, #{file_ori_name},

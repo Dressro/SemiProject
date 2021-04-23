@@ -1,3 +1,4 @@
+<%@page import="com.project.fp.dto.File_TableDto"%>
 <%@page import="com.project.fp.dto.BoardDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -10,8 +11,21 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+	
+	a{text-decoration: none;}
+</style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
+<% BoardDto b_dto = (BoardDto)request.getAttribute("b_dto");
+File_TableDto f_dto = (File_TableDto)request.getAttribute("f_dto");
+%>		
+
+	function filedown(){
+		var url = "semi.do?command=filedown&file_path=<%=f_dto.getFile_path()%>&file_new_name=<%=f_dto.getFile_new_name()%>";
+		$(location).attr('href',encodeURI(url));
+	}
+	
 	$(function(){
 		var text_html = $("textarea").html();
 		var find_html_1 = "&lt;img";
@@ -27,28 +41,29 @@
 </script>
 </head>
 <body>
-<% BoardDto dto = (BoardDto)request.getAttribute("dto"); %>	
+
 	<h1>Detail</h1>
-	
 	<form action="semi.do" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="member_id" value="<%=dto.getMember_id()%>" />
+		<input type="hidden" name="member_id" value="<%=b_dto.getMember_id()%>" />
 		<input type="hidden" name="command" value="board_insertres" />
 		<div class="container">
 			<div class="content" style="width: 70%">
 				<div class="row justify-content-md-center">
 					<div class="col-sm-9">
-						닉&nbsp;네&nbsp;임&nbsp; : <input type="text" name="member_id" value="<%=dto.getMember_id() %>" readonly="readonly">
+						닉&nbsp;네&nbsp;임&nbsp; : <input type="text" name="member_id" value="<%=b_dto.getMember_id() %>" readonly="readonly">
 						<div class="input-group mb-3">
 							
-							제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목 : <input type="text" class="form-control" name="board_title" size="100" value="<%=dto.getBoard_title()%>" readonly="readonly">
+							제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목 : <input type="text" class="form-control" name="board_title" size="100" value="<%=b_dto.getBoard_title()%>" readonly="readonly">
 						</div>
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group mb-3">
-							카테고리 : <input type="text" name="board_category" value="<%=dto.getBoard_category()%>">
+							카테고리 : <input type="text" name="board_category" value="<%=b_dto.getBoard_category()%>">
 						</div>
 						<div align="right">
-							<a href="#">다운로드</a>
+							<%if(f_dto!=null){ %>
+							<div onclick="filedown();"><%=f_dto.getFile_ori_name() %>(<%=f_dto.getFile_size() %>)</div>
+							<%} %>
 						</div>
 					</div>
 				</div>
@@ -57,7 +72,8 @@
 					<div class="col_c" style="margin-bottom: 30px">
 						<div class="input-group">
 							<div contentEditable="true" id="text" style="border: 1">
- 					 		<%=dto.getBoard_content() %>
+ 					 		<%=b_dto.getBoard_content() %>
+ 					 		
 							</div>
 						</div>
 					</div>

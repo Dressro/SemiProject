@@ -1,6 +1,7 @@
 package com.project.fp.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
@@ -16,7 +17,9 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -61,7 +64,7 @@ import com.project.fp.gmail.MailSend;
 @MultipartConfig(location = "", maxFileSize = -1, maxRequestSize = -1, fileSizeThreshold = 1024)
 public class SemiProjectController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private int file_new_name_int = 1;
+	private String file_new_name = "";
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -253,6 +256,12 @@ public class SemiProjectController extends HttpServlet {
 			response.sendRedirect("board_insertform.jsp");
 		} else if (command.equals("board_insertres")) {
 			String file_path = request.getSession().getServletContext().getRealPath("fileupload");
+			
+			File Folder = new File(file_path);
+			if (!Folder.exists()) {
+				    Folder.mkdir();
+			}
+			
 			String contentType = request.getContentType();
 			String member_id = request.getParameter("member_id");
 			String board_title = request.getParameter("board_title");
@@ -302,33 +311,59 @@ public class SemiProjectController extends HttpServlet {
 
 				for (Part part : parts) {
 					if (part.getHeader("Content-Disposition").contains("filename=")) {
-						String file_name = extractFileName(part.getHeader("Content-Disposition"));
+						String file_ori_name = extractFileName(part.getHeader("Content-Disposition"));
 						if (part.getSize() > 0) {
-							String file_type = file_name.substring(file_name.lastIndexOf("."));
+							String file_type = file_ori_name.substring(file_ori_name.lastIndexOf("."));
 							String file_size = Long.toString(part.getSize());
-							part.write(file_path + File.separator + file_name);
+							file_new_name = getRandomFileName(5) + file_ori_name;
+							part.write(file_path + File.separator + file_new_name);
 							part.delete();
 							f_dto.setFile_path(file_path);
-							f_dto.setFile_ori_name(file_name);
-							String file_new_name_str = String.valueOf(file_new_name_int);
-							f_dto.setFile_new_name(file_new_name_str);
+							f_dto.setFile_ori_name(file_ori_name);
+							f_dto.setFile_new_name(file_new_name);
 							f_dto.setFile_type(file_type);
 							f_dto.setFile_size(file_size);
 							f_dto.setMember_id(member_id);
 							f_dto.setBoard_no(board_no);
 							int f_res = f_t_biz.board_insert(f_dto);
-							
 						}
 					}
 				}
 			}
-
-			file_new_name_int++;
 		}else if(command.equals("board_dec_detail")){
 			int board_no = Integer.parseInt(request.getParameter("board_no"));
 			BoardDto b_dto = b_biz.board_selectOne(board_no);
-			request.setAttribute("dto", b_dto);
+			File_TableDto f_dto = f_t_biz.board_selectOne(board_no);
+			request.setAttribute("b_dto", b_dto);
+			request.setAttribute("f_dto", f_dto);
 			dispatch(response, request, "board_detail.jsp");
+		}else if(command.equals("filedown")){
+			String file_path = request.getSession().getServletContext().getRealPath("fileupload");
+			String file_new_name = request.getParameter("file_new_name");
+			
+			String filePath = file_path + File.separator + file_new_name;
+			byte[] b = new byte[4096];
+			FileInputStream fileInputStream = new FileInputStream(filePath);
+			
+			String mimeType = getServletContext().getMimeType(filePath);
+			if(mimeType == null) {
+				mimeType = "application/octet-stream";
+			}
+			response.setContentType(mimeType);	
+			
+	        String sEncoding = new String(file_new_name.getBytes("UTF-8"));
+	        response.setHeader("Content-Disposition", "attachment; fileName= " + sEncoding);
+	        ServletOutputStream servletOutStream = response.getOutputStream();
+	        
+	        int read;
+	        while((read = fileInputStream.read(b,0,b.length))!= -1){
+	            servletOutStream.write(b,0,read);            
+	        }
+	        
+	        servletOutStream.flush();
+	        servletOutStream.close();
+	        fileInputStream.close();
+		
 		}else if (command.equals("logout")) {
 			session.invalidate();
 			response.sendRedirect("index.jsp");
@@ -400,7 +435,16 @@ public class SemiProjectController extends HttpServlet {
 		}
 		return sb.toString();
 	}
-
+	private static String getRandomFileName(int len) {
+		char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+		int idx = 0;
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < len; i++) {
+			idx = (int) (charSet.length * Math.random());
+			sb.append(charSet[idx]);
+		}
+		return sb.toString();
+	}
 	private String extractFileName(String partHeader) {
 		for (String cd : partHeader.split(";")) {
 			if (cd.trim().startsWith("filename")) {

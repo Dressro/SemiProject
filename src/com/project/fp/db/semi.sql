@@ -166,6 +166,10 @@ CREATE TABLE FILE_TABLE(
 	CONSTRAINT FILE_TABLE_CH_NUM_FK FOREIGN KEY (CH_NUM) REFERENCES CHAT (CH_NUM),
 	CONSTRAINT FILE_TABLE_ANIMAL_NO_KF FOREIGN KEY (ANIMAL_NO) REFERENCES ANIMAL (ANIMAL_NO)
 );
+
+select * from member m , file_table f
+where m.member_id = f.member_id
+and board_no = '64';
 select * from member;  dhksdn486  
 select * from board;
 select * from file_table

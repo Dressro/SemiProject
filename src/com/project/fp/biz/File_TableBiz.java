@@ -8,6 +8,7 @@ public interface File_TableBiz {
 	
 	public List<File_TableDto> selectList();
 	public File_TableDto selectOne(int file_num);
+	public File_TableDto board_selectOne(int board_no);
 	public int board_insert(File_TableDto dto);
 	public int animal_insert(File_TableDto dto);
 	public int ch_insert(File_TableDto dto);

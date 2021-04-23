@@ -38,7 +38,20 @@ public class File_TableDaoImpl extends SqlMapConfig implements File_TableDao {
 
 		return dto;
 	}
+	
+	@Override
+	public File_TableDto board_selectOne(int board_no) {
+		File_TableDto dto = null;
 
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			dto = session.selectOne(namespace + "board_selectOne", board_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return dto;
+	}
+	
 	@Override
 	public int board_insert(File_TableDto dto) {
 
@@ -114,5 +127,7 @@ public class File_TableDaoImpl extends SqlMapConfig implements File_TableDao {
 
 		return res;
 	}
+
+	
 
 }
