@@ -73,10 +73,10 @@
 		ORDER BY BOARD_REGDATE DESC
 		) A
 		WHERE ROWNUM <![CDATA[ <= ]]>
-		#{blockEnd}
+		#{pageEnd}
 		) X
 		WHERE X.rnum <![CDATA[ >= ]]>
-		#{blockBegin}
+		#{pageBegin}
 	</select>
 
 	<select id="notice_selectList"
@@ -95,10 +95,10 @@
 		BOARD_REGDATE DESC
 		) A
 		WHERE ROWNUM <![CDATA[ <= ]]>
-		#{blockEnd}
+		#{pageEnd}
 		) X
 		WHERE X.rnum <![CDATA[ >= ]]>
-		#{blockBegin}
+		#{pageBegin}
 	</select>
 
 	<select id="qna_selectList"
@@ -117,10 +117,10 @@
 		ORDER BY BOARD_REGDATE DESC
 		) A
 		WHERE ROWNUM <![CDATA[ <= ]]>
-		#{blockEnd}
+		#{pageEnd}
 		) X
 		WHERE X.rnum <![CDATA[ >= ]]>
-		#{blockBegin}
+		#{pageBegin}
 	</select>
 
 	<select id="dec_selectList"
@@ -139,10 +139,10 @@
 		ORDER BY BOARD_REGDATE DESC
 		) A
 		WHERE ROWNUM <![CDATA[ <= ]]>
-		#{blockEnd}
+		#{pageEnd}
 		) X
 		WHERE X.rnum <![CDATA[ >= ]]>
-		#{blockBegin}
+		#{pageBegin}
 	</select>
 
 	<select id="board_selectOne" parameterType="int"
