@@ -114,7 +114,7 @@ public class PagingDto {
 	}
 
 	public void setTotalBlock() {
-		this.totalBlock = (int) Math.ceil(totalPage / DISPLAY_PAGE);
+		this.totalBlock = (int) Math.ceil(totalPage / (double) DISPLAY_PAGE);
 	}
 
 	public int getNowBlock() {
@@ -182,3 +182,4 @@ public class PagingDto {
 	}
 
 }
+
