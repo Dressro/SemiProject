@@ -117,6 +117,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 			<nav>
 				<ul class="mymenus">
 					<li><a class="mymenu" href="#">마이페이지</a></li>
+					<li><a class="mymenu" href="#">캘린더</a></li>
 					<li><a class="mymenu" href="#">주문내역</a></li>
 					<li><a class="mymenu" href="#">취소/반품/교환/환불내역</a></li>
 					<li><a class="mymenu" href="#">회원정보수정</a></li>
@@ -226,6 +227,15 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 				
 				
 			</section>
+			
+			<section class="mypage">
+			<h1>캘린더</h1>
+			
+				
+			
+			
+			</section>
+			
 			<section class="mypage">
 							
 				<%

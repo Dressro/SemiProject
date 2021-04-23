@@ -79,12 +79,17 @@ $(function(){
  
 });
 
-function insertPopup() {
+function detailPopup() {
     window.name = "adminpage.jsp";
     window.open("memberdetail.jsp", "insert",
             "width = 550, height = 800, resizable = no, scrollbars = no, status = no");
 }
 
+function memberinsertPopup() {
+    window.name = "adminpage.jsp";
+    window.open("signup.jsp", "insert",
+            "width = 730, height = 800, resizable = no, scrollbars = no, status = no");
+}
 
 </script>
 <style>
@@ -158,7 +163,7 @@ function insertPopup() {
 
 	<tr>
 		<td><input type="checkbox" value=""></td>
-		<td><a id="detailpop" href="javascript:insertPopup();"><%=dto.getMember_id() %></a></td>
+		<td><a id="detailpop" href="javascript:detailPopup();"><%=dto.getMember_id() %></a></td>
 		<td><%=dto.getMember_name() %></td>
 		<td><%=dto.getMember_nicname() %></td>
 		<td><%=dto.getMember_email() %></td>
@@ -177,7 +182,7 @@ function insertPopup() {
 	<tr>
 		<td colspan="11" align="right">
 			<input type="submit" value="등급변경">
-			<input type="button" value="회원등록" onclick="#" />
+			<input type="button" value="회원등록" onclick="javascript:memberinsertPopup();">
 		</td>
 	</tr>
 </table>
@@ -269,13 +274,14 @@ function insertPopup() {
 	
 	
 	<tr>
+	<%--
 		<td><input type="checkbox" value=""></td>
 		<td>${dto.board_free_no }</td>
 		<td></td>
 		<td>${dto.board_title }</td>
 		<td>${dto.member_id }</td>
 		<td>${dto.board_regdate }</td>
-	</tr>
+	</tr>  --%>
 	<tr>
 	<td colspan="7" align="right">
 	<input type="submit"value="글삭제" onclick="#" />
