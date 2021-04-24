@@ -16,7 +16,7 @@ response.setContentType("text/html; charset=UTF-8");
 <title>Insert title here</title>
 <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript">
+<script type="text/javascript">	
 <% BoardDto b_dto = (BoardDto)request.getAttribute("b_dto");
    File_TableDto f_dto = (File_TableDto)request.getAttribute("f_dto");
 %>		
