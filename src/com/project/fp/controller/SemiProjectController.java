@@ -241,6 +241,19 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				dispatch(response, request, "signup_idchk.jsp");
 			}
+			
+		} else if (command.equals("memberdetail")) {
+			response.sendRedirect("memberdetail.jsp");
+		} else if (command.equals("memberdel")) {
+			String member_id = request.getParameter("member_id");
+			int md_res = 0;
+			md_res = m_biz.delete(member_id);
+			if (md_res > 0) {
+				jsResponse(response,"회원탈퇴", "index.jsp");
+			} else {
+				jsResponse(response, "회원탈퇴실패", "semi.do?command=mypage");
+			}
+			
 		} else if (command.equals("board_notice")) {
 			int nowPage = 1;
 			if (request.getParameter("nowPage") != null) {
@@ -464,6 +477,8 @@ public class SemiProjectController extends HttpServlet {
 			String content = "문자 내용 작성";
 			SMS.sendSMS(member_phone, content);
 		}
+		
+	
 
 	}
 

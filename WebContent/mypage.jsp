@@ -1,3 +1,4 @@
+<%@page import="com.project.fp.dao.MemberDaoImpl"%>
 <%@page import="com.project.fp.dto.Order_TableDto"%>
 <%@page import="com.project.fp.biz.Order_TableBizImpl"%>
 <%@page import="com.project.fp.biz.Order_TableBiz"%>
@@ -66,6 +67,8 @@ function chk(value){
 	}
 }
 
+
+
 </script>
 <link href="resources/css/head.css" rel=stylesheet type="text/css" />
 
@@ -73,6 +76,9 @@ function chk(value){
 <body>
 <%
 MemberDto dto = (MemberDto) session.getAttribute("dto");
+if (dto == null) {
+	pageContext.forward("index.jsp");
+}
 %>
 	<div id="semipage">
 		<header>
@@ -145,7 +151,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 					</tr>
 					</table>
 					
-					<div class="orderIng">
+					<!-- <div class="orderIng">
 					<ol style="padding: 25px">
 						<li class="step1">
 			             	입금대기중
@@ -163,7 +169,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 			                배송완료
 						</li>
 					</ol>
-				</div><br>
+				</div><br> -->
 				
 				<table border="1">
 					<colgroup>
@@ -201,26 +207,26 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 						<th colspan="5">주문내역</th>
 					</tr>
 					<tr>
+						<th>주문번호</th>
 						<th>주문일</th>
 						<th>상품명</th>
 						<th>결제금액</th>
 						<th>주문상태</th>
-						<th>상세보기</th>
 						
 					</tr>
 					<tr>
+						<td>no</td>
 						<td>date</td>
 						<td>상품명</td>
 						<td>금액</td>
 						<td>상태</td>
-						<td>상세보기링크</td>
 					</tr>
 					<tr>
-						<td>date</td>
-						<td>상품명</td>
-						<td>금액</td>
-						<td>상태</td>
-						<td>상세보기링크</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
 					</tr>
 					
 					</table>
@@ -512,8 +518,9 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 							</td>
 						</tr>
 						<tr>
-							<td colspan="9" align="right"><input type="submit"
-								value="회원정보수정" onclick="#" /> <input type="button" value="취소"
+							<td colspan="9" align="right"><button type="button"
+								value="회원정보수정" onclick="location.href='semi.do?command=membermod&member_id=<%=dto.getMember_id()%>'" /></button> 
+								<input type="button" value="취소"
 								onclick="location.href='index.html'" /></td>
 						</tr>
 					</table>
@@ -524,7 +531,6 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 
 				<h1>회원탈퇴</h1>
 				<form action="semi.do" method="post">
-					<input type="hidden" name="command" value="memberdel">
 
 					<table border="1">
 						<col width="200" />
@@ -533,24 +539,24 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 						</tr>
 
 						<tr>
-							<th>아이디 *</th>
+							<th>아이디</th>
 							<td><input type="text" name="member_id" title="n"
 								readonly="readonly" value="<%=dto.getMember_id()%>" /></td>
 						</tr>
 						<tr>
-							<th>비밀번호 *</th>
+							<th>비밀번호</th>
 							<td><input type="password" name="member_password"
 								onclick="idCheckConfirm();"></td>
 						</tr>
 						<tr>
-							<th>비밀번호확인 *</th>
+							<th>비밀번호확인</th>
 							<td><input type="password" name="member_password_chk"
-								onclick="idCheckConfirm();"> <font id="chkNotice"
-								size="2"></font></td>
+								onclick="idCheckConfirm();"> 
+								<font id="chkNotice" size="2"></font></td>
 						</tr>
 						<tr>
-							<td colspan="5" align="center"><input type="submit"
-								value="회원탈퇴" onclick="#" /></td>
+							<td colspan="5" align="center">
+							<button type="button" onclick="location.href='semi.do?command=memberdel&member_id=<%=dto.getMember_id()%>'">회원탈퇴</button> </td>
 						</tr>
 					</table>
 				</form>
