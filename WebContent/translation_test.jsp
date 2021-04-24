@@ -27,6 +27,7 @@
 </script>
 </head>
 <%
+	String text = (String) request.getAttribute("text");
 	String result = (String) request.getAttribute("result");
 %>
 <body>
@@ -47,7 +48,7 @@
 		<option value="it">이탈리아어</option>
 		<option value="fr">프랑스어</option>	
 	</select>
-	<input type="text" name="papago_text" />
+	<input type="text" name="papago_text" value="<%=text %>" />
 	<input type="button" value="번역" onclick="translation();"/>
 	<select name="target">
 		<option value="ko">한국어</option>

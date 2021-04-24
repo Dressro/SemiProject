@@ -472,6 +472,7 @@ public class SemiProjectController extends HttpServlet {
 			String target = request.getParameter("target");
 			String result = papago.getTransSentence(text, source, target);
 			System.out.println(result);
+			request.setAttribute("text", text);
 			request.setAttribute("result", result);
 			dispatch(response, request, "translation_test.jsp");
 		}
