@@ -162,6 +162,10 @@
 		board_category=#{board_category},board_regdate=sysdate
 		where board_no = #{board_no}
 	</update>
+	<update id="board_read" parameterType="BoardDto">
+		update board set board_readcount = #{board_readcount}
+		where board_no = #{board_no}	
+	</update>
 	<update id="free_answerupdate" parameterType="int">
 		update board set board_groupseq = board_groupseq + 1
 		where board_groupno = (select board_groupno from board where board_free_no

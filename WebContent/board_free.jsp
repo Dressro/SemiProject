@@ -38,9 +38,10 @@
 	<input type="hidden" name="command" value="board_delete">
 	<table border="1">
 		<col width="30px" />
-		<col width="50px">
-		<col width="100px">
-		<col width="500px">
+		<col width="50px"/>
+		<col width="100px"/>
+		<col width="500px"/>
+		<col width="100px"/>
 		<col width="300px">
 		
 		<tr>
@@ -48,12 +49,13 @@
 			<th>번호</th>
 			<th>작성자</th>
 			<th>제목</th>
+			<th>조회수</th>
 			<th>작성일</th>
 		</tr>
 		<c:choose>
 			<c:when test="${empty list }">
 				<tr>
-					<th colspan="5">----------작성된 글이 존재하지 않습니다----------</th>
+					<th colspan="6">----------작성된 글이 존재하지 않습니다----------</th>
 				</tr>
 			</c:when>
 			<c:otherwise>
@@ -68,13 +70,14 @@
 							</c:forEach>
 							<a href="semi.do?command=board_detail&board_no=${dto.board_no }">${dto.board_title }</a>
 						</td>
+						<td>${dto.board_readcount }</td>
 						<td>${dto.board_regdate }</td>
 					</tr>
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
 		<tr>
-			<td colspan="5" align="right">
+			<td colspan="6" align="right">
 				<input type="button" value="글작성" onclick="location.href='semi.do?command=board_insertform'" />
 				<input type="submit" value="삭제" onclick="chkcheck();"/>
 			</td>
