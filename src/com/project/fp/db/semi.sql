@@ -166,6 +166,17 @@ CREATE TABLE FILE_TABLE(
 	CONSTRAINT FILE_TABLE_CH_NUM_FK FOREIGN KEY (CH_NUM) REFERENCES CHAT (CH_NUM),
 	CONSTRAINT FILE_TABLE_ANIMAL_NO_KF FOREIGN KEY (ANIMAL_NO) REFERENCES ANIMAL (ANIMAL_NO)
 );
+<<<<<<< HEAD
+=======
+
+select * from member m , file_table f
+where m.member_id = f.member_id
+and board_no = '64';
+select * from member;  dhksdn486  
+select * from board;
+select * from file_table
+SELECT * FROM ANIMAL;
+>>>>>>> 86fd1501d1675df4a19206041e32f8f753fe8742
 
 
 CREATE TABLE HOSPITAL(
@@ -181,6 +192,7 @@ select count(*) from hospital order by hospital_num desc;
 select * from member;  
 select * from file_table;
 select * from board order by board_no desc;
+
 
 SELECT X.rnum, X.board_no,X.board_free_no,X.board_notice_no,X.board_qna_no,X.board_dec_no,
 		X.board_title,X.board_content,X.board_regdate,X.board_readcount,
@@ -219,4 +231,11 @@ SELECT X.rnum, X.board_no,X.board_free_no,X.board_notice_no,X.board_qna_no,X.boa
 		where b.rnum >=
 		11
 
-		
+	
+delete from member where member_id='1702707258'
+SELECT FILE_NUM, FILE_PATH, FILE_ORI_NAME, FILE_NEW_NAME,
+		FILE_TYPE, FILE_DATE, FILE_SIZE, MEMBER_ID, BOARD_NO, CH_NUM,
+		ANIMAL_NO
+		FROM FILE_TABLE
+		WHERE BOARD_NO = '73'
+

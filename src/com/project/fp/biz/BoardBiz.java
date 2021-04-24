@@ -23,6 +23,7 @@ public interface BoardBiz {
 	public int notice_insert(BoardDto dto);
 	public int qna_insert(BoardDto dto);
 	public int dec_insert(BoardDto dto);
+	public int board_update(BoardDto dto);
 	public int free_update(BoardDto dto);
 	public int notice_update(BoardDto dto);
 	public int qna_update(BoardDto dto);
@@ -32,4 +33,5 @@ public interface BoardBiz {
 	public int delete(int board_no);
 	public int free_answerProc(BoardDto dto);
 	public int qna_answerProc(BoardDto dto);
+	public int multiDelete(String[] board_nos);
 }

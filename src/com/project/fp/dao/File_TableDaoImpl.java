@@ -1,7 +1,9 @@
 package com.project.fp.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -38,7 +40,20 @@ public class File_TableDaoImpl extends SqlMapConfig implements File_TableDao {
 
 		return dto;
 	}
+	
+	@Override
+	public File_TableDto board_selectOne(int board_no) {
+		File_TableDto dto = null;
 
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			dto = session.selectOne(namespace + "board_selectOne", board_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return dto;
+	}
+	
 	@Override
 	public int board_insert(File_TableDto dto) {
 
@@ -114,5 +129,46 @@ public class File_TableDaoImpl extends SqlMapConfig implements File_TableDao {
 
 		return res;
 	}
+
+	@Override
+	public int board_delete(int board_no) {
+		int res = 0;
+
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.delete(namespace + "board_delete", board_no);
+			if (res > 0) {
+				session.commit();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	}
+
+	@Override
+	public int multiDelete(String[] board_nos) {
+int count = 0;
+		
+		Map<String, String[]> map = new HashMap<String, String[]>();
+		map.put("board_nos", board_nos);
+		
+		SqlSession session = null;
+		try {
+			session = getSqlSessionFactory().openSession(false);
+			count = session.delete(namespace+"multiDelete",map);
+			if(count == board_nos.length) {
+				session.commit();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		
+		return count;
+	}
+
+	
 
 }

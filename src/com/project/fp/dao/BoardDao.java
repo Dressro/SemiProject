@@ -23,6 +23,7 @@ public interface BoardDao {
 	public int notice_insert(BoardDto dto);
 	public int qna_insert(BoardDto dto);
 	public int dec_insert(BoardDto dto);
+	public int board_update(BoardDto dto);
 	public int free_update(BoardDto dto);
 	public int notice_update(BoardDto dto);
 	public int qna_update(BoardDto dto);
@@ -34,4 +35,5 @@ public interface BoardDao {
 	public int readcountupdate(int board_no);
 	public int free_delete(int board_free_no);
 	public int delete(int board_no);
+	public int multiDelete(String[] board_nos);
 }
