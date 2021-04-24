@@ -63,6 +63,7 @@ import com.project.fp.dto.HospitalDto;
 import com.project.fp.dto.MemberDto;
 import com.project.fp.dto.PagingDto;
 import com.project.fp.gmail.MailSend;
+import com.project.fp.papago.papago;
 import com.project.fp.sms.SMS;
 
 @WebServlet("/SemiProjectController")
@@ -463,6 +464,16 @@ public class SemiProjectController extends HttpServlet {
 			String member_phone = request.getParameter("member_phone");
 			String content = "문자 내용 작성";
 			SMS.sendSMS(member_phone, content);
+		}
+		
+		if (command.equals("translation")) {
+			String text = request.getParameter("text");
+			String source = request.getParameter("source");
+			String target = request.getParameter("target");
+			String result = papago.getTransSentence(text, source, target);
+			System.out.println(result);
+			request.setAttribute("result", result);
+			dispatch(response, request, "translation_test.jsp");
 		}
 
 	}
