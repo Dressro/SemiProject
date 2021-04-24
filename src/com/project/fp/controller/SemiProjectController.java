@@ -301,8 +301,6 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("board_insertform")) {
 			response.sendRedirect("board_insertform.jsp");
 		} else if (command.equals("board_insertres")) {
-			String file_path = request.getSession().getServletContext().getRealPath("fileupload");
-			String contentType = request.getContentType();
 			String member_id = request.getParameter("member_id");
 			String board_title = request.getParameter("board_title");
 			String board_content = request.getParameter("board_content");
@@ -344,7 +342,10 @@ public class SemiProjectController extends HttpServlet {
 			}
 			List<BoardDto> b_list = b_biz.board_selectList(b_dto);
 			int board_no = b_list.get(0).getBoard_no();
+			System.out.println("board_no: "+board_no);
 
+			String file_path = request.getSession().getServletContext().getRealPath("fileupload");
+			String contentType = request.getContentType();
 			if (contentType != null && contentType.toLowerCase().startsWith("multipart/")) {
 				Collection<Part> parts = request.getParts();
 				File_TableDto f_dto = new File_TableDto();
