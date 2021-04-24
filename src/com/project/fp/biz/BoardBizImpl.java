@@ -5,70 +5,69 @@ import java.util.List;
 import com.project.fp.dao.BoardDao;
 import com.project.fp.dao.BoardDaoImpl;
 import com.project.fp.dto.BoardDto;
+import com.project.fp.dto.PagingDto;
 
 public class BoardBizImpl implements BoardBiz {
 
 	private BoardDao dao = new BoardDaoImpl();
 	
 	@Override
+	public int free_allCount() {
+
+		return dao.free_allCount();
+	}
+
+	@Override
 	public List<BoardDto> board_selectList(BoardDto dto) {
 		// TODO Auto-generated method stub
 		return dao.board_selectList(dto);
 	}
 
+	public int notice_allCount() {
 
-	@Override
-	public List<BoardDto> free_selectList() {
-		// TODO Auto-generated method stub
-		return dao.free_selectList();
+		return dao.notice_allCount();
 	}
 
 	@Override
-	public List<BoardDto> notice_selectList() {
-		// TODO Auto-generated method stub
-		return dao.notice_selectList();
+	public int qna_allCount() {
+
+		return dao.qna_allCount();
 	}
 
 	@Override
-	public List<BoardDto> qna_selectList() {
-		// TODO Auto-generated method stub
-		return dao.qna_selectList();
+	public int dec_allCount() {
+
+		return dao.dec_allCount();
 	}
 
 	@Override
-	public List<BoardDto> dec_selectList() {
+	public List<BoardDto> free_selectList(PagingDto Pdto) {
 		// TODO Auto-generated method stub
-		return dao.dec_selectList();
+		return dao.free_selectList(Pdto);
 	}
-	
+
+	@Override
+	public List<BoardDto> notice_selectList(PagingDto Pdto) {
+		// TODO Auto-generated method stub
+		return dao.notice_selectList(Pdto);
+	}
+
+	@Override
+	public List<BoardDto> qna_selectList(PagingDto Pdto) {
+		// TODO Auto-generated method stub
+		return dao.qna_selectList(Pdto);
+	}
+
+	@Override
+	public List<BoardDto> dec_selectList(PagingDto Pdto) {
+		// TODO Auto-generated method stub
+		return dao.dec_selectList(Pdto);
+	}
+
 	@Override
 	public BoardDto board_selectOne(int board_no) {
 		// TODO Auto-generated method stub
 		return dao.board_selectOne(board_no);
-	}
-	
-	@Override
-	public BoardDto free_selectOne(int board_free_no) {
-		// TODO Auto-generated method stub
-		return dao.free_selectOne(board_free_no);
-	}
-
-	@Override
-	public BoardDto notice_selectOne(int board_notice_no) {
-		// TODO Auto-generated method stub
-		return dao.notice_selectOne(board_notice_no);
-	}
-
-	@Override
-	public BoardDto qna_selectOne(int board_qna_no) {
-		// TODO Auto-generated method stub
-		return dao.qna_selectOne(board_qna_no);
-	}
-
-	@Override
-	public BoardDto dec_selectOne(int board_dec_no) {
-		// TODO Auto-generated method stub
-		return dao.dec_selectOne(board_dec_no);
 	}
 
 	@Override
@@ -175,8 +174,6 @@ public class BoardBizImpl implements BoardBiz {
 		return dao.multiDelete(board_nos);
 	}
 
-
-	
 
 
 	

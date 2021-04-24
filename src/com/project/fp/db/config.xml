@@ -31,5 +31,6 @@
 		<mapper resource="com/project/fp/db/ProjectFP-mapper_board.xml"/>
 		<mapper resource="com/project/fp/db/ProjectFP-mapper_File_Table.xml"/>
 		<mapper resource="com/project/fp/db/ProjectFP-mapper_Hospital.xml"/>
+		<mapper resource="com/project/fp/db/ProjectFP-mapper_Order_Table.xml"/>
 	</mappers>
 </configuration>

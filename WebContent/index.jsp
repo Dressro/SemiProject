@@ -12,6 +12,7 @@ response.setContentType("text/html; charset=UTF-8");
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="resources/css/head.css" rel=stylesheet type="text/css" />
+<link href="resources/css/footer.css" rel=stylesheet type="text/css" />
 <style type="text/css">
 
 body {
@@ -109,48 +110,6 @@ img {
 	margin: 0 auto;
 }
 
-#semi_footer {
-	background-color: #a0a0a0;
-	position: relative;
-}
-
-.footer {
-	width: 1200px;
-	margin: 0 auto;
-}
-
-.footer_content {
-	display: inline-block;
-	vertical-align: middle;
-	margin-left: 20px;
-}
-
-.footer_content:first-child {
-	margin-left: 0px;
-}
-.footer_ul {
-	margin-top: 5px;
-}
-.footer_ul_a {
-	padding: 0px;
-	font-weight: bold;
-}
-.footer_div{
-	margin-top: 5px;
-    line-height: 1.5;
-    width: 1000px
-}
-.footer_sns{
-	margin-top: -20px;
-    line-height: 16px;
-    text-align: right;
-
-}
-.footer_sns_a{
-	display: inline-block;
-	padding: 0px;
-	margin-left: 10px;
-}
 </style>
 <script type="text/javascript">
 	var slideIndex = 0;
@@ -214,7 +173,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 
 			<nav>
 				<ul>
-					<li><a href="#">
+					<li><a href="index.jsp">
 							<img src="https://www.onium.in/wp-content/uploads/2019/03/sample-logo-png-6-1.png" width="160" height="60" alt="메인화면" />
 						</a></li>
 
@@ -224,8 +183,10 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 					<li class="menu"><a href="semi.do?command=board_dec">실종신고</a>
 					<li class="menu"><a href="semi.do?command=mypage">마이페이지</a>
 					<li class="menu"><a href="semi.do?command=shopping">쇼핑</a>
-					<li class="menu"><a href="semi.do?command=board_qna">상품문의</a> 
+					<li class="menu"><a href="semi.do?command=board_qna">상품문의</a>
+					 <%--
 					<li class="menu"><a href="semi.do?command=test">test</a>
+					 --%>
 					<%
  						if (dto == null) {
  					%>

@@ -166,6 +166,8 @@ CREATE TABLE FILE_TABLE(
 	CONSTRAINT FILE_TABLE_CH_NUM_FK FOREIGN KEY (CH_NUM) REFERENCES CHAT (CH_NUM),
 	CONSTRAINT FILE_TABLE_ANIMAL_NO_KF FOREIGN KEY (ANIMAL_NO) REFERENCES ANIMAL (ANIMAL_NO)
 );
+<<<<<<< HEAD
+=======
 
 select * from member m , file_table f
 where m.member_id = f.member_id
@@ -174,6 +176,7 @@ select * from member;  dhksdn486
 select * from board;
 select * from file_table
 SELECT * FROM ANIMAL;
+>>>>>>> 86fd1501d1675df4a19206041e32f8f753fe8742
 
 
 CREATE TABLE HOSPITAL(
@@ -183,10 +186,52 @@ CREATE TABLE HOSPITAL(
 	HOSPITAL_PHONE VARCHAR2(100)
 );
 
-select * from hospital order by hospital_num desc;
+
+
+select count(*) from hospital order by hospital_num desc;
 select * from member;  
 select * from file_table;
 select * from board order by board_no desc;
+
+
+SELECT X.rnum, X.board_no,X.board_free_no,X.board_notice_no,X.board_qna_no,X.board_dec_no,
+		X.board_title,X.board_content,X.board_regdate,X.board_readcount,
+		X.board_groupno,X.board_groupseq,X.board_titletab,X.member_id
+		FROM (
+		SELECT ROWNUM AS rnum, A.board_no,A.board_free_no,A.board_notice_no,A.board_qna_no,A.board_dec_no,
+		A.board_title,A.board_content,A.board_regdate,A.board_readcount,
+		A.board_groupno,A.board_groupseq,A.board_titletab,A.member_id
+		FROM (
+		SELECT b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
+		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
+		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname as
+		member_id
+		FROM BOARD b, MEMBER m
+		WHERE BOARD_CATEGORY = 'F'
+		and m.member_id = b.member_id
+		ORDER BY BOARD_REGDATE DESC
+		) A
+		WHERE ROWNUM <= 15
+		) X
+		WHERE X.rnum >= 1
+
+		select
+		b.rnum,b.hospital_num,b.hospital_name,b.hospital_addr,b.hospital_phone
+		from
+		(select rownum as rnum ,
+		a.hospital_num,a.hospital_name,a.hospital_addr,a.hospital_phone
+		from
+		(select
+		hospital_num,hospital_name,hospital_addr,hospital_phone
+		from
+		hospital
+		order by hospital_num desc)a
+		where rownum <=
+		20)b
+		where b.rnum >=
+		11
+
+	
 delete from member where member_id='1702707258'
 SELECT FILE_NUM, FILE_PATH, FILE_ORI_NAME, FILE_NEW_NAME,
 		FILE_TYPE, FILE_DATE, FILE_SIZE, MEMBER_ID, BOARD_NO, CH_NUM,

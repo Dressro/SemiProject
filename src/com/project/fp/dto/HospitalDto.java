@@ -51,4 +51,11 @@ public class HospitalDto {
 		this.hospital_phone = hospital_phone;
 	}
 
+	@Override
+	public String toString() {
+		return "HospitalDto [hospital_num=" + hospital_num + ", hospital_name=" + hospital_name + ", hospital_addr="
+				+ hospital_addr + ", hospital_phone=" + hospital_phone + "]";
+	}
+
+	
 }

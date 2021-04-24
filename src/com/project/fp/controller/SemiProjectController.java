@@ -1,7 +1,12 @@
 package com.project.fp.controller;
 
+import java.io.BufferedReader;
 import java.io.File;
+
+import java.io.FileReader;
+
 import java.io.FileInputStream;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
@@ -28,6 +33,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -46,6 +52,8 @@ import com.project.fp.biz.Chat_ContentBiz;
 import com.project.fp.biz.Chat_ContentBizImpl;
 import com.project.fp.biz.File_TableBiz;
 import com.project.fp.biz.File_TableBizImpl;
+import com.project.fp.biz.HospitalBiz;
+import com.project.fp.biz.HospitalBizImpl;
 import com.project.fp.biz.MemberBiz;
 import com.project.fp.biz.MemberBizImpl;
 import com.project.fp.biz.Order_TableBiz;
@@ -57,8 +65,11 @@ import com.project.fp.biz.ReceiveBizImpl;
 import com.project.fp.dto.AnimalDto;
 import com.project.fp.dto.BoardDto;
 import com.project.fp.dto.File_TableDto;
+import com.project.fp.dto.HospitalDto;
 import com.project.fp.dto.MemberDto;
+import com.project.fp.dto.PagingDto;
 import com.project.fp.gmail.MailSend;
+import com.project.fp.sms.SMS;
 
 import oracle.net.aso.b;
 
@@ -84,8 +95,8 @@ public class SemiProjectController extends HttpServlet {
 		Order_TableBiz o_t_biz = new Order_TableBizImpl();
 		ProductBiz p_biz = new ProductBizImpl();
 		ReceiveBiz r_biz = new ReceiveBizImpl();
+		HospitalBiz h_biz = new HospitalBizImpl();
 		HttpSession session = request.getSession();
-		session.setMaxInactiveInterval(3600);
 
 		if (command.equals("signup")) {
 			response.sendRedirect("signup.jsp");
@@ -144,29 +155,31 @@ public class SemiProjectController extends HttpServlet {
 			m_dto.setMember_password(member_password);
 			MemberDto dto = m_biz.selectOne(m_dto);
 			session.setAttribute("dto", dto);
-			dispatch(response, request, "index.jsp");
+			session.setMaxInactiveInterval(3600);
+			jsResponse(response, "로그인 성공", "index.jsp");
 		} else if (command.equals("sns_signup")) {
 			String member_id = request.getParameter("member_id");
-			MemberDto m_dto = new MemberDto();	
+			MemberDto m_dto = new MemberDto();
 			m_dto.setMember_id(member_id);
 			MemberDto t_dto = null;
 			t_dto = m_biz.selectSerch(m_dto);
 			if (t_dto != null) {
 				session.setAttribute("dto", t_dto);
+				session.setMaxInactiveInterval(3600);
 				jsResponse(response, "로그인 성공(SNS)", "index.jsp");
 			} else {
 				request.setAttribute("dto", m_dto);
 				dispatch(response, request, "sns_signup.jsp");
 			}
-		}else if (command.equals("sns_general_signup")) {
+		} else if (command.equals("sns_general_signup")) {
 			String member_id = request.getParameter("member_id");
 			request.setAttribute("member_id", member_id);
 			dispatch(response, request, "sns_general_signup.jsp");
 		} else if (command.equals("sns_doctor_signup")) {
 			String member_id = request.getParameter("member_id");
 			request.setAttribute("member_id", member_id);
-			dispatch(response, request, "sns_doctor_signup.jsp"); 
-		}else if (command.equals("sns_signupres")) {
+			dispatch(response, request, "sns_doctor_signup.jsp");
+		} else if (command.equals("sns_signupres")) {
 			String member_id = request.getParameter("member_id");
 			String member_password = getRandomPassword(10);
 			String member_name = request.getParameter("member_name");
@@ -203,6 +216,8 @@ public class SemiProjectController extends HttpServlet {
 
 			int res = m_res + a_res;
 			if (res > 0) {
+				session.setAttribute("dto", m_dto);
+				session.setMaxInactiveInterval(3600);
 				jsResponse(response, "회원가입 성공", "index.jsp");
 			} else {
 				jsResponse(response, "회원가입 실패", "#");
@@ -235,15 +250,45 @@ public class SemiProjectController extends HttpServlet {
 				dispatch(response, request, "signup_idchk.jsp");
 			}
 		} else if (command.equals("board_notice")) {
-			List<BoardDto> list = b_biz.notice_selectList();
+			int nowPage = 1;
+			if (request.getParameter("nowPage") != null) {
+				nowPage = Integer.parseInt(request.getParameter("nowPage"));
+			}
+			int count = b_biz.notice_allCount();
+			System.out.println(nowPage);
+			System.out.println(count);
+			PagingDto Pdto = new PagingDto(count, nowPage);
+
+			List<BoardDto> list = b_biz.notice_selectList(Pdto);
+			request.setAttribute("BoardCommand", command);
 			request.setAttribute("list", list);
+			request.setAttribute("Pdto", Pdto);
 			dispatch(response, request, "board_notice.jsp");
 		} else if (command.equals("board_free")) {
-			List<BoardDto> list = b_biz.free_selectList();
+			int nowPage = 1;
+			if (request.getParameter("nowPage") != null) {
+				nowPage = Integer.parseInt(request.getParameter("nowPage"));
+			}
+			System.out.println(nowPage);
+			int count = b_biz.free_allCount();
+			PagingDto Pdto = new PagingDto(count, nowPage);
+			System.out.println("나왔다");
+			System.out.println(nowPage);
+			System.out.println(count);
+			List<BoardDto> list = b_biz.free_selectList(Pdto);
+			request.setAttribute("BoardCommand", command);
 			request.setAttribute("list", list);
+			request.setAttribute("Pdto", Pdto);
 			dispatch(response, request, "board_free.jsp");
 		} else if (command.equals("board_dec")) {
-			List<BoardDto> list = b_biz.dec_selectList();
+			int nowPage = 1;
+			if (request.getParameter("nowPage") != null) {
+				nowPage = Integer.parseInt(request.getParameter("nowPage"));
+			}
+			int count = b_biz.free_allCount();
+			PagingDto Pdto = new PagingDto(count, nowPage);
+
+			List<BoardDto> list = b_biz.dec_selectList(Pdto);
 			request.setAttribute("list", list);
 			dispatch(response, request, "board_dec.jsp");
 		} else if (command.equals("mypage")) {
@@ -251,22 +296,29 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("shopping")) {
 			response.sendRedirect("shopping.jsp");
 		} else if (command.equals("board_qna")) {
-			List<BoardDto> list = b_biz.qna_selectList();
+			int nowPage = 1;
+			if (request.getParameter("nowPage") != null) {
+				nowPage = Integer.parseInt(request.getParameter("nowPage"));
+			}
+			int count = b_biz.qna_allCount();
+			PagingDto Pdto = new PagingDto(count, nowPage);
+			request.setAttribute("BoardCommand", command);
+			List<BoardDto> list = b_biz.qna_selectList(Pdto);
 			request.setAttribute("list", list);
 			dispatch(response, request, "board_qna.jsp");
-		} else if(command.equals("board_updateform")){
+		} else if (command.equals("board_updateform")) {
 			int board_no = Integer.parseInt(request.getParameter("board_no"));
 			BoardDto b_dto = b_biz.board_selectOne(board_no);
 			File_TableDto f_dto = f_t_biz.board_selectOne(board_no);
 			request.setAttribute("b_dto", b_dto);
 			request.setAttribute("f_dto", f_dto);
 			dispatch(response, request, "board_updateform.jsp");
-		} else if(command.equals("board_updateres")) {
+		} else if (command.equals("board_updateres")) {
 			String file_path = request.getSession().getServletContext().getRealPath("fileupload");
-			
+
 			File Folder = new File(file_path);
 			if (!Folder.exists()) {
-				    Folder.mkdir();
+				Folder.mkdir();
 			}
 			int board_no = Integer.parseInt(request.getParameter("board_no"));
 			String contentType = request.getContentType();
@@ -339,14 +391,16 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("board_insertform")) {
 			response.sendRedirect("board_insertform.jsp");
 		} else if (command.equals("board_insertres")) {
+
 			String file_path = request.getSession().getServletContext().getRealPath("fileupload");
-			
+
 			File Folder = new File(file_path);
 			if (!Folder.exists()) {
-				    Folder.mkdir();
+				Folder.mkdir();
 			}
-			
+
 			String contentType = request.getContentType();
+
 			String member_id = request.getParameter("member_id");
 			String board_title = request.getParameter("board_title");
 			String board_content = request.getParameter("board_content");
@@ -387,7 +441,6 @@ public class SemiProjectController extends HttpServlet {
 					jsResponse(response, "등록 실패", "semi.do?command=board_dec");
 				}
 			}
-			
 			if (contentType != null && contentType.toLowerCase().startsWith("multipart/")) {
 				Collection<Part> parts = request.getParts();
 				File_TableDto f_dto = new File_TableDto();
@@ -415,28 +468,28 @@ public class SemiProjectController extends HttpServlet {
 					}
 				}
 			}
-		}else if(command.equals("deleteres")) {
+		} else if (command.equals("deleteres")) {
 			int board_no = Integer.parseInt(request.getParameter("board_no"));
 			int f_res = f_t_biz.board_delete(board_no);
 			int b_res = b_biz.delete(board_no);
-			if(b_res > 0) {
+			if (b_res > 0) {
 				jsResponse(response, "삭제 성공", "semi.do?command=board_free");
-			}else {
+			} else {
 				jsResponse(response, "삭제 실패", "semi.do?command=board_detail&board_no=" + board_no);
 			}
-		}else if(command.equals("board_delete")) {
+		} else if (command.equals("board_delete")) {
 			String[] board_no = request.getParameterValues("board_no");
-			if(board_no == null || board_no.length == 0) {}
-			else {
+			if (board_no == null || board_no.length == 0) {
+			} else {
 				int f_res = f_t_biz.multiDelete(board_no);
 				int b_res = b_biz.multiDelete(board_no);
-				if(b_res == board_no.length && f_res == board_no.length) {
+				if (b_res == board_no.length && f_res == board_no.length) {
 					jsResponse(response, "선택된 글들이 모두 삭제되었습니다.", "semi.do?command=board_free");
-				}else {
+				} else {
 					jsResponse(response, "선택된 글들이 삭제되지 않았습니다.", "semi.do?command=board_free");
 				}
 			}
-		}else if(command.equals("board_detail")){
+		} else if (command.equals("board_detail")) {
 			int board_no = Integer.parseInt(request.getParameter("board_no"));
 			BoardDto b_dto = b_biz.board_selectOne(board_no);
 			int res = b_biz.board_read(b_dto);
@@ -447,40 +500,60 @@ public class SemiProjectController extends HttpServlet {
 			request.setAttribute("b_dto", b_dto);
 			request.setAttribute("f_dto", f_dto);
 			dispatch(response, request, "board_detail.jsp");
-		}else if(command.equals("filedown")){
+		} else if (command.equals("filedown")) {
 			String file_path = request.getSession().getServletContext().getRealPath("fileupload");
 			String file_new_name = request.getParameter("file_new_name");
-			
+
 			String filePath = file_path + File.separator + file_new_name;
 			byte[] b = new byte[4096];
 			FileInputStream fileInputStream = new FileInputStream(filePath);
-			
+
 			String mimeType = getServletContext().getMimeType(filePath);
-			if(mimeType == null) {
+			if (mimeType == null) {
 				mimeType = "application/octet-stream";
 			}
-			response.setContentType(mimeType);	
-			
-	        String sEncoding = new String(file_new_name.getBytes("UTF-8"));
-	        response.setHeader("Content-Disposition", "attachment; fileName= " + sEncoding);
-	        ServletOutputStream servletOutStream = response.getOutputStream();
-	        
-	        int read;
-	        while((read = fileInputStream.read(b,0,b.length))!= -1){
-	            servletOutStream.write(b,0,read);            
-	        }
-	        
-	        servletOutStream.flush();
-	        servletOutStream.close();
-	        fileInputStream.close();
-		
-		}else if (command.equals("logout")) {
+			response.setContentType(mimeType);
+
+			String sEncoding = new String(file_new_name.getBytes("UTF-8"));
+			response.setHeader("Content-Disposition", "attachment; fileName= " + sEncoding);
+			ServletOutputStream servletOutStream = response.getOutputStream();
+
+			int read;
+			while ((read = fileInputStream.read(b, 0, b.length)) != -1) {
+				servletOutStream.write(b, 0, read);
+			}
+
+			servletOutStream.flush();
+			servletOutStream.close();
+			fileInputStream.close();
+
+		} else if (command.equals("logout")) {
 			session.invalidate();
 			response.sendRedirect("index.jsp");
 		} else if (command.equals("animal_hospital")) {
-			response.sendRedirect("animal_hospital.jsp");
+			int nowPage = 1;
+			if (request.getParameter("nowPage") != null) {
+				nowPage = Integer.parseInt(request.getParameter("nowPage"));
+			}
+			int count = h_biz.count();
+			PagingDto pdto = new PagingDto(count, nowPage);
+			List<HospitalDto> list = new ArrayList<HospitalDto>();
+			list = h_biz.selectList(pdto);
+			request.setAttribute("Animal_hospital_Command", command);
+			request.setAttribute("list", list);
+			request.setAttribute("Pdto", pdto);
+			dispatch(response, request, "animal_hospital.jsp");
 		} else if (command.equals("test")) {
 			response.sendRedirect("test.html");
+		} else if (command.equals("animal_hospital_search")) {
+			String hospital_name = request.getParameter("hospitial_name");
+			System.out.println(hospital_name);
+			HospitalDto h_dto = new HospitalDto();
+			h_dto.setHospital_name(hospital_name);
+			List<HospitalDto> list = new ArrayList<HospitalDto>();
+			list = h_biz.selectSearchList(h_dto);
+			request.setAttribute("list", list);
+			dispatch(response, request, "animal_hospital.jsp");
 		}
 
 		if (command.equals("mailsend")) {
@@ -516,6 +589,39 @@ public class SemiProjectController extends HttpServlet {
 			}
 		}
 
+		if (command.equals("test")) {
+			File fi = new File("C://Users//alahx/test123123123678678678.csv");
+			BufferedReader br = new BufferedReader(new BufferedReader(new FileReader(fi)));
+			String line = "";
+			String[] str = new String[3];
+			HospitalDto h_dto = null;
+			int res = 0;
+			while ((line = br.readLine()) != null) { // 한 라인씩 읽어오기.
+				h_dto = new HospitalDto();
+				System.out.println(line);
+				str = line.split(",");
+				System.out.println(str[0]);
+				System.out.println(str[1]);
+				System.out.println(str[2]);
+
+				h_dto.setHospital_name(str[0]);
+				h_dto.setHospital_addr(str[1]);
+				h_dto.setHospital_phone(str[2]);
+
+				res = h_biz.insert(h_dto);
+				if (res > 0) {
+					break;
+				}
+
+			}
+		}
+
+		if (command.equals("smssend")) {
+			String member_phone = request.getParameter("member_phone");
+			String content = "문자 내용 작성";
+			SMS.sendSMS(member_phone, content);
+		}
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -533,7 +639,7 @@ public class SemiProjectController extends HttpServlet {
 				+ "';" + "</script>";
 		response.getWriter().print(responseText);
 	}
-	
+
 	private static String getRandomPassword(int len) {
 		char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
 				'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
@@ -545,6 +651,7 @@ public class SemiProjectController extends HttpServlet {
 		}
 		return sb.toString();
 	}
+
 	private static String getRandomFileName(int len) {
 		char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 		int idx = 0;
@@ -555,6 +662,7 @@ public class SemiProjectController extends HttpServlet {
 		}
 		return sb.toString();
 	}
+
 	private String extractFileName(String partHeader) {
 		for (String cd : partHeader.split(";")) {
 			if (cd.trim().startsWith("filename")) {

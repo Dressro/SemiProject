@@ -1,4 +1,5 @@
 
+<%@page import="com.project.fp.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -10,6 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="resources/css/head.css" rel=stylesheet type="text/css" />
 <style type="text/css">
 	
 	.animal {
@@ -51,6 +53,7 @@
         }
     }).open();
 }
+	/*
 	function idCheckConfirm(){
 		var chk = document.getElementsByName("member_id")[0].title;
 		if(chk == "n") {
@@ -58,7 +61,7 @@
 			document.getElementsByName("member_id")[0].focus();
 		}
 	}
-	
+	*/
 	function idCheck(){
 		var member_id = document.getElementsByName("member_id")[0];
 		if(member_id.value.trim() =="" || member_id.value == null){
@@ -115,6 +118,16 @@
 		}	
 	}
 	
+	function sendsms(){
+		var member_phone = $('input[name=member_phone_1]').val() + $('input[name=member_phone_2]').val() + $('input[name=member_phone_3]').val();
+		if($('input[name=member_phone_1]').val().trim() == "" || $('input[name=member_phone_1]').val() == null){
+			alert("전화번로를 입력해 주세요");
+		} else {
+			open("semi.do?command=smssend&member_phone="+member_phone,"","width=200 , height= 200");
+		}	
+	}
+
+	
 </script>
 
 <script>
@@ -122,7 +135,43 @@
 </script>
 </head>
 <body>
-	<h1>일반회원 회원가입</h1>
+<%
+	MemberDto dto = (MemberDto) session.getAttribute("dto");
+%>
+<div id="semipage">
+<header>
+
+			<nav>
+				<ul>
+					<li><a href="#">
+							<img src="https://www.onium.in/wp-content/uploads/2019/03/sample-logo-png-6-1.png" width="160" height="60" alt="메인화면" />
+						</a></li>
+
+					<li class="menu"><a href="semi.do?command=board_notice">공지사항</a>
+					<li class="menu"><a href="semi.do?command=board_free">자유게시판</a>
+					<li class="menu"><a href="semi.do?command=animal_hospital">동물병원검색</a>
+					<li class="menu"><a href="semi.do?command=board_dec">실종신고</a>
+					<li class="menu"><a href="semi.do?command=mypage">마이페이지</a>
+					<li class="menu"><a href="semi.do?command=shopping">쇼핑</a>
+					<li class="menu"><a href="semi.do?command=board_qna">상품문의</a> 
+					<%
+ 						if (dto == null) {
+ 					%>
+					<li class="li_right" id="login"><a class="li_rigit_a" href="semi.do?command=login">로그인</a></li>
+					<%
+					} else {
+					%>
+					<li class="li_right"><a class="li_rigit_a" href="semi.do?command=logout">로그아웃</a> 
+					<%
+ 					}
+ 					%>
+					<li class="li_right"><a class="li_rigit_a" href="semi.do?command=signup">회원가입</a></li>
+
+				</ul>
+			</nav>
+
+		</header>
+	<h1>회원가입 (일반)</h1>
 	
 		<div class="join_table">
 			<div id="member_join">
@@ -185,6 +234,7 @@
 						<input type="text" name="member_phone_1" maxlength="3" size="3" >-
 						<input type="text" name="member_phone_2" maxlength="4" size="3" >-
 						<input type="text" name="member_phone_3" maxlength="4" size="3" >
+						<input type="button" value="문자 전송" onclick="sendsms();" />
 					</td>
 				</tr>
 				<tr>
@@ -317,7 +367,7 @@
 			</form>
 		</div>
 	</div>
-	
+	</div>
 </body>
 
 </html>
