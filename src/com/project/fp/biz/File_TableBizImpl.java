@@ -64,6 +64,12 @@ public class File_TableBizImpl implements File_TableBiz {
 		return dao.delete(file_num);
 	}
 
+	@Override
+	public int board_delete(int board_no) {
+		
+		return dao.board_delete(board_no);
+	}
+
 	
 
 }

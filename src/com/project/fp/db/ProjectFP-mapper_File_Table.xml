@@ -52,5 +52,9 @@
 		WHERE
 		FILE_NUM = #{file_num}
 	</delete>
+	<delete id="board_delete" parameterType="File_TableDto">
+		DELETE FROM FILE_TABLE
+		WHERE BOARD_NO = #{board_no}
+	</delete>
 
 </mapper>

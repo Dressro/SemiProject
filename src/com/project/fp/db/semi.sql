@@ -188,3 +188,9 @@ select * from member;
 select * from file_table;
 select * from board order by board_no desc;
 delete from member where member_id='1702707258'
+SELECT FILE_NUM, FILE_PATH, FILE_ORI_NAME, FILE_NEW_NAME,
+		FILE_TYPE, FILE_DATE, FILE_SIZE, MEMBER_ID, BOARD_NO, CH_NUM,
+		ANIMAL_NO
+		FROM FILE_TABLE
+		WHERE BOARD_NO = '73'
+
