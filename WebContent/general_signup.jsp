@@ -15,6 +15,7 @@ response.setContentType("text/html; charset=UTF-8");
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="resources/css/head.css" rel=stylesheet type="text/css" />
+<link href="resources/css/footer.css" rel=stylesheet type="text/css" />
 <style type="text/css">
 #animal {
 	display: none;
@@ -82,14 +83,26 @@ response.setContentType("text/html; charset=UTF-8");
 	padding-left: 10px;
 }
 .general_signup_title {
-	display: block; margin-top : 10px;
+	display: block;
 	margin-bottom: 3px;
 	margin-top: 10px;
+}
+.general_signup_age, .general_signup_weight, .general_signup_animal_gender, .general_signup_animal_yn{
+	display: inline-block;
+	padding-right : 10px;
+	margin-bottom: 3px;
+	margin-top: 10px;
+	height: 20px;
+}
+
+#general_signup_btn{
+	padding-top: 10px;
 }
 
 #chkNotice {
 	margin-left: 10px;
 }
+
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -160,13 +173,13 @@ response.setContentType("text/html; charset=UTF-8");
 
 	function chk(value) {
 		if (value == "Y") {
-			$("#animal").toggle();
+			$("#animal").show();
 			$("input[id=animal_gen_chk]").attr("checked", "checked");
 			$("input[name=animal_name]").attr("required", "true");
 		} else if (value == "N") {
 			$("input[name=animal_name]").attr("required", "false");
 			$("input[id=animal_gen_chk]").attr("checked", "unchecked");
-			$("#animal").toggle();
+			$("#animal").hide();
 		}
 	}
 
@@ -344,9 +357,9 @@ response.setContentType("text/html; charset=UTF-8");
 									</div>
 								</div>
 								<div class="general_signup_row">
-									<h3 class="general_signup_title">반려동물 여부</h3>
+									<h3 class="general_signup_animal_yn">반려동물 여부</h3>
 									<div class="general_signup_animal_yn">
-										<span class="general_signup_animal">
+										<span class="general_signup_animal_yn">
 											<input type="radio" name="member_animal" value="N" onclick="chk(this.value);" checked>
 											없음
 											<input type="radio" name="member_animal" value="Y" onclick="chk(this.value);">
@@ -369,9 +382,9 @@ response.setContentType("text/html; charset=UTF-8");
 									</div>
 									<div class="general_signup_animal_info">
 								
-										<h3 class="general_signup_title">성별*</h3>
+										<h3 class="general_signup_animal_gender">성별*</h3>
 										<div class="general_signup_animal_gender">
-											<span class="general_signup_animal">
+											<span class="general_signup_animal_gender">
 												<input type="radio" id="animal_gen_chk" name="animal_gen" value="M">
 												<img src="resources/images/male.svg" style="width: 20px; height: 20px;">
 												<input type="radio" name="animal_gen" value="F">
@@ -381,14 +394,15 @@ response.setContentType("text/html; charset=UTF-8");
 									</div>
 									<div class="general_signup_animal_info">
 										<h3 class="general_signup_title">품종</h3>
-									
-										<input type="text" name="animal_type" maxlength="20" />
-									
+										<div class="general_signup_animal_type">
+											<span class="general_signup_span"> 
+												<input class="general_signup_text" type="text" name="animal_type" maxlength="20" />
+											</span>
+										</div>
 									</div>
-								<table border="1" id="member_table">
-								<tr class="animal">
-									<th>나이</th>
-									<td>
+								
+								<div class="general_signup_animal_info">
+									<h3 class="general_signup_age">나이</h3>
 										<select name="animal_age">
 											<option value="1">1</option>
 											<option value="2">2</option>
@@ -421,11 +435,10 @@ response.setContentType("text/html; charset=UTF-8");
 											<option value="29">29</option>
 											<option value="30">30</option>
 										</select>
-									</td>
-								</tr>
-								<tr class="animal">
-									<th>체중</th>
-									<td>
+								</div>
+								
+								<div class="general_signup_animal_info">
+									<h3 class="general_signup_weight">몸무게</h3>
 										<select name="animal_weight">
 											<option value="1">1kg</option>
 											<option value="2">2kg</option>
@@ -458,24 +471,50 @@ response.setContentType("text/html; charset=UTF-8");
 											<option value="29">29kg</option>
 											<option value="30">30kg</option>
 										</select>
-									</td>
-								</tr>
-								<tr class="animal">
-									<th>특이사항(질병,기타사항)</th>
-									<td>
-										<textarea rows="10" cols="30" name="animal_unq"></textarea>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="9" align="right">
-										<input type="submit" value="회원가입" onclick="check();" />
-										<input type="button" value="취소" onclick="location.href='index.html'" />
-									</td>
-								</tr>
-							</table>
+								</div>
+								
+								<div class="general_signup_animal_info">
+									<h3 class="general_signup_weight">특이사항(질병,기타사항)</h3>
+									<div class="general_signup_animal_special_note">
+										<span class="general_signup_span">
+											<textarea class="general_signup_text" rows="10" cols="30" name="animal_unq"></textarea>
+										</span>
+									</div>
+							
+								</div>
+							</div>
+							<div id="general_signup_btn">
+								<input type="submit" value="회원가입" onclick="check();" />
+								<input type="button" value="취소" onclick="location.href='index.html'" />
 							</div>
 					</form>
 				</div>
+			</div>
+		</div>
+		
+		<div id="semi_footer">
+			<div class="footer">
+				<h2>Family Pet</h2>
+				<ul class="footer_ul">
+					<li class="footer_content"><a href="#" class="footer_ul_a">이용약관</a></li>
+					<li class="footer_content"><a href="#" class="footer_ul_a">개인정보처리방침</a></li>
+					<li class="footer_content"><a href="#" class="footer_ul_a">제휴문의</a></li>
+				</ul>
+				<div class ="footer_div">
+					Famliy Pet | 대표이사 : 이민형 | 서울특별시 강남구 삼성로 648<br> 사업자 등록번호 : 000-00-000000 | 통신판매업신고 : 2021-서울강남-0000
+				</div>
+				<ul class ="footer_sns">
+					<li class="li_right">
+					 	<a href="https://www.facebook.com" class="footer_sns_a">
+					 		<img src="https://opgg-static.akamaized.net/images/site/sns/facebook_icon_white.png" />
+					 	</a>
+					</li>
+					<li class="li_right">
+           			 	<a href="https://www.instagram.com" class="footer_sns_a">
+           			 		<img src="https://opgg-static.akamaized.net/images/site/sns/instagram_icon_white.png" />
+           			 	</a>
+           			</li>
+				</ul>
 			</div>
 		</div>
 	</div>
