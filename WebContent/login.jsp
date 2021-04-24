@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="resources/css/head.css" rel=stylesheet type="text/css" />
+<link href="resources/css/footer.css" rel=stylesheet type="text/css" />
 <style>
 #semi_login_mid {
 	width: 600px;
@@ -33,9 +34,11 @@
 	margin-left: 100px;
 	margin-bottom: 15px;
 }
-.semi_login_mid_div:first-child{
-	margin-right:100px;
+
+.semi_login_mid_div:first-child {
+	margin-right: 100px;
 }
+
 .semi_login_idpw {
 	display: block;
 	margin-bottom: 10px;
@@ -55,17 +58,20 @@
 
 .semi_login_mid_idpwfind {
 	display: inline-block;
-	text-align:center;
+	text-align: center;
 	font-size: 13px;
 	width: 180px;
 	padding-bottom: 10px;
 }
-.semi_login_mid_idpwfind:hover{
-	text-decoration : underline;
+
+.semi_login_mid_idpwfind:hover {
+	text-decoration: underline;
 }
-.g-recaptcha{
+
+.g-recaptcha {
 	margin-top: 20px;
 }
+
 .g-recaptcha-error {
 	border-radius: 5px;
 	padding: 5px;
@@ -248,11 +254,11 @@
 						//naver_id_login.setPopup();
 						naver_id_login.init_naver_id_login();
 					</script>
-					
+
 				</form>
 			</div>
 
-			
+
 
 
 			<script type="text/javascript">
@@ -271,6 +277,27 @@
 			</script>
 
 
+		</div>
+		<div id="semi_footer">
+			<div class="footer">
+				<h2>Family Pet</h2>
+				<ul class="footer_ul">
+					<li class="footer_content"><a href="#" class="footer_ul_a">이용약관</a></li>
+					<li class="footer_content"><a href="#" class="footer_ul_a">개인정보처리방침</a></li>
+					<li class="footer_content"><a href="#" class="footer_ul_a">제휴문의</a></li>
+				</ul>
+				<div class="footer_div">
+					Famliy Pet | 대표이사 : 이민형 | 서울특별시 강남구 삼성로 648<br> 사업자 등록번호 : 000-00-000000 | 통신판매업신고 : 2021-서울강남-0000
+				</div>
+				<ul class="footer_sns">
+					<li class="li_right"><a href="https://www.facebook.com" class="footer_sns_a">
+							<img src="https://opgg-static.akamaized.net/images/site/sns/facebook_icon_white.png" />
+						</a></li>
+					<li class="li_right"><a href="https://www.instagram.com" class="footer_sns_a">
+							<img src="https://opgg-static.akamaized.net/images/site/sns/instagram_icon_white.png" />
+						</a></li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </body>
