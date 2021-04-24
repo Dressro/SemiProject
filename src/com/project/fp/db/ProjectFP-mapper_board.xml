@@ -191,5 +191,12 @@
 		delete from board
 		where board_no = #{board_no}
 	</delete>
+	<delete id="multiDelete" parameterType="map">
+ 		delete from board
+ 		where board_no in
+ 			<foreach collection="board_nos" item="board_no" open="(" separator="," close=")">
+ 				#{board_no}
+ 			</foreach>
+ 	</delete>
 
 </mapper>

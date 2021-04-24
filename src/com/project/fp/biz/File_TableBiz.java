@@ -15,5 +15,6 @@ public interface File_TableBiz {
 	public int update(File_TableDto dto);
 	public int delete(int file_num);
 	public int board_delete(int board_no);
+	public int multiDelete(String[] board_nos);
 
 }

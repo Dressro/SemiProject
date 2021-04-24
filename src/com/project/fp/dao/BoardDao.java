@@ -32,4 +32,5 @@ public interface BoardDao {
 	public int readcountupdate(int board_no);
 	public int free_delete(int board_free_no);
 	public int delete(int board_no);
+	public int multiDelete(String[] board_nos);
 }

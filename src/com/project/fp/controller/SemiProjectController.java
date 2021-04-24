@@ -415,6 +415,27 @@ public class SemiProjectController extends HttpServlet {
 					}
 				}
 			}
+		}else if(command.equals("deleteres")) {
+			int board_no = Integer.parseInt(request.getParameter("board_no"));
+			int f_res = f_t_biz.board_delete(board_no);
+			int b_res = b_biz.delete(board_no);
+			if(b_res > 0) {
+				jsResponse(response, "삭제 성공", "semi.do?command=board_free");
+			}else {
+				jsResponse(response, "삭제 실패", "semi.do?command=board_detail&board_no=" + board_no);
+			}
+		}else if(command.equals("board_delete")) {
+			String[] board_no = request.getParameterValues("board_no");
+			if(board_no == null || board_no.length == 0) {}
+			else {
+				int f_res = f_t_biz.multiDelete(board_no);
+				int b_res = b_biz.multiDelete(board_no);
+				if(b_res == board_no.length && f_res == board_no.length) {
+					jsResponse(response, "선택된 글들이 모두 삭제되었습니다.", "semi.do?command=board_free");
+				}else {
+					jsResponse(response, "선택된 글들이 삭제되지 않았습니다.", "semi.do?command=board_free");
+				}
+			}
 		}else if(command.equals("board_detail")){
 			int board_no = Integer.parseInt(request.getParameter("board_no"));
 			BoardDto b_dto = b_biz.board_selectOne(board_no);
@@ -508,7 +529,7 @@ public class SemiProjectController extends HttpServlet {
 				+ "';" + "</script>";
 		response.getWriter().print(responseText);
 	}
-
+	
 	private static String getRandomPassword(int len) {
 		char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
 				'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };

@@ -56,5 +56,11 @@
 		DELETE FROM FILE_TABLE
 		WHERE BOARD_NO = #{board_no}
 	</delete>
-
+	<delete id="multiDelete" parameterType="map">
+ 		delete from file_table
+ 		where board_no in
+ 			<foreach collection="board_nos" item="board_no" open="(" separator="," close=")">
+ 				#{board_no}
+ 			</foreach>
+ 	</delete>
 </mapper>

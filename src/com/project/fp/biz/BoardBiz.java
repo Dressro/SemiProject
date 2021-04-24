@@ -30,4 +30,5 @@ public interface BoardBiz {
 	public int delete(int board_no);
 	public int free_answerProc(BoardDto dto);
 	public int qna_answerProc(BoardDto dto);
+	public int multiDelete(String[] board_nos);
 }

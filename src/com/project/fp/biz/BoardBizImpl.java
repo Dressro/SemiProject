@@ -163,6 +163,13 @@ public class BoardBizImpl implements BoardBiz {
 	}
 
 
+	@Override
+	public int multiDelete(String[] board_nos) {
+		
+		return dao.multiDelete(board_nos);
+	}
+
+
 	
 
 

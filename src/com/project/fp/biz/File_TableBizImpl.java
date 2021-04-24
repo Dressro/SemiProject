@@ -70,6 +70,12 @@ public class File_TableBizImpl implements File_TableBiz {
 		return dao.board_delete(board_no);
 	}
 
+	@Override
+	public int multiDelete(String[] board_nos) {
+		
+		return dao.multiDelete(board_nos);
+	}
+
 	
 
 }

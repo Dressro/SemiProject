@@ -1,7 +1,9 @@
 package com.project.fp.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -142,6 +144,29 @@ public class File_TableDaoImpl extends SqlMapConfig implements File_TableDao {
 		}
 
 		return res;
+	}
+
+	@Override
+	public int multiDelete(String[] board_nos) {
+int count = 0;
+		
+		Map<String, String[]> map = new HashMap<String, String[]>();
+		map.put("board_nos", board_nos);
+		
+		SqlSession session = null;
+		try {
+			session = getSqlSessionFactory().openSession(false);
+			count = session.delete(namespace+"multiDelete",map);
+			if(count == board_nos.length) {
+				session.commit();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		
+		return count;
 	}
 
 	
