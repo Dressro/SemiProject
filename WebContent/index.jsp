@@ -77,27 +77,32 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 								<li><a href="semi.do?command=board_dec">실종신고</a>
 								<li><a href="semi.do?command=mypage">마이페이지</a>
 								<li><a href="semi.do?command=shopping">쇼핑</a>
-								<li><a href="semi.do?command=board_qna">상품문의</a> <%
- if (dto == null) {
- %>
-								<li class="menu"><a href="semi.do?command=chatlist">채팅</a> <%
- } else {
- %>
-								<li class="menu"><a href="semi.do?command=chatlist&member_id=<%=dto.getMember_id()%>">채팅</a> <%
- }
- %>
-								<li class="menu"><a href="semi.do?command=chatboard">채팅방 test</a> <%--
+								<li><a href="semi.do?command=board_qna">상품문의</a> 
+								<%
+ 								if (dto == null) {
+ 								%>
+								<li class="menu"><a href="semi.do?command=chatlist">채팅</a> 
+								<%
+ 								} else {
+ 								%>
+								<li class="menu"><a href="semi.do?command=chatlist&member_id=<%=dto.getMember_id()%>">채팅</a> 
+								<%
+ 								}
+								 %>
+						 <%--
 					<li class="menu"><a href="semi.do?command=test">test</a>
-					 --%> <%
- if (dto == null) {
- %>
+					 --%> 
+					 			<%
+ 								if (dto == null) {
+ 								%>
 								<li class="li_right" id="login"><a class="li_rigit_a" href="semi.do?command=login">로그인</a></li>
 								<%
 								} else {
 								%>
-								<li class="li_right"><a class="li_rigit_a" href="semi.do?command=logout">로그아웃</a> <%
- }
- %>
+								<li class="li_right"><a class="li_rigit_a" href="semi.do?command=logout">로그아웃</a>
+								<%
+ 								}
+								 %>
 								<li class="li_right"><a class="li_rigit_a" href="semi.do?command=signup">회원가입</a></li>
 							</ul>
 						</nav>
