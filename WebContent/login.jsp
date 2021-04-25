@@ -120,7 +120,7 @@
 }
 
 #kakao_padding {
-	padding-top: 20px;
+	margin-bottom : 20px;
 	padding-bottom: 20px;
 	height: 60px;
 }
@@ -240,7 +240,7 @@
 					}
 					return true;
 				}
-s
+
 				function verifyCaptcha() {
 					document.getElementById('g-recaptcha-error').innerHTML = '';
 				}
