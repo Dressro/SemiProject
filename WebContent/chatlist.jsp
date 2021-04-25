@@ -104,8 +104,8 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 			<col width="300px">
 
 			<tr>
-				<th>제목</th>
 				<th>이름</th>
+				<th>제목</th>
 				<th>날짜</th>
 			</tr>
 			<c:choose>
@@ -117,8 +117,8 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 				<c:otherwise>
 					<c:forEach items="${c_list }" var="dto">
 						<tr>
-							<td>${dto.ch_name }</td>
 							<td>${dto.member_id }</td>
+							<td><a href="semi.do?command=chatboard">${dto.ch_name }</a></td>
 							<td>${dto.ch_date }</td>
 						</tr>
 					</c:forEach>
