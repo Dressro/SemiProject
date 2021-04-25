@@ -494,6 +494,10 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("board_detail")) {
 			int board_no = Integer.parseInt(request.getParameter("board_no"));
 			BoardDto b_dto = b_biz.board_selectOne(board_no);
+			int res = b_biz.board_read(b_dto);
+			if(res<0) {
+				jsResponse(response, "조회수 실패", "index.html");
+			}
 			File_TableDto f_dto = f_t_biz.board_selectOne(board_no);
 			request.setAttribute("b_dto", b_dto);
 			request.setAttribute("f_dto", f_dto);

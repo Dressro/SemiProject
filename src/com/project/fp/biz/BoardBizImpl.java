@@ -93,7 +93,13 @@ public class BoardBizImpl implements BoardBiz {
 		// TODO Auto-generated method stub
 		return dao.dec_insert(dto);
 	}
-
+	
+	@Override
+	public int board_read(BoardDto dto) {
+		dto.setBoard_readcount(dto.getBoard_readcount()+1);
+		return dao.board_read(dto);
+	}
+	
 	@Override
 	public int free_update(BoardDto dto) {
 		// TODO Auto-generated method stub
@@ -168,6 +174,9 @@ public class BoardBizImpl implements BoardBiz {
 		return dao.multiDelete(board_nos);
 	}
 
+
+
+	
 
 
 }
