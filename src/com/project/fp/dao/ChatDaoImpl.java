@@ -12,12 +12,12 @@ public class ChatDaoImpl extends SqlMapConfig implements ChatDao {
 	private String namespace = "com.project.fp.chat.";
 
 	@Override
-	public List<ChatDto> selectList() {
+	public List<ChatDto> selectList(ChatDto dto) {
 		
 		List<ChatDto> list = new ArrayList<ChatDto>();
 		
 		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
-			list = session.selectList(namespace+"selectList");
+			list = session.selectList(namespace+"selectList",dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

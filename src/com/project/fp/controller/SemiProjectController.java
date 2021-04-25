@@ -64,6 +64,7 @@ import com.project.fp.biz.ReceiveBiz;
 import com.project.fp.biz.ReceiveBizImpl;
 import com.project.fp.dto.AnimalDto;
 import com.project.fp.dto.BoardDto;
+import com.project.fp.dto.ChatDto;
 import com.project.fp.dto.Chat_ContentDto;
 import com.project.fp.dto.File_TableDto;
 import com.project.fp.dto.HospitalDto;
@@ -551,8 +552,13 @@ public class SemiProjectController extends HttpServlet {
 			list = h_biz.selectSearchList(h_dto);
 			request.setAttribute("list", list);
 			dispatch(response, request, "animal_hospital.jsp");
-		} else if(command.equals("chatboard")) {
-			response.sendRedirect("ChatBoard.jsp");
+		} else if(command.equals("chatlist")) {
+			String member_id = request.getParameter("member_id");
+			ChatDto c_dto = new ChatDto();
+			c_dto.setMember_id(member_id);
+			List<ChatDto> c_list = c_biz.selectList(c_dto);
+			request.setAttribute("c_list", c_list);
+			dispatch(response, request, "chatlist.jsp");
 		} else if (command.equals("chat_insert")) {
 			String member_nickname = request.getParameter("member_nickname");
 			String ch_content = request.getParameter("ch_content");
@@ -566,6 +572,8 @@ public class SemiProjectController extends HttpServlet {
 			if(res > 0) {
 				response.getWriter().append("통신 성공");
 			}
+		} else if (command.equals("chatboard")) {
+			response.sendRedirect("ChatBoard.jsp");
 		}
 
 		if (command.equals("mailsend")) {

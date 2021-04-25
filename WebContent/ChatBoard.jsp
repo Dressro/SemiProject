@@ -1,9 +1,9 @@
 <%@page import="com.project.fp.dto.MemberDto"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -44,7 +44,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 	}
 
 	function onOpen(event) {
-		textarea.value += "Ώ¬°α ΌΊ°ψ\n";
+		textarea.value += "μ—°κ²° μ„±κ³µ\n";
 	}
 
 	function onError(event) {
@@ -63,7 +63,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 				alert(data);
 			},
 			error(){
-				alert("Ελ½Ε ½ΗΖΠ");
+				alert("ν†µμ‹  μ‹¤ν¨");
 			}
 		});
 		inputMessage.value = "";

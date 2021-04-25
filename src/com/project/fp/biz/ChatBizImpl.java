@@ -11,9 +11,9 @@ public class ChatBizImpl implements ChatBiz {
 	ChatDao dao = new ChatDaoImpl();
 
 	@Override
-	public List<ChatDto> selectList() {
+	public List<ChatDto> selectList(ChatDto dto) {
 
-		return dao.selectList();
+		return dao.selectList(dto);
 	}
 
 	@Override
