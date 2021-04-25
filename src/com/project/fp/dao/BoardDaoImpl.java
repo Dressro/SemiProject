@@ -1,7 +1,9 @@
 package com.project.fp.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -181,6 +183,20 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 
 		return res;
 	}
+	@Override
+	public int board_update(BoardDto dto) {
+		int res = 0;
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.insert(namespace + "board_update", dto);
+			if (res > 0) {
+				session.commit();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	}
 
 	@Override
 	public int free_update(BoardDto dto) {
@@ -311,4 +327,30 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		return res;
 	}
 
+	@Override
+	public int multiDelete(String[] board_nos) {
+		int count = 0;
+		
+		Map<String, String[]> map = new HashMap<String, String[]>();
+		map.put("board_nos", board_nos);
+		
+		SqlSession session = null;
+		try {
+			session = getSqlSessionFactory().openSession(false);
+			count = session.delete(namespace+"multiDelete",map);
+			if(count == board_nos.length) {
+				session.commit();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		
+		return count;
+	}
+
+	
+
+	
 }

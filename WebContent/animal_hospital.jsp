@@ -41,10 +41,11 @@
 .animal_hospital_search_text{
 	display :inline-block;
 	height : 25px;
-	width : 90%;
+	width : 85%;
 	border:none;
 	font-size: 15px;
-	padding-right: 20px;
+	padding-right: 30px;
+	padding-left: 10px;
 }
 .animal_hospital_name{
 	padding: 10px;
@@ -232,8 +233,20 @@
 						</ul>
 					</div>
 				</div>
+			<jsp:include page="/animal_hospital_paging.jsp">
+				<jsp:param value="${Animal_hospital_Command }" name="command"/>
+				<jsp:param value="${Pdto.nowBlock}" name="nowBlock" />
+				<jsp:param value="${Pdto.blockBegin }" name="blockBegin"/>
+				<jsp:param value="${Pdto.blockEnd }" name="blockEnd"/>
+	  			<jsp:param value="${Pdto.nowPage}" name="nowPage" />
+	 			<jsp:param value="${Pdto.blockBegin}" name="blockBegin" />
+	  			<jsp:param value="${Pdto.blockEnd}" name="blockEnd" />
+	  			<jsp:param value="${Pdto.totalBlock}" name="totalBlock" />
+			</jsp:include>
 			</div>
 		</div>
+		
+		
 		
 		<div id="semi_footer">
 			<div class="footer">

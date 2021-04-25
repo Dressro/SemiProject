@@ -5,14 +5,22 @@ import java.util.List;
 import com.project.fp.dao.HospitalDao;
 import com.project.fp.dao.HospitalDaoImpl;
 import com.project.fp.dto.HospitalDto;
+import com.project.fp.dto.PagingDto;
 
 public class HospitalBizImpl implements HospitalBiz {
 
 	private HospitalDao dao = new HospitalDaoImpl();
+	
 	@Override
-	public List<HospitalDto> selectList() {
+	public int count() {
 		// TODO Auto-generated method stub
-		return dao.selectList();
+		return dao.count();
+	}
+	
+	@Override
+	public List<HospitalDto> selectList(PagingDto Pdto) {
+		// TODO Auto-generated method stub
+		return dao.selectList(Pdto);
 	}
 	
 	@Override
@@ -27,5 +35,7 @@ public class HospitalBizImpl implements HospitalBiz {
 		// TODO Auto-generated method stub
 		return dao.insert(dto);
 	}
+
+	
 
 }

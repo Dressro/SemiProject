@@ -155,7 +155,18 @@ public class BoardBizImpl implements BoardBiz {
 	}
 
 
+	@Override
+	public int board_update(BoardDto dto) {
+		// TODO Auto-generated method stub
+		return dao.board_update(dto);
+	}
 
+
+	@Override
+	public int multiDelete(String[] board_nos) {
+		
+		return dao.multiDelete(board_nos);
+	}
 
 
 

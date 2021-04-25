@@ -1,3 +1,4 @@
+
 <%@page import="com.project.fp.dto.ProductDto"%>
 <%@page import="com.project.fp.biz.ProductBizImpl"%>
 <%@page import="com.project.fp.biz.ProductBiz"%>
@@ -80,15 +81,16 @@ $(function(){
 });
 
 function detailPopup() {
-    window.open("semi.do?command=memberdetail", "insert",
+    window.name = "adminpage.jsp";
+    window.open("memberdetail.jsp", "insert",
             "width = 550, height = 800, resizable = no, scrollbars = no, status = no");
 }
 
 function memberinsertPopup() {
-    window.open("semi.do?command=signup", "insert",
+    window.name = "adminpage.jsp";
+    window.open("signup.jsp", "insert",
             "width = 730, height = 800, resizable = no, scrollbars = no, status = no");
 }
-
 
 </script>
 <style>
@@ -116,23 +118,18 @@ function memberinsertPopup() {
 </section>
 
 <div class = "adminpage-body">
-<section class="adminpage"> 
-<%--
-List<MemberDto> list = (List<MemberDto>)request.getAttribute("list");
---%>
-	
+<section class="adminpage">
 
 <%
-MemberBiz biz = new MemberBizImpl();
-List<MemberDto> list = biz.selectList();
-	
+	MemberBiz biz = new MemberBizImpl();
+	List<MemberDto> list = biz.selectList();
 %>
 
 <h1>회원정보관리</h1>
 <form action="semi.do" method="post" id="memberlist">
 <input type="hidden" name="command" value="memberdetail">
 
-<table border="1" id="adminBoard"> 
+<table border="1" id="adminBoard">
 	<col width="30"/>
 	<col width="100"/>
 	<col width="100"/>
@@ -147,7 +144,7 @@ List<MemberDto> list = biz.selectList();
 	
 	<tr>
 		<th><input type="checkbox" value=""/></th>
-		<th>ID</th> 
+		<th>ID</th>
 		<th>이름</th>
 		<th>닉네임</th>
 		<th>EMAIL</th>

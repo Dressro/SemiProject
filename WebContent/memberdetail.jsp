@@ -1,3 +1,4 @@
+
 <%@page import="com.project.fp.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -205,7 +206,7 @@
 						</tr>
 						<tr>
 							<td colspan="9" align="right">
-								<input type="submit" value="회원정보수정" /> 
+								<input type="submit" value="회원정보수정" onclick="#" /> 
 								<input type="button" value="취소" onclick="#" /></td>
 						</tr>
 					</table>

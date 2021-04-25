@@ -167,6 +167,14 @@ CREATE TABLE FILE_TABLE(
 	CONSTRAINT FILE_TABLE_ANIMAL_NO_KF FOREIGN KEY (ANIMAL_NO) REFERENCES ANIMAL (ANIMAL_NO)
 );
 
+select * from member m , file_table f
+where m.member_id = f.member_id
+and board_no = '64';
+select * from member;  dhksdn486  
+select * from board;
+select * from file_table
+SELECT * FROM ANIMAL;
+
 
 CREATE TABLE HOSPITAL(
 	HOSPITAL_NUM NUMBER PRIMARY KEY,
@@ -177,10 +185,11 @@ CREATE TABLE HOSPITAL(
 
 
 
-select * from hospital order by hospital_num desc;
+select count(*) from hospital order by hospital_num desc;
 select * from member;  
 select * from file_table;
 select * from board order by board_no desc;
+
 
 SELECT X.rnum, X.board_no,X.board_free_no,X.board_notice_no,X.board_qna_no,X.board_dec_no,
 		X.board_title,X.board_content,X.board_regdate,X.board_readcount,
@@ -202,4 +211,28 @@ SELECT X.rnum, X.board_no,X.board_free_no,X.board_notice_no,X.board_qna_no,X.boa
 		WHERE ROWNUM <= 15
 		) X
 		WHERE X.rnum >= 1
+
+		select
+		b.rnum,b.hospital_num,b.hospital_name,b.hospital_addr,b.hospital_phone
+		from
+		(select rownum as rnum ,
+		a.hospital_num,a.hospital_name,a.hospital_addr,a.hospital_phone
+		from
+		(select
+		hospital_num,hospital_name,hospital_addr,hospital_phone
+		from
+		hospital
+		order by hospital_num desc)a
+		where rownum <=
+		20)b
+		where b.rnum >=
+		11
+
+	
+delete from member where member_id='1702707258'
+SELECT FILE_NUM, FILE_PATH, FILE_ORI_NAME, FILE_NEW_NAME,
+		FILE_TYPE, FILE_DATE, FILE_SIZE, MEMBER_ID, BOARD_NO, CH_NUM,
+		ANIMAL_NO
+		FROM FILE_TABLE
+		WHERE BOARD_NO = '73'
 
