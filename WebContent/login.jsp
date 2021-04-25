@@ -4,7 +4,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="resources/css/head.css" rel=stylesheet type="text/css" />
 <style>
 #semi_login_mid {
 	width: 600px;
@@ -185,31 +184,7 @@
 </script>
 </head>
 <body>
-	<div id="semipage">
-		<header>
-
-			<nav>
-				<ul>
-					<li><a href="index.jsp">
-							<img src="https://www.onium.in/wp-content/uploads/2019/03/sample-logo-png-6-1.png" width="160" height="60" alt="메인화면" />
-						</a></li>
-
-					<li class="menu"><a href="semi.do?command=board_notice">공지사항</a>
-					<li class="menu"><a href="semi.do?command=board_free">자유게시판</a>
-					<li class="menu"><a href="semi.do?command=animal_hospital">동물병원검색</a>
-					<li class="menu"><a href="semi.do?command=board_dec">실종신고</a>
-					<li class="menu"><a href="semi.do?command=mypage">마이페이지</a>
-					<li class="menu"><a href="semi.do?command=shopping">쇼핑</a>
-					<li class="menu"><a href="semi.do?command=board_qna">상품문의</a> <%--
-					<li class="menu"><a href="semi.do?command=test">test</a>
-					 --%>
-					<li class="li_right" id="login"><a class="li_rigit_a" href="semi.do?command=login">로그인</a></li>
-					<li class="li_right"><a class="li_rigit_a" href="semi.do?command=signup">회원가입</a></li>
-
-				</ul>
-			</nav>
-
-		</header>
+		<jsp:include page="header.jsp" />
 		<div id="semi_login_mid">
 			<div id="semi_login_mid_input">
 				<form action="semi.do" class="semi_login_mid_input_form" method="post" onsubmit="return submitUserForm();">
@@ -252,9 +227,6 @@
 				</form>
 			</div>
 
-			
-
-
 			<script type="text/javascript">
 				function submitUserForm() {
 					var response = grecaptcha.getResponse();
@@ -264,14 +236,12 @@
 					}
 					return true;
 				}
-
+s
 				function verifyCaptcha() {
 					document.getElementById('g-recaptcha-error').innerHTML = '';
 				}
 			</script>
-
-
 		</div>
-	</div>
+	<jsp:include page="bottom.jsp" />
 </body>
 </html>
