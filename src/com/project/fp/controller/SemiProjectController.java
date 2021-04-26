@@ -46,6 +46,8 @@ import com.project.fp.biz.AnimalBiz;
 import com.project.fp.biz.AnimalBizImpl;
 import com.project.fp.biz.BoardBiz;
 import com.project.fp.biz.BoardBizImpl;
+import com.project.fp.biz.Board_ReplyBiz;
+import com.project.fp.biz.Board_ReplyBizImpl;
 import com.project.fp.biz.ChatBiz;
 import com.project.fp.biz.ChatBizImpl;
 import com.project.fp.biz.Chat_ContentBiz;
@@ -64,6 +66,7 @@ import com.project.fp.biz.ReceiveBiz;
 import com.project.fp.biz.ReceiveBizImpl;
 import com.project.fp.dto.AnimalDto;
 import com.project.fp.dto.BoardDto;
+import com.project.fp.dto.Board_ReplyDto;
 import com.project.fp.dto.File_TableDto;
 import com.project.fp.dto.HospitalDto;
 import com.project.fp.dto.MemberDto;
@@ -96,6 +99,7 @@ public class SemiProjectController extends HttpServlet {
 		ProductBiz p_biz = new ProductBizImpl();
 		ReceiveBiz r_biz = new ReceiveBizImpl();
 		HospitalBiz h_biz = new HospitalBizImpl();
+		Board_ReplyBiz b_r_biz = new Board_ReplyBizImpl();
 		HttpSession session = request.getSession();
 
 		if (command.equals("signup")) {
@@ -493,6 +497,10 @@ public class SemiProjectController extends HttpServlet {
 			int board_no = Integer.parseInt(request.getParameter("board_no"));
 			BoardDto b_dto = b_biz.board_selectOne(board_no);
 			File_TableDto f_dto = f_t_biz.board_selectOne(board_no);
+			
+			List<Board_ReplyDto> b_r_list = b_r_biz.reply_selectList(board_no);
+			request.setAttribute("b_r_list", b_r_list);
+			
 			request.setAttribute("b_dto", b_dto);
 			request.setAttribute("f_dto", f_dto);
 			dispatch(response, request, "board_detail.jsp");

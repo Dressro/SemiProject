@@ -28,7 +28,6 @@
 <% BoardDto b_dto = (BoardDto)request.getAttribute("b_dto");
 File_TableDto f_dto = (File_TableDto)request.getAttribute("f_dto");
 %>		
-
 <%if(f_dto!=null){ %>
 	function filedown(){
 		var url = "semi.do?command=filedown&file_path=<%=f_dto.getFile_path()%>&file_new_name=<%=f_dto.getFile_new_name()%>";
