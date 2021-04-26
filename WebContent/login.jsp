@@ -272,6 +272,7 @@
 
 
 		</div>
+>>>>>>> branch 'master' of https://github.com/Dressro/SemiProject.git
 	</div>
 </body>
 </html>
