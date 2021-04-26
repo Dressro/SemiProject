@@ -46,8 +46,8 @@ function check(){
 </script>
 </head>
 <body>
-
-	<h1>계정정보 찾기</h1>
+<jsp:include page="header.jsp" />
+	<h3>계정정보 찾기</h3>
 
 	<div class="tab">
 		<button class="tablinks" onclick="openTab(event, 'findid')" id="defaultOpen">아이디찾기</button>
@@ -127,9 +127,9 @@ function check(){
 			</table>
 		</form>
 
-
+	
 	</div>
-
+<jsp:include page="bottom.jsp" />
 	<script>
 		function openTab(evt, tabName) {
 			var i, tabcontent, tablinks;

@@ -27,9 +27,9 @@
 </style>
 </head>
 <body>
-
+<jsp:include page="header.jsp" />
 	<div>
-		<h1>Join Us</h1>
+		<h3>Join Us</h3>
 		<div id="join_container">
 		<div class="box">
 			<input type="button" value="일반회원" onclick="location.href='semi.do?command=general_signup'">
@@ -39,6 +39,6 @@
 		</div>
 		</div>
 	</div>
-	
+<jsp:include page="bottom.jsp" />	
 </body>
 </html>

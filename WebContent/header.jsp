@@ -23,9 +23,6 @@
 <link rel="stylesheet" href="resources/css/owl.carousel.min.css" type="text/css">
 <link rel="stylesheet" href="resources/css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="resources/css/style.css" type="text/css">
-<style type="text/css">
-	
-</style>
 </head>
 <%
 MemberDto dto = (MemberDto) session.getAttribute("dto");
@@ -70,9 +67,9 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 <li><a href="semi.do?command=board_free">자유게시판</a>
 <li><a href="semi.do?command=animal_hospital">동물병원검색</a>
 <li><a href="semi.do?command=board_dec">실종신고</a>
-<li><a href="semi.do?command=mypage">마이페이지</a>
 <li><a href="semi.do?command=shopping">쇼핑</a>
 <li><a href="semi.do?command=board_qna">상품문의</a>
+
 <%
 if (dto == null) {
 %>
@@ -80,6 +77,7 @@ if (dto == null) {
 <%
 } else {
 %>
+					<li><a href="semi.do?command=mypage">마이페이지</a>
 					<li><a href="semi.do?command=logout">로그아웃</a> 
 <%
 }

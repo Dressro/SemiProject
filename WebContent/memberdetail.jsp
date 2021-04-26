@@ -9,11 +9,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
-
 </script>
-
 </head>
-
+<jsp:include page="header.jsp" />
 <body>
 
 		<form action="semi.do" method="post">
@@ -82,7 +80,7 @@
 						</tr>
 
 						<tr class="animal">
-							<th><h1>반려동물 정보</h1></th>
+							<th><h3>반려동물 정보</h3></th>
 						</tr>
 						<tr class="animal">
 							<th>이름 *</th>
@@ -210,6 +208,6 @@
 						</tr>
 					</table>
 				</form>
-
+	<jsp:include page="bottom.jsp" />
 </body>
 </html>

@@ -11,6 +11,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+<jsp:include page="header.jsp" />
 	<h1>Shopping</h1>
+<jsp:include page="bottom.jsp" />
 </body>
 </html>

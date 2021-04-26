@@ -24,81 +24,9 @@
 <link rel="stylesheet" href="resources/css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="resources/css/style.css" type="text/css">
 </head>
-<%
-MemberDto dto = (MemberDto) session.getAttribute("dto");
-%>
 <body>
 
-<div id="preloder">
-<div class="loader"></div>
-</div>
-<div class="offcanvas-menu-overlay"></div>
-<div class="offcanvas-menu-wrapper">
-<div class="offcanvas__widget">
-<ul>
-</ul>
-<div class="price">Family Pet</div>
-</div>
-<div class="offcanvas__logo">
-<a href="index.jsp">
-<img src="resources/images/logo/logo.png" width="160" height="60" alt="메인화면" />
-</a>
-</div>
-<div id="mobile-menu-wrap"></div>
-</div>
-
-
-<header class="header">
-<div class="container">
-<div class="row">
-<div class="col-lg-2">
-<div class="header__logo">
-<a href="index.jsp">
-<img src="resources/images/logo/logo.png" width="160" height="60" alt="메인화면" />
-</a>
-</div>
-</div>
-<div class="col-lg-14">
-<div class="header__options">
-<nav class="header__menu mobile-menu">
-<ul>
-<li class="active"><a href="index.jsp">홈</a></li>
-<li><a href="semi.do?command=board_notice">공지사항</a>
-<li><a href="semi.do?command=board_free">자유게시판</a>
-<li><a href="semi.do?command=animal_hospital">동물병원검색</a>
-<li><a href="semi.do?command=board_dec">실종신고</a>
-<li><a href="semi.do?command=mypage">마이페이지</a>
-<li><a href="semi.do?command=shopping">쇼핑</a>
-<li><a href="semi.do?command=board_qna">상품문의</a>
-<%
-if (dto == null) {
-%>
-					<li id="login"><a class="li_rigit_a" href="semi.do?command=login">로그인</a></li>
-<%
-} else {
-%>
-					<li><a href="semi.do?command=logout">로그아웃</a> 
-<%
-}
-%>
-					<li><a href="semi.do?command=signup">회원가입</a></li>
-</ul>
- </nav>
-<div class="header__option__right">
-<div class="header__option__right_seearch">
-<ul>
-
-</ul>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="canvas__open"><i class="fa fa-bars"></i></div>
-</header>
-
-
+<jsp:include page="header.jsp" />
 <section class="hero">
 <div class="hero__slider owl-carousel">
 <div class="hero__items set-bg" data-setbg="resources/images/section/section_1.jpg">
@@ -523,60 +451,7 @@ if (dto == null) {
 </div>
 </div>
 </section>
-
-<footer class="footer">
-<div class="container">
-<div class="footer__options">
-<div class="row">
-<div class="col-lg-2 col-md-3">
-<div class="footer__widget">
-<h4>Company</h4>
-<ul>
-<li><a href="#">About us</a></li>
-<li><a href="#">Servcies</a></li>
-<li><a href="#">Contact us</a></li>
-</ul>
-</div>
-</div>
-<div class="col-lg-2 col-md-3">
-<div class="footer__widget">
-<h4>Account</h4>
-<ul>
-<li><a href="#">My cart</a></li>
-<li><a href="#">Wisslist</a></li>
-<li><a href="#">Login/Register</a></li>
-</ul>
-</div>
-</div>
-<div class="col-lg-4 col-md-6">
-<div class="footer__newslatter">
-<h4>Newletter</h4>
-<p>Subcribe to our newsletter to get more free tips. No Spam, Promise.</p>
-</div>
-</div>
-<div class="col-lg-4 col-md-6">
-<div class="footer__widget footer__widget--address">
-<h4>Get in touch</h4>
-<ul>
-<li>69 North Cleveland Street, Memphis,USA.</li>
-<li>(123) 8111 9210 - (012) 1111 6868</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-<div class="footer__copyright">
-<div class="row">
-<div class="col-lg-12 text-center">
-
-<p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This is made with by <a href="index.jsp" target="_blank">Family Pet</a>
-</p>
-
-</div>
-</div>
-</div>
-</div>
-</footer>
+<jsp:include page="bottom.jsp" />
 
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <script src="resources/js/bootstrap.min.js"></script>
