@@ -558,6 +558,43 @@ public class SemiProjectController extends HttpServlet {
 			list = h_biz.selectSearchList(h_dto);
 			request.setAttribute("list", list);
 			dispatch(response, request, "animal_hospital.jsp");
+		} else if (command.equals("replyUpload")) {
+			String reply_nicname = request.getParameter("member_nicname");
+			String reply_content = request.getParameter("reply_content");
+			int board_no = Integer.parseInt(request.getParameter("board_no"));
+			
+			System.out.println(reply_nicname);
+			
+			Board_ReplyDto b_r_dto = new Board_ReplyDto();
+			b_r_dto.setReply_nicname(reply_nicname);
+			b_r_dto.setReply_content(reply_content);
+			b_r_dto.setBoard_no(board_no);
+			
+			b_r_biz.reply_insert(b_r_dto);
+		} else if (command.equals("replyDelete")) {
+			int reply_no = Integer.parseInt(request.getParameter("reply_no"));
+			
+			b_r_biz.reply_delete(reply_no);
+		} else if(command.equals("replyUpdate")) {
+			int reply_no = Integer.parseInt(request.getParameter("reply_no"));
+			String reply_content = request.getParameter("reply_content");
+			System.out.println(reply_content);
+			Board_ReplyDto b_r_dto = new Board_ReplyDto();
+			b_r_dto.setReply_no(reply_no);
+			b_r_dto.setReply_content(reply_content);
+			
+			b_r_biz.reply_update(b_r_dto);
+		} else if(command.equals("r_reply_upload")) {
+			int reply_no = Integer.parseInt(request.getParameter("reply_no"));
+			String r_reply_content = request.getParameter("r_reply_content");
+			String reply_nicname = request.getParameter("member_nicname");
+			
+			Board_ReplyDto b_r_dto = new Board_ReplyDto();
+			b_r_dto.setReply_no(reply_no);
+			b_r_dto.setReply_content(r_reply_content);
+			b_r_dto.setReply_nicname(reply_nicname);
+			
+			b_r_biz.replyProc(b_r_dto);
 		}
 
 		if (command.equals("mailsend")) {

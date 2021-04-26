@@ -12,6 +12,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
@@ -116,6 +118,7 @@ File_TableDto f_dto = (File_TableDto)request.getAttribute("f_dto");
 	<br/>
 	<br/>
 	<br/>
+
 	
 	<!-- 댓글 목록 (작성자닉네임, 작성자/로그인상태 확인) -->
 	<div id="replyList">
@@ -128,54 +131,64 @@ File_TableDto f_dto = (File_TableDto)request.getAttribute("f_dto");
 				</c:when>
 				<c:otherwise>
 					<c:forEach var="replyList" items="${b_r_list }">
+					
 						<c:if test="${replyList.reply_delflag eq 'Y' }">
+							
 							<tr>
-								<td>----댓글이 삭제되었습니다----</td>
+								<td>
+									<textarea rows="2" cols="60" disabled="disabled">----삭제된 댓글입니다----</textarea>
+								</td>
 							</tr>
+							
 						</c:if>
+						
 						<c:if test="${replyList.reply_delflag eq 'N' }">
 							<tr>
-								<td></td>
-								<td><fmt:formatDate value="${replyList.reply_regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+								<td>${replyList.reply_nicname }
+								<fmt:formatDate value="${replyList.reply_regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 							</tr>
 							<tr>
-								<td><textarea rows="4" cols="60" disabled="disabled">${replyList.reply_content }</textarea></td>
+								<td><textarea rows="4" cols="60" disabled="disabled" name="${replyList.reply_no }" class="reply_content${replyList.reply_no }">${replyList.reply_content }</textarea></td>
 							</tr>
 							<tr>
 								<td>
-									<c:if test="">
-										<input type="button" value="수정" id="replyUpdate">
+									<c:if test="${replyList.reply_nicname == dto.member_nicname }">
+										<input type="button" value="수정" class="replyUpdate" id="replyUpdate${replyList.reply_no }" name="${replyList.reply_no }">
 									</c:if>
-								</td>
-								<td>
-									<c:if test="">
-										<input type="button" value="삭제" id="replyDelete">
+							
+									<c:if test="${replyList.reply_nicname == dto.member_nicname }">
+										<input type="button" value="삭제" class="replyDelete" name="${replyList.reply_no }">
 									</c:if>							 
-								</td>
-								<td>
-									<c:if test="">
-										<input type="button" value="답글달기" id="r_replyUpload">
+								
+									<c:if test="${dto ne null }">
+										<input type="button" value="답글달기" class="r_replyUpload" name="${dto.member_nicname }">
 									</c:if>								
 								</td>
 							</tr>
 						</c:if>
+						
 					</c:forEach>
 				</c:otherwise>
 			</c:choose>
 		</table>
 	</div>
 	
-	<!-- 댓글 작성 (로그인했을때, 등록버튼) -->
+	<br/>
+	<br/>
+	<br/>
+	
+	<!-- 댓글 작성 -->
 	<div id="replyWrite">
 		<table id="replyWriteTable">
 			
 			<c:choose>
-				<c:when test="">
+				<c:when test="${dto ne null }">
 					<tr>
-						<td><textarea rows="3" cols="80" name="reply_content" id="reply_content"></textarea></td>
+						<th>${dto.member_nicname }</th>
+						<td><textarea rows="3" cols="80" name="reply_content" class="reply_content"></textarea></td>
 					</tr>
 					<tr>
-						<td><input type="button" value="등록" id="replyUpload"></td>
+						<td><input type="button" value="등록" class="replyUpload" name="${dto.member_nicname }"></td>
 					</tr>
 				</c:when>
 				<c:otherwise>
@@ -190,22 +203,122 @@ File_TableDto f_dto = (File_TableDto)request.getAttribute("f_dto");
 	
 	<script type="text/javascript">
 	
-		// 댓글 작성 버튼 눌렀을 때
-		$("#replyUpload").click(function(){
+	$(document).ready(function(){
+	
+		// 등록 버튼 눌렀을 때
+		$(".replyUpload").click(function(){
+
+			var member_nicname = $(this).attr("name");
+			var reply_content = $(".reply_content").val();
+			var board_no = "${b_dto.board_no}";
+			
+			if(reply_content == "") {
+				alert("댓글을 입력해주세요.");
+				return;
+			}
+			
+			$.ajax({
+				type:"post",
+				url: "semi.do?command=replyUpload",
+				data: {
+					member_nicname : member_nicname,
+					reply_content : reply_content,
+					board_no : board_no
+				},
+				success: function(){
+					alert("댓글 등록 성공");
+					location.href="semi.do?command=board_detail&board_no="+${b_dto.board_no};
+				}
+				
+				
+			});
 			
 		});
+		
 		// 수정 버튼 눌렀을 때
-		$("#replyUpdate").click(function(){
+		$(".replyUpdate").click(function(){
 			
+			var reply_no = $(this).attr("name");
+			$(this).attr("value", "수정완료");
+			$(".reply_content"+reply_no).attr("disabled",false);
+
+			
+			$(".replyDelete").hide();
+			$(".r_replyUpload").hide();
+
+			$(this).attr("value", "수정완료").click(function(){
+				var reply_content = $(".reply_content"+reply_no).val();
+				
+				$.ajax({
+					type:"post",
+					url:"semi.do?command=replyUpdate",
+					data: {
+						reply_no : reply_no,
+						reply_content : reply_content
+					},
+					success: function(){
+						alert("댓글 수정 완료");
+						location.href="semi.do?command=board_detail&board_no="+${b_dto.board_no};
+					}
+				});
+			});
+
 		});
+		
 		// 삭제 버튼 눌렀을 때
-		$("replyDelete").click(function(){
-			
+		$(".replyDelete").click(function(){	
+			var reply_no = $(this).attr("name");
+
+			$.ajax({
+				type:"post",
+				url: "semi.do?command=replyDelete",
+				data: {
+					reply_no : reply_no
+				},
+				success: function(){
+					alert("댓글 삭제 성공");
+					location.href="semi.do?command=board_detail&board_no="+${b_dto.board_no};
+				}
+			});
 		});
+		
 		// 답글달기 버튼 눌렀을 때
-		$("r_replyUpload").click(function(){
+		$(".r_replyUpload").click(function(){
+			var member_nicname = $(this).attr("name");
+			var reply_no = $(this).parent().parent().prev().children().children().attr("name");
+			alert(reply_no);
+			$(".replyDelete").hide();
+			$(".r_replyUpload").hide();
+			$(".replyUpdate").hide();
 			
+			var replyEditor = '<tr>'
+							+ '<th><i class="fas fa-comment-dots"></i></th>'
+							+ '</tr>'
+							+ '<tr>'
+							+ '<td style="padding-left:10px">'
+							+ '<td><textarea rows="3" cols="80" name="reply_content" class="r_reply_content"></textarea><input type="button" value="답글등록" class="r_reply_test"></td>'
+							+ '</tr>';					
+			$(this).after(replyEditor);
+			
+			$(".r_reply_test").click(function(){
+				var r_reply_content = $(".r_reply_content").val();
+				$.ajax({
+					type:"post",
+					url: "semi.do?command=r_reply_upload",
+					data: {
+						member_nicname : member_nicname,
+						r_reply_content : r_reply_content,
+						reply_no : reply_no
+					},
+					success: function(){
+						alert("답변 작성 성공");
+						location.href="semi.do?command=board_detail&board_no="+${b_dto.board_no};
+					}
+				});
+			});
 		});
+		
+	});
 		
 	</script>
 	

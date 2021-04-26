@@ -23,21 +23,21 @@
 		WHERE REPLY_NO = #{reply_no}
 	</update>
 	
-	<delete id="reply_delete" parameterType="int">
-		DELETE
-		FROM BOARD_REPLY
+	<update id="reply_delete" parameterType="int">
+		UPDATE BOARD_REPLY
+		SET REPLY_DELFLAG = 'Y'
 		WHERE REPLY_NO = #{reply_no}
-	</delete>
+	</update>
 	
 	<select id="r_reply_insert" parameterType="com.project.fp.dto.Board_ReplyDto">
 		INSERT INTO BOARD_REPLY
 		VALUES(
 		REPLY_NO_SEQ.NEXTVAL,
 		(SELECT REPLY_GROUPNO FROM BOARD_REPLY WHERE REPLY_NO = #{reply_no}),
-		(SELECT REPLY_GROUPSEQ + 1 FROM BOARD_REPLY WHERE REPLY_NO = #{reply_no}),
+		(SELECT REPLY_GROUPSEQ FROM BOARD_REPLY WHERE REPLY_NO = #{reply_no}) + 1,
 		(SELECT REPLY_TAB FROM BOARD_REPLY WHERE REPLY_NO = #{reply_no}) + 1,
 		'N', #{reply_content}, SYSDATE,
-		(SELECT BOARD_NO FROM BOARD_REPLY WHERE REPLY_NO #{reply_no}),
+		(SELECT BOARD_NO FROM BOARD_REPLY WHERE REPLY_NO = #{reply_no}),
 		#{reply_nicname}
 		)
 	</select>

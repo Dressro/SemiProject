@@ -17,7 +17,7 @@ public class Board_ReplyDaoImpl extends SqlMapConfig implements Board_ReplyDao {
 		List<Board_ReplyDto> list = new ArrayList<Board_ReplyDto>();
 		
 		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
-			list = session.selectList(namespace+"reply_selectList");
+			list = session.selectList(namespace+"reply_selectList",board_no);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
