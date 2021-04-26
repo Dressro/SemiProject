@@ -241,7 +241,10 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 		</div>
 
 
-		<div><input type="button" value="파파고 test" onclick="location.href='translation_test.jsp'"/></div>
+		<div>
+			<input type="button" value="파파고 test" onclick="location.href='translation_test.jsp'"/>
+			<input type="button" value="결제 test" onclick="location.href='product_page(payment_test).jsp'"/>
+		</div>
 
 		<div id="semi_footer">
 			<div class="footer">
