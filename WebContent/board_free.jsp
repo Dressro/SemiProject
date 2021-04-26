@@ -56,8 +56,8 @@ response.setContentType("text/html; charset=UTF-8");
 </style>
 </head>
 <body>
-
-	<h1>자유게시판</h1>
+<jsp:include page="header.jsp" />
+	<h3>자유게시판</h3>
 	
 			<select class="search_category">
 				<option selected value="T_C">제목+내용</option>
@@ -131,5 +131,6 @@ response.setContentType("text/html; charset=UTF-8");
 							<jsp:param value="${Pdto.totalBlock}" name="totalBlock" />
 						</jsp:include>
 			</form>
+	<jsp:include page="bottom.jsp" />
 </body>
 </html>

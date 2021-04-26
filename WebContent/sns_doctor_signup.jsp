@@ -63,10 +63,11 @@
 </script>
 </head>
 <body>
+<jsp:include page="header.jsp" />
 	<%
 		String member_id = request.getParameter("member_id");
 	%>
-	<h1>일반회원 회원가입</h1>
+	<h3>일반회원 회원가입</h3>
 	
 		<div class="join_table">
 			<div id="member_join">
@@ -138,7 +139,6 @@
 			</form>
 		</div>
 	</div>
-	
+<jsp:include page="bottom.jsp" />	
 </body>
-
 </html>
