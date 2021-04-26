@@ -4,7 +4,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="resources/css/head.css" rel=stylesheet type="text/css" />
 <style>
 #semi_login_mid {
 	width: 600px;
@@ -12,23 +11,19 @@
 	min-height: 1000px;
 	padding-top: 50px;
 }
-
 #semi_login_mid_input {
 	text-align: center;
 	width: 600px;
 	margin: 0px auto;
 	height: 500px;
 }
-
 .semi_login_text {
 	float: left;
 	height: 50px;
 }
-
 .semi_login_mid_input_form {
 	height: 100%;
 }
-
 .semi_login_mid_div {
 	margin-left: 100px;
 	margin-bottom: 15px;
@@ -44,7 +39,6 @@
 	text-align: center;
 	border: solid 1px #dadada;
 }
-
 .semi_login_idpw_text {
 	height: 100%;
 	padding-left: 10px;
@@ -52,7 +46,6 @@
 	font-size: 15px;
 	border: none;
 }
-
 .semi_login_mid_idpwfind {
 	display: inline-block;
 	text-align:center;
@@ -70,7 +63,6 @@
 	border-radius: 5px;
 	padding: 5px;
 }
-
 .semi_login_mid_input_btn {
 	display: block;
 	width: 400px;
@@ -84,7 +76,6 @@
 	margin-bottom: 10px;
 	font-weight: bolder;
 }
-
 .hr-sect {
 	display: flex;
 	flex-basis: 100%;
@@ -93,7 +84,6 @@
 	font-size: 12px;
 	margin: 8px 0px;
 }
-
 .hr-sect::before, .hr-sect::after {
 	content: "";
 	flex-grow: 1;
@@ -103,30 +93,25 @@
 	line-height: 0px;
 	margin: 0px 16px;
 }
-
 #kakao_id_login {
 	padding: 0;
 	width: 400px;
 	height: 60px;
 }
-
 #kakao-login-btn {
 	width: 400px;
 	height: 60px;
 }
-
 #kakao_padding {
 	padding-top: 20px;
 	padding-bottom: 20px;
 	height: 60px;
 }
-
 #naver_id_login {
 	padding: 0;
 	width: 400px;
 	height: 60px;
 }
-
 #naver_id_login_img {
 	width: 400px;
 	height: 60px;
@@ -140,9 +125,7 @@
 	$(function() {
 		Kakao.init('5c95aa7ad857e55475bed627ba9faf99');
 		Kakao.isInitialized();
-
 		console.log("Kakao.isInitialized()", Kakao.isInitialized());
-
 		Kakao.Auth.createLoginButton({
 			container : '#kakao_id_login',
 			success : function(authObj) {
@@ -152,7 +135,6 @@
 						var userID = response.id;
 						var useEmail = response.kakao_account.email;
 						var userNickName = response.properties.nickname;
-
 						var form = document.createElement('form');
 						var objs_1;
 						objs_1 = document.createElement('input');
@@ -174,42 +156,16 @@
 						console.log("request fail", error);
 					}
 				});
-
 			},
 			fail : function(err) {
 				alert(JSON.stringify(err));
 			},
 		});
-
 	});
 </script>
 </head>
 <body>
-	<div id="semipage">
-		<header>
-
-			<nav>
-				<ul>
-					<li><a href="index.jsp">
-							<img src="https://www.onium.in/wp-content/uploads/2019/03/sample-logo-png-6-1.png" width="160" height="60" alt="메인화면" />
-						</a></li>
-
-					<li class="menu"><a href="semi.do?command=board_notice">공지사항</a>
-					<li class="menu"><a href="semi.do?command=board_free">자유게시판</a>
-					<li class="menu"><a href="semi.do?command=animal_hospital">동물병원검색</a>
-					<li class="menu"><a href="semi.do?command=board_dec">실종신고</a>
-					<li class="menu"><a href="semi.do?command=mypage">마이페이지</a>
-					<li class="menu"><a href="semi.do?command=shopping">쇼핑</a>
-					<li class="menu"><a href="semi.do?command=board_qna">상품문의</a> <%--
-					<li class="menu"><a href="semi.do?command=test">test</a>
-					 --%>
-					<li class="li_right" id="login"><a class="li_rigit_a" href="semi.do?command=login">로그인</a></li>
-					<li class="li_right"><a class="li_rigit_a" href="semi.do?command=signup">회원가입</a></li>
-
-				</ul>
-			</nav>
-
-		</header>
+		<jsp:include page="header.jsp" />
 		<div id="semi_login_mid">
 			<div id="semi_login_mid_input">
 				<form action="semi.do" class="semi_login_mid_input_form" method="post" onsubmit="return submitUserForm();">
@@ -252,9 +208,6 @@
 				</form>
 			</div>
 
-			
-
-
 			<script type="text/javascript">
 				function submitUserForm() {
 					var response = grecaptcha.getResponse();
@@ -264,15 +217,11 @@
 					}
 					return true;
 				}
-
 				function verifyCaptcha() {
 					document.getElementById('g-recaptcha-error').innerHTML = '';
 				}
 			</script>
-
-
 		</div>
->>>>>>> branch 'master' of https://github.com/Dressro/SemiProject.git
-	</div>
+	<jsp:include page="bottom.jsp" />
 </body>
 </html>

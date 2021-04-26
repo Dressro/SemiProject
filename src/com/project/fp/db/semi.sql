@@ -121,6 +121,8 @@ CREATE TABLE CHAT (
 	CONSTRAINT CHAT_MEMBER_ID_FK FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER (MEMBER_ID)
 );
 insert into chat values(chat_num_seq.nextval,'ㅇㅇ',sysdate,'Dressro');
+insert into chat values(chat_num_seq.nextval,'22',sysdate,'Dressro');
+insert into chat values(chat_num_seq.nextval,'33',sysdate,'Dressro');
 CREATE TABLE RECEIVE(
 	ORDER_NUM NUMBER PRIMARY KEY,
 	RECEIVE_NAME VARCHAR2(20) NOT NULL,
@@ -131,7 +133,7 @@ CREATE TABLE RECEIVE(
 );
 
 CREATE TABLE CHAT_CONTENT(
-	CH_NUM NUMBER PRIMARY KEY,
+	CH_NUM NUMBER NOT NULL,
 	MEMBER_NICNAME VARCHAR2(20) NOT NULL,
 	CH_CONTENT VARCHAR2(4000) NOT NULL,
 	CH_CONTENT_DATE DATE NOT NULL,
@@ -168,7 +170,9 @@ CREATE TABLE FILE_TABLE(
 );
 
 
+
 SELECT * FROM MEMBER;
+
 
 
 select * from member m , file_table f
@@ -178,6 +182,10 @@ select * from member;  dhksdn486
 select * from board;
 select * from file_table
 SELECT * FROM ANIMAL;
+
+
+select * from chat;
+select * from CHAT_CONTENT;
 
 
 
@@ -242,6 +250,7 @@ SELECT FILE_NUM, FILE_PATH, FILE_ORI_NAME, FILE_NEW_NAME,
 		WHERE BOARD_NO = '73'
 
 
+
 -- 댓글 테이블 (아직 수정중)
 DROP SEQUENCE REPLY_NO_SEQ;
 DROP SEQUENCE REPLY_GROUPNO_SEQ;
@@ -263,3 +272,4 @@ CREATE TABLE BOARD_REPLY (
 	CONSTRAINT BOARD_REPLY_REPLY_DELFLAG_CHK CHECK (REPLY_DELFLAG IN ('Y', 'N')),
 	CONSTRAINT BOARD_REPLY_BOARD_NO_FK FOREIGN KEY (BOARD_NO) REFERENCES BOARD (BOARD_NO)
 );
+

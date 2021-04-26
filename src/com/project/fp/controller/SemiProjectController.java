@@ -67,11 +67,14 @@ import com.project.fp.biz.ReceiveBizImpl;
 import com.project.fp.dto.AnimalDto;
 import com.project.fp.dto.BoardDto;
 import com.project.fp.dto.Board_ReplyDto;
+import com.project.fp.dto.ChatDto;
+import com.project.fp.dto.Chat_ContentDto;
 import com.project.fp.dto.File_TableDto;
 import com.project.fp.dto.HospitalDto;
 import com.project.fp.dto.MemberDto;
 import com.project.fp.dto.PagingDto;
 import com.project.fp.gmail.MailSend;
+import com.project.fp.papago.papago;
 import com.project.fp.sms.SMS;
 
 import oracle.net.aso.b;
@@ -253,6 +256,19 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				dispatch(response, request, "signup_idchk.jsp");
 			}
+			
+		} else if (command.equals("memberdetail")) {
+			response.sendRedirect("memberdetail.jsp");
+		} else if (command.equals("memberdel")) {
+			String member_id = request.getParameter("member_id");
+			int md_res = 0;
+			md_res = m_biz.delete(member_id);
+			if (md_res > 0) {
+				jsResponse(response,"회원탈퇴", "index.jsp");
+			} else {
+				jsResponse(response, "회원탈퇴실패", "semi.do?command=mypage");
+			}
+			
 		} else if (command.equals("board_notice")) {
 			int nowPage = 1;
 			if (request.getParameter("nowPage") != null) {
@@ -299,6 +315,9 @@ public class SemiProjectController extends HttpServlet {
 			response.sendRedirect("mypage.jsp");
 		} else if (command.equals("shopping")) {
 			response.sendRedirect("shopping.jsp");
+		} else if (command.equals("shop_insertform")) {
+			response.sendRedirect("shop_insertform.jsp");
+			
 		} else if (command.equals("board_qna")) {
 			int nowPage = 1;
 			if (request.getParameter("nowPage") != null) {
@@ -487,7 +506,8 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				int f_res = f_t_biz.multiDelete(board_no);
 				int b_res = b_biz.multiDelete(board_no);
-				if (b_res == board_no.length && f_res == board_no.length) {
+				System.out.println(board_no);
+				if (b_res == board_no.length) {
 					jsResponse(response, "선택된 글들이 모두 삭제되었습니다.", "semi.do?command=board_free");
 				} else {
 					jsResponse(response, "선택된 글들이 삭제되지 않았습니다.", "semi.do?command=board_free");
@@ -496,11 +516,13 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("board_detail")) {
 			int board_no = Integer.parseInt(request.getParameter("board_no"));
 			BoardDto b_dto = b_biz.board_selectOne(board_no);
-			File_TableDto f_dto = f_t_biz.board_selectOne(board_no);
-			
 			List<Board_ReplyDto> b_r_list = b_r_biz.reply_selectList(board_no);
 			request.setAttribute("b_r_list", b_r_list);
-			
+			int res = b_biz.board_read(b_dto);
+			if(res<0) {
+				jsResponse(response, "조회수 실패", "index.html");
+			}
+			File_TableDto f_dto = f_t_biz.board_selectOne(board_no);
 			request.setAttribute("b_dto", b_dto);
 			request.setAttribute("f_dto", f_dto);
 			dispatch(response, request, "board_detail.jsp");
@@ -558,6 +580,63 @@ public class SemiProjectController extends HttpServlet {
 			list = h_biz.selectSearchList(h_dto);
 			request.setAttribute("list", list);
 			dispatch(response, request, "animal_hospital.jsp");
+		} else if(command.equals("chatlist")) {
+			String member_id = request.getParameter("member_id");
+			ChatDto c_dto = new ChatDto();
+			c_dto.setMember_id(member_id);
+			List<ChatDto> c_list = c_biz.selectList(c_dto);
+			request.setAttribute("c_list", c_list);
+			dispatch(response, request, "chatlist.jsp");
+		} else if (command.equals("chat_insert")) {
+			String member_nickname = request.getParameter("member_nickname");
+			String ch_content = request.getParameter("ch_content");
+			System.out.println(ch_content);
+			System.out.println(member_nickname);
+			
+			Chat_ContentDto c_c_dto = new Chat_ContentDto();
+			c_c_dto.setCh_content(ch_content);
+			c_c_dto.setMember_nickname(member_nickname);
+			int res = c_c_biz.insert(c_c_dto);
+			if(res > 0) {
+				response.getWriter().append("통신 성공");
+			}
+		} else if (command.equals("chatboard")) {
+			int ch_num = Integer.parseInt(request.getParameter("ch_num"));
+			request.setAttribute("ch_num", ch_num);
+			dispatch(response, request, "ChatBoard.jsp");
+		} else if (command.equals("mailsend")) {
+			String member_email = request.getParameter("member_email"); // 수신자
+			String from = "ejsdnlcl@gmail.com"; // 발신자
+			String cc = "scientist-1002@hanmail.net"; // 참조
+			String subject = "PetCare 회원가입 이메일 인증번호 입니다.";
+			String content = getRandomPassword(10);
+			try {
+				MailSend ms = new MailSend();
+				ms.sendEmail(from, member_email, cc, subject, content);
+				System.out.println("전송 성공");
+				request.setAttribute("content", content);
+				dispatch(response, request, "signup_emailchk.jsp");
+			} catch (MessagingException me) {
+				System.out.println("메일 전송에 실패하였습니다.");
+				System.out.println("실패 이유 : " + me.getMessage());
+				me.printStackTrace();
+			} catch (Exception e) {
+				System.out.println("메일 전송에 실패하였습니다.");
+				System.out.println("실패 이유 : " + e.getMessage());
+				e.printStackTrace();
+			}
+		} else if (command.equals("mailcheck")) {
+			String AuthenticationKey = request.getParameter("AuthenticationKey");
+			String AuthenticationUser = request.getParameter("AuthenticationUser");
+			if (AuthenticationKey.equals(AuthenticationUser)) {
+				System.out.println("인증 성공");
+			} else {
+				System.out.println("인증 실패");
+			}
+		} else if (command.equals("smssend")) {
+			String member_phone = request.getParameter("member_phone");
+			String content = "문자 내용 작성";
+			SMS.sendSMS(member_phone, content);
 		} else if (command.equals("replyUpload")) {
 			String reply_nicname = request.getParameter("member_nicname");
 			String reply_content = request.getParameter("reply_content");
@@ -597,39 +676,6 @@ public class SemiProjectController extends HttpServlet {
 			b_r_biz.replyProc(b_r_dto);
 		}
 
-		if (command.equals("mailsend")) {
-			String member_email = request.getParameter("member_email"); // 수신자
-			String from = "ejsdnlcl@gmail.com"; // 발신자
-			String cc = "scientist-1002@hanmail.net"; // 참조
-			String subject = "PetCare 회원가입 이메일 인증번호 입니다.";
-			String content = getRandomPassword(10);
-			try {
-				MailSend ms = new MailSend();
-				ms.sendEmail(from, member_email, cc, subject, content);
-				System.out.println("전송 성공");
-				request.setAttribute("content", content);
-				dispatch(response, request, "signup_emailchk.jsp");
-			} catch (MessagingException me) {
-				System.out.println("메일 전송에 실패하였습니다.");
-				System.out.println("실패 이유 : " + me.getMessage());
-				me.printStackTrace();
-			} catch (Exception e) {
-				System.out.println("메일 전송에 실패하였습니다.");
-				System.out.println("실패 이유 : " + e.getMessage());
-				e.printStackTrace();
-			}
-		}
-
-		if (command.equals("mailcheck")) {
-			String AuthenticationKey = request.getParameter("AuthenticationKey");
-			String AuthenticationUser = request.getParameter("AuthenticationUser");
-			if (AuthenticationKey.equals(AuthenticationUser)) {
-				System.out.println("인증 성공");
-			} else {
-				System.out.println("인증 실패");
-			}
-		}
-
 		if (command.equals("test")) {
 			File fi = new File("C://Users//alahx/test123123123678678678.csv");
 			BufferedReader br = new BufferedReader(new BufferedReader(new FileReader(fi)));
@@ -657,10 +703,34 @@ public class SemiProjectController extends HttpServlet {
 			}
 		}
 
-		if (command.equals("smssend")) {
-			String member_phone = request.getParameter("member_phone");
-			String content = "문자 내용 작성";
-			SMS.sendSMS(member_phone, content);
+
+		if (command.equals("translation")) {
+			String text = request.getParameter("text");
+			String source = request.getParameter("source");
+			String target = request.getParameter("target");
+			String result = papago.getTransSentence(text, source, target);
+			System.out.println(text + " : " + result);
+			request.setAttribute("text", text);
+			request.setAttribute("result", result);
+			dispatch(response, request, "translation_test.jsp");
+		}
+		
+		if (command.equals("payment")) {
+			String pay_method = request.getParameter("pay_method");
+			String product = request.getParameter("product");
+			String name = request.getParameter("name");
+			String email = request.getParameter("email");
+			String phone = request.getParameter("phone");
+			String address = request.getParameter("address");
+			int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));
+			request.setAttribute("pay_method", pay_method);
+			request.setAttribute("product", product);
+			request.setAttribute("name", name);
+			request.setAttribute("email", email);
+			request.setAttribute("phone", phone);
+			request.setAttribute("address", address);
+			request.setAttribute("totalPrice", totalPrice);
+			dispatch(response, request, "payment_test.jsp");
 		}
 
 	}

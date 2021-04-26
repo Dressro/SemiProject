@@ -24,13 +24,14 @@ response.setContentType("text/html; charset=UTF-8");
 </script>
 </head>
 <body>
+<jsp:include page="header.jsp" />
 	<%
 	MemberDto dto = (MemberDto) session.getAttribute("dto");
 	if (dto == null) {
 		pageContext.forward("index.html");
 	}
 	%>
-	<h1>BOARD_INSERTFORM</h1>
+	<h3>BOARD_INSERTFORM</h3>
 	<form action="semi.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="member_id" value="<%=dto.getMember_id()%>" />
 		<input type="hidden" name="command" value="board_insertres" />
@@ -84,6 +85,6 @@ response.setContentType("text/html; charset=UTF-8");
 			</div>
 		</div>
 	</form>
+<jsp:include page="bottom.jsp" />	
 </body>
-
 </html>

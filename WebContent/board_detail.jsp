@@ -3,17 +3,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-    
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8"); %>
 
 <!DOCTYPE html>
 <html>
 <head>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
-
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
@@ -65,8 +60,8 @@ File_TableDto f_dto = (File_TableDto)request.getAttribute("f_dto");
 </script>
 </head>
 <body>
-
-	<h1>Detail</h1>
+	<jsp:include page="header.jsp" />
+	<h3>Detail</h3>
 	<form action="semi.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="member_id" value="<%=b_dto.getMember_id()%>" />
 		<input type="hidden" name="command" value="board_updateres" />
@@ -114,6 +109,7 @@ File_TableDto f_dto = (File_TableDto)request.getAttribute("f_dto");
 		</div>
 	</form>
 	
+
 	<br/>
 	<br/>
 	<br/>
@@ -322,5 +318,8 @@ File_TableDto f_dto = (File_TableDto)request.getAttribute("f_dto");
 		
 	</script>
 	
+	
+	
+	<jsp:include page="bottom.jsp" />
 </body>
 </html>
