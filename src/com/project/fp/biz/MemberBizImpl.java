@@ -53,6 +53,12 @@ public class MemberBizImpl implements MemberBiz {
 		return 0;
 	}
 
+	@Override
+	public MemberDto selectdetail(String member_id) {
+		// TODO Auto-generated method stub
+		return dao.selectdetail(member_id);
+	}
+
 
 
 }

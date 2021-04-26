@@ -69,7 +69,9 @@ import com.project.fp.dto.Chat_ContentDto;
 import com.project.fp.dto.File_TableDto;
 import com.project.fp.dto.HospitalDto;
 import com.project.fp.dto.MemberDto;
+import com.project.fp.dto.Order_TableDto;
 import com.project.fp.dto.PagingDto;
+import com.project.fp.dto.ProductDto;
 import com.project.fp.gmail.MailSend;
 import com.project.fp.sms.SMS;
 
@@ -253,7 +255,11 @@ public class SemiProjectController extends HttpServlet {
 			}
 			
 		} else if (command.equals("memberdetail")) {
-			response.sendRedirect("memberdetail.jsp");
+			String member_id = request.getParameter("member_id");
+			MemberDto dto = m_biz.selectdetail(member_id);
+			request.setAttribute("dto", dto);
+			dispatch(response, request, "memberdetail.jsp");
+			
 		} else if (command.equals("memberdel")) {
 			String member_id = request.getParameter("member_id");
 			int md_res = 0;
@@ -308,11 +314,28 @@ public class SemiProjectController extends HttpServlet {
 			dispatch(response, request, "board_dec.jsp");
 		} else if (command.equals("mypage")) {
 			response.sendRedirect("mypage.jsp");
+		} else if (command.equals("boardlist")) {
+			BoardDto b_dto = new BoardDto();
+			List<BoardDto> list = b_biz.board_selectList(b_dto);
+			request.setAttribute("list", list);
+			dispatch(response, request, "adminpage.jsp");
 		} else if (command.equals("shopping")) {
 			response.sendRedirect("shopping.jsp");
-		} else if (command.equals("shop_insertform")) {
+		} else if (command.equals("memberlist")) {
+			List<MemberDto> list = m_biz.selectList();
+			request.setAttribute("list", list);
+			dispatch(response, request, "adminpage.jsp");
+		} else if (command.equals("prodlist")) {
+			List<ProductDto> list = p_biz.selectList();
+			request.setAttribute("list", list);
+			dispatch(response, request, "adminpage.jsp");
+		} else if (command.equals("orderlist")) {
+			List<Order_TableDto> list = o_t_biz.selectList();
+			request.setAttribute("list", list);
+			dispatch(response, request, "adminpage.jsp");
+		}
+		else if (command.equals("shop_insertform")) {
 			response.sendRedirect("shop_insertform.jsp");
-			
 		} else if (command.equals("board_qna")) {
 			int nowPage = 1;
 			if (request.getParameter("nowPage") != null) {

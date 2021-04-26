@@ -29,35 +29,40 @@ response.setContentType("text/html; charset=UTF-8");
 %>
 	<h1>SHOP_INSERTFORM</h1>
 	<form action="semi.do" method="post" enctype="multipart/form-data">
-		<%--z<input type="hidden" name="prod_num" value="<%=dto.getProd_num()%>" /> --%>
 		<input type="hidden" name="command" value="shop_insertform" />
 		
 		
-		<%--insertform 수정중 --%>
 		
 		<div class="container">
 			<div class="content" style="width: 70%">
 				<div class="row justify-content-md-center">
+					<div class="col-sm-3">
+							<div class="input-group mb-3">
+								<select class="custom-select" id="inputGroupSelect03" name="prod_category">
+									<option selected>카테고리를 선택해 주세요.</option>
+									<option value="1">사료/간식</option>
+									<option value="2">케어</option>
+									<option value="3">리빙</option>
+									<option value="4">외출</option>
+									<option value="5">장난감</option>
+									<option value="6">패션</option>
+								</select>
+							</div>
+						</div>
+				
 					<div class="col-sm-9">
 						<div class="input-group mb-3">
-							<input type="text" class="form-control" name="prod_name" size="100" placeholder="상품명을 입력해주세요.">
+							상품명 : <input type="text" class="form-control" name="prod_name" size="30" ><br/>
+							제조사 : <input type="text" class="form-control" name="prod_mfr" size="30" ><br/>
+							거래처 : <input type="text" class="form-control" name="prod_client" size="30" ><br/>
+							판매가 : <input type="text" class="form-control" name="prod_price" size="10" ><br/>
+							할인율 : <input type="text" class="form-control" name="prod_sale" size="10" ><br/>
+							입고수량 : <input type="text" class="form-control" name="prod_in" size="10" ><br/>
+														
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-3">
-						<div class="input-group mb-3">
-							<select class="custom-select" id="inputGroupSelect03" name="prod_category">
-								<option selected>카테고리를 선택해 주세요.</option>
-								<option value="1">사료/간식</option>
-								<option value="2">케어</option>
-								<option value="3">리빙</option>
-								<option value="4">외출</option>
-								<option value="5">장난감</option>
-								<option value="6">패션</option>
-							</select>
-						</div>
-					</div>
-
+				
 				<hr>
 
 				<div class="row justify-content-md-center">
@@ -66,7 +71,7 @@ response.setContentType("text/html; charset=UTF-8");
 							<textarea class="form-control" id="p_content" name="prod_explain"></textarea>
 							<script type="text/javascript">
 								CKEDITOR.replace('p_content', {
-									height : 500
+									height : 200
 								});
 							</script>
 						</div>

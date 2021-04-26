@@ -166,14 +166,11 @@ CREATE TABLE FILE_TABLE(
 	CONSTRAINT FILE_TABLE_CH_NUM_FK FOREIGN KEY (CH_NUM) REFERENCES CHAT (CH_NUM),
 	CONSTRAINT FILE_TABLE_ANIMAL_NO_KF FOREIGN KEY (ANIMAL_NO) REFERENCES ANIMAL (ANIMAL_NO)
 );
-<<<<<<< HEAD
-=======
 
 
 
 SELECT * FROM MEMBER;
 
->>>>>>> e3b39a93c7ce733afa0a2619bfe6993eebdec1aa
 
 select * from member m , file_table f
 where m.member_id = f.member_id
@@ -182,12 +179,9 @@ select * from member;  dhksdn486
 select * from board;
 select * from file_table
 SELECT * FROM ANIMAL;
-<<<<<<< HEAD
-=======
 
 select * from chat;
 select * from CHAT_CONTENT;
->>>>>>> e3b39a93c7ce733afa0a2619bfe6993eebdec1aa
 
 
 CREATE TABLE HOSPITAL(
@@ -249,5 +243,3 @@ SELECT FILE_NUM, FILE_PATH, FILE_ORI_NAME, FILE_NEW_NAME,
 		ANIMAL_NO
 		FROM FILE_TABLE
 		WHERE BOARD_NO = '73'
-
-
