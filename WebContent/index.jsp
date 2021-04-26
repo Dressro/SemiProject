@@ -62,7 +62,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 <div class="header__options">
 <nav class="header__menu mobile-menu">
 <ul>
-<li class="active"><a href="index.jsp">Home</a></li>
+<li class="active"><a href="index.jsp">홈</a></li>
 <li><a href="semi.do?command=board_notice">공지사항</a>
 <li><a href="semi.do?command=board_free">자유게시판</a>
 <li><a href="semi.do?command=animal_hospital">동물병원검색</a>
