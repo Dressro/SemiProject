@@ -12,7 +12,9 @@ public interface BoardDao {
 	public int qna_allCount();
 	public int dec_allCount();
 
-
+	public List<BoardDto> board_M_search(BoardDto dto);
+	public List<BoardDto> board_C_search(BoardDto dto);
+	public List<BoardDto> board_MC_search(BoardDto dto);
 	public List<BoardDto> board_selectList(BoardDto dto);
 	public BoardDto board_selectOne(int board_no);
 	public List<BoardDto> free_selectList(PagingDto Pdto);

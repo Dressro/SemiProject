@@ -234,9 +234,11 @@ SELECT X.rnum, X.board_no,X.board_free_no,X.board_notice_no,X.board_qna_no,X.boa
 		where rownum <=
 		20)b
 		where b.rnum >=
-		11
-
-	
+		11 
+		SELECT DISTINCT * FROM BOARD WHERE BOARD_FREE_NO > 0 AND MEMBER_ID LIKE '%ss%'
+select * from board where board_free_no > 0 and member_id like '%ss%' order by board_no;
+select * from board where board_free_no > 0 and member_id like '%ss%' order by board_no;
+select * from board where board_free_no > 0 and member_id like '%'||#member_id#||'%' order by board_no;
 delete from member where member_id='1702707258'
 SELECT FILE_NUM, FILE_PATH, FILE_ORI_NAME, FILE_NEW_NAME,
 		FILE_TYPE, FILE_DATE, FILE_SIZE, MEMBER_ID, BOARD_NO, CH_NUM,

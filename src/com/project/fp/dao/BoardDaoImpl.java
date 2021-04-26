@@ -65,7 +65,33 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 
 		return res;
 	}
+	
+	@Override
+	public List<BoardDto> board_M_search(BoardDto dto) {
+		List<BoardDto> list = new ArrayList<BoardDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "board_M_search", dto);
+		}
+		return list;
+	}
 
+	@Override
+	public List<BoardDto> board_C_search(BoardDto dto) {
+		List<BoardDto> list = new ArrayList<BoardDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "board_C_search", dto);
+		}
+		return list;
+	}
+
+	@Override
+	public List<BoardDto> board_MC_search(BoardDto dto) {
+		List<BoardDto> list = new ArrayList<BoardDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "board_MC_search", dto);
+		}
+		return list;
+	}
 	@Override
 	public List<BoardDto> board_selectList(BoardDto dto) {
 		// TODO Auto-generated method stub
@@ -365,6 +391,10 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		
 		return count;
 	}
+
+	
+
+	
 
 	
 
