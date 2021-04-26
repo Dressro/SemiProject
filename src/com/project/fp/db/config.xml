@@ -12,6 +12,7 @@
 		<typeAlias type="com.project.fp.dto.Order_TableDto" alias="Order_TableDto" />
 		<typeAlias type="com.project.fp.dto.ProductDto" alias="ProductDto" />
 		<typeAlias type="com.project.fp.dto.ReceiveDto" alias="ReceiveDto" />
+		<typeAlias type="com.project.fp.dto.HospitalDto" alias="HospitalDto" />
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -27,6 +28,9 @@
 	<mappers>
 		<mapper resource="com/project/fp/db/ProjectFP-mapper_animal.xml"/>
 		<mapper resource="com/project/fp/db/ProjectFP-mapper_member.xml"/>
-
+		<mapper resource="com/project/fp/db/ProjectFP-mapper_board.xml"/>
+		<mapper resource="com/project/fp/db/ProjectFP-mapper_File_Table.xml"/>
+		<mapper resource="com/project/fp/db/ProjectFP-mapper_Hospital.xml"/>
+		<mapper resource="com/project/fp/db/ProjectFP-mapper_Order_Table.xml"/>
 	</mappers>
 </configuration>

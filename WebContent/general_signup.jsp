@@ -1,3 +1,5 @@
+
+<%@page import="com.project.fp.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -9,6 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="resources/css/head.css" rel=stylesheet type="text/css" />
 <style type="text/css">
 	
 	.animal {
@@ -50,29 +53,29 @@
         }
     }).open();
 }
+	/*
 	function idCheckConfirm(){
-		var chk = document.getElementsByName("myid")[0].title;
+		var chk = document.getElementsByName("member_id")[0].title;
 		if(chk == "n") {
 			alert("id 중복체크를 먼저 해주세요.");
-			document.getElementsByName("myid")[0].focus();
+			document.getElementsByName("member_id")[0].focus();
 		}
 	}
-	
+	*/
 	function idCheck(){
-		var doc = document.getElementsByName("myid")[0];
-		if(doc.value.trim() =="" || doc.value == null){
+		var member_id = document.getElementsByName("member_id")[0];
+		if(member_id.value.trim() =="" || member_id.value == null){
 			alert("id를 입력해 주세요");
 		} else {
-			open("logincontroller.jsp?command=idchk&myid="+doc.value,"","width=200 , height= 200");
+			open("semi.do?command=idchk&member_id="+member_id.value,"","width=300 , height= 300");
 		}
-	
 	}
 	function check(){
 		var member_email = $('input[name=member_email_1]').val() +"@"+ $('select[name=member_email_2]').val();
 		$('input[name=member_email]').attr('value',member_email);
 		var member_phone = $('input[name=member_phone_1]').val() +"-"+ $('input[name=member_phone_2]').val() +"-"+$('input[name=member_phone_3]').val(); 
 		$('input[name=member_phone]').attr('value',member_phone);
-		var member_addr = $('input[name=member_addr_1]').val() + " " + $('input[name=member_addr_2]').val()
+		var member_addr = $('input[name=member_addr_1]').val() + " " + $('input[name=member_addr_2]').val();
 		$('input[name=member_addr]').attr('value',member_addr);
 	}
 	
@@ -106,6 +109,25 @@
 	    });
 	    
 	});
+	function sendmailkey(){
+		var member_email = $('input[name=member_email_1]').val() +"@"+ $('select[name=member_email_2]').val();
+		if($('input[name=member_email_1]').val().trim() == "" || $('input[name=member_email_1]').val() == null){
+			alert("이메일을 입력해 주세요");
+		} else {
+			open("semi.do?command=mailsend&member_email=" + member_email,"","width=200 , height= 200");
+		}	
+	}
+	
+	function sendsms(){
+		var member_phone = $('input[name=member_phone_1]').val() + $('input[name=member_phone_2]').val() + $('input[name=member_phone_3]').val();
+		if($('input[name=member_phone_1]').val().trim() == "" || $('input[name=member_phone_1]').val() == null){
+			alert("전화번로를 입력해 주세요");
+		} else {
+			open("semi.do?command=smssend&member_phone="+member_phone,"","width=200 , height= 200");
+		}	
+	}
+
+	
 </script>
 
 <script>
@@ -113,8 +135,43 @@
 </script>
 </head>
 <body>
-	
-	<h1>일반회원 회원가입</h1>
+<%
+	MemberDto dto = (MemberDto) session.getAttribute("dto");
+%>
+<div id="semipage">
+<header>
+
+			<nav>
+				<ul>
+					<li><a href="#">
+							<img src="https://www.onium.in/wp-content/uploads/2019/03/sample-logo-png-6-1.png" width="160" height="60" alt="메인화면" />
+						</a></li>
+
+					<li class="menu"><a href="semi.do?command=board_notice">공지사항</a>
+					<li class="menu"><a href="semi.do?command=board_free">자유게시판</a>
+					<li class="menu"><a href="semi.do?command=animal_hospital">동물병원검색</a>
+					<li class="menu"><a href="semi.do?command=board_dec">실종신고</a>
+					<li class="menu"><a href="semi.do?command=mypage">마이페이지</a>
+					<li class="menu"><a href="semi.do?command=shopping">쇼핑</a>
+					<li class="menu"><a href="semi.do?command=board_qna">상품문의</a> 
+					<%
+ 						if (dto == null) {
+ 					%>
+					<li class="li_right" id="login"><a class="li_rigit_a" href="semi.do?command=login">로그인</a></li>
+					<%
+					} else {
+					%>
+					<li class="li_right"><a class="li_rigit_a" href="semi.do?command=logout">로그아웃</a> 
+					<%
+ 					}
+ 					%>
+					<li class="li_right"><a class="li_rigit_a" href="semi.do?command=signup">회원가입</a></li>
+
+				</ul>
+			</nav>
+
+		</header>
+	<h1>회원가입 (일반)</h1>
 	
 		<div class="join_table">
 			<div id="member_join">
@@ -123,50 +180,51 @@
 			<input type="hidden" name="member_notify" value="N" />
 			<input type="hidden" name="member_grade" value="개인" />
 			<input type="hidden" name="member_dr_info" value="없음"/>
-			<table border="1">
+			<table border="1" id="member_table">
 				<tr>
 					<th>아이디 *</th>
 					<td>
-						<input type="text" name="member_id" title="n" required="required" />
-						<input type="button" value="중복체크" onclick="" />
+						<input type="text" title="n" name="member_id" required="required"/>
+						<input type="button" name="member_id_chk" value="중복체크" onclick="idCheck();" />
 					</td>
 				</tr>
 				<tr>
 					<th>비밀번호 *</th>
 					<td>
-						<input type="password" name="member_password" onclick="">
+						<input type="password" name="member_password" onclick="idCheckConfirm();">
 					</td>
 				</tr>
 				<tr>
 					<th>비밀번호확인 *</th>
 					<td>
-						<input type="password" name="member_password_chk" onclick="">
+						<input type="password" name="member_password_chk" onclick="idCheckConfirm();">
 						<font id="chkNotice" size="2"></font>
 					</td>
 				</tr>
 				<tr>
 					<th>이름 *</th>
 					<td>
-						<input type="text" name="member_name" onclick="">
+						<input type="text" name="member_name" onclick="idCheckConfirm();">
 					</td>
 				</tr>
 				<tr>
 					<th>닉네임 *</th>
 					<td>
-						<input type="text" name="member_nicname" maxlength="5" onclick="">
+						<input type="text" name="member_nicname" maxlength="5" onclick="idCheckConfirm();">
 					</td>
 				</tr>
 				<tr>
 					<th>이메일 *</th>
 					<td>
 						<input type="hidden" name="member_email" value="">
-						<input type="text" name="member_email_1" maxlength="30" onclick="">@
+						<input type="text" name="member_email_1" maxlength="30" onclick="idCheckConfirm();">@
                         <select name="member_email_2">
                             <option>naver.com</option>
                             <option>daum.net</option>
                             <option>gmail.com</option>
                             <option>nate.com</option>                        
                         </select>
+                        <input type="button" name="email_send" value="인증번호 전송" onclick="sendmailkey();" />
 					</td>
 				</tr>
 				<tr>
@@ -176,16 +234,17 @@
 						<input type="text" name="member_phone_1" maxlength="3" size="3" >-
 						<input type="text" name="member_phone_2" maxlength="4" size="3" >-
 						<input type="text" name="member_phone_3" maxlength="4" size="3" >
+						<input type="button" value="문자 전송" onclick="sendsms();" />
 					</td>
 				</tr>
 				<tr>
 					<th>주소 *</th>
 					<td>
 						<input type="hidden" name="member_addr" value="">
-						<input type="text" id="postcode" placeholder="우편번호">
+						<input type="text" id="postcode" placeholder="우편번호" readonly="readonly">
 						<input type="button" onclick="address();" value="우편번호 찾기"><br>
-						<input type="text" name="member_addr_1" id="addr_1" placeholder="기본주소">
-						<input type="text" name="member_addr_2" id="addr_2" placeholder="상세주소">
+						<input type="text" name="member_addr_1" id="addr_1" placeholder="기본주소" readonly="readonly">
+						<input type="text" name="member_addr_2" id="addr_2" placeholder="상세주소" required="required">
 					</td>
 				</tr>
 				<tr>
@@ -308,7 +367,7 @@
 			</form>
 		</div>
 	</div>
-	
+	</div>
 </body>
 
 </html>

@@ -7,10 +7,11 @@ drop table receive;
 drop table chat_content;
 drop table animal;
 drop table file_TABLE;
+drop table hospital;
 
 DROP SEQUENCE PRODUCT_NUM_SEQ;
 DROP SEQUENCE BOARD_NO_SEQ;
-DROP SEQUENCE BOARD_FREE_SEQ;
+DROP SEQUENCE BOARD_FREE_NO_SEQ;
 DROP SEQUENCE BOARD_NOTICE_SEQ;
 DROP SEQUENCE BOARD_QNA_SEQ;
 DROP SEQUENCE BOARD_DEC_SEQ;
@@ -20,11 +21,12 @@ DROP SEQUENCE ORDER_NUM_SEQ;
 DROP SEQUENCE CHAT_NUM_SEQ;
 DROP SEQUENCE ANIMAL_NO_SEQ;
 DROP SEQUENCE FILE_NUM_SEQ;
+DROP SEQUENCE HOSPITAL_NUM_SEQ;
 
 
 CREATE SEQUENCE PRODUCT_NUM_SEQ;
 CREATE SEQUENCE BOARD_NO_SEQ;
-CREATE SEQUENCE BOARD_FREE_SEQ;
+CREATE SEQUENCE BOARD_FREE_NO_SEQ;
 CREATE SEQUENCE BOARD_NOTICE_SEQ;
 CREATE SEQUENCE BOARD_QNA_SEQ;
 CREATE SEQUENCE BOARD_DEC_SEQ;
@@ -34,7 +36,7 @@ CREATE SEQUENCE ORDER_NUM_SEQ;
 CREATE SEQUENCE CHAT_NUM_SEQ;
 CREATE SEQUENCE ANIMAL_NO_SEQ;
 CREATE SEQUENCE FILE_NUM_SEQ;
-
+CREATE SEQUENCE HOSPITAL_NUM_SEQ;
 
 CREATE TABLE PRODUCT(
 	PROD_NUM NUMBER PRIMARY KEY,
@@ -72,6 +74,7 @@ CREATE TABLE MEMBER(
 	CONSTRAINT MEMBER_MEMBER_NOTIFY_CHK CHECK(MEMBER_NOTIFY IN ('Y', 'N'))
 );
 
+select * from member;
 CREATE TABLE BOARD(
 	BOARD_NO NUMBER PRIMARY KEY,
 	BOARD_FREE_NO NUMBER,
@@ -117,7 +120,7 @@ CREATE TABLE CHAT (
 	MEMBER_ID VARCHAR2(500) NOT NULL,
 	CONSTRAINT CHAT_MEMBER_ID_FK FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER (MEMBER_ID)
 );
-
+insert into chat values(chat_num_seq.nextval,'ㅇㅇ',sysdate,'Dressro');
 CREATE TABLE RECEIVE(
 	ORDER_NUM NUMBER PRIMARY KEY,
 	RECEIVE_NAME VARCHAR2(20) NOT NULL,
@@ -134,7 +137,6 @@ CREATE TABLE CHAT_CONTENT(
 	CH_CONTENT_DATE DATE NOT NULL,
 	CONSTRAINT CHAT_CONTENT_CH_NUM_FK FOREIGN KEY (CH_NUM) REFERENCES CHAT (CH_NUM)
 );
-
 CREATE TABLE ANIMAL(
 	ANIMAL_NO NUMBER PRIMARY KEY,
 	ANIMAL_NAME VARCHAR2(100) NOT NULL,
@@ -147,23 +149,98 @@ CREATE TABLE ANIMAL(
 	CONSTRAINT ANIMAL_ANIMAL_GEN_CHK CHECK (ANIMAL_GEN IN ('M','F')),
 	CONSTRAINT ANIMAL_MEMBER_ID_FK FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER (MEMBER_ID)
 );
-
 CREATE TABLE FILE_TABLE(
 	FILE_NUM NUMBER PRIMARY KEY,
-	FILE_PATH VARCHAR2(100) NOT NULL,
-	FILE_ORI_NAME VARCHAR2(30) NOT NULL,
-	FILE_NEW_NAME VARCHAR2(30) NOT NULL,
-	FILE_TYPE VARCHAR2(10) NOT NULL,
+	FILE_PATH VARCHAR2(500) NOT NULL,
+	FILE_ORI_NAME VARCHAR2(500) NOT NULL,
+	FILE_NEW_NAME VARCHAR2(500) NOT NULL,
+	FILE_TYPE VARCHAR2(500) NOT NULL,
 	FILE_DATE DATE NOT NULL,
-	FILE_SIZE VARCHAR2(40) NOT NULL,
+	FILE_SIZE VARCHAR2(500) NOT NULL,
 	MEMBER_ID VARCHAR2(500) NOT NULL,
-	BOARD_NO NUMBER NOT NULL,
-	CH_NUM NUMBER NOT NULL,
-	ANIMAL_NO NUMBER NOT NULL,
+	BOARD_NO NUMBER ,
+	CH_NUM NUMBER,
+	ANIMAL_NO NUMBER ,
 	CONSTRAINT FILE_TALBE_MEMBER_ID_FK FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER (MEMBER_ID),
 	CONSTRAINT FILE_TABLE_BOARD_NO_FK FOREIGN KEY (BOARD_NO) REFERENCES BOARD (BOARD_NO),
 	CONSTRAINT FILE_TABLE_CH_NUM_FK FOREIGN KEY (CH_NUM) REFERENCES CHAT (CH_NUM),
 	CONSTRAINT FILE_TABLE_ANIMAL_NO_KF FOREIGN KEY (ANIMAL_NO) REFERENCES ANIMAL (ANIMAL_NO)
 );
+<<<<<<< HEAD
 
 SELECT * FROM MEMBER;
+=======
+<<<<<<< HEAD
+=======
+
+select * from member m , file_table f
+where m.member_id = f.member_id
+and board_no = '64';
+select * from member;  dhksdn486  
+select * from board;
+select * from file_table
+SELECT * FROM ANIMAL;
+>>>>>>> 86fd1501d1675df4a19206041e32f8f753fe8742
+
+
+CREATE TABLE HOSPITAL(
+	HOSPITAL_NUM NUMBER PRIMARY KEY,
+	HOSPITAL_NAME VARCHAR2(500) NOT NULL,
+	HOSPITAL_ADDR VARCHAR2(500) NOT NULL,
+	HOSPITAL_PHONE VARCHAR2(100)
+);
+
+
+
+select count(*) from hospital order by hospital_num desc;
+select * from member;  
+select * from file_table;
+select * from board order by board_no desc;
+
+
+SELECT X.rnum, X.board_no,X.board_free_no,X.board_notice_no,X.board_qna_no,X.board_dec_no,
+		X.board_title,X.board_content,X.board_regdate,X.board_readcount,
+		X.board_groupno,X.board_groupseq,X.board_titletab,X.member_id
+		FROM (
+		SELECT ROWNUM AS rnum, A.board_no,A.board_free_no,A.board_notice_no,A.board_qna_no,A.board_dec_no,
+		A.board_title,A.board_content,A.board_regdate,A.board_readcount,
+		A.board_groupno,A.board_groupseq,A.board_titletab,A.member_id
+		FROM (
+		SELECT b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
+		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
+		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname as
+		member_id
+		FROM BOARD b, MEMBER m
+		WHERE BOARD_CATEGORY = 'F'
+		and m.member_id = b.member_id
+		ORDER BY BOARD_REGDATE DESC
+		) A
+		WHERE ROWNUM <= 15
+		) X
+		WHERE X.rnum >= 1
+
+		select
+		b.rnum,b.hospital_num,b.hospital_name,b.hospital_addr,b.hospital_phone
+		from
+		(select rownum as rnum ,
+		a.hospital_num,a.hospital_name,a.hospital_addr,a.hospital_phone
+		from
+		(select
+		hospital_num,hospital_name,hospital_addr,hospital_phone
+		from
+		hospital
+		order by hospital_num desc)a
+		where rownum <=
+		20)b
+		where b.rnum >=
+		11
+
+	
+delete from member where member_id='1702707258'
+SELECT FILE_NUM, FILE_PATH, FILE_ORI_NAME, FILE_NEW_NAME,
+		FILE_TYPE, FILE_DATE, FILE_SIZE, MEMBER_ID, BOARD_NO, CH_NUM,
+		ANIMAL_NO
+		FROM FILE_TABLE
+		WHERE BOARD_NO = '73'
+
+>>>>>>> branch 'master' of https://github.com/Dressro/SemiProject.git
