@@ -593,7 +593,9 @@ public class SemiProjectController extends HttpServlet {
 				response.getWriter().append("통신 성공");
 			}
 		} else if (command.equals("chatboard")) {
-			response.sendRedirect("ChatBoard.jsp");
+			int ch_num = Integer.parseInt(request.getParameter("ch_num"));
+			request.setAttribute("ch_num", ch_num);
+			dispatch(response, request, "ChatBoard.jsp");
 		} else if (command.equals("mailsend")) {
 			String member_email = request.getParameter("member_email"); // 수신자
 			String from = "ejsdnlcl@gmail.com"; // 발신자

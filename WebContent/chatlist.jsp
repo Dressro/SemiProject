@@ -111,7 +111,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 									<tr>
 										<td>${dto.member_id }</td>
 										<td>
-											<a href="semi.do?command=chatboard">${dto.ch_name }</a>
+											<a href="semi.do?command=chatboard&ch_num=${dto.ch_num }">${dto.ch_name }</a>
 										</td>
 										<td>${dto.ch_date }</td>
 									</tr>
