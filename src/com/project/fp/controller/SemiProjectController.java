@@ -578,9 +578,7 @@ public class SemiProjectController extends HttpServlet {
 			}
 		} else if (command.equals("chatboard")) {
 			response.sendRedirect("ChatBoard.jsp");
-		}
-
-		if (command.equals("mailsend")) {
+		} else if (command.equals("mailsend")) {
 			String member_email = request.getParameter("member_email"); // 수신자
 			String from = "ejsdnlcl@gmail.com"; // 발신자
 			String cc = "scientist-1002@hanmail.net"; // 참조
@@ -601,9 +599,7 @@ public class SemiProjectController extends HttpServlet {
 				System.out.println("실패 이유 : " + e.getMessage());
 				e.printStackTrace();
 			}
-		}
-
-		if (command.equals("mailcheck")) {
+		} else if (command.equals("mailcheck")) {
 			String AuthenticationKey = request.getParameter("AuthenticationKey");
 			String AuthenticationUser = request.getParameter("AuthenticationUser");
 			if (AuthenticationKey.equals(AuthenticationUser)) {
@@ -611,6 +607,10 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				System.out.println("인증 실패");
 			}
+		} else if (command.equals("smssend")) {
+			String member_phone = request.getParameter("member_phone");
+			String content = "문자 내용 작성";
+			SMS.sendSMS(member_phone, content);
 		}
 
 		if (command.equals("test")) {
@@ -640,11 +640,7 @@ public class SemiProjectController extends HttpServlet {
 			}
 		}
 
-		if (command.equals("smssend")) {
-			String member_phone = request.getParameter("member_phone");
-			String content = "문자 내용 작성";
-			SMS.sendSMS(member_phone, content);
-		}
+
 
 	}
 
