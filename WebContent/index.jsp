@@ -26,12 +26,6 @@ response.setContentType("text/html; charset=UTF-8");
 <link rel="stylesheet" href="resources/css/owl.carousel.min.css" type="text/css">
 <link rel="stylesheet" href="resources/css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="resources/css/style.css" type="text/css">
-<style type="text/css">
-product
-:nth-child
-(
-)
-</style>
 </head>
 <%
 MemberDto dto = (MemberDto) session.getAttribute("dto");
@@ -693,14 +687,9 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 				<div class="row">
 					<div class="col-lg-12 text-center">
 
-						<p>
-							Copyright &copy;
-							<script>
-								document.write(new Date().getFullYear());
-							</script>
-							All rights reserved | This is made with by
-							<a href="index.jsp" target="_blank"">Family Pet</a>
-						</p>
+<p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This is made with by <a href="index.jsp" target="_blank">Family Pet</a>
+</p>
+
 
 					</div>
 				</div>
