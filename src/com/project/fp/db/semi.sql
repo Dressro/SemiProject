@@ -168,6 +168,10 @@ CREATE TABLE FILE_TABLE(
 );
 
 
+
+SELECT * FROM MEMBER;
+
+
 select * from member m , file_table f
 where m.member_id = f.member_id
 and board_no = '64';
@@ -239,4 +243,5 @@ SELECT FILE_NUM, FILE_PATH, FILE_ORI_NAME, FILE_NEW_NAME,
 		ANIMAL_NO
 		FROM FILE_TABLE
 		WHERE BOARD_NO = '73'
+
 

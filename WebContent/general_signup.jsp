@@ -1,4 +1,3 @@
-
 <%@page import="com.project.fp.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
@@ -31,6 +30,7 @@ response.setContentType("text/html; charset=UTF-8");
 	min-height: 1000px;
 }
 
+<<<<<<< HEAD
 .general_signup_idpw {
 	height: 500px;
 }
@@ -98,11 +98,70 @@ response.setContentType("text/html; charset=UTF-8");
 #general_signup_btn{
 	padding-top: 10px;
 }
+=======
+            document.getElementById('postcode').value = data.zonecode;
+            document.getElementById("addr_1").value = roadAddr;
+            document.getElementById("addr_1").value = data.jibunAddress;
+            
+            if(data.autoRoadAddress) {
+            	document.getElementById("addr_1").value = roadAddr;
+            } else if(data.autoJibunAddress) {
+            	document.getElementById("addr_1").value = data.jibunAddress;
+            } else {
+            }
+        }
+    }).open();
+}
+	/*
+	function idCheckConfirm(){
+		var chk = document.getElementsByName("member_id")[0].title;
+		if(chk == "n") {
+			alert("id 중복체크를 먼저 해주세요.");
+			document.getElementsByName("member_id")[0].focus();
+		}
+	}
+	*/
+	function idCheck(){
+		var member_id = document.getElementsByName("member_id")[0];
+		if(member_id.value.trim() =="" || member_id.value == null){
+			alert("id를 입력해 주세요");
+		} else {
+			open("semi.do?command=idchk&member_id="+member_id.value,"","width=300 , height= 300");
+		}
+	}
+	function check(){
+		var member_email = $('input[name=member_email_1]').val() +"@"+ $('select[name=member_email_2]').val();
+		$('input[name=member_email]').attr('value',member_email);
+		var member_phone = $('input[name=member_phone_1]').val() +"-"+ $('input[name=member_phone_2]').val() +"-"+$('input[name=member_phone_3]').val(); 
+		$('input[name=member_phone]').attr('value',member_phone);
+		var member_addr = $('input[name=member_addr_1]').val() + " " + $('input[name=member_addr_2]').val();
+		$('input[name=member_addr]').attr('value',member_addr);
+	}
+	
+	function chk(value){
+		if(value == "Y"){
+			$(".animal").toggle();
+			$("input[id=animal_gen_chk]").attr("checked","checked");
+			$("input[name=animal_name]").attr("required","true");
+		}else if(value == "N"){
+			$("input[name=animal_name]").attr("required","false");
+			$("input[id=animal_gen_chk]").attr("checked","unchecked");
+			$(".animal").toggle();
+		}
+	}
+	
+	$(function(){
+		
+	    $('input[name=member_password]').keyup(function(){
+	      $('#chkNotice').html('');
+	    });
+>>>>>>> 7c8811e38386e8e57408f460d44d6b33b9f42ea3
 
 #chkNotice {
 	margin-left: 10px;
 }
 
+<<<<<<< HEAD
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

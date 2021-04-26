@@ -278,27 +278,7 @@
 
 
 		</div>
-		<div id="semi_footer">
-			<div class="footer">
-				<h2>Family Pet</h2>
-				<ul class="footer_ul">
-					<li class="footer_content"><a href="#" class="footer_ul_a">이용약관</a></li>
-					<li class="footer_content"><a href="#" class="footer_ul_a">개인정보처리방침</a></li>
-					<li class="footer_content"><a href="#" class="footer_ul_a">제휴문의</a></li>
-				</ul>
-				<div class="footer_div">
-					Famliy Pet | 대표이사 : 이민형 | 서울특별시 강남구 삼성로 648<br> 사업자 등록번호 : 000-00-000000 | 통신판매업신고 : 2021-서울강남-0000
-				</div>
-				<ul class="footer_sns">
-					<li class="li_right"><a href="https://www.facebook.com" class="footer_sns_a">
-							<img src="https://opgg-static.akamaized.net/images/site/sns/facebook_icon_white.png" />
-						</a></li>
-					<li class="li_right"><a href="https://www.instagram.com" class="footer_sns_a">
-							<img src="https://opgg-static.akamaized.net/images/site/sns/instagram_icon_white.png" />
-						</a></li>
-				</ul>
-			</div>
-		</div>
+
 	</div>
 </body>
 </html>
