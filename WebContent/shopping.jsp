@@ -9,6 +9,7 @@
 </head>
 <body>
 
+<jsp:include page="header.jsp" />
 	<h1>상품</h1>
 		<form action="semi.do" method="post">
 		<input type="hidden" name="command" value="shopping">
@@ -54,5 +55,7 @@
 		</tr>
 	</table>
 	</form>
+	<jsp:include page="bottom.jsp" />
+
 </body>
 </html>

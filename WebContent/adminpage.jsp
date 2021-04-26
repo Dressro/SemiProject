@@ -28,7 +28,35 @@ response.setContentType("text/html; charset=UTF-8");
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="resources/css/head.css" rel=stylesheet type="text/css" />
+<style type="text/css">
+	.li_right {
+	float: right;
+	}
+
+	.li_rigit_a {
+	padding: 15px 20px 15px 0px;
+	}
+	.adminmenus li a{
+	display: block;
+	color: black;
+	text-align: center;
+	padding: 15px 20px;
+	text-decoration: none;
+	}
+	.adminmenus li{
+		float: left;
+	}
+	.section_nav {
+		width: 100%;
+		height: 70px;
+	}
+	.adminmenus {
+		list-style-type: none;
+		margin: 0;
+		overflow: hidden;
+		list-style: none;
+	}
+</style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 
@@ -103,9 +131,9 @@ function memberinsertPopup() {
 
 </head>
 <body>
-	
+<jsp:include page="header.jsp" />	
 
-<section>
+<section class="section_nav">
   <nav>
     <ul class="adminmenus">
       <li><a class="adminmenu" href="#">회원정보관리</a></li>
@@ -125,7 +153,7 @@ function memberinsertPopup() {
 	List<MemberDto> list = biz.selectList();
 %>
 
-<h1>회원정보관리</h1>
+<h3>회원정보관리</h3>
 <form action="semi.do" method="post" id="memberlist">
 <input type="hidden" name="command" value="memberdetail">
 
@@ -351,5 +379,6 @@ function memberinsertPopup() {
 </section>
 </div>
 
+<jsp:include page="bottom.jsp" />	
 </body>
 </html>

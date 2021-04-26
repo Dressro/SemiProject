@@ -61,8 +61,8 @@ File_TableDto f_dto = (File_TableDto)request.getAttribute("f_dto");
 </script>
 </head>
 <body>
-
-	<h1>Detail</h1>
+	<jsp:include page="header.jsp" />
+	<h3>Detail</h3>
 	<form action="semi.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="member_id" value="<%=b_dto.getMember_id()%>" />
 		<input type="hidden" name="command" value="board_updateres" />
@@ -109,5 +109,6 @@ File_TableDto f_dto = (File_TableDto)request.getAttribute("f_dto");
 			</div>
 		</div>
 	</form>
+	<jsp:include page="bottom.jsp" />
 </body>
 </html>

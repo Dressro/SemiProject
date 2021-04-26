@@ -74,6 +74,7 @@
 </script>
 </head>
 <body>
+<jsp:include page="header.jsp" />
 	<%
 		String member_id = request.getParameter("member_id");
 	%>
@@ -252,7 +253,6 @@
 			</form>
 		</div>
 	</div>
-	
+<jsp:include page="bottom.jsp" />	
 </body>
-
 </html>
