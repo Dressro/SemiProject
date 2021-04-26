@@ -3,6 +3,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+    
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8"); %>
 
@@ -108,5 +111,103 @@ File_TableDto f_dto = (File_TableDto)request.getAttribute("f_dto");
 			</div>
 		</div>
 	</form>
+	
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	
+	<!-- 댓글 목록 (작성자닉네임, 작성자/로그인상태 확인) -->
+	<div id="replyList">
+		<table id="replyListTable">
+			<c:choose>
+				<c:when test="${empty b_r_list }">
+					<tr>
+						<td>--------작성된 댓글이 없습니다.-----------</td>
+					</tr>
+				</c:when>
+				<c:otherwise>
+					<c:forEach var="replyList" items="${b_r_list }">
+						<c:if test="${replyList.reply_delflag eq 'Y' }">
+							<tr>
+								<td>----댓글이 삭제되었습니다----</td>
+							</tr>
+						</c:if>
+						<c:if test="${replyList.reply_delflag eq 'N' }">
+							<tr>
+								<td></td>
+								<td><fmt:formatDate value="${replyList.reply_regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+							</tr>
+							<tr>
+								<td><textarea rows="4" cols="60" disabled="disabled">${replyList.reply_content }</textarea></td>
+							</tr>
+							<tr>
+								<td>
+									<c:if test="">
+										<input type="button" value="수정" id="replyUpdate">
+									</c:if>
+								</td>
+								<td>
+									<c:if test="">
+										<input type="button" value="삭제" id="replyDelete">
+									</c:if>							 
+								</td>
+								<td>
+									<c:if test="">
+										<input type="button" value="답글달기" id="r_replyUpload">
+									</c:if>								
+								</td>
+							</tr>
+						</c:if>
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>
+		</table>
+	</div>
+	
+	<!-- 댓글 작성 (로그인했을때, 등록버튼) -->
+	<div id="replyWrite">
+		<table id="replyWriteTable">
+			
+			<c:choose>
+				<c:when test="">
+					<tr>
+						<td><textarea rows="3" cols="80" name="reply_content" id="reply_content"></textarea></td>
+					</tr>
+					<tr>
+						<td><input type="button" value="등록" id="replyUpload"></td>
+					</tr>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td><textarea rows="2" cols="60" disabled="disabled" placeholder="로그인한 사용자만 댓글을 입력할 수 있습니다."></textarea></td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
+			
+		</table>
+	</div>
+	
+	<script type="text/javascript">
+	
+		// 댓글 작성 버튼 눌렀을 때
+		$("#replyUpload").click(function(){
+			
+		});
+		// 수정 버튼 눌렀을 때
+		$("#replyUpdate").click(function(){
+			
+		});
+		// 삭제 버튼 눌렀을 때
+		$("replyDelete").click(function(){
+			
+		});
+		// 답글달기 버튼 눌렀을 때
+		$("r_replyUpload").click(function(){
+			
+		});
+		
+	</script>
+	
 </body>
 </html>

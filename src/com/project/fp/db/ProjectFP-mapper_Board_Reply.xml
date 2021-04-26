@@ -4,7 +4,7 @@
 <mapper namespace="com.project.fp.board_reply">
 
 	<select id="reply_selectList" parameterType="int" resultType="com.project.fp.dto.Board_ReplyDto">
-		SELECT REPLY_NO, REPLY_GROUPNO, REPLY_GROUPSEQ, REPLY_TAB, REPLY_DELFLAG, REPLY_CONTENT, REPLY_REGDATE, BOARD_NO
+		SELECT REPLY_NO, REPLY_GROUPNO, REPLY_GROUPSEQ, REPLY_TAB, REPLY_DELFLAG, REPLY_CONTENT, REPLY_REGDATE, BOARD_NO, REPLY_NICNAME
 		FROM BOARD_REPLY
 		WHERE BOARD_NO = #{board_no}
 		ORDER BY REPLY_GROUPNO DESC, REPLY_GROUPSEQ
@@ -13,7 +13,7 @@
 	<select id="reply_insert" parameterType="com.project.fp.dto.Board_ReplyDto">
 		INSERT INTO BOARD_REPLY
 		VALUES(
-		REPLY_NO_SEQ.NEXTVAL, REPLY_GROUPNO_SEQ.NEXTVAL, 1, 0, 'N', #{reply_content}, SYSDATE, #{board_no}
+		REPLY_NO_SEQ.NEXTVAL, REPLY_GROUPNO_SEQ.NEXTVAL, 1, 0, 'N', #{reply_content}, SYSDATE, #{board_no}, #{reply_nicname}
 		)
 	</select>
 	
@@ -37,7 +37,8 @@
 		(SELECT REPLY_GROUPSEQ + 1 FROM BOARD_REPLY WHERE REPLY_NO = #{reply_no}),
 		(SELECT REPLY_TAB FROM BOARD_REPLY WHERE REPLY_NO = #{reply_no}) + 1,
 		'N', #{reply_content}, SYSDATE,
-		(SELECT BOARD_NO FROM BOARD_REPLY WHERE REPLY_NO #{reply_no})
+		(SELECT BOARD_NO FROM BOARD_REPLY WHERE REPLY_NO #{reply_no}),
+		#{reply_nicname}
 		)
 	</select>
 	

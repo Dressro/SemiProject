@@ -14,7 +14,7 @@ public class Board_ReplyDto {
 	private String reply_delflag;	// 댓글 삭제 여부
 	
 	private int board_no;	// 게시글 번호
-	private String member_nicname;	// 작성자 닉네임
+	private String reply_nicname;	// 작성자 닉네임
 	
 
 	public Board_ReplyDto() {
@@ -23,7 +23,7 @@ public class Board_ReplyDto {
 	
 	
 	public Board_ReplyDto(int reply_no, String reply_content, Date reply_regdate, int reply_groupno, int reply_groupseq,
-			int reply_tab, String reply_delflag, int board_no, String member_nicname) {
+			int reply_tab, String reply_delflag, int board_no, String reply_nicname) {
 		super();
 		this.reply_no = reply_no;
 		this.reply_content = reply_content;
@@ -33,7 +33,7 @@ public class Board_ReplyDto {
 		this.reply_tab = reply_tab;
 		this.reply_delflag = reply_delflag;
 		this.board_no = board_no;
-		this.member_nicname = member_nicname;
+		this.reply_nicname = reply_nicname;
 	}
 
 
@@ -86,11 +86,11 @@ public class Board_ReplyDto {
 	public void setBoard_no(int board_no) {
 		this.board_no = board_no;
 	}
-	public String getMember_nicname() {
-		return member_nicname;
+	public String getReply_nicname() {
+		return reply_nicname;
 	}
-	public void setMember_nicname(String member_nicname) {
-		this.member_nicname = member_nicname;
+	public void setReply_nicname(String reply_nicname) {
+		this.reply_nicname = reply_nicname;
 	}
 	
 	
