@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="resources/css/head.css" rel=stylesheet type="text/css" />
+<link href="resources/css/footer.css" rel=stylesheet type="text/css" />
 <style>
 #semi_login_mid {
 	width: 600px;
@@ -33,9 +34,11 @@
 	margin-left: 100px;
 	margin-bottom: 15px;
 }
-.semi_login_mid_div:first-child{
-	margin-right:100px;
+
+.semi_login_mid_div:first-child {
+	margin-right: 100px;
 }
+
 .semi_login_idpw {
 	display: block;
 	margin-bottom: 10px;
@@ -55,17 +58,20 @@
 
 .semi_login_mid_idpwfind {
 	display: inline-block;
-	text-align:center;
+	text-align: center;
 	font-size: 13px;
 	width: 180px;
 	padding-bottom: 10px;
 }
-.semi_login_mid_idpwfind:hover{
-	text-decoration : underline;
+
+.semi_login_mid_idpwfind:hover {
+	text-decoration: underline;
 }
-.g-recaptcha{
+
+.g-recaptcha {
 	margin-top: 20px;
 }
+
 .g-recaptcha-error {
 	border-radius: 5px;
 	padding: 5px;
@@ -248,11 +254,11 @@
 						//naver_id_login.setPopup();
 						naver_id_login.init_naver_id_login();
 					</script>
-					
+
 				</form>
 			</div>
 
-			
+
 
 
 			<script type="text/javascript">
@@ -272,6 +278,7 @@
 
 
 		</div>
+
 	</div>
 </body>
 </html>

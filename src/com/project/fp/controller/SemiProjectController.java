@@ -64,6 +64,8 @@ import com.project.fp.biz.ReceiveBiz;
 import com.project.fp.biz.ReceiveBizImpl;
 import com.project.fp.dto.AnimalDto;
 import com.project.fp.dto.BoardDto;
+import com.project.fp.dto.ChatDto;
+import com.project.fp.dto.Chat_ContentDto;
 import com.project.fp.dto.File_TableDto;
 import com.project.fp.dto.HospitalDto;
 import com.project.fp.dto.MemberDto;
@@ -508,6 +510,10 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("board_detail")) {
 			int board_no = Integer.parseInt(request.getParameter("board_no"));
 			BoardDto b_dto = b_biz.board_selectOne(board_no);
+			int res = b_biz.board_read(b_dto);
+			if(res<0) {
+				jsResponse(response, "조회수 실패", "index.html");
+			}
 			File_TableDto f_dto = f_t_biz.board_selectOne(board_no);
 			request.setAttribute("b_dto", b_dto);
 			request.setAttribute("f_dto", f_dto);
@@ -566,9 +572,29 @@ public class SemiProjectController extends HttpServlet {
 			list = h_biz.selectSearchList(h_dto);
 			request.setAttribute("list", list);
 			dispatch(response, request, "animal_hospital.jsp");
-		}
-
-		if (command.equals("mailsend")) {
+		} else if(command.equals("chatlist")) {
+			String member_id = request.getParameter("member_id");
+			ChatDto c_dto = new ChatDto();
+			c_dto.setMember_id(member_id);
+			List<ChatDto> c_list = c_biz.selectList(c_dto);
+			request.setAttribute("c_list", c_list);
+			dispatch(response, request, "chatlist.jsp");
+		} else if (command.equals("chat_insert")) {
+			String member_nickname = request.getParameter("member_nickname");
+			String ch_content = request.getParameter("ch_content");
+			System.out.println(ch_content);
+			System.out.println(member_nickname);
+			
+			Chat_ContentDto c_c_dto = new Chat_ContentDto();
+			c_c_dto.setCh_content(ch_content);
+			c_c_dto.setMember_nickname(member_nickname);
+			int res = c_c_biz.insert(c_c_dto);
+			if(res > 0) {
+				response.getWriter().append("통신 성공");
+			}
+		} else if (command.equals("chatboard")) {
+			response.sendRedirect("ChatBoard.jsp");
+		} else if (command.equals("mailsend")) {
 			String member_email = request.getParameter("member_email"); // 수신자
 			String from = "ejsdnlcl@gmail.com"; // 발신자
 			String cc = "scientist-1002@hanmail.net"; // 참조
@@ -589,9 +615,7 @@ public class SemiProjectController extends HttpServlet {
 				System.out.println("실패 이유 : " + e.getMessage());
 				e.printStackTrace();
 			}
-		}
-
-		if (command.equals("mailcheck")) {
+		} else if (command.equals("mailcheck")) {
 			String AuthenticationKey = request.getParameter("AuthenticationKey");
 			String AuthenticationUser = request.getParameter("AuthenticationUser");
 			if (AuthenticationKey.equals(AuthenticationUser)) {
@@ -599,6 +623,10 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				System.out.println("인증 실패");
 			}
+		} else if (command.equals("smssend")) {
+			String member_phone = request.getParameter("member_phone");
+			String content = "문자 내용 작성";
+			SMS.sendSMS(member_phone, content);
 		}
 
 		if (command.equals("test")) {
@@ -627,15 +655,6 @@ public class SemiProjectController extends HttpServlet {
 
 			}
 		}
-
-		if (command.equals("smssend")) {
-			String member_phone = request.getParameter("member_phone");
-			String content = "문자 내용 작성";
-			SMS.sendSMS(member_phone, content);
-		}
-		
-	
-
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
