@@ -485,7 +485,8 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				int f_res = f_t_biz.multiDelete(board_no);
 				int b_res = b_biz.multiDelete(board_no);
-				if (b_res == board_no.length && f_res == board_no.length) {
+				System.out.println(board_no);
+				if (b_res == board_no.length) {
 					jsResponse(response, "선택된 글들이 모두 삭제되었습니다.", "semi.do?command=board_free");
 				} else {
 					jsResponse(response, "선택된 글들이 삭제되지 않았습니다.", "semi.do?command=board_free");

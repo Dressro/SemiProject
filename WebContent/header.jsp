@@ -23,6 +23,11 @@
 <link rel="stylesheet" href="resources/css/owl.carousel.min.css" type="text/css">
 <link rel="stylesheet" href="resources/css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="resources/css/style.css" type="text/css">
+<style type="text/css">
+	a{
+		color:#111111;
+	}
+</style>
 </head>
 <%
 MemberDto dto = (MemberDto) session.getAttribute("dto");

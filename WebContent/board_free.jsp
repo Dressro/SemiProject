@@ -12,6 +12,34 @@ response.setContentType("text/html; charset=UTF-8");
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="resources/css/board_1.css">
+<link rel="stylesheet" href="resources/css/board_2.css">
+<link rel="stylesheet" href="resources/css/board_3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400"  />
+<link rel="stylesheet" href="resources/css/search.css"  />
+<style type="text/css">
+	.s-btn{
+	border: none;
+	display: inline-block;
+	padding: 5px 5px 5px 8px;
+	background: #f45d96;
+	font-size: 14px;
+	color: #ffffff;
+	font-weight: 600;
+	letter-spacing: 4px;
+	text-transform: uppercase;
+	}
+	#paging{
+		text-align: center;
+		font-size: 20pt;
+	}
+	#paging a{
+		font-size: 20pt;
+	}
+	a{
+		color:#f45d96;
+	}
+</style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 	$(function() {
@@ -38,61 +66,46 @@ response.setContentType("text/html; charset=UTF-8");
 		alert("search category: " + search_category + " search_text :" + search_text);
 	}
 </script>
-<style type="text/css">
-	
-	*{
-		margin: 0;
-		padding: 0;
-	}
-	body{
-		width: 100%;
-	}
-	a{
-		text-decoration: none;
-	}
-	a:hover,a:visited,a:link{
-		color:black;
-	}
-</style>
 </head>
 <body>
 <jsp:include page="header.jsp" />
-	<h3>자유게시판</h3>
-	
-			<select class="search_category">
-				<option selected value="T_C">제목+내용</option>
+  <div class="content">
+    
+    <div class="container">
+      <h2 class="mb-5">자유게시판</h2>
+      <div style="float: right;">
+              <select data-trigger="" name="choices-single-defaul" class="search_category" style="padding: 3.5px;">
+                <option selected value="T_C">제목+내용</option>
+                <option value="W">작성자</option>
 				<option value="T">제목만</option>
-				<option value="W">작성자</option>
-			</select>
-			<input type="text" class="search_text" size="10">
-			<button type="button" name="search_btn" onclick="search();">검색</button>
-	
-			<form action="semi.do" method="post" id="muldelform">
-			<input type="hidden" name="command" value="board_delete">
-			<table border="1">
-				<colgroup>
-				<col width="5%" />
-				<col width="5%"/>
-				<col width="5%"/>
-				<col width="70%"/>
-				<col width="5%"/>
-				<col width="10%">
-				</colgroup>
-				
-				<tr>
-					<th><input type="checkbox" name="all" onclick="allCheck(this.checked);"/></th>
-					<th>번호</th>
-					<th>작성자</th>
-					<th>제목</th>
-					<th>조회수</th>
-					<th>작성일</th> 
-				</tr>
-				<c:choose>
+              </select>
+            <input id="search" type="text" class="search_text" value=""/>
+            <button class="s-btn" type="button" onclick="search();">검색</button>
+    </div>
+
+      <div class="table-responsive">
+	<form action="semi.do" method="post">
+		<input type="hidden" name="command" value="board_delete">
+        <table class="table custom-table">
+          <thead>
+            <tr>
+              <th scope="col">
+                <input type="checkbox" name="all" onclick="allCheck(this.checked);"/>
+              </th>
+              <th scope="col">번호</th>
+              <th scope="col">작성자</th>
+              <th scope="col">제목</th>
+              <th scope="col">조회수</th>
+              <th scope="col">작성일</th>
+            </tr>
+          </thead>
+          <tbody>
+          	<c:choose>
 					<c:when test="${empty list }">
 						<tr>
 							<th colspan="6">----------작성된 글이 존재하지 않습니다----------</th>
 						</tr>
-					</c:when>
+            </c:when>
 					<c:otherwise>
 						<c:forEach items="${list }" var="dto">
 								<tr>
@@ -115,12 +128,13 @@ response.setContentType("text/html; charset=UTF-8");
 				</c:choose>
 				<tr>
 					<td colspan="6" style="text-align: right;">
-						<input type="button" value="글작성" onclick="location.href='semi.do?command=board_insertform'" />
-						<input type="submit" value="삭제" onclick="chkcheck();"/>
+						<input type="button" class="s-btn" value="글작성" onclick="location.href='semi.do?command=board_insertform'" />
+						<input type="submit" class="s-btn" value="삭제" onclick="chkcheck();"/>
 					</td>
 				</tr>
-			</table>
-						<jsp:include page="/board_paging.jsp">
+          </tbody>
+        </table>
+      	  				<jsp:include page="/board_paging.jsp">
 							<jsp:param value="${BoardCommand }" name="command" />
 							<jsp:param value="${Pdto.nowBlock}" name="nowBlock" />
 							<jsp:param value="${Pdto.blockBegin }" name="blockBegin" />
@@ -130,7 +144,12 @@ response.setContentType("text/html; charset=UTF-8");
 							<jsp:param value="${Pdto.blockEnd}" name="blockEnd" />
 							<jsp:param value="${Pdto.totalBlock}" name="totalBlock" />
 						</jsp:include>
-			</form>
-	<jsp:include page="bottom.jsp" />
+        </form>
+      </div>
+    </div>
+  </div>
+</head>
+<jsp:include page="bottom.jsp" />
+	
 </body>
 </html>
