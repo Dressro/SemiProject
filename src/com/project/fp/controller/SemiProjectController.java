@@ -71,6 +71,7 @@ import com.project.fp.dto.HospitalDto;
 import com.project.fp.dto.MemberDto;
 import com.project.fp.dto.PagingDto;
 import com.project.fp.gmail.MailSend;
+import com.project.fp.papago.papago;
 import com.project.fp.sms.SMS;
 
 import oracle.net.aso.b;
@@ -657,6 +658,37 @@ public class SemiProjectController extends HttpServlet {
 
 			}
 		}
+
+
+		if (command.equals("translation")) {
+			String text = request.getParameter("text");
+			String source = request.getParameter("source");
+			String target = request.getParameter("target");
+			String result = papago.getTransSentence(text, source, target);
+			System.out.println(text + " : " + result);
+			request.setAttribute("text", text);
+			request.setAttribute("result", result);
+			dispatch(response, request, "translation_test.jsp");
+		}
+		
+		if (command.equals("payment")) {
+			String pay_method = request.getParameter("pay_method");
+			String product = request.getParameter("product");
+			String name = request.getParameter("name");
+			String email = request.getParameter("email");
+			String phone = request.getParameter("phone");
+			String address = request.getParameter("address");
+			int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));
+			request.setAttribute("pay_method", pay_method);
+			request.setAttribute("product", product);
+			request.setAttribute("name", name);
+			request.setAttribute("email", email);
+			request.setAttribute("phone", phone);
+			request.setAttribute("address", address);
+			request.setAttribute("totalPrice", totalPrice);
+			dispatch(response, request, "payment_test.jsp");
+		}
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
