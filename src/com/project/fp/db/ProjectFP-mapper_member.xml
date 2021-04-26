@@ -33,7 +33,7 @@
 		WHERE MEMBER_NAME = #{member_name}
 		AND MEMBER_EMAIL = #{member_email}
 	</select>
-	<select id="selectOne" parameterType="MemberDto"
+	<select id="selectOne" parameterType="int"
 		resultType="MemberDto">
 
 		SELECT MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME,
@@ -63,11 +63,13 @@
 	</update>
 
 
+
+
 	<delete id="delete" parameterType="String">
 		UPDATE MEMBER
 		SET MEMBER_JOIN =
 		'N'
-		WHERE MEMBER_LOGINROUTE = #{member_loginroute}
+		WHERE MEMBER_PASSWORD = #{member_password}
 		AND MEMBER_ID =
 		#{member_id}
 

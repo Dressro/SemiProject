@@ -91,45 +91,6 @@ function check(){
 			</table>
 		</form>
 	</div>
-
-	<div id="findpw" class="tabcontent">
-		<form action="semi.do" method="post">
-			<h1>비밀번호 찾기</h1>
-			<p>아이디를 입력 후, 본인확인을 통해 비밀번호를 다시 설정할 수 있습니다.</p>
-			<table>
-				<tr>
-					<th>아이디</th>
-					<td>
-						<input type="text" name="member_id" required="required">
-					</td>
-				</tr>
-
-				<tr>
-					<th>이메일</th>
-					<td>
-						<input type="text" name="member_email" maxlength="30" onclick="">
-						@
-						<select name="member_email_2">
-							<option>naver.com</option>
-							<option>daum.net</option>
-							<option>gmail.com</option>
-							<option>nate.com</option>
-						</select>
-					</td>
-				</tr>
-
-				<tr>
-					<td colspan="2">
-						<button type="button" id="searchpw" onclick="location.href='findpwres.jsp'">본인확인</button>
-					</td>
-				</tr>
-
-			</table>
-		</form>
-
-
-	</div>
-
 	<script>
 		function openTab(evt, tabName) {
 			var i, tabcontent, tablinks;

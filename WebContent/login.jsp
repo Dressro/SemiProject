@@ -245,6 +245,7 @@
 					document.getElementById('g-recaptcha-error').innerHTML = '';
 				}
 			</script>
+
 		</div>
 	<jsp:include page="bottom.jsp" />
 </body>

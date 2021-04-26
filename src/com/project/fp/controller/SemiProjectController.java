@@ -251,6 +251,19 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				dispatch(response, request, "signup_idchk.jsp");
 			}
+			
+		} else if (command.equals("memberdetail")) {
+			response.sendRedirect("memberdetail.jsp");
+		} else if (command.equals("memberdel")) {
+			String member_id = request.getParameter("member_id");
+			int md_res = 0;
+			md_res = m_biz.delete(member_id);
+			if (md_res > 0) {
+				jsResponse(response,"회원탈퇴", "index.jsp");
+			} else {
+				jsResponse(response, "회원탈퇴실패", "semi.do?command=mypage");
+			}
+			
 		} else if (command.equals("board_notice")) {
 			int nowPage = 1;
 			if (request.getParameter("nowPage") != null) {
@@ -297,6 +310,9 @@ public class SemiProjectController extends HttpServlet {
 			response.sendRedirect("mypage.jsp");
 		} else if (command.equals("shopping")) {
 			response.sendRedirect("shopping.jsp");
+		} else if (command.equals("shop_insertform")) {
+			response.sendRedirect("shop_insertform.jsp");
+			
 		} else if (command.equals("board_qna")) {
 			int nowPage = 1;
 			if (request.getParameter("nowPage") != null) {
@@ -578,9 +594,7 @@ public class SemiProjectController extends HttpServlet {
 			}
 		} else if (command.equals("chatboard")) {
 			response.sendRedirect("ChatBoard.jsp");
-		}
-
-		if (command.equals("mailsend")) {
+		} else if (command.equals("mailsend")) {
 			String member_email = request.getParameter("member_email"); // 수신자
 			String from = "ejsdnlcl@gmail.com"; // 발신자
 			String cc = "scientist-1002@hanmail.net"; // 참조
@@ -601,9 +615,7 @@ public class SemiProjectController extends HttpServlet {
 				System.out.println("실패 이유 : " + e.getMessage());
 				e.printStackTrace();
 			}
-		}
-
-		if (command.equals("mailcheck")) {
+		} else if (command.equals("mailcheck")) {
 			String AuthenticationKey = request.getParameter("AuthenticationKey");
 			String AuthenticationUser = request.getParameter("AuthenticationUser");
 			if (AuthenticationKey.equals(AuthenticationUser)) {
@@ -611,6 +623,10 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				System.out.println("인증 실패");
 			}
+		} else if (command.equals("smssend")) {
+			String member_phone = request.getParameter("member_phone");
+			String content = "문자 내용 작성";
+			SMS.sendSMS(member_phone, content);
 		}
 
 		if (command.equals("test")) {
@@ -639,13 +655,6 @@ public class SemiProjectController extends HttpServlet {
 
 			}
 		}
-
-		if (command.equals("smssend")) {
-			String member_phone = request.getParameter("member_phone");
-			String content = "문자 내용 작성";
-			SMS.sendSMS(member_phone, content);
-		}
-
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
