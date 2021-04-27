@@ -677,7 +677,7 @@ public class SemiProjectController extends HttpServlet {
 			if (res > 0) {
 				response.getWriter().append("채팅방 생성");
 			} else {
-				response.getWriter().append("채팅방 실패");
+				response.getWriter().append("채팅방이 존재합니다.");
 			}
 
 		}

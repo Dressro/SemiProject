@@ -93,29 +93,21 @@
 }
 </style>
 </head>
-<%
-MemberDto dto = (MemberDto) session.getAttribute("dto");
-int ch_num = (int) request.getAttribute("ch_num");
-%>
+
 <body>
 
 	<div id="main_con">
 		<div id="chat_con"></div>
 		<div id="bottom_con">
-			<input id="ch_num" type="hidden" value="<%=ch_num%>">
-			<input id="member_nickname" type="hidden" value="<%=dto.getMember_nicname()%>" />
 			<input id="inputMessage" type="text" onkeyup="enterkey()" />
-			<input type="submit" value="send" onclick="send();" />
+			<input id="btn-submit" type="submit" value="send" onclick="send();" />
 		</div>
 	</div>
 </body>
 <script type="text/javascript">
-	var ch_num = document.getElementById('ch_num').value;
 	var textarea = document.getElementById("messageWindow");
-	var webSocket = new WebSocket('ws://localhost:8787/SemiProject/ChatServelt/'+ch_num);
+	var webSocket = new WebSocket('ws://localhost:8787/SemiProject/ChatServelt');
 	var inputMessage = document.getElementById('inputMessage');
-	var member_nickname = document.getElementById('member_nickname');
-	
 
 	webSocket.onerror = function(event) {
 		onError(event)
@@ -128,15 +120,12 @@ int ch_num = (int) request.getAttribute("ch_num");
 		onMessage(event)
 	};
 	function onMessage(event) {
-		var message = event.data.split(":");
-		var sender = message[0];
-		var content = message[1];
-		textarea.value += sender+ " : "+ content + "\n";
+		textarea.value += event.data
 	}
 
 	function onOpen(event) {
 		textarea.value += "연결 성공\n";
-		
+
 	}
 
 	function onError(event) {
@@ -148,31 +137,19 @@ int ch_num = (int) request.getAttribute("ch_num");
 		var $chat = $("<div class='my-chat-box'><div class='chat my-chat'>"
 				+ msg + "</div></div>");
 		$('#chat_con').append($chat);
-		webSocket.send(msg);
-		$.ajax({
-			url:"semi.do",
-			method:"post",
-			data:{command:"chat_insert", member_nickname:member_nickname.value, ch_content:inputMessage.value},
-			dataType:"text",
-			success: function(data){
-				alert(data);
-			},
-			error(){
-				alert("통신 실패");
-			}
-		});
+		webSocket.send(inputMessage.value);
 		inputMessage.value = "";
 	}
-	
+
 	function enterkey() {
-        if (window.event.keyCode == 13) {
-            send();
-        }
-    }
-	
+		if (window.event.keyCode == 13) {
+			send();
+		}
+	}
+
 	window.setInterval(function() {
-        var elem = document.getElementById('messageWindow');
-        elem.scrollTop = elem.scrollHeight;
-    }, 0);
+		var elem = document.getElementById('messageWindow');
+		elem.scrollTop = elem.scrollHeight;
+	}, 0);
 </script>
 </html>
