@@ -114,15 +114,16 @@ CREATE TABLE ORDER_TABLE(
 );
 
 CREATE TABLE CHAT (
-	CH_NUM NUMBER PRIMARY KEY,
-	CH_NAME VARCHAR2(20) NOT NULL,
+	CH_NUM NUMBER NOT NULL,
+	DOCTOR_ID VARCHAR2(500) NOT NULL,
 	CH_DATE DATE NOT NULL,
 	MEMBER_ID VARCHAR2(500) NOT NULL,
-	CONSTRAINT CHAT_MEMBER_ID_FK FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER (MEMBER_ID)
+	CONSTRAINT CHAT_MEMBER_ID_FK FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER (MEMBER_ID),
+	CONSTRAINT CH_NUM_UK UNIQUE (CH_NUM),
+	CONSTRAINT CHAT_PK PRIMARY KEY (DOCTOR_ID,MEMBER_ID)
 );
-insert into chat values(chat_num_seq.nextval,'ㅇㅇ',sysdate,'Dressro');
-insert into chat values(chat_num_seq.nextval,'22',sysdate,'Dressro');
-insert into chat values(chat_num_seq.nextval,'33',sysdate,'Dressro');
+
+
 CREATE TABLE RECEIVE(
 	ORDER_NUM NUMBER PRIMARY KEY,
 	RECEIVE_NAME VARCHAR2(20) NOT NULL,
@@ -174,6 +175,7 @@ CREATE TABLE FILE_TABLE(
 SELECT * FROM MEMBER;
 
 
+
 select * from member m , file_table f
 where m.member_id = f.member_id
 and board_no = '64';
@@ -182,8 +184,11 @@ select * from board;
 select * from file_table
 SELECT * FROM ANIMAL;
 
+
+
 select * from chat;
 select * from CHAT_CONTENT;
+
 
 
 CREATE TABLE HOSPITAL(
@@ -236,12 +241,43 @@ SELECT X.rnum, X.board_no,X.board_free_no,X.board_notice_no,X.board_qna_no,X.boa
 		where rownum <=
 		20)b
 		where b.rnum >=
-		11
-
-	
+		11 
+		SELECT DISTINCT * FROM BOARD WHERE BOARD_FREE_NO > 0 AND MEMBER_ID LIKE '%ss%'
+select * from board where board_free_no > 0 and member_id like '%ss%' order by board_no;
+select * from board where board_free_no > 0 and member_id like '%ss%' order by board_no;
+select * from board where board_free_no > 0 and member_id like '%'||#member_id#||'%' order by board_no;
 delete from member where member_id='1702707258'
 SELECT FILE_NUM, FILE_PATH, FILE_ORI_NAME, FILE_NEW_NAME,
 		FILE_TYPE, FILE_DATE, FILE_SIZE, MEMBER_ID, BOARD_NO, CH_NUM,
 		ANIMAL_NO
 		FROM FILE_TABLE
 		WHERE BOARD_NO = '73'
+SELECT  board_no
+		FROM board 
+		WHERE BOARD_FREE_NO > 0 AND MEMBER_ID LIKE '%ss%'
+		order by board_no desc
+
+
+
+-- 댓글 테이블 (아직 수정중)
+DROP SEQUENCE REPLY_NO_SEQ;
+DROP SEQUENCE REPLY_GROUPNO_SEQ;
+DROP TABLE BOARD_REPLY;
+
+CREATE SEQUENCE REPLY_NO_SEQ;
+CREATE SEQUENCE REPLY_GROUPNO_SEQ;
+
+CREATE TABLE BOARD_REPLY (
+	REPLY_NO NUMBER PRIMARY KEY,
+	REPLY_GROUPNO NUMBER NOT NULL,
+	REPLY_GROUPSEQ NUMBER NOT NULL,
+	REPLY_TAB NUMBER NOT NULL,
+	REPLY_DELFLAG VARCHAR2(2) NOT NULL,
+	REPLY_CONTENT VARCHAR2(2000) NOT NULL,
+	REPLY_REGDATE DATE NOT NULL,
+	BOARD_NO NUMBER NOT NULL,
+	REPLY_NICNAME VARCHAR2(1000) NOT NULL,
+	CONSTRAINT BOARD_REPLY_REPLY_DELFLAG_CHK CHECK (REPLY_DELFLAG IN ('Y', 'N')),
+	CONSTRAINT BOARD_REPLY_BOARD_NO_FK FOREIGN KEY (BOARD_NO) REFERENCES BOARD (BOARD_NO)
+);
+

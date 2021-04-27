@@ -20,6 +20,16 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<MemberDto> selectDoctorList() {
+		// TODO Auto-generated method stub
+		List<MemberDto> list = new ArrayList<MemberDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "selectDoctorList");
+		}
+		return list;
+	}
 
 	@Override
 	public MemberDto selectSerch(MemberDto dto) {
@@ -123,6 +133,8 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 	}
 
 	
+
+
 
 
 }

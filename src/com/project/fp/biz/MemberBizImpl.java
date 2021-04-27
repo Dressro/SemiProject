@@ -15,6 +15,12 @@ public class MemberBizImpl implements MemberBiz {
 		// TODO Auto-generated method stub
 		return dao.selectList();
 	}
+	
+	@Override
+	public List<MemberDto> selectDoctorList() {
+		// TODO Auto-generated method stub
+		return dao.selectDoctorList();
+	}
 
 	@Override
 
@@ -70,6 +76,8 @@ public class MemberBizImpl implements MemberBiz {
 		// TODO Auto-generated method stub
 		return dao.mypagemod(dto);
 	}
+
+
 
 
 

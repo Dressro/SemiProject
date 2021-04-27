@@ -7,6 +7,8 @@ import com.project.fp.dto.MemberDto;
 public interface MemberDao {
 
 	public List<MemberDto> selectList();
+	
+	public List<MemberDto> selectDoctorList();
 
 	public MemberDto selectSerch(MemberDto dto);
 

@@ -61,9 +61,9 @@ response.setContentType("text/html; charset=UTF-8");
 		}
 	}
 	function search(){
-		var search_category = $(".search_category option:selected").val();
-		var search_text = $(".search_text").val();
-		alert("search category: " + search_category + " search_text :" + search_text);
+		var s_c = $(".search_category option:selected").val();
+		var s_t = $(".search_text").val();
+		location.href="semi.do?command=board_free&s_c="+s_c+"&s_t="+s_t;
 	}
 </script>
 </head>

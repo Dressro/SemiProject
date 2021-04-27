@@ -65,7 +65,33 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 
 		return res;
 	}
+	
+	@Override
+	public List<BoardDto> board_M_search(BoardDto dto) {
+		List<BoardDto> list = new ArrayList<BoardDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "board_M_search", dto);
+		}
+		return list;
+	}
 
+	@Override
+	public List<BoardDto> board_C_search(BoardDto dto) {
+		List<BoardDto> list = new ArrayList<BoardDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "board_C_search", dto);
+		}
+		return list;
+	}
+
+	@Override
+	public List<BoardDto> board_MC_search(BoardDto dto) {
+		List<BoardDto> list = new ArrayList<BoardDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "board_MC_search", dto);
+		}
+		return list;
+	}
 	@Override
 	public List<BoardDto> board_selectList(BoardDto dto) {
 		// TODO Auto-generated method stub
@@ -75,7 +101,34 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<BoardDto> free_M_search(PagingDto Pdto) {
+		List<BoardDto> list = new ArrayList<BoardDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "free_M_search", Pdto);
+		}
+		return list;
+	}
+	
+	@Override
+	public List<BoardDto> free_C_search(PagingDto Pdto) {
+		List<BoardDto> list = new ArrayList<BoardDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "free_C_search", Pdto);
+		}
+		return list;
+	}
 
+	@Override
+	public List<BoardDto> free_MC_search(PagingDto Pdto) {
+		List<BoardDto> list = new ArrayList<BoardDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "free_MC_search", Pdto);
+		}
+		return list;
+	}
+	
 	@Override
 	public List<BoardDto> free_selectList(PagingDto Pdto) {
 
@@ -365,6 +418,14 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		
 		return count;
 	}
+
+	
+
+	
+
+	
+
+	
 
 	
 
