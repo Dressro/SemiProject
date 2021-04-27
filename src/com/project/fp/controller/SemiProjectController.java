@@ -72,7 +72,9 @@ import com.project.fp.dto.Chat_ContentDto;
 import com.project.fp.dto.File_TableDto;
 import com.project.fp.dto.HospitalDto;
 import com.project.fp.dto.MemberDto;
+import com.project.fp.dto.Order_TableDto;
 import com.project.fp.dto.PagingDto;
+import com.project.fp.dto.ProductDto;
 import com.project.fp.gmail.MailSend;
 import com.project.fp.papago.papago;
 import com.project.fp.sms.SMS;
@@ -256,19 +258,23 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				dispatch(response, request, "signup_idchk.jsp");
 			}
-			
+
 		} else if (command.equals("memberdetail")) {
-			response.sendRedirect("memberdetail.jsp");
+			String member_id = request.getParameter("member_id");
+			MemberDto dto = m_biz.selectdetail(member_id);
+			request.setAttribute("dto", dto);
+			dispatch(response, request, "memberdetail.jsp");
+			
 		} else if (command.equals("memberdel")) {
 			String member_id = request.getParameter("member_id");
 			int md_res = 0;
 			md_res = m_biz.delete(member_id);
 			if (md_res > 0) {
-				jsResponse(response,"회원탈퇴", "index.jsp");
+				jsResponse(response, "회원탈퇴", "index.jsp");
 			} else {
 				jsResponse(response, "회원탈퇴실패", "semi.do?command=mypage");
 			}
-			
+
 		} else if (command.equals("board_notice")) {
 			int nowPage = 1;
 			if (request.getParameter("nowPage") != null) {
@@ -289,17 +295,54 @@ public class SemiProjectController extends HttpServlet {
 			if (request.getParameter("nowPage") != null) {
 				nowPage = Integer.parseInt(request.getParameter("nowPage"));
 			}
-			System.out.println(nowPage);
+			String s_c = request.getParameter("s_c");
+			String s_t = request.getParameter("s_t");
+			if(s_c == null){
 			int count = b_biz.free_allCount();
 			PagingDto Pdto = new PagingDto(count, nowPage);
-			System.out.println("나왔다");
-			System.out.println(nowPage);
-			System.out.println(count);
 			List<BoardDto> list = b_biz.free_selectList(Pdto);
 			request.setAttribute("BoardCommand", command);
 			request.setAttribute("list", list);
 			request.setAttribute("Pdto", Pdto);
 			dispatch(response, request, "board_free.jsp");
+			}else{
+				if(s_c.equals("W")) {
+					BoardDto dto = new BoardDto();
+					dto.setMember_id(s_t);
+					List<BoardDto> slist = b_biz.board_M_search(dto);
+					int count = slist.size();
+					PagingDto Pdto = new PagingDto(count, nowPage,s_c,s_t);
+					List<BoardDto> list = b_biz.free_M_search(Pdto);
+					request.setAttribute("BoardCommand", command);
+					request.setAttribute("list", list);
+					request.setAttribute("Pdto", Pdto);
+					dispatch(response, request, "board_free.jsp");
+				}else if(s_c.equals("T")) {
+					BoardDto dto = new BoardDto();
+					dto.setBoard_content(s_t);
+					List<BoardDto> slist = b_biz.board_C_search(dto);
+					int count = slist.size();
+					PagingDto Pdto = new PagingDto(count, nowPage,s_c,s_t);
+					List<BoardDto> list = b_biz.free_C_search(Pdto);
+					request.setAttribute("BoardCommand", command);
+					request.setAttribute("list", list);
+					request.setAttribute("Pdto", Pdto);
+					dispatch(response, request, "board_free.jsp");
+				}else if(s_c.equals("T_C")){
+					BoardDto dto = new BoardDto();
+					dto.setMember_id(s_t);
+					dto.setBoard_content(s_t);
+					List<BoardDto> slist = b_biz.board_MC_search(dto);
+					int count = slist.size();
+					PagingDto Pdto = new PagingDto(count, nowPage,s_c,s_t);
+					List<BoardDto> list = b_biz.free_MC_search(Pdto);
+					request.setAttribute("BoardCommand", command);
+					request.setAttribute("list", list);
+					request.setAttribute("Pdto", Pdto);
+					dispatch(response, request, "board_free.jsp");
+				}
+				
+			}
 		} else if (command.equals("board_dec")) {
 			int nowPage = 1;
 			if (request.getParameter("nowPage") != null) {
@@ -313,11 +356,59 @@ public class SemiProjectController extends HttpServlet {
 			dispatch(response, request, "board_dec.jsp");
 		} else if (command.equals("mypage")) {
 			response.sendRedirect("mypage.jsp");
+		} else if (command.equals("boardlist")) {
+			BoardDto b_dto = new BoardDto();
+			List<BoardDto> list = b_biz.board_selectList(b_dto);
+			request.setAttribute("list", list);
+			dispatch(response, request, "adminpage.jsp");
 		} else if (command.equals("shopping")) {
-			response.sendRedirect("shopping.jsp");
-		} else if (command.equals("shop_insertform")) {
+			List<ProductDto> list = p_biz.selectList();
+			request.setAttribute("list", list);
+			dispatch(response, request, "shopping.jsp");
+		} else if (command.equals("memberlist")) {
+			List<MemberDto> list = m_biz.selectList();
+			request.setAttribute("list", list);
+			dispatch(response, request, "adminpage.jsp");
+		} else if (command.equals("prodlist")) {
+			List<ProductDto> list = p_biz.selectList();
+			request.setAttribute("list", list);
+			dispatch(response, request, "adminpage.jsp");
+		} else if (command.equals("orderlist")) {
+			List<Order_TableDto> list = o_t_biz.selectList();
+			request.setAttribute("list", list);
+			dispatch(response, request, "adminpage.jsp");
+		}
+		else if (command.equals("shop_insertform")) {
 			response.sendRedirect("shop_insertform.jsp");
+		} else if (command.equals("shop_insertres")) {
+
+			String prod_category = request.getParameter("prod_category");
+			String prod_name = request.getParameter("prod_name");
+			String prod_mfr = request.getParameter("prod_mfr");
+			String prod_explain = request.getParameter("prod_explain");
+			String prod_client = request.getParameter("prod_client");
+			int prod_price = Integer.parseInt(request.getParameter("prod_price"));
+			int prod_sale = Integer.parseInt(request.getParameter("prod_sale"));
+			int prod_in = Integer.parseInt(request.getParameter("prod_in"));
 			
+			ProductDto p_dto = new ProductDto();
+			p_dto.setProd_category(prod_category);
+			p_dto.setProd_name(prod_name);
+			p_dto.setProd_mfr(prod_mfr);
+			p_dto.setProd_explain(prod_explain);
+			p_dto.setProd_client(prod_client);
+			p_dto.setProd_price(prod_price);
+			p_dto.setProd_sale(prod_sale);
+			p_dto.setProd_in(prod_in);
+			
+			int res = 0;
+			res = p_biz.insert(p_dto);
+			if (res > 0) {
+				jsResponse(response, "등록 성공", "semi.do?command=shopping");
+			} else {
+				jsResponse(response, "등록 실패", "semi.do?command=shop_insertform");
+			}
+	
 		} else if (command.equals("board_qna")) {
 			int nowPage = 1;
 			if (request.getParameter("nowPage") != null) {
@@ -519,7 +610,7 @@ public class SemiProjectController extends HttpServlet {
 			List<Board_ReplyDto> b_r_list = b_r_biz.reply_selectList(board_no);
 			request.setAttribute("b_r_list", b_r_list);
 			int res = b_biz.board_read(b_dto);
-			if(res<0) {
+			if (res < 0) {
 				jsResponse(response, "조회수 실패", "index.html");
 			}
 			File_TableDto f_dto = f_t_biz.board_selectOne(board_no);
@@ -580,24 +671,33 @@ public class SemiProjectController extends HttpServlet {
 			list = h_biz.selectSearchList(h_dto);
 			request.setAttribute("list", list);
 			dispatch(response, request, "animal_hospital.jsp");
-		} else if(command.equals("chatlist")) {
+		} else if (command.equals("chatlist")) {
 			String member_id = request.getParameter("member_id");
+			String member_grade = request.getParameter("member_grade");
 			ChatDto c_dto = new ChatDto();
 			c_dto.setMember_id(member_id);
-			List<ChatDto> c_list = c_biz.selectList(c_dto);
+			List<ChatDto> c_list = new ArrayList<ChatDto>();
+			if (member_grade.equals("개인")) {
+				c_list = c_biz.selectUserList(c_dto);
+			}else if(member_grade.equals("전문의")) {
+				c_list = c_biz.selectDoctorList(c_dto);
+			}
+			List<MemberDto> m_list = m_biz.selectDoctorList();
 			request.setAttribute("c_list", c_list);
+			request.setAttribute("m_list", m_list);
+			request.setAttribute("member_grade", member_grade);
 			dispatch(response, request, "chatlist.jsp");
 		} else if (command.equals("chat_insert")) {
 			String member_nickname = request.getParameter("member_nickname");
 			String ch_content = request.getParameter("ch_content");
 			System.out.println(ch_content);
 			System.out.println(member_nickname);
-			
+
 			Chat_ContentDto c_c_dto = new Chat_ContentDto();
 			c_c_dto.setCh_content(ch_content);
 			c_c_dto.setMember_nickname(member_nickname);
 			int res = c_c_biz.insert(c_c_dto);
-			if(res > 0) {
+			if (res > 0) {
 				response.getWriter().append("통신 성공");
 			}
 		} else if (command.equals("chatboard")) {
@@ -637,6 +737,46 @@ public class SemiProjectController extends HttpServlet {
 			String member_phone = request.getParameter("member_phone");
 			String content = "문자 내용 작성";
 			SMS.sendSMS(member_phone, content);
+		} else if (command.equals("translation")) {
+			String text = request.getParameter("text");
+			String source = request.getParameter("source");
+			String target = request.getParameter("target");
+			String result = papago.getTransSentence(text, source, target);
+			System.out.println(text + " : " + result);
+			request.setAttribute("text", text);
+			request.setAttribute("result", result);
+			dispatch(response, request, "translation_test.jsp");
+		} else if (command.equals("payment")) {
+			String pay_method = request.getParameter("pay_method");
+			String product = request.getParameter("product");
+			String name = request.getParameter("name");
+			String email = request.getParameter("email");
+			String phone = request.getParameter("phone");
+			String address = request.getParameter("address");
+			int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));
+			request.setAttribute("pay_method", pay_method);
+			request.setAttribute("product", product);
+			request.setAttribute("name", name);
+			request.setAttribute("email", email);
+			request.setAttribute("phone", phone);
+			request.setAttribute("address", address);
+			request.setAttribute("totalPrice", totalPrice);
+			dispatch(response, request, "payment_test.jsp");
+		} else if (command.equals("chat_board_insert")) {
+			String member_id = request.getParameter("member_id");
+			String doctor_id = request.getParameter("doctor_id");
+			System.out.println(member_id);
+			System.out.println(doctor_id);
+			ChatDto dto = new ChatDto();
+			dto.setDoctor_id(doctor_id);
+			dto.setMember_id(member_id);
+			int res = c_biz.insert(dto);
+			if (res > 0) {
+				response.getWriter().append("채팅방 생성");
+			} else {
+				response.getWriter().append("채팅방이 존재합니다.");
+			}
+
 		} else if (command.equals("replyUpload")) {
 			String reply_nicname = request.getParameter("member_nicname");
 			String reply_content = request.getParameter("reply_content");
@@ -701,36 +841,6 @@ public class SemiProjectController extends HttpServlet {
 				}
 
 			}
-		}
-
-
-		if (command.equals("translation")) {
-			String text = request.getParameter("text");
-			String source = request.getParameter("source");
-			String target = request.getParameter("target");
-			String result = papago.getTransSentence(text, source, target);
-			System.out.println(text + " : " + result);
-			request.setAttribute("text", text);
-			request.setAttribute("result", result);
-			dispatch(response, request, "translation_test.jsp");
-		}
-		
-		if (command.equals("payment")) {
-			String pay_method = request.getParameter("pay_method");
-			String product = request.getParameter("product");
-			String name = request.getParameter("name");
-			String email = request.getParameter("email");
-			String phone = request.getParameter("phone");
-			String address = request.getParameter("address");
-			int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));
-			request.setAttribute("pay_method", pay_method);
-			request.setAttribute("product", product);
-			request.setAttribute("name", name);
-			request.setAttribute("email", email);
-			request.setAttribute("phone", phone);
-			request.setAttribute("address", address);
-			request.setAttribute("totalPrice", totalPrice);
-			dispatch(response, request, "payment_test.jsp");
 		}
 
 	}

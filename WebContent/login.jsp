@@ -103,8 +103,9 @@
 	height: 60px;
 }
 #kakao_padding {
-	padding-top: 20px;
+	margin-top : 10px;
 	padding-bottom: 20px;
+	margin-bottom: 20px;
 	height: 60px;
 }
 #naver_id_login {
