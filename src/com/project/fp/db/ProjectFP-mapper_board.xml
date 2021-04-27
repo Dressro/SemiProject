@@ -30,7 +30,92 @@
 		FROM BOARD
 		WHERE BOARD_CATEGORY = 'D'
 	</select>
-	
+	<select id="free_M_search"
+		parameterType="com.project.fp.dto.PagingDto" resultType="BoardDto">
+		SELECT X.rnum,
+		X.board_no,X.board_free_no,X.board_notice_no,X.board_qna_no,X.board_dec_no,
+		X.board_title,X.board_content,X.board_regdate,X.board_readcount,
+		X.board_groupno,X.board_groupseq,X.board_titletab,X.member_id
+		FROM (
+		SELECT ROWNUM AS rnum,
+		A.board_no,A.board_free_no,A.board_notice_no,A.board_qna_no,A.board_dec_no,
+		A.board_title,A.board_content,A.board_regdate,A.board_readcount,
+		A.board_groupno,A.board_groupseq,A.board_titletab,A.member_id
+		FROM (
+		SELECT
+		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
+		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
+		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname as
+		member_id
+		FROM BOARD b, MEMBER m
+		WHERE b.MEMBER_ID LIKE '%'||#{s_t}||'%'
+		and
+		m.member_id = b.member_id
+		ORDER BY BOARD_REGDATE DESC
+		) A
+		WHERE ROWNUM <![CDATA[ <= ]]>
+		#{pageEnd}
+		) X
+		WHERE X.rnum <![CDATA[ >= ]]>
+		#{pageBegin}
+	</select>
+	<select id="free_C_search"
+		parameterType="com.project.fp.dto.PagingDto" resultType="BoardDto">
+		SELECT X.rnum,
+		X.board_no,X.board_free_no,X.board_notice_no,X.board_qna_no,X.board_dec_no,
+		X.board_title,X.board_content,X.board_regdate,X.board_readcount,
+		X.board_groupno,X.board_groupseq,X.board_titletab,X.member_id
+		FROM (
+		SELECT ROWNUM AS rnum,
+		A.board_no,A.board_free_no,A.board_notice_no,A.board_qna_no,A.board_dec_no,
+		A.board_title,A.board_content,A.board_regdate,A.board_readcount,
+		A.board_groupno,A.board_groupseq,A.board_titletab,A.member_id
+		FROM (
+		SELECT
+		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
+		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
+		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname as
+		member_id
+		FROM BOARD b, MEMBER m
+		WHERE b.board_content LIKE '%'||#{s_t}||'%'
+		and
+		m.member_id = b.member_id
+		ORDER BY BOARD_REGDATE DESC
+		) A
+		WHERE ROWNUM <![CDATA[ <= ]]>
+		#{pageEnd}
+		) X
+		WHERE X.rnum <![CDATA[ >= ]]>
+		#{pageBegin}
+	</select>
+	<select id="free_MC_search"
+		parameterType="com.project.fp.dto.PagingDto" resultType="BoardDto">
+		SELECT X.rnum,
+		X.board_no,X.board_free_no,X.board_notice_no,X.board_qna_no,X.board_dec_no,
+		X.board_title,X.board_content,X.board_regdate,X.board_readcount,
+		X.board_groupno,X.board_groupseq,X.board_titletab,X.member_id
+		FROM (
+		SELECT ROWNUM AS rnum,
+		A.board_no,A.board_free_no,A.board_notice_no,A.board_qna_no,A.board_dec_no,
+		A.board_title,A.board_content,A.board_regdate,A.board_readcount,
+		A.board_groupno,A.board_groupseq,A.board_titletab,A.member_id
+		FROM (
+		SELECT
+		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
+		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
+		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname as
+		member_id
+		FROM BOARD b, MEMBER m
+		WHERE (b.MEMBER_ID LIKE '%'||#{s_t}||'%' or b.board_content LIKE '%'||#{s_t}||'%')
+		and m.member_id = b.member_id
+		ORDER BY BOARD_REGDATE DESC
+		) A
+		WHERE ROWNUM <![CDATA[ <= ]]>
+		#{pageEnd}
+		) X
+		WHERE X.rnum <![CDATA[ >= ]]>
+		#{pageBegin}
+	</select>
 	<select id="board_M_search" parameterType="BoardDto" resultType="BoardDto">
 		SELECT  b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
 		board_title,b.board_content,b.board_regdate,b.board_readcount,

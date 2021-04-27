@@ -251,30 +251,6 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				dispatch(response, request, "signup_idchk.jsp");
 			}
-		} else if (command.equals("search")) { 
-			String s_c = request.getParameter("s_c");
-			String s_t = request.getParameter("s_t");
-			if(s_c.equals("W")) {
-				BoardDto dto = new BoardDto();
-				dto.setMember_id(s_t);
-				List<BoardDto> slist = b_biz.board_M_search(dto);
-				request.setAttribute("slist", slist);
-				dispatch(response, request, "semi.do?command=board_free");
-			}else if(s_c.equals("T")) {
-				BoardDto dto = new BoardDto();
-				dto.setBoard_content(s_t);
-				List<BoardDto> slist = b_biz.board_C_search(dto);
-				request.setAttribute("slist", slist);
-				dispatch(response, request, "semi.do?command=board_free");
-			}else {
-				BoardDto dto = new BoardDto();
-				dto.setMember_id(s_t);
-				dto.setBoard_content(s_t);
-				List<BoardDto> slist = b_biz.board_MC_search(dto);
-				request.setAttribute("slist", slist);
-				dispatch(response, request, "semi.do?command=board_free");
-			}
-			
 			} else if (command.equals("board_notice")) {
 			int nowPage = 1;
 			if (request.getParameter("nowPage") != null) {
@@ -295,20 +271,53 @@ public class SemiProjectController extends HttpServlet {
 			if (request.getParameter("nowPage") != null) {
 				nowPage = Integer.parseInt(request.getParameter("nowPage"));
 			}
+			String s_c = request.getParameter("s_c");
+			String s_t = request.getParameter("s_t");
+			if(s_c == null){
 			int count = b_biz.free_allCount();
 			PagingDto Pdto = new PagingDto(count, nowPage);
-			
-			if(request.getAttribute("slist")==null) {
 			List<BoardDto> list = b_biz.free_selectList(Pdto);
 			request.setAttribute("BoardCommand", command);
 			request.setAttribute("list", list);
 			request.setAttribute("Pdto", Pdto);
 			dispatch(response, request, "board_free.jsp");
-			}else {
-				List<BoardDto> list = (List<BoardDto>)request.getAttribute("slist");
-				request.setAttribute("BoardCommand", command);
-				request.setAttribute("list", list);
-				dispatch(response, request, "board_free.jsp");
+			}else{
+				if(s_c.equals("W")) {
+					BoardDto dto = new BoardDto();
+					dto.setMember_id(s_t);
+					List<BoardDto> slist = b_biz.board_M_search(dto);
+					int count = slist.size();
+					PagingDto Pdto = new PagingDto(count, nowPage,s_c,s_t);
+					List<BoardDto> list = b_biz.free_M_search(Pdto);
+					request.setAttribute("BoardCommand", command);
+					request.setAttribute("list", list);
+					request.setAttribute("Pdto", Pdto);
+					dispatch(response, request, "board_free.jsp");
+				}else if(s_c.equals("T")) {
+					BoardDto dto = new BoardDto();
+					dto.setBoard_content(s_t);
+					List<BoardDto> slist = b_biz.board_C_search(dto);
+					int count = slist.size();
+					PagingDto Pdto = new PagingDto(count, nowPage,s_c,s_t);
+					List<BoardDto> list = b_biz.free_C_search(Pdto);
+					request.setAttribute("BoardCommand", command);
+					request.setAttribute("list", list);
+					request.setAttribute("Pdto", Pdto);
+					dispatch(response, request, "board_free.jsp");
+				}else if(s_c.equals("T_C")){
+					BoardDto dto = new BoardDto();
+					dto.setMember_id(s_t);
+					dto.setBoard_content(s_t);
+					List<BoardDto> slist = b_biz.board_MC_search(dto);
+					int count = slist.size();
+					PagingDto Pdto = new PagingDto(count, nowPage,s_c,s_t);
+					List<BoardDto> list = b_biz.free_MC_search(Pdto);
+					request.setAttribute("BoardCommand", command);
+					request.setAttribute("list", list);
+					request.setAttribute("Pdto", Pdto);
+					dispatch(response, request, "board_free.jsp");
+				}
+				
 			}
 		} else if (command.equals("board_dec")) {
 			int nowPage = 1;

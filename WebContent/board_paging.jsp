@@ -10,10 +10,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<%String s_c = request.getParameter("s_c");
+  String s_t = request.getParameter("s_t");%>
+  <%if(s_c ==null){ %>
 <div id = "paging">
-	
+
   	  <!-- value에 서블릿 주소 넣기 -->
+  	 
 	  <c:url var = "action" value="/semi.do" />
 
 	  <!-- 이전 페이지 블록으로 이동 -->
@@ -39,7 +42,37 @@
 	  </c:if>
 
 </div>
+<%}else {%>
+<div id = "paging">
 
+  	  <!-- value에 서블릿 주소 넣기 -->
+  	 
+	  <c:url var = "action" value="/semi.do" />
+
+	  <!-- 이전 페이지 블록으로 이동 -->
+	  <c:if test="${param.nowBlock > 1}">
+		    <a href="${action}?command=${param.command}&nowPage=${param.blockBegin-1}&s_c=<%=s_c%>&s_t=<%=s_t%>">◀</a>
+	  </c:if>
+	
+	  <!-- 현재 페이지 블록에 해당하는 페이지 출력 -->
+	  <c:forEach begin="${param.blockBegin}" end="${param.blockEnd}" var="index">
+		    <c:choose>
+			    <c:when test="${param.nowPage == index}">
+				     ${index}
+			    </c:when>
+			    <c:otherwise>
+            		 <a href="${action}?command=${param.command}&nowPage=${index}&s_c=<%=s_c%>&s_t=<%=s_t%>">${index}</a>
+			    </c:otherwise>
+		    </c:choose>
+	  </c:forEach>
+
+	  <!-- 다음 페이지 블록으로 이동 -->
+	  <c:if test="${param.nowBlock < param.totalBlock}">
+		    <a href="${action}?command=${param.command}&nowPage=${param.blockEnd+1}&s_c=<%=s_c%>&s_t=<%=s_t%>">▶</a>
+	  </c:if>
+
+</div>
+<%} %>
 </body>
 
 </html>
