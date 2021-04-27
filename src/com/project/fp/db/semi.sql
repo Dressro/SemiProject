@@ -121,6 +121,8 @@ CREATE TABLE CHAT (
 	CONSTRAINT CHAT_MEMBER_ID_FK FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER (MEMBER_ID)
 );
 insert into chat values(chat_num_seq.nextval,'ㅇㅇ',sysdate,'Dressro');
+insert into chat values(chat_num_seq.nextval,'22',sysdate,'Dressro');
+insert into chat values(chat_num_seq.nextval,'33',sysdate,'Dressro');
 CREATE TABLE RECEIVE(
 	ORDER_NUM NUMBER PRIMARY KEY,
 	RECEIVE_NAME VARCHAR2(20) NOT NULL,
@@ -166,11 +168,14 @@ CREATE TABLE FILE_TABLE(
 	CONSTRAINT FILE_TABLE_CH_NUM_FK FOREIGN KEY (CH_NUM) REFERENCES CHAT (CH_NUM),
 	CONSTRAINT FILE_TABLE_ANIMAL_NO_KF FOREIGN KEY (ANIMAL_NO) REFERENCES ANIMAL (ANIMAL_NO)
 );
+<<<<<<< HEAD
+=======
 
 
 
 SELECT * FROM MEMBER;
 
+>>>>>>> e3b39a93c7ce733afa0a2619bfe6993eebdec1aa
 
 select * from member m , file_table f
 where m.member_id = f.member_id
@@ -179,9 +184,12 @@ select * from member;  dhksdn486
 select * from board;
 select * from file_table
 SELECT * FROM ANIMAL;
+<<<<<<< HEAD
+=======
 
 select * from chat;
 select * from CHAT_CONTENT;
+>>>>>>> e3b39a93c7ce733afa0a2619bfe6993eebdec1aa
 
 
 CREATE TABLE HOSPITAL(

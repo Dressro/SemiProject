@@ -63,11 +63,13 @@
 	</update>
 
 
+
+
 	<delete id="delete" parameterType="String">
 		UPDATE MEMBER
 		SET MEMBER_JOIN =
 		'N'
-		WHERE MEMBER_LOGINROUTE = #{member_loginroute}
+		WHERE MEMBER_PASSWORD = #{member_password}
 		AND MEMBER_ID =
 		#{member_id}
 

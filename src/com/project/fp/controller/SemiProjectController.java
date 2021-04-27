@@ -71,6 +71,7 @@ import com.project.fp.dto.HospitalDto;
 import com.project.fp.dto.MemberDto;
 import com.project.fp.dto.PagingDto;
 import com.project.fp.gmail.MailSend;
+import com.project.fp.papago.papago;
 import com.project.fp.sms.SMS;
 
 import oracle.net.aso.b;
@@ -251,7 +252,20 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				dispatch(response, request, "signup_idchk.jsp");
 			}
-			} else if (command.equals("board_notice")) {
+			
+		} else if (command.equals("memberdetail")) {
+			response.sendRedirect("memberdetail.jsp");
+		} else if (command.equals("memberdel")) {
+			String member_id = request.getParameter("member_id");
+			int md_res = 0;
+			md_res = m_biz.delete(member_id);
+			if (md_res > 0) {
+				jsResponse(response,"회원탈퇴", "index.jsp");
+			} else {
+				jsResponse(response, "회원탈퇴실패", "semi.do?command=mypage");
+			}
+			
+		} else if (command.equals("board_notice")) {
 			int nowPage = 1;
 			if (request.getParameter("nowPage") != null) {
 				nowPage = Integer.parseInt(request.getParameter("nowPage"));
@@ -334,6 +348,9 @@ public class SemiProjectController extends HttpServlet {
 			response.sendRedirect("mypage.jsp");
 		} else if (command.equals("shopping")) {
 			response.sendRedirect("shopping.jsp");
+		} else if (command.equals("shop_insertform")) {
+			response.sendRedirect("shop_insertform.jsp");
+			
 		} else if (command.equals("board_qna")) {
 			int nowPage = 1;
 			if (request.getParameter("nowPage") != null) {
@@ -615,7 +632,9 @@ public class SemiProjectController extends HttpServlet {
 				response.getWriter().append("통신 성공");
 			}
 		} else if (command.equals("chatboard")) {
-			response.sendRedirect("ChatBoard.jsp");
+			int ch_num = Integer.parseInt(request.getParameter("ch_num"));
+			request.setAttribute("ch_num", ch_num);
+			dispatch(response, request, "ChatBoard.jsp");
 		} else if (command.equals("mailsend")) {
 			String member_email = request.getParameter("member_email"); // 수신자
 			String from = "ejsdnlcl@gmail.com"; // 발신자
@@ -679,6 +698,34 @@ public class SemiProjectController extends HttpServlet {
 		}
 
 
+		if (command.equals("translation")) {
+			String text = request.getParameter("text");
+			String source = request.getParameter("source");
+			String target = request.getParameter("target");
+			String result = papago.getTransSentence(text, source, target);
+			System.out.println(text + " : " + result);
+			request.setAttribute("text", text);
+			request.setAttribute("result", result);
+			dispatch(response, request, "translation_test.jsp");
+		}
+		
+		if (command.equals("payment")) {
+			String pay_method = request.getParameter("pay_method");
+			String product = request.getParameter("product");
+			String name = request.getParameter("name");
+			String email = request.getParameter("email");
+			String phone = request.getParameter("phone");
+			String address = request.getParameter("address");
+			int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));
+			request.setAttribute("pay_method", pay_method);
+			request.setAttribute("product", product);
+			request.setAttribute("name", name);
+			request.setAttribute("email", email);
+			request.setAttribute("phone", phone);
+			request.setAttribute("address", address);
+			request.setAttribute("totalPrice", totalPrice);
+			dispatch(response, request, "payment_test.jsp");
+		}
 
 	}
 
