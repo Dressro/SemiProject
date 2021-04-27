@@ -11,9 +11,16 @@ public class ChatBizImpl implements ChatBiz {
 	ChatDao dao = new ChatDaoImpl();
 
 	@Override
-	public List<ChatDto> selectList(ChatDto dto) {
+	public List<ChatDto> selectUserList(ChatDto dto) {
 
-		return dao.selectList(dto);
+		return dao.selectUserList(dto);
+	}
+	
+
+	@Override
+	public List<ChatDto> selectDoctorList(ChatDto dto) {
+		// TODO Auto-generated method stub
+		return dao.selectDoctorList(dto);
 	}
 
 	@Override
@@ -39,5 +46,6 @@ public class ChatBizImpl implements ChatBiz {
 
 		return dao.delete(chat_num);
 	}
+
 
 }
