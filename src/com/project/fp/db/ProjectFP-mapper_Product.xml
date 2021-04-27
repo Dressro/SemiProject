@@ -5,7 +5,7 @@
 	<select id="selectList" resultType="ProductDto">
 		SELECT PROD_NUM, PROD_NAME, PROD_EXPLAIN, PROD_SALE, PROD_PRICE, PROD_RECOMM, PROD_STOCK, PROD_CATEGORY, PROD_IN, PROD_OUT, PROD_INDATE, PROD_OUTDATE, PROD_MFR, PROD_CLIENT
 		FROM PRODUCT
-		ORDER BY SEQ DESC
+		ORDER BY PROD_NUM DESC
 	</select>
 	
 	
@@ -20,7 +20,7 @@
 	
 	<insert id="insert" parameterType="ProductDto">
 		INSERT INTO PRODUCT
-		VALUES(PRODUCT_NUM_SEQ.NEXTVAL, #{prod_name}, #{prod_explain}, #{prod_sale}, #{prod_price}, #{prod_recomm}, #{prod_stock}, #{prod_category}, #{prod_in}, #{prod_out}, #{prod_indate}, #{prod_outdate}, #{prod_mfr}, #{prod_client})
+		VALUES(PRODUCT_NUM_SEQ.NEXTVAL, #{prod_name}, #{prod_explain}, #{prod_sale}, #{prod_price},1, 0, #{prod_category}, #{prod_in}, 0, sysdate, sysdate, #{prod_mfr}, #{prod_client})
 	</insert>
 	
 	

@@ -14,12 +14,8 @@ response.setContentType("text/html; charset=UTF-8");
 <title>Insert title here</title>
 <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
-	window.onload = function(){
-		var op = document.getElementId("inputGroupSelect03");
-	}
-	function goback() {
-		window.history.back();
-	}
+	
+
 	
 </script>
 </head>
@@ -30,6 +26,7 @@ response.setContentType("text/html; charset=UTF-8");
 	<h1>SHOP_INSERTFORM</h1>
 	<form action="semi.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="command" value="shop_insertform" />
+		<input type="hidden" name="command" value="shop_insertres" />
 		
 		
 		
@@ -83,8 +80,8 @@ response.setContentType("text/html; charset=UTF-8");
 						<div class="custom-file">
 							&nbsp;
 							<input type="file" class="form-control-file" id="exampleFormControlFile1" name="file">
-							<button type="button" class="btn btn-outline-secondary" style="float: right; width: 10%; font-weight: bold" onclick="goback();">취 소</button>
-							<button type="submit" class="btn btn-outline-secondary" style="float: right; width: 10%; font-weight: bold; margin-right: 10px;">등 록</button>
+							<button type="button" class="btn btn-outline-secondary" style="float: right; width: 10%; font-weight: bold" onclick="#">취 소</button>
+							<button type="button" class="btn btn-outline-secondary" onclick="location.href='semi.do?command=shop_insertres'"style="float: right; width: 10%; font-weight: bold; margin-right: 10px;">등 록</button>
 						</div>
 					</div>
 				</div>
