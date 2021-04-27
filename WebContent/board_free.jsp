@@ -86,6 +86,8 @@ response.setContentType("text/html; charset=UTF-8");
       <div class="table-responsive">
 	<form action="semi.do" method="post">
 		<input type="hidden" name="command" value="board_delete">
+		<input type="hidden" name="userID" value="${dto.member_id }">
+		<input type="hidden" name="userGrade" value="${dto.member_grade }">
         <table class="table custom-table">
           <thead>
             <tr>
@@ -126,12 +128,14 @@ response.setContentType("text/html; charset=UTF-8");
 						</c:forEach>
 					</c:otherwise>
 				</c:choose>
+				<c:if test="${dto ne null }">
 				<tr>
 					<td colspan="6" style="text-align: right;">
 						<input type="button" class="s-btn" value="글작성" onclick="location.href='semi.do?command=board_insertform'" />
 						<input type="submit" class="s-btn" value="삭제" onclick="chkcheck();"/>
 					</td>
 				</tr>
+				</c:if>
           </tbody>
         </table>
       	  				<jsp:include page="/board_paging.jsp">

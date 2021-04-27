@@ -12,5 +12,6 @@ public interface Board_ReplyDao {
 	public int reply_delete(int reply_no);
 	public int r_reply_insert(Board_ReplyDto Rdto);
 	public int reply_groupseq_update(int board_no);
+	public int board_delete(int board_no);
 
 }
