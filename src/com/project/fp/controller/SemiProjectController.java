@@ -46,6 +46,8 @@ import com.project.fp.biz.AnimalBiz;
 import com.project.fp.biz.AnimalBizImpl;
 import com.project.fp.biz.BoardBiz;
 import com.project.fp.biz.BoardBizImpl;
+import com.project.fp.biz.Board_ReplyBiz;
+import com.project.fp.biz.Board_ReplyBizImpl;
 import com.project.fp.biz.ChatBiz;
 import com.project.fp.biz.ChatBizImpl;
 import com.project.fp.biz.Chat_ContentBiz;
@@ -64,6 +66,7 @@ import com.project.fp.biz.ReceiveBiz;
 import com.project.fp.biz.ReceiveBizImpl;
 import com.project.fp.dto.AnimalDto;
 import com.project.fp.dto.BoardDto;
+import com.project.fp.dto.Board_ReplyDto;
 import com.project.fp.dto.ChatDto;
 import com.project.fp.dto.Chat_ContentDto;
 import com.project.fp.dto.File_TableDto;
@@ -101,6 +104,7 @@ public class SemiProjectController extends HttpServlet {
 		ProductBiz p_biz = new ProductBizImpl();
 		ReceiveBiz r_biz = new ReceiveBizImpl();
 		HospitalBiz h_biz = new HospitalBizImpl();
+		Board_ReplyBiz b_r_biz = new Board_ReplyBizImpl();
 		HttpSession session = request.getSession();
 
 		if (command.equals("signup")) {
@@ -566,6 +570,8 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("board_detail")) {
 			int board_no = Integer.parseInt(request.getParameter("board_no"));
 			BoardDto b_dto = b_biz.board_selectOne(board_no);
+			List<Board_ReplyDto> b_r_list = b_r_biz.reply_selectList(board_no);
+			request.setAttribute("b_r_list", b_r_list);
 			int res = b_biz.board_read(b_dto);
 			if (res < 0) {
 				jsResponse(response, "조회수 실패", "index.html");
@@ -734,6 +740,43 @@ public class SemiProjectController extends HttpServlet {
 				response.getWriter().append("채팅방이 존재합니다.");
 			}
 
+		} else if (command.equals("replyUpload")) {
+			String reply_nicname = request.getParameter("member_nicname");
+			String reply_content = request.getParameter("reply_content");
+			int board_no = Integer.parseInt(request.getParameter("board_no"));
+			
+			System.out.println(reply_nicname);
+			
+			Board_ReplyDto b_r_dto = new Board_ReplyDto();
+			b_r_dto.setReply_nicname(reply_nicname);
+			b_r_dto.setReply_content(reply_content);
+			b_r_dto.setBoard_no(board_no);
+			
+			b_r_biz.reply_insert(b_r_dto);
+		} else if (command.equals("replyDelete")) {
+			int reply_no = Integer.parseInt(request.getParameter("reply_no"));
+			
+			b_r_biz.reply_delete(reply_no);
+		} else if(command.equals("replyUpdate")) {
+			int reply_no = Integer.parseInt(request.getParameter("reply_no"));
+			String reply_content = request.getParameter("reply_content");
+			System.out.println(reply_content);
+			Board_ReplyDto b_r_dto = new Board_ReplyDto();
+			b_r_dto.setReply_no(reply_no);
+			b_r_dto.setReply_content(reply_content);
+			
+			b_r_biz.reply_update(b_r_dto);
+		} else if(command.equals("r_reply_upload")) {
+			int reply_no = Integer.parseInt(request.getParameter("reply_no"));
+			String r_reply_content = request.getParameter("r_reply_content");
+			String reply_nicname = request.getParameter("member_nicname");
+			
+			Board_ReplyDto b_r_dto = new Board_ReplyDto();
+			b_r_dto.setReply_no(reply_no);
+			b_r_dto.setReply_content(r_reply_content);
+			b_r_dto.setReply_nicname(reply_nicname);
+			
+			b_r_biz.replyProc(b_r_dto);
 		}
 
 		if (command.equals("test")) {
