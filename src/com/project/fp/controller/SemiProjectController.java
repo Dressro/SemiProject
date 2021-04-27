@@ -257,11 +257,103 @@ public class SemiProjectController extends HttpServlet {
 			
 		} else if (command.equals("memberdetail")) {
 			String member_id = request.getParameter("member_id");
-			MemberDto dto = m_biz.selectdetail(member_id);
+			MemberDto dto = m_biz.selectDetail(member_id);
+			AnimalDto a_dto = a_biz.selectoneDetail(member_id);
 			request.setAttribute("dto", dto);
+			request.setAttribute("a_dto", a_dto);
 			dispatch(response, request, "memberdetail.jsp");
+		} else if(command.equals("membermod")) {
+			String member_nicname = request.getParameter("member_nicname");
+			String member_email = request.getParameter("member_email_1");
+			String member_phone = request.getParameter("member_phone");
+			String member_addr = request.getParameter("member_addr_1");
+			String member_animal = request.getParameter("member_animal");
+			String member_id = request.getParameter("member_id");
+			String member_password = request.getParameter("member_password");
+			MemberDto dto = new MemberDto();
+			dto.setMember_nicname(member_nicname);
+			dto.setMember_email(member_email);
+			dto.setMember_phone(member_phone);
+			dto.setMember_addr(member_addr);
+			dto.setMember_animal(member_animal);
+			dto.setMember_id(member_id);
+			dto.setMember_password(member_password);
 			
-		} else if (command.equals("memberdel")) {
+			int m_res = m_biz.mypagemod(dto);
+			int a_res = 0;
+			if (member_animal.equals("Y")) {
+				String animal_name = request.getParameter("animal_name");
+				String animal_gen = request.getParameter("animal_gen");
+				String animal_type = request.getParameter("animal_type");
+				int animal_age = Integer.parseInt(request.getParameter("animal_age"));
+				double animal_weight = Double.parseDouble(request.getParameter("animal_weight"));
+				String animal_unq = request.getParameter("animal_unq");
+				AnimalDto a_dto = new AnimalDto();
+				a_dto.setAnimal_name(animal_name);
+				a_dto.setAnimal_gen(animal_gen);
+				a_dto.setAnimal_type(animal_type);
+				a_dto.setAnimal_age(animal_age);
+				a_dto.setAnimal_weight(animal_weight);
+				a_dto.setAnimal_unq(animal_unq);
+				a_res = a_biz.update(a_dto);
+			}
+
+			int res = m_res + a_res; 
+			if (res > 0) {
+				jsResponse(response, "수정성공", "mypage.jsp");
+			} else {
+				jsResponse(response, "수정실패", "#");
+			} 
+		} else if (command.equals("memberdetail")) {
+			String member_id = request.getParameter("member_id");
+			MemberDto dto = m_biz.selectDetail(member_id);
+			AnimalDto a_dto = a_biz.selectoneDetail(member_id);
+			request.setAttribute("dto", dto);
+			request.setAttribute("a_dto", a_dto);
+			dispatch(response, request, "memberdetail.jsp");
+		} else if(command.equals("memberupdate")) {
+			String member_nicname = request.getParameter("member_nicname");
+			String member_email = request.getParameter("member_email");
+			String member_phone = request.getParameter("member_phone");
+			String member_addr = request.getParameter("member_addr");
+			String member_animal = request.getParameter("member_animal");
+			String member_id = request.getParameter("member_id");
+
+			MemberDto dto = new MemberDto();
+			dto.setMember_nicname(member_nicname);
+			dto.setMember_email(member_email);
+			dto.setMember_phone(member_phone);
+			dto.setMember_addr(member_addr);
+			dto.setMember_animal(member_animal);
+			dto.setMember_id(member_id);
+			
+			int m_res = m_biz.mypageupdate(dto);
+			int a_res = 0;
+			if (member_animal.equals("Y")) {
+				String animal_name = request.getParameter("animal_name");
+				String animal_gen = request.getParameter("animal_gen");
+				String animal_type = request.getParameter("animal_type");
+				int animal_age = Integer.parseInt(request.getParameter("animal_age"));
+				double animal_weight = Double.parseDouble(request.getParameter("animal_weight"));
+				String animal_unq = request.getParameter("animal_unq");
+				AnimalDto a_dto = new AnimalDto();
+				a_dto.setAnimal_name(animal_name);
+				a_dto.setAnimal_gen(animal_gen);
+				a_dto.setAnimal_type(animal_type);
+				a_dto.setAnimal_age(animal_age);
+				a_dto.setAnimal_weight(animal_weight);
+				a_dto.setAnimal_unq(animal_unq);
+				a_res = a_biz.update(a_dto);
+			}
+
+			int res = m_res + a_res; 
+			if (res > 0) {
+				jsResponse(response, "수정성공", "adminpage.jsp");
+			} else {
+				jsResponse(response, "수정실패", "#");
+			} 
+		
+		}else if (command.equals("memberdel")) {
 			String member_id = request.getParameter("member_id");
 			int md_res = 0;
 			md_res = m_biz.delete(member_id);

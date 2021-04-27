@@ -108,9 +108,9 @@ $(function(){
  
 });
 
-function detailPopup() {
+function detailPopup(member_id) {
     window.name = "adminpage.jsp";
-    window.open("semi.do?command=memberdetail&member_id=${dto.member_id }", "insert",
+    window.open("semi.do?command=memberdetail&member_id="${dto.member_id }, "insert",
             "width = 550, height = 800, resizable = no, scrollbars = no, status = no");
 }
 
@@ -189,7 +189,7 @@ function memberinsertPopup() {
 		<c:forEach items="${list }" var="dto"> 
 				<tr>
 			<td><input type="checkbox" value=""></td>
-			<td><a id="detailpop" href="javascript:detailPopup();">${dto.member_id }</a></td>
+			<td><a id="detailpop" href="semi.do?command=memberdetail&member_id=${dto.member_id }">${dto.member_id }</a></td>
 			<td>${dto.member_name }</td>
 			<td>${dto.member_nicname }</td>
 			<td>${dto.member_email }</td>
