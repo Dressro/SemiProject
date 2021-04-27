@@ -93,6 +93,15 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 		return 0;
 	}
 
+	@Override
+	public MemberDto selectdetail(String member_id) {
+		MemberDto m_dto = null;
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			m_dto = session.selectOne(namespace + "selectOne", member_id);
+		}
+		return m_dto;
+	}
+
 
 
 

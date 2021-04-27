@@ -184,8 +184,10 @@ select * from file_table
 SELECT * FROM ANIMAL;
 
 
+
 select * from chat;
 select * from CHAT_CONTENT;
+
 
 
 
@@ -248,5 +250,3 @@ SELECT FILE_NUM, FILE_PATH, FILE_ORI_NAME, FILE_NEW_NAME,
 		ANIMAL_NO
 		FROM FILE_TABLE
 		WHERE BOARD_NO = '73'
-
-

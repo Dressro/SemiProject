@@ -69,7 +69,9 @@ import com.project.fp.dto.Chat_ContentDto;
 import com.project.fp.dto.File_TableDto;
 import com.project.fp.dto.HospitalDto;
 import com.project.fp.dto.MemberDto;
+import com.project.fp.dto.Order_TableDto;
 import com.project.fp.dto.PagingDto;
+import com.project.fp.dto.ProductDto;
 import com.project.fp.gmail.MailSend;
 import com.project.fp.papago.papago;
 import com.project.fp.sms.SMS;
@@ -254,7 +256,11 @@ public class SemiProjectController extends HttpServlet {
 			}
 
 		} else if (command.equals("memberdetail")) {
-			response.sendRedirect("memberdetail.jsp");
+			String member_id = request.getParameter("member_id");
+			MemberDto dto = m_biz.selectdetail(member_id);
+			request.setAttribute("dto", dto);
+			dispatch(response, request, "memberdetail.jsp");
+			
 		} else if (command.equals("memberdel")) {
 			String member_id = request.getParameter("member_id");
 			int md_res = 0;
@@ -309,11 +315,59 @@ public class SemiProjectController extends HttpServlet {
 			dispatch(response, request, "board_dec.jsp");
 		} else if (command.equals("mypage")) {
 			response.sendRedirect("mypage.jsp");
+		} else if (command.equals("boardlist")) {
+			BoardDto b_dto = new BoardDto();
+			List<BoardDto> list = b_biz.board_selectList(b_dto);
+			request.setAttribute("list", list);
+			dispatch(response, request, "adminpage.jsp");
 		} else if (command.equals("shopping")) {
-			response.sendRedirect("shopping.jsp");
-		} else if (command.equals("shop_insertform")) {
+			List<ProductDto> list = p_biz.selectList();
+			request.setAttribute("list", list);
+			dispatch(response, request, "shopping.jsp");
+		} else if (command.equals("memberlist")) {
+			List<MemberDto> list = m_biz.selectList();
+			request.setAttribute("list", list);
+			dispatch(response, request, "adminpage.jsp");
+		} else if (command.equals("prodlist")) {
+			List<ProductDto> list = p_biz.selectList();
+			request.setAttribute("list", list);
+			dispatch(response, request, "adminpage.jsp");
+		} else if (command.equals("orderlist")) {
+			List<Order_TableDto> list = o_t_biz.selectList();
+			request.setAttribute("list", list);
+			dispatch(response, request, "adminpage.jsp");
+		}
+		else if (command.equals("shop_insertform")) {
 			response.sendRedirect("shop_insertform.jsp");
+		} else if (command.equals("shop_insertres")) {
 
+			String prod_category = request.getParameter("prod_category");
+			String prod_name = request.getParameter("prod_name");
+			String prod_mfr = request.getParameter("prod_mfr");
+			String prod_explain = request.getParameter("prod_explain");
+			String prod_client = request.getParameter("prod_client");
+			int prod_price = Integer.parseInt(request.getParameter("prod_price"));
+			int prod_sale = Integer.parseInt(request.getParameter("prod_sale"));
+			int prod_in = Integer.parseInt(request.getParameter("prod_in"));
+			
+			ProductDto p_dto = new ProductDto();
+			p_dto.setProd_category(prod_category);
+			p_dto.setProd_name(prod_name);
+			p_dto.setProd_mfr(prod_mfr);
+			p_dto.setProd_explain(prod_explain);
+			p_dto.setProd_client(prod_client);
+			p_dto.setProd_price(prod_price);
+			p_dto.setProd_sale(prod_sale);
+			p_dto.setProd_in(prod_in);
+			
+			int res = 0;
+			res = p_biz.insert(p_dto);
+			if (res > 0) {
+				jsResponse(response, "등록 성공", "semi.do?command=shopping");
+			} else {
+				jsResponse(response, "등록 실패", "semi.do?command=shop_insertform");
+			}
+	
 		} else if (command.equals("board_qna")) {
 			int nowPage = 1;
 			if (request.getParameter("nowPage") != null) {

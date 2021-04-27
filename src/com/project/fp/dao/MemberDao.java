@@ -15,6 +15,8 @@ public interface MemberDao {
 	public MemberDto selectIdSerch(MemberDto dto);
 
 	public MemberDto selectOne(MemberDto dto);
+	
+	public MemberDto selectdetail(String member_id);
 
 	public int insert(MemberDto dto);
 
