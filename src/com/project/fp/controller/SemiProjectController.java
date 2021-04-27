@@ -73,6 +73,7 @@ import com.project.fp.dto.Order_TableDto;
 import com.project.fp.dto.PagingDto;
 import com.project.fp.dto.ProductDto;
 import com.project.fp.gmail.MailSend;
+import com.project.fp.papago.papago;
 import com.project.fp.sms.SMS;
 
 import oracle.net.aso.b;
@@ -555,7 +556,8 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				int f_res = f_t_biz.multiDelete(board_no);
 				int b_res = b_biz.multiDelete(board_no);
-				if (b_res == board_no.length && f_res == board_no.length) {
+				System.out.println(board_no);
+				if (b_res == board_no.length) {
 					jsResponse(response, "선택된 글들이 모두 삭제되었습니다.", "semi.do?command=board_free");
 				} else {
 					jsResponse(response, "선택된 글들이 삭제되지 않았습니다.", "semi.do?command=board_free");
@@ -647,7 +649,9 @@ public class SemiProjectController extends HttpServlet {
 				response.getWriter().append("통신 성공");
 			}
 		} else if (command.equals("chatboard")) {
-			response.sendRedirect("ChatBoard.jsp");
+			int ch_num = Integer.parseInt(request.getParameter("ch_num"));
+			request.setAttribute("ch_num", ch_num);
+			dispatch(response, request, "ChatBoard.jsp");
 		} else if (command.equals("mailsend")) {
 			String member_email = request.getParameter("member_email"); // 수신자
 			String from = "ejsdnlcl@gmail.com"; // 발신자
@@ -709,6 +713,37 @@ public class SemiProjectController extends HttpServlet {
 
 			}
 		}
+
+
+		if (command.equals("translation")) {
+			String text = request.getParameter("text");
+			String source = request.getParameter("source");
+			String target = request.getParameter("target");
+			String result = papago.getTransSentence(text, source, target);
+			System.out.println(text + " : " + result);
+			request.setAttribute("text", text);
+			request.setAttribute("result", result);
+			dispatch(response, request, "translation_test.jsp");
+		}
+		
+		if (command.equals("payment")) {
+			String pay_method = request.getParameter("pay_method");
+			String product = request.getParameter("product");
+			String name = request.getParameter("name");
+			String email = request.getParameter("email");
+			String phone = request.getParameter("phone");
+			String address = request.getParameter("address");
+			int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));
+			request.setAttribute("pay_method", pay_method);
+			request.setAttribute("product", product);
+			request.setAttribute("name", name);
+			request.setAttribute("email", email);
+			request.setAttribute("phone", phone);
+			request.setAttribute("address", address);
+			request.setAttribute("totalPrice", totalPrice);
+			dispatch(response, request, "payment_test.jsp");
+		}
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

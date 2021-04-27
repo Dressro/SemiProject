@@ -31,14 +31,14 @@ response.setContentType("text/html; charset=UTF-8");
 </script>
 </head>
 <body>
+<jsp:include page="header.jsp" />
 	<%
 	MemberDto dto = (MemberDto) session.getAttribute("dto");
 	if (dto == null) {
 		pageContext.forward("index.html");
 	}
 	%>
-	<h1>BOARD_UPDATEFORM</h1>
-	<%=f_dto.getFile_ori_name() %>
+	<h3>BOARD_UPDATEFORM</h3>
 	<form action="semi.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="member_id" value="<%=b_dto.getMember_id()%>" />
 		<input type="hidden" name="board_no" value="<%=b_dto.getBoard_no() %>"/>
@@ -93,6 +93,6 @@ response.setContentType("text/html; charset=UTF-8");
 			</div>
 		</div>
 	</form>
+	<jsp:include page="bottom.jsp" />
 </body>
-
 </html>

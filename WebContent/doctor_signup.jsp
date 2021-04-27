@@ -88,8 +88,8 @@
 </script>
 </head>
 <body>
-	
-	<h1>전문의 회원가입</h1>
+	<jsp:include page="header.jsp" />
+	<h3>전문의 회원가입</h3>
 	<div class="join_box">
 		<div class="join_table">
 			<form action="semi.do" method="POST">
@@ -179,6 +179,6 @@
 			</form>
 		</div>
 	</div>
-	
+	<jsp:include page="bottom.jsp" />
 </body>
 </html>

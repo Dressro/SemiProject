@@ -10,8 +10,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+<jsp:include page="header.jsp" />	
 	
-	<h1>공지사항</h1>
+	<h3>공지사항</h3>
 	
 	<table border="1">
 		<col width="50px">
@@ -64,6 +65,6 @@
 	  	<jsp:param value="${Pdto.blockEnd}" name="blockEnd" />
 	  	<jsp:param value="${Pdto.totalBlock}" name="totalBlock" />
 	</jsp:include>
-	
+	<jsp:include page="bottom.jsp" />
 </body>
 </html>

@@ -9,22 +9,26 @@
 </head>
 <%
 MemberDto dto = (MemberDto) session.getAttribute("dto");
+int ch_num = (int) request.getAttribute("ch_num");
 %>
 <body>
 
 	<fieldset>
 		<textarea id="messageWindow" rows="10" cols="60" readonly="readonly"></textarea>
 		<br>
+		<input id="ch_num" type="hidden" value="<%=ch_num%>">
 		<input id="member_nickname" type="hidden" value="<%=dto.getMember_nicname()%>"/>
 		<input id="inputMessage" type="text" onkeyup="enterkey()" />
 		<input type="submit" value="send" onclick="send();" />
 	</fieldset>
 </body>
 <script type="text/javascript">
+	var ch_num = document.getElementById('ch_num').value;
 	var textarea = document.getElementById("messageWindow");
-	var webSocket = new WebSocket('ws://localhost:8787/SemiProject/ChatServelt');
+	var webSocket = new WebSocket('ws://localhost:8787/SemiProject/ChatServelt/'+ch_num);
 	var inputMessage = document.getElementById('inputMessage');
 	var member_nickname = document.getElementById('member_nickname');
+	
 
 	webSocket.onerror = function(event) {
 		onError(event)
@@ -45,6 +49,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 
 	function onOpen(event) {
 		textarea.value += "연결 성공\n";
+		
 	}
 
 	function onError(event) {

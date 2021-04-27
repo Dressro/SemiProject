@@ -28,6 +28,7 @@
 </style>
 <script type="text/javascript"></script>
 <script type="text/javascript">
+
 <%
 MemberDto dto = (MemberDto) request.getAttribute("dto");
 %>
@@ -72,7 +73,7 @@ MemberDto dto = (MemberDto) request.getAttribute("dto");
 </script>
 </head>
 <body>
-
+<jsp:include page="header.jsp" />
 	<div>
 		<h1>SNS Join Us</h1>
 		<div id="join_container">
@@ -84,6 +85,6 @@ MemberDto dto = (MemberDto) request.getAttribute("dto");
 		</div>
 		</div>
 	</div>
-	
+<jsp:include page="bottom.jsp" />	
 </body>
 </html>

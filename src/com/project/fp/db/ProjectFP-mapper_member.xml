@@ -33,7 +33,7 @@
 		WHERE MEMBER_NAME = #{member_name}
 		AND MEMBER_EMAIL = #{member_email}
 	</select>
-	<select id="selectOne" parameterType="int"
+	<select id="selectOne" parameterType="MemberDto"
 		resultType="MemberDto">
 
 		SELECT MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME,

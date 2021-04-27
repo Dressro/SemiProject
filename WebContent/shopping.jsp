@@ -69,7 +69,6 @@
     </div>
 </section>
 </form>
-		
 	<jsp:include page="bottom.jsp" />
 
 </body>

@@ -121,6 +121,8 @@ CREATE TABLE CHAT (
 	CONSTRAINT CHAT_MEMBER_ID_FK FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER (MEMBER_ID)
 );
 insert into chat values(chat_num_seq.nextval,'ㅇㅇ',sysdate,'Dressro');
+insert into chat values(chat_num_seq.nextval,'22',sysdate,'Dressro');
+insert into chat values(chat_num_seq.nextval,'33',sysdate,'Dressro');
 CREATE TABLE RECEIVE(
 	ORDER_NUM NUMBER PRIMARY KEY,
 	RECEIVE_NAME VARCHAR2(20) NOT NULL,
