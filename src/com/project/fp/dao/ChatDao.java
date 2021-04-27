@@ -6,7 +6,8 @@ import com.project.fp.dto.ChatDto;
 
 public interface ChatDao {
 	
-	public List<ChatDto> selectList(ChatDto dto);
+	public List<ChatDto> selectUserList(ChatDto dto);
+	public List<ChatDto> selectDoctorList(ChatDto dto);
 	public ChatDto selectOne(int ch_num);
 	public int insert(ChatDto dto);
 	public int update(ChatDto dto);

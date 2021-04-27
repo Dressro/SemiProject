@@ -82,6 +82,7 @@ if (dto == null) {
 <%
 } else {
 %>
+					<li><a href="semi.do?command=chatlist&member_id=<%=dto.getMember_id()%>&member_grade=<%=dto.getMember_grade()%>">채팅</a>
 					<li><a href="semi.do?command=mypage">마이페이지</a>
 					<li><a href="semi.do?command=logout">로그아웃</a> 
 <%

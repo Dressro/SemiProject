@@ -39,11 +39,46 @@ public class BoardBizImpl implements BoardBiz {
 
 		return dao.dec_allCount();
 	}
+	
+	@Override
+	public List<BoardDto> board_M_search(BoardDto dto) {
+		// TODO Auto-generated method stub
+		return dao.board_M_search(dto);
+	}
 
+	@Override
+	public List<BoardDto> board_C_search(BoardDto dto) {
+		// TODO Auto-generated method stub
+		return dao.board_C_search(dto);
+	}
+
+	@Override
+	public List<BoardDto> board_MC_search(BoardDto dto) {
+		// TODO Auto-generated method stub
+		return dao.board_MC_search(dto);
+	}
+	
 	@Override
 	public List<BoardDto> free_selectList(PagingDto Pdto) {
 		// TODO Auto-generated method stub
 		return dao.free_selectList(Pdto);
+	}
+	
+	@Override
+	public List<BoardDto> free_M_search(PagingDto Pdto) {
+		// TODO Auto-generated method stub
+		return dao.free_M_search(Pdto);
+	}
+	@Override
+	public List<BoardDto> free_C_search(PagingDto Pdto) {
+		// TODO Auto-generated method stub
+		return dao.free_C_search(Pdto);
+	}
+
+	@Override
+	public List<BoardDto> free_MC_search(PagingDto Pdto) {
+		// TODO Auto-generated method stub
+		return dao.free_MC_search(Pdto);
 	}
 
 	@Override
@@ -173,6 +208,13 @@ public class BoardBizImpl implements BoardBiz {
 		
 		return dao.multiDelete(board_nos);
 	}
+
+	
+	
+
+	
+
+	
 
 
 
