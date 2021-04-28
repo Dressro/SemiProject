@@ -23,8 +23,7 @@ public interface MemberBiz {
 	public int delete(String member_id);
 
 	public int update(MemberDto dto);
+
+	public int grade_update(MemberDto dto);
 	
-	public int mypageupdate(MemberDto dto);
-	
-	public int mypagemod(MemberDto dto);
 }

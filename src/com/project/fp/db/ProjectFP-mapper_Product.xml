@@ -20,7 +20,7 @@
 	
 	<insert id="insert" parameterType="ProductDto">
 		INSERT INTO PRODUCT
-		VALUES(PRODUCT_NUM_SEQ.NEXTVAL, #{prod_name}, #{prod_explain}, #{prod_sale}, #{prod_price},1, 0, #{prod_category}, #{prod_in}, 0, sysdate, sysdate, #{prod_mfr}, #{prod_client})
+		VALUES(PRODUCT_NUM_SEQ.NEXTVAL, #{prod_name}, #{prod_explain}, #{prod_sale}, #{prod_price},1, #{prod_stock}, #{prod_category}, #{prod_stock}, null, sysdate, null, #{prod_mfr}, #{prod_client})
 	</insert>
 	
 	

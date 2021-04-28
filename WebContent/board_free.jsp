@@ -88,6 +88,7 @@ response.setContentType("text/html; charset=UTF-8");
 		<input type="hidden" name="command" value="board_delete">
 		<input type="hidden" name="userNicname" value="${dto.member_nicname }">
 		<input type="hidden" name="userGrade" value="${dto.member_grade }">
+		<input type="hidden" name="command" value="board_free_delete">
         <table class="table custom-table">
           <thead>
             <tr>

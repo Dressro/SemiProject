@@ -1,4 +1,3 @@
-
 <%@page import="com.project.fp.dto.ProductDto"%>
 <%@page import="com.project.fp.biz.ProductBizImpl"%>
 <%@page import="com.project.fp.biz.ProductBiz"%>
@@ -61,15 +60,7 @@ response.setContentType("text/html; charset=UTF-8");
 <script type="text/javascript">
 
 $(function(){
-		$('.adminmenus li').click(function(){
-		$('.adminmenus li').find('a').removeClass('active');
-	    $(this).find('a').addClass('active');
-	    $('.adminpage').hide();		   
-		var i = $(this).index();
-		$('.adminpage').eq(i).show();
 	});
-		<!--$('.adminmenus li').eq(0).trigger('click');-->
-});
 
 $(function(){
 	 
@@ -147,15 +138,11 @@ function memberinsertPopup() {
 </section>
 
 <div class = "adminpage-body">
-<section class="adminpage">
-<%
-	MemberBiz biz = new MemberBizImpl();
-	List<MemberDto> list = biz.selectList();
-%>
+<section class="adminpage_1">
 
 <h3>회원정보관리</h3>
 <form action="semi.do" method="post" id="memberlist">
-<input type="hidden" name="command" value="memberdetail">
+<input type="hidden" name="command" value="member_grade">
 
 <table border="1" id="adminBoard">
 	<col width="30"/>
@@ -187,20 +174,32 @@ function memberinsertPopup() {
 
 
 		<c:forEach items="${list }" var="dto"> 
-				<tr>
-			<td><input type="checkbox" value=""></td>
-			<td><a id="detailpop" href="semi.do?command=memberdetail&member_id=${dto.member_id }">${dto.member_id }</a></td>
-			<td>${dto.member_name }</td>
-			<td>${dto.member_nicname }</td>
-			<td>${dto.member_email }</td>
-			<td>${dto.member_phone }</td>
-			<td>${dto.member_addr }</td>
-			<td>${dto.member_grade }</td>
-			<td>${dto.member_animal }</td>
-			<td>${dto.member_point }</td>
-			<td>${dto.member_dr_info }</td>
-		</tr>
-	</c:forEach>
+			<tr>
+				<td><input type="checkbox" value=""></td>
+				<td><a id="detailpop" href="javascript:detailPopup();">${dto.member_id }</a>
+					<input type="hidden" name="member_id" value="${dto.member_id }"></td>
+				<td>${dto.member_name }</td>
+				<td>${dto.member_nicname }</td>
+				<td>${dto.member_email }</td>
+				<td>${dto.member_phone }</td>
+				<td>${dto.member_addr }</td>
+				<td>
+					<select name="member_grade">
+					<c:if test="${dto.member_grade eq '개인'}">
+						<option value="개인" selected>개인</option>
+						<option value="전문의">전문의</option>
+					</c:if>
+					<c:if test="${dto.member_grade eq '전문의'}">
+						<option value="개인" >개인</option>
+						<option value="전문의" selected>전문의</option>
+					</c:if>
+					</select>
+				</td>
+				<td>${dto.member_animal }</td>
+				<td>${dto.member_point }</td>
+				<td>${dto.member_dr_info }</td>
+			</tr>
+		</c:forEach>
 
 	<tr>
 		<td colspan="11" align="right">
@@ -211,11 +210,11 @@ function memberinsertPopup() {
 </table>
 </form>
 </section>
-<section class="adminpage">
+<section class="adminpage_2">
 
 
 
-<h1>전체주문조회</h1>
+<h3>전체주문조회</h3>
 <input type="hidden" name="command" value="orderlist">
 <table border="1" id="adminBoard">
 	<col width="30"/>
@@ -262,12 +261,14 @@ function memberinsertPopup() {
 </table>
 </section>
 
-<section class="adminpage">
+<section class="adminpage_3">
 
 
 
-<h1>게시글관리</h1>
+<h3>게시글관리</h3>
 <input type="hidden" name="command" value="boardlist">
+<form action="semi.do">
+<input type="hidden" name="command" value="board_delete">
 <table border="1" id="adminBoard">
 	<col width="30"/>
 	<col width="60"/>
@@ -290,9 +291,11 @@ function memberinsertPopup() {
 	
 	<c:forEach items="${boardlist }" var="dto"> 
 	<tr>
-		<td><input type="checkbox" value=""></td>
+		<td>
+		<input type="checkbox" name="board_no" value="${dto.board_no }">
+		</td>
 		<td>${dto.board_no }</td>
-		<td>${dto.board_catecory }</td>
+		<td>${dto.board_category }</td>
 		<td>${dto.board_title }</td>
 		<td>${dto.board_content }</td>
 		<td>${dto.member_id }</td>
@@ -301,16 +304,16 @@ function memberinsertPopup() {
 	</c:forEach>
 	<tr>
 	<td colspan="7" align="right">
-	<input type="submit"value="글삭제" onclick="#" />
+	<input type="submit"value="글삭제"/>
 	</td></tr>
 	
 </table>
+</form>
 </section>
 
-<section class="adminpage">
+<section class="adminpage_4">
 
-
-<h1>상품관리</h1>
+<h3>상품관리</h3>
 <input type="hidden" name="command" value="prodlist">
 <table border="1" id="adminBoard">
 	<col width="30"/>
@@ -329,13 +332,13 @@ function memberinsertPopup() {
 	   <th>번호</th>
 	   <th>카테고리</th>
 	   <th>상품명</th>
-	   <th>제조사</th>
-	   <th>설명</th>
-	   <th>정가</th>
 	   <th>할인율</th>
+	   <th>정가</th>
+	   <th>설명</th>
 	   <th>재고</th>
+	   <th>입고날짜</th>
+	   <th>제조사</th>
 	   <th>거래처</th>
-	   <th>등록날짜</th>
 	</tr>
 	
 <c:forEach items="${prodlist }" var="dto"> 
@@ -344,13 +347,13 @@ function memberinsertPopup() {
 		<td>${dto.prod_num }</td>
 		<td>${dto.prod_category }</td>
 		<td>${dto.prod_name }</td>
-		<td>${dto.prod_mfr }</td>
+		<td>${dto.prod_sale }%</td>
+		<td>${dto.prod_price }</td>
 		<td>${dto.prod_explain }</td>
 		<td>${dto.prod_stock }</td>
-		<td>${dto.prod_price }</td>
-		<td>${dto.prod_sale }</td>
 		<td>${dto.prod_indate }</td>
-		<td>${dto.prod_outdate }</td>
+		<td>${dto.prod_mfr }</td>
+		<td>${dto.prod_client }</td>
 	</tr>
 </c:forEach>
 

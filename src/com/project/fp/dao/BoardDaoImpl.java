@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 
 import com.project.fp.dto.BoardDto;
+import com.project.fp.dto.MemberDto;
 import com.project.fp.dto.PagingDto;
 
 public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
@@ -64,6 +65,15 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		}
 
 		return res;
+	}
+	
+	@Override
+	public List<BoardDto> board_List() {
+		List<BoardDto> list = new ArrayList<BoardDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "board_List");
+		}
+		return list;
 	}
 	
 	@Override
@@ -418,6 +428,8 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		
 		return count;
 	}
+
+	
 
 	
 
