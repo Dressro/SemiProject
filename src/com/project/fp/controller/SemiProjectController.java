@@ -260,10 +260,6 @@ public class SemiProjectController extends HttpServlet {
 			}
 
 		} else if (command.equals("memberdetail")) {
-			String member_id = request.getParameter("member_id");
-			MemberDto dto = m_biz.selectdetail(member_id);
-			request.setAttribute("dto", dto);
-			dispatch(response, request, "memberdetail.jsp");
 			
 		} else if (command.equals("memberdel")) {
 			String member_id = request.getParameter("member_id");
