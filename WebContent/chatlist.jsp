@@ -21,6 +21,55 @@
 			$('.mypage').eq(i).show();
 		});
 		$('.mymenus li').eq(0).trigger('click');
+		
+		$('.mymenu').eq(1).click(function () {
+			var member_grade = $('#member_grade').val();
+			var member_id = $('#member_id').val();
+			if(member_grade == '개인'){
+				$.ajax({
+					url:"semi.do",
+					method:"post",
+					data:{command:"chatlist_chat",member_grade:member_grade,member_id:member_id},
+					dataType:"json",
+					success:function(msg){
+						$('.chat_ul').empty();
+						var list = msg.result;
+						console.log(list);
+						for(var i = 0; i < list.length; i++){
+							var $li = $("<li class='Doctor_list' ondblclick='chat_go("+list[i].ch_num+");'>");
+							$li.append($("<div class='Doctor_list_info'><span>"+list[i].doctor_id+" 님과의 채팅방 </span></div>"));
+							$li.append($("<div class='Doctor_list_info'><span>"+list[i].ch_date+"</span></div>"));
+							$('.chat_ul').append($li);
+						}
+					},
+					error(){
+						alert("통신 실패");
+					}		
+				});
+			} else if(member_grade == '전문의'){
+				$.ajax({
+					url:"semi.do",
+					method:"post",
+					data:{command:"chatlist_chat",member_grade:member_grade,member_id:member_id},
+					dataType:"json",
+					success:function(msg){
+						$('.chat_ul').empty();
+						var list = msg.result;
+						console.log(list);
+						for(var i = 0; i < list.length; i++){
+							var $li = $("<li class='Doctor_list' ondblclick='chat_go("+list[i].ch_num+");'>");
+							$li.append($("<div class='Doctor_list_info'><span>"+list[i].member_id+" 님과의 채팅방 </span></div>"));
+							$li.append($("<div class='Doctor_list_info'><span>"+list[i].ch_date+"</span></div>"));
+							$('.chat_ul').append($li);
+						}
+					},
+					error(){
+						alert("통신 실패");
+					}		
+				});
+			}
+			
+		});
 	});
 </script>
 <style type="text/css">
@@ -29,14 +78,17 @@
 	margin: 0 auto;
 	min-height: 1000px;
 }
-.Doctor_ul {
-	border: 1px solid black;
-}
 
 .Doctor_list {
 	height: 100px;
 	width: 100%;
-	border-top: 1px solid black;
+	border-top: 1px solid #dadada;
+}
+.Doctor_list:last-child{
+	border-bottom: 1px solid #dadada;
+}
+.Doctor_list:hover{
+	background: #e2e2e2;
 }
 
 .Doctor_list_div {
@@ -61,7 +113,7 @@ String member_grade = (String) request.getAttribute("member_grade");
 <body>
 	<jsp:include page="header.jsp" />
 	<div id="semipage">
-	
+		<input type="hidden" id="member_grade" value="<%=member_grade %>"/>
 		<!-- 전문의 회원이 아닌 아이디 -->
 		<input type="hidden" id="member_id" value="<%=dto.getMember_id()%>"/>
 		<div id ="chat_mid">
@@ -83,7 +135,7 @@ String member_grade = (String) request.getAttribute("member_grade");
 							<c:otherwise>
 								<ul class = "Doctor_ul">
 								<c:forEach items="${m_list }" var="m_dto">
-									<li class="Doctor_list">
+									<li class="Doctor_list"  ondblclick="chat_create('${m_dto.member_id}');">
 										<div class = "Doctor_list_div">
 											img
 										</div>
@@ -92,10 +144,6 @@ String member_grade = (String) request.getAttribute("member_grade");
 										</div>
 										<div class="Doctor_list_info">
 											<span>${m_dto.member_dr_info}</span>	
-										</div>
-										<div class="Doctor_list_info">
-											<!-- 전문의 아이디 제공 -->
-											<button type="button" name="chat_create" onclick="chat_create('${m_dto.member_id}');">채팅방 생성</button>
 										</div>
 									</li>
 								</c:forEach>
@@ -124,57 +172,47 @@ String member_grade = (String) request.getAttribute("member_grade");
 			</script>
 			<div>
 				<section class="mypage">
-					<table border="1">
-						<col width="500px">
-						<col width="300px">
-
-						<tr>
-							<%
-								if(member_grade.equals("개인")){
-							%>
-							<th>의사 ID</th>
-							<%
-								} else {
-							%>
-							<th>유저 ID</th>
-							<%
-								}
-							%>
-							<th>날짜</th>
-						</tr>
 						<c:choose>
-							<c:when test="${empty c_list }">
-								<tr>
-									<th colspan="3">----------채팅방이 존재 하지 않습니다.----------</th>
-								</tr>
+							<c:when test="${empty m_list }">
+								<span>현재 채팅방이 없습니다.</span>
 							</c:when>
 							<c:otherwise>
-								<c:forEach items="${c_list }" var="dto">
-									<tr>
+								<ul class = "chat_ul">
+								<c:forEach items="${c_list }" var="c_dto">
+									<li class="Doctor_list"  ondblclick="chat_go('${c_dto.ch_num }');">
 										<%
 											if(member_grade.equals("개인")){
 										%>
-										<td>
-											<a href="semi.do?command=chatboard&ch_num=${dto.ch_num }">${dto.doctor_id }</a>
-										</td>
+										<div class="Doctor_list_info">
+											<span>${c_dto.doctor_id }님과의 채팅방</span>	
+										</div>
 										<%
 											} else {
 										%>
-										<td>
-											<a href="semi.do?command=chatboard&ch_num=${dto.ch_num }">${dto.member_id }</a>
-										</td>
+										<div class="Doctor_list_info">
+											<span>${c_dto.member_id }님과의 채팅방</span>	
+										</div>
 										<%
 											}
 										%>
-										<td>${dto.ch_date }</td>
-									</tr>
+										<div class="Doctor_list_info">
+											<span>${c_dto.ch_date }</span>	
+										</div>
+									</li>
 								</c:forEach>
+								</ul>
 							</c:otherwise>
 						</c:choose>
-					</table>
 				</section>
 			</div>
 		</div>
+		<script type="text/javascript">
+			function chat_go(num) {
+				var ch_num = num;
+				open("semi.do?command=chatboard&ch_num="+ch_num,"",
+				"width=500 , height= 700");
+			}
+		</script>
 
 		<jsp:include page="bottom.jsp" />
 	</div>

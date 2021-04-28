@@ -922,6 +922,26 @@ public class SemiProjectController extends HttpServlet {
 			b_r_dto.setReply_nicname(reply_nicname);
 			
 			b_r_biz.replyProc(b_r_dto);
+		} else if(command.equals("chatlist_chat")) {
+			String member_grade = request.getParameter("member_grade");
+			String member_id = request.getParameter("member_id");
+			ChatDto c_dto = new ChatDto();
+			c_dto.setMember_id(member_id);
+			List<ChatDto> c_list = new ArrayList<ChatDto>();
+			if (member_grade.equals("개인")) {
+				c_list = c_biz.selectUserList(c_dto);
+			}else if(member_grade.equals("전문의")) {
+				c_list = c_biz.selectDoctorList(c_dto);
+			}
+			JsonArray resultArray = new JsonArray();
+			for(ChatDto dto : c_list) {
+				Gson gson = new Gson();
+				String jsonString = gson.toJson(dto);
+				resultArray.add(JsonParser.parseString(jsonString));
+			}
+			JsonObject result = new JsonObject();
+			result.add("result", resultArray);
+			response.getWriter().append(result.toString());
 		}
 
 		if (command.equals("test")) {

@@ -49,12 +49,18 @@
 	padding: 10px;
 }
 .animal_hospital_name_ul{
-	border: 1px solid black;
+
 }
 .animal_hospital_list{
 	height:100px;
 	width:100%;
-	border-top: 1px solid black;
+	border-top: 1px solid #dadada;
+}
+.animal_hospital_list:hover{
+	background: #e2e2e2;
+}
+.animal_hospital_list:last-child{
+	border-bottom: 1px solid #dadada;
 }
 .animal_hospital_list_div{
 	float:left;
