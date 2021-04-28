@@ -267,6 +267,16 @@ public class SemiProjectController extends HttpServlet {
 			request.setAttribute("a_dto", a_dto);
 			dispatch(response, request, "memberdetail.jsp");
 		} else if(command.equals("membermod")) {
+			String member_id = request.getParameter("member_id");
+			MemberDto m_dto = new MemberDto();
+			MemberDto dto = m_biz.selectOne(m_dto);
+			AnimalDto a_dto = a_biz.selectoneDetail(member_id);
+			request.setAttribute("dto", dto);
+			request.setAttribute("a_dto", a_dto);
+			dispatch(response, request, "mypage.jsp");
+			
+			
+		} else if(command.equals("membermodres")) {	
 			String member_nicname = request.getParameter("member_nicname");
 			String member_email = request.getParameter("member_email_1");
 			String member_phone = request.getParameter("member_phone");
@@ -275,6 +285,7 @@ public class SemiProjectController extends HttpServlet {
 			String member_id = request.getParameter("member_id");
 			String member_password = request.getParameter("member_password");
 			MemberDto dto = new MemberDto();
+			
 			dto.setMember_nicname(member_nicname);
 			dto.setMember_email(member_email);
 			dto.setMember_phone(member_phone);
@@ -286,6 +297,7 @@ public class SemiProjectController extends HttpServlet {
 			int m_res = m_biz.mypagemod(dto);
 			int a_res = 0;
 			if (member_animal.equals("Y")) {
+				int animal_no = Integer.parseInt(request.getParameter("animal_no"));
 				String animal_name = request.getParameter("animal_name");
 				String animal_gen = request.getParameter("animal_gen");
 				String animal_type = request.getParameter("animal_type");
@@ -293,6 +305,7 @@ public class SemiProjectController extends HttpServlet {
 				double animal_weight = Double.parseDouble(request.getParameter("animal_weight"));
 				String animal_unq = request.getParameter("animal_unq");
 				AnimalDto a_dto = new AnimalDto();
+				a_dto.setAnimal_no(animal_no);
 				a_dto.setAnimal_name(animal_name);
 				a_dto.setAnimal_gen(animal_gen);
 				a_dto.setAnimal_type(animal_type);
@@ -317,9 +330,9 @@ public class SemiProjectController extends HttpServlet {
 			dispatch(response, request, "memberdetail.jsp");
 		} else if(command.equals("memberupdate")) {
 			String member_nicname = request.getParameter("member_nicname");
-			String member_email = request.getParameter("member_email");
+			String member_email = request.getParameter("member_email_1");
 			String member_phone = request.getParameter("member_phone");
-			String member_addr = request.getParameter("member_addr");
+			String member_addr = request.getParameter("member_addr_1");
 			String member_animal = request.getParameter("member_animal");
 			String member_id = request.getParameter("member_id");
 
@@ -334,6 +347,8 @@ public class SemiProjectController extends HttpServlet {
 			int m_res = m_biz.mypageupdate(dto);
 			int a_res = 0;
 			if (member_animal.equals("Y")) {
+				
+				int animal_no = Integer.parseInt(request.getParameter("animal_no"));
 				String animal_name = request.getParameter("animal_name");
 				String animal_gen = request.getParameter("animal_gen");
 				String animal_type = request.getParameter("animal_type");
@@ -341,6 +356,7 @@ public class SemiProjectController extends HttpServlet {
 				double animal_weight = Double.parseDouble(request.getParameter("animal_weight"));
 				String animal_unq = request.getParameter("animal_unq");
 				AnimalDto a_dto = new AnimalDto();
+				a_dto.setAnimal_no(animal_no);
 				a_dto.setAnimal_name(animal_name);
 				a_dto.setAnimal_gen(animal_gen);
 				a_dto.setAnimal_type(animal_type);
@@ -364,7 +380,7 @@ public class SemiProjectController extends HttpServlet {
 			if (md_res > 0) {
 				jsResponse(response, "회원탈퇴", "index.jsp");
 			} else {
-				jsResponse(response, "회원탈퇴실패", "semi.do?command=mypage");
+				jsResponse(response, "회원탈퇴실패", "mypage.jsp");
 			}
 
 		} else if (command.equals("board_notice")) {
