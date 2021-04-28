@@ -518,6 +518,7 @@ public class SemiProjectController extends HttpServlet {
 			PagingDto Pdto = new PagingDto(count, nowPage);
 			request.setAttribute("BoardCommand", command);
 			List<BoardDto> list = b_biz.qna_selectList(Pdto);
+			request.setAttribute("Pdto", Pdto);
 			request.setAttribute("list", list);
 			dispatch(response, request, "board_qna.jsp");
 		} else if (command.equals("board_updateform")) {
