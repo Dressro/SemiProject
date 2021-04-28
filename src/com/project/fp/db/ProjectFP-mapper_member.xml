@@ -96,6 +96,29 @@
 		WHERE MEMBER_ID = #{member_id}
 	</update>
 	
+	<update id="mypageupdate" parameterType="MemberDto">
+		UPDATE MEMBER
+		SET
+		MEMBER_NICNAME = #{member_nicname},
+		MEMBER_EMAIL = #{member_email},
+		MEMBER_PHONE = #{member_phone},
+		MEMBER_ADDR = #{member_addr},
+		MEMBER_ANIMAL = #{member_animal}
+		WHERE MEMBER_ID = #{member_id}
+	</update>
+	
+	<update id="mypagemod" parameterType="MemberDto">
+		UPDATE MEMBER
+		SET
+		MEMBER_NICNAME = #{member_nicname},
+		MEMBER_EMAIL = #{member_email},
+		MEMBER_PHONE = #{member_phone},
+		MEMBER_ADDR = #{member_addr},
+		MEMBER_ANIMAL = #{member_animal}
+		WHERE MEMBER_ID = #{member_id} AND MEMBER_PASSWORD = #{member_password}
+	</update>
+	
+	
 	<update id="grade_update" parameterType="MemberDto">
 		UPDATE MEMBER
 		SET

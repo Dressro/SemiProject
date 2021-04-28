@@ -124,6 +124,30 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 
 		return res;
 	}
+	@Override
+	public int mypageupdate(MemberDto dto) {
+		int res = 0;
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.delete(namespace + "mypageupdate", dto);
+			if (res > 0) {
+				session.commit();
+			}
+		}
+		return res;
+	}
+
+	@Override
+	public int mypagemod(MemberDto dto) {
+		int res = 0;
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.delete(namespace + "mypagemod", dto);
+			if (res > 0) {
+				session.commit();
+			}
+		}
+		return res;
+	}
+
 
 
 

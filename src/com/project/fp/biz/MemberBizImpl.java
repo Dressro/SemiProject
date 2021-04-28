@@ -70,6 +70,18 @@ public class MemberBizImpl implements MemberBiz {
 		// TODO Auto-generated method stub
 		return dao.grade_update(dto);
 	}
+	
+	@Override
+	public int mypageupdate(MemberDto dto) {
+		// TODO Auto-generated method stub
+		return dao.mypageupdate(dto);
+	}
+
+	@Override
+	public int mypagemod(MemberDto dto) {
+		// TODO Auto-generated method stub
+		return dao.mypagemod(dto);
+	}
 
 
 

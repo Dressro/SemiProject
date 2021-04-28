@@ -359,8 +359,8 @@ function memberinsertPopup() {
 
 	<tr>
 	<td colspan="12" align="right">
-	<input type="submit"value="상품등록" onclick="location.href='semi.do?command=shop_insertform'" />
-	<input type="submit"value="상품삭제" onclick="#" />
+	<input type="button"value="상품등록" onclick="location.href='semi.do?command=shop_insertform'" />
+	<input type="button"value="상품삭제" onclick="#" />
 	</td></tr>
 	
 </table>

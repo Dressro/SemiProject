@@ -24,6 +24,10 @@ public interface MemberDao {
 
 	public int update(MemberDto dto);
 	
+public int mypageupdate(MemberDto dto);
+	
+	public int mypagemod (MemberDto dto);
+	
 	public int grade_update(MemberDto dto);
 
 }

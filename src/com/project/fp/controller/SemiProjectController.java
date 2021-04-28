@@ -258,6 +258,7 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				dispatch(response, request, "signup_idchk.jsp");
 			}
+
 		} else if (command.equals("member_grade")) {
 			String[] member_id = request.getParameterValues("member_id");
 			String[] member_grade = request.getParameterValues("member_grade");
@@ -268,11 +269,113 @@ public class SemiProjectController extends HttpServlet {
 				dto.setMember_grade(member_grade[i]);
 				res = m_biz.grade_update(dto);
 				res++;
+			} 
+		}else if (command.equals("memberdetail")) {
+			String member_id = request.getParameter("member_id");
+			MemberDto dto = m_biz.selectDetail(member_id);
+			AnimalDto a_dto = a_biz.selectoneDetail(member_id);
+			request.setAttribute("dto", dto);
+			request.setAttribute("a_dto", a_dto);
+			dispatch(response, request, "memberdetail.jsp");
+		} else if(command.equals("membermod")) {
+			String member_id = request.getParameter("member_id");
+			MemberDto m_dto = null;
+			MemberDto dto = m_biz.selectOne(m_dto);
+			AnimalDto a_dto = a_biz.selectoneDetail(member_id);
+			request.setAttribute("dto", dto);
+			request.setAttribute("a_dto", a_dto);
+			dispatch(response, request, "mypage.jsp");
+			
+			
+		} else if(command.equals("membermodres")) {	
+			String member_nicname = request.getParameter("member_nicname");
+			String member_email = request.getParameter("member_email_1");
+			String member_phone = request.getParameter("member_phone");
+			String member_addr = request.getParameter("member_addr_1");
+			String member_animal = request.getParameter("member_animal");
+			String member_id = request.getParameter("member_id");
+			String member_password = request.getParameter("member_password");
+			MemberDto dto = new MemberDto();
+			
+			dto.setMember_nicname(member_nicname);
+			dto.setMember_email(member_email);
+			dto.setMember_phone(member_phone);
+			dto.setMember_addr(member_addr);
+			dto.setMember_animal(member_animal);
+			dto.setMember_id(member_id);
+			dto.setMember_password(member_password);
+			
+			int m_res = m_biz.mypagemod(dto);
+			int a_res = 0;
+			if (member_animal.equals("Y")) {
+				int animal_no = Integer.parseInt(request.getParameter("animal_no"));
+				String animal_name = request.getParameter("animal_name");
+				String animal_gen = request.getParameter("animal_gen");
+				String animal_type = request.getParameter("animal_type");
+				int animal_age = Integer.parseInt(request.getParameter("animal_age"));
+				double animal_weight = Double.parseDouble(request.getParameter("animal_weight"));
+				String animal_unq = request.getParameter("animal_unq");
+				AnimalDto a_dto = new AnimalDto();
+				a_dto.setAnimal_no(animal_no);
+				a_dto.setAnimal_name(animal_name);
+				a_dto.setAnimal_gen(animal_gen);
+				a_dto.setAnimal_type(animal_type);
+				a_dto.setAnimal_age(animal_age);
+				a_dto.setAnimal_weight(animal_weight);
+				a_dto.setAnimal_unq(animal_unq);
+				a_res = a_biz.update(a_dto);
 			}
+			
+			int res = m_res + a_res; 
 			if (res > 0) {
 				jsResponse(response, "권한수정 성공", "semi.do?command=memberlist");
 			} else {
 				jsResponse(response, "권한수정 실패", "semi.do?command=memberlist");
+				jsResponse(response, "수정실패", "#");
+			} 
+		} else if (command.equals("memberdetail")) {
+			String member_id = request.getParameter("member_id");
+			MemberDto dto = m_biz.selectDetail(member_id);
+			AnimalDto a_dto = a_biz.selectoneDetail(member_id);
+			request.setAttribute("dto", dto);
+			request.setAttribute("a_dto", a_dto);
+			dispatch(response, request, "memberdetail.jsp");
+		} else if(command.equals("memberupdate")) {
+			String member_nicname = request.getParameter("member_nicname");
+			String member_email = request.getParameter("member_email_1");
+			String member_phone = request.getParameter("member_phone");
+			String member_addr = request.getParameter("member_addr_1");
+			String member_animal = request.getParameter("member_animal");
+			String member_id = request.getParameter("member_id");
+
+			MemberDto dto = new MemberDto();
+			dto.setMember_nicname(member_nicname);
+			dto.setMember_email(member_email);
+			dto.setMember_phone(member_phone);
+			dto.setMember_addr(member_addr);
+			dto.setMember_animal(member_animal);
+			dto.setMember_id(member_id);
+			
+			int m_res = m_biz.mypageupdate(dto);
+			int a_res = 0;
+			if (member_animal.equals("Y")) {
+				
+				int animal_no = Integer.parseInt(request.getParameter("animal_no"));
+				String animal_name = request.getParameter("animal_name");
+				String animal_gen = request.getParameter("animal_gen");
+				String animal_type = request.getParameter("animal_type");
+				int animal_age = Integer.parseInt(request.getParameter("animal_age"));
+				double animal_weight = Double.parseDouble(request.getParameter("animal_weight"));
+				String animal_unq = request.getParameter("animal_unq");
+				AnimalDto a_dto = new AnimalDto();
+				a_dto.setAnimal_no(animal_no);
+				a_dto.setAnimal_name(animal_name);
+				a_dto.setAnimal_gen(animal_gen);
+				a_dto.setAnimal_type(animal_type);
+				a_dto.setAnimal_age(animal_age);
+				a_dto.setAnimal_weight(animal_weight);
+				a_dto.setAnimal_unq(animal_unq);
+				a_res = a_biz.update(a_dto);
 			}
 		} else if (command.equals("memberdel")) {
 			String member_id = request.getParameter("member_id");
@@ -281,7 +384,7 @@ public class SemiProjectController extends HttpServlet {
 			if (md_res > 0) {
 				jsResponse(response, "회원탈퇴", "index.jsp");
 			} else {
-				jsResponse(response, "회원탈퇴실패", "semi.do?command=mypage");
+				jsResponse(response, "회원탈퇴실패", "mypage.jsp");
 			}
 
 		} else if (command.equals("board_notice")) {
