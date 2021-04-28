@@ -60,9 +60,21 @@ public class MemberBizImpl implements MemberBiz {
 	}
 
 	@Override
-	public MemberDto selectdetail(String member_id) {
+	public MemberDto selectDetail(String member_id) {
 		// TODO Auto-generated method stub
-		return dao.selectdetail(member_id);
+		return dao.selectDetail(member_id);
+	}
+
+	@Override
+	public int mypageupdate(MemberDto dto) {
+		// TODO Auto-generated method stub
+		return dao.mypageupdate(dto);
+	}
+
+	@Override
+	public int mypagemod(MemberDto dto) {
+		// TODO Auto-generated method stub
+		return dao.mypagemod(dto);
 	}
 
 

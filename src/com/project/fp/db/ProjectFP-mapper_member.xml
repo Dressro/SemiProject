@@ -69,7 +69,7 @@
 
 	<select id="selectDetail" resultType="MemberDto">
 
-		SELECT MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME,
+		SELECT MEMBER_ID, MEMBER_NAME,
 		MEMBER_NICNAME,
 		MEMBER_EMAIL, MEMBER_PHONE, MEMBER_ADDR, MEMBER_GRADE,
 		MEMBER_JOIN, MEMBER_ANIMAL, MEMBER_POINT, MEMBER_DR_INFO,
@@ -96,8 +96,28 @@
 		WHERE MEMBER_ID = #{member_id}
 	</update>
 
-
-
+	<update id="mypageupdate" parameterType="MemberDto">
+		UPDATE MEMBER
+		SET
+		MEMBER_NICNAME = #{member_nicname},
+		MEMBER_EMAIL = #{member_email},
+		MEMBER_PHONE = #{member_phone},
+		MEMBER_ADDR = #{member_addr},
+		MEMBER_ANIMAL = #{member_animal}
+		WHERE MEMBER_ID = #{member_id}
+	</update>
+	
+	<update id="mypagemod" parameterType="MemberDto">
+		UPDATE MEMBER
+		SET
+		MEMBER_NICNAME = #{member_nicname},
+		MEMBER_EMAIL = #{member_email},
+		MEMBER_PHONE = #{member_phone},
+		MEMBER_ADDR = #{member_addr},
+		MEMBER_ANIMAL = #{member_animal}
+		WHERE MEMBER_ID = #{member_id} AND MEMBER_PASSWORD = #{member_password}
+	</update>
+	
 
 	<delete id="delete" parameterType="String">
 		UPDATE MEMBER

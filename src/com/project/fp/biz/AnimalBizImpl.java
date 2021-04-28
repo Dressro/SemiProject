@@ -39,4 +39,10 @@ public class AnimalBizImpl implements AnimalBiz {
 		return dao.delete(animal_no);
 	}
 
+	@Override
+	public AnimalDto selectoneDetail(String member_id) {
+		// TODO Auto-generated method stub
+		return dao.selectoneDetail(member_id);
+	}
+
 }

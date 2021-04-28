@@ -19,6 +19,16 @@
 		WHERE
 		ANIMAL_NO = #{animal_no}
 	</select>
+	
+	
+	<select id="selectoneDetail" parameterType="String"
+		resultType="AnimalDto">
+		SELECT ANIMAL_NO, ANIMAL_NAME, ANIMAL_GEN, ANIMAL_TYPE,
+		ANIMAL_AGE, ANIMAL_WEIGHT, ANIMAL_UNQ, MEMBER_ID
+		FROM ANIMAL
+		WHERE
+		MEMBER_ID = #{member_id}
+	</select>
 
 	<insert id="insert" parameterType="AnimalDto">
 		INSERT INTO ANIMAL
@@ -30,7 +40,10 @@
 	<update id="update" parameterType="AnimalDto">
 		UPDATE ANIMAL
 		SET ANIMAL_NAME =
-		#{animal_name}
+		#{animal_name}, ANIMAL_GEN = #{animal_gen},
+		ANIMAL_TYPE = #{animal_type},
+		ANIMAL_AGE = #{animal_age}, ANIMAL_WEIGHT=#{animal_weight}, ANIMAL_UNQ=#{animal_unq}
+		
 		WHERE ANIMAL_NO = #{animal_no}
 	</update>
 

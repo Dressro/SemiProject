@@ -8,6 +8,7 @@ public interface AnimalDao {
 	
 	public List<AnimalDto> selectList();
 	public AnimalDto selectOne(int animal_no);
+	public AnimalDto selectoneDetail(String member_id);
 	public int insert(AnimalDto dto);
 	public int update(AnimalDto dto);
 	public int delete(int animal_no);
