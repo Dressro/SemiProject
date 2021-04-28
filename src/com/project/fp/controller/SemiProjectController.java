@@ -942,6 +942,14 @@ public class SemiProjectController extends HttpServlet {
 			JsonObject result = new JsonObject();
 			result.add("result", resultArray);
 			response.getWriter().append(result.toString());
+		} else if (command.equals("chat_del")) {
+			int ch_num = Integer.parseInt(request.getParameter("ch_num"));
+			int res = c_biz.delete(ch_num);
+			if(res > 0) {
+				response.getWriter().append("삭제 성공");
+			}else {
+				response.getWriter().append("삭제 실패");
+			}
 		}
 
 		if (command.equals("test")) {

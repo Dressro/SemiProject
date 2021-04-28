@@ -23,54 +23,58 @@
 		$('.mymenus li').eq(0).trigger('click');
 		
 		$('.mymenu').eq(1).click(function () {
-			var member_grade = $('#member_grade').val();
-			var member_id = $('#member_id').val();
-			if(member_grade == '개인'){
-				$.ajax({
-					url:"semi.do",
-					method:"post",
-					data:{command:"chatlist_chat",member_grade:member_grade,member_id:member_id},
-					dataType:"json",
-					success:function(msg){
-						$('.chat_ul').empty();
-						var list = msg.result;
-						console.log(list);
-						for(var i = 0; i < list.length; i++){
-							var $li = $("<li class='Doctor_list' ondblclick='chat_go("+list[i].ch_num+");'>");
-							$li.append($("<div class='Doctor_list_info'><span>"+list[i].doctor_id+" 님과의 채팅방 </span></div>"));
-							$li.append($("<div class='Doctor_list_info'><span>"+list[i].ch_date+"</span></div>"));
-							$('.chat_ul').append($li);
-						}
-					},
-					error(){
-						alert("통신 실패");
-					}		
-				});
-			} else if(member_grade == '전문의'){
-				$.ajax({
-					url:"semi.do",
-					method:"post",
-					data:{command:"chatlist_chat",member_grade:member_grade,member_id:member_id},
-					dataType:"json",
-					success:function(msg){
-						$('.chat_ul').empty();
-						var list = msg.result;
-						console.log(list);
-						for(var i = 0; i < list.length; i++){
-							var $li = $("<li class='Doctor_list' ondblclick='chat_go("+list[i].ch_num+");'>");
-							$li.append($("<div class='Doctor_list_info'><span>"+list[i].member_id+" 님과의 채팅방 </span></div>"));
-							$li.append($("<div class='Doctor_list_info'><span>"+list[i].ch_date+"</span></div>"));
-							$('.chat_ul').append($li);
-						}
-					},
-					error(){
-						alert("통신 실패");
-					}		
-				});
-			}
-			
+			refresh();
 		});
 	});
+	function refresh() {
+		var member_grade = $('#member_grade').val();
+		var member_id = $('#member_id').val();
+		if(member_grade == '개인'){
+			$.ajax({
+				url:"semi.do",
+				method:"post",
+				data:{command:"chatlist_chat",member_grade:member_grade,member_id:member_id},
+				dataType:"json",
+				success:function(msg){
+					$('.chat_ul').empty();
+					var list = msg.result;
+					console.log(list);
+					for(var i = 0; i < list.length; i++){
+						var $li = $("<li class='Doctor_list' ondblclick='chat_go("+list[i].ch_num+");'>");
+						$li.append($("<div class='Doctor_list_info'><span>"+list[i].doctor_id+" 님과의 채팅방 </span></div>"));
+						$li.append($("<div class='Doctor_list_info'><span>"+list[i].ch_date+"</span></div>"));
+						$li.append($("<button type='button' onclick='chat_delete("+list[i].ch_num+");'>채팅방 삭제</button>"));
+						$('.chat_ul').append($li);
+					}
+				},
+				error(){
+					alert("통신 실패");
+				}		
+			});
+		} else if(member_grade == '전문의'){
+			$.ajax({
+				url:"semi.do",
+				method:"post",
+				data:{command:"chatlist_chat",member_grade:member_grade,member_id:member_id},
+				dataType:"json",
+				success:function(msg){
+					$('.chat_ul').empty();
+					var list = msg.result;
+					console.log(list);
+					for(var i = 0; i < list.length; i++){
+						var $li = $("<li class='Doctor_list' ondblclick='chat_go("+list[i].ch_num+");'>");
+						$li.append($("<div class='Doctor_list_info'><span>"+list[i].member_id+" 님과의 채팅방 </span></div>"));
+						$li.append($("<div class='Doctor_list_info'><span>"+list[i].ch_date+"</span></div>"));
+						$li.append($("<button type='button'>채팅방 삭제</button>"));
+						$('.chat_ul').append($li);
+					}
+				},
+				error(){
+					alert("통신 실패");
+				}		
+			});
+		}
+	}
 </script>
 <style type="text/css">
 #chat_mid{
@@ -178,28 +182,6 @@ String member_grade = (String) request.getAttribute("member_grade");
 							</c:when>
 							<c:otherwise>
 								<ul class = "chat_ul">
-								<c:forEach items="${c_list }" var="c_dto">
-									<li class="Doctor_list"  ondblclick="chat_go('${c_dto.ch_num }');">
-										<%
-											if(member_grade.equals("개인")){
-										%>
-										<div class="Doctor_list_info">
-											<span>${c_dto.doctor_id }님과의 채팅방</span>	
-										</div>
-										<%
-											} else {
-										%>
-										<div class="Doctor_list_info">
-											<span>${c_dto.member_id }님과의 채팅방</span>	
-										</div>
-										<%
-											}
-										%>
-										<div class="Doctor_list_info">
-											<span>${c_dto.ch_date }</span>	
-										</div>
-									</li>
-								</c:forEach>
 								</ul>
 							</c:otherwise>
 						</c:choose>
@@ -211,6 +193,28 @@ String member_grade = (String) request.getAttribute("member_grade");
 				var ch_num = num;
 				open("semi.do?command=chatboard&ch_num="+ch_num,"",
 				"width=500 , height= 700");
+			}
+			function chat_delete(num) {
+				var ch_num = num;
+				var del = confirm('채팅방 삭제 하겠습니까?');
+				if(del){
+					$.ajax({
+						url:"semi.do",
+						method:"post",
+						data:{command:"chat_del",ch_num:ch_num},
+						dataType:"text",
+						success:function(msg){
+							alert(msg);
+							refresh();
+						},
+						error(){
+							alert("통신 실패");
+						}
+						
+					});
+				}else{
+					alert("취소");
+				}
 			}
 		</script>
 
