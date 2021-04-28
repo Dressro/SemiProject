@@ -7,6 +7,7 @@ request.setCharacterEncoding("UTF-8");
 <%
 response.setContentType("text/html; charset=UTF-8");
 %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,7 +48,9 @@ response.setContentType("text/html; charset=UTF-8");
 						<div class="input-group mb-3">
 							<select class="custom-select" id="inputGroupSelect03" name="board_category">
 								<option selected>게시판을 선택해 주세요.</option>
+								<c:if test="${dto.member_grade eq '관리자' }">
 								<option value="N">공지사항</option>
+								</c:if>
 								<option value="F">자유게시판</option>
 								<option value="Q">상품문의</option>
 								<option value="D">실종신고</option>

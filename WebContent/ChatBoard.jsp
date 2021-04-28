@@ -128,14 +128,14 @@ int ch_num = (int) request.getAttribute("ch_num");
 		onMessage(event)
 	};
 	function onMessage(event) {
-		var message = event.data.split(":");
-		var sender = message[0];
-		var content = message[1];
-		textarea.value += sender+ " : "+ content + "\n";
+		var c_msg = event.data;
+		var $chat = $("<div class='chat-box'><div class='chat'>" + c_msg + "</div></div>");
+		$('#chat_con').append($chat);
 	}
 
 	function onOpen(event) {
-		textarea.value += "연결 성공\n";
+		alert("연결성공");
+
 		
 	}
 

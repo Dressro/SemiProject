@@ -120,11 +120,13 @@
 		onMessage(event)
 	};
 	function onMessage(event) {
-		textarea.value += event.data
+		var c_msg = event.data;
+		var $chat = $("<div class='chat-box'><div class='chat'>" + chatMsg + "</div><div class='chat-info chat-box'>"+ dateInfo +"</div></div>");
+		$('#chat-container').append($chat);
 	}
 
 	function onOpen(event) {
-		textarea.value += "연결 성공\n";
+		alert("연결성공");
 
 	}
 

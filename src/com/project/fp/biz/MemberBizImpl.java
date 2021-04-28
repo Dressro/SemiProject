@@ -146,7 +146,14 @@ public class MemberBizImpl implements MemberBiz {
 
 	@Override
 	public int delete(String member_id) {
-		return dao.delete(member_id);
+		String en_id = null;
+		try {
+			en_id = AES256_str.Encrypt(member_id);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dao.delete(en_id);
 	}
 
 	@Override
@@ -162,11 +169,11 @@ public class MemberBizImpl implements MemberBiz {
 	}
 
 	@Override
-	public MemberDto selectdetail(String member_id) {
+	public MemberDto selectDetail(String member_id) {
 		MemberDto detaildto = new MemberDto();
 		try {
 			String en_id = AES256_str.Encrypt(member_id);
-			detaildto = dao.selectdetail(en_id);
+			detaildto = dao.selectDetail(en_id);
 			detaildto.setMember_id(AES256_str.Decrypt(detaildto.getMember_id()));
 			detaildto.setMember_password(AES256_str.Decrypt(detaildto.getMember_password()));
 			detaildto.setMember_name(AES256_str.Decrypt(detaildto.getMember_name()));
@@ -181,6 +188,37 @@ public class MemberBizImpl implements MemberBiz {
 			e.printStackTrace();
 		}
 		return detaildto;
+	}
+
+	@Override
+	public int mypageupdate(MemberDto dto) {
+		try {
+			dto.setMember_id(AES256_str.Encrypt(dto.getMember_id()));
+			dto.setMember_nicname(AES256_str.Encrypt(dto.getMember_nicname()));
+			dto.setMember_email(AES256_str.Encrypt(dto.getMember_email()));
+			dto.setMember_phone(AES256_str.Encrypt(dto.getMember_phone()));
+			dto.setMember_addr(AES256_str.Encrypt(dto.getMember_addr()));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dao.mypageupdate(dto);
+	}
+
+	@Override
+	public int mypagemod(MemberDto dto) {
+		try {
+			dto.setMember_id(AES256_str.Encrypt(dto.getMember_id()));
+			dto.setMember_password(AES256_str.Encrypt(dto.getMember_password()));
+			dto.setMember_nicname(AES256_str.Encrypt(dto.getMember_nicname()));
+			dto.setMember_email(AES256_str.Encrypt(dto.getMember_email()));
+			dto.setMember_phone(AES256_str.Encrypt(dto.getMember_phone()));
+			dto.setMember_addr(AES256_str.Encrypt(dto.getMember_addr()));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dao.mypagemod(dto);
 	}
 
 

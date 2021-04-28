@@ -48,5 +48,10 @@
 		WHERE REPLY_GROUPNO = (SELECT REPLY_GROUPNO FROM BOARD_REPLY WHERE BOARD_NO = #{board_no})
 		AND REPLY_GROUPSEQ > (SELECT REPLY_GROUPSEQ FROM BOARD_REPLY WHERE BOARD_NO = #{board_no})
 	</update>
+	
+	<delete id="board_delete" parameterType="com.project.fp.dto.Board_ReplyDto">
+		DELETE FROM BOARD_REPLY
+		WHERE BOARD_NO = #{board_no}
+	</delete>
 
 </mapper>

@@ -14,5 +14,6 @@ public interface Board_ReplyBiz {
 	public int reply_groupseq_update(int board_no);
 	
 	public int replyProc(Board_ReplyDto Rdto);
+	public int board_delete(int board_no);
 
 }
