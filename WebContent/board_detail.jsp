@@ -111,10 +111,10 @@ File_TableDto f_dto = (File_TableDto)request.getAttribute("f_dto");
 				<div class="row justify-content-md-center">
 					<div class="input-group mb-3">
 						<div class="custom-file">
-							<c:if test="${b_dto.member_id == dto.member_id || dto.member_grade eq '관리자' }">
+							<c:if test="${b_dto.member_id == dto.member_nicname || dto.member_grade eq '관리자' }">
 								<button type="button" class="btn btn-outline-secondary" style="float: right; width: 10%; font-weight: bold" onclick="location.href='semi.do?command=deleteres&board_no=<%=b_dto.getBoard_no()%>'">삭  제</button>
 							</c:if>
-							<c:if test="${b_dto.member_id == dto.member_id }">
+							<c:if test="${b_dto.member_id == dto.member_nicname }">
 								<button type="button" class="btn btn-outline-secondary" style="float: right; width: 10%; font-weight: bold; margin-right: 10px;" onclick="location.href='semi.do?command=board_updateform&board_no=<%=b_dto.getBoard_no()%>'">수  정</button>
 							</c:if>
 						</div>
