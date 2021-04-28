@@ -305,7 +305,7 @@
 	<insert id="qna_insert" parameterType="BoardDto">
 		insert into board
 		values
-		(board_no_seq.nextval,null,null,board_qna_no_seq.nextval,null,#{board_title},
+		(board_no_seq.nextval,null,null,board_qna_seq.nextval,null,#{board_title},
 		#{board_content},sysdate,0,board_qna_groupno_seq.nextval,1,0,'N',#{board_category},#{member_id})
 	</insert>
 	<insert id="dec_insert" parameterType="BoardDto">

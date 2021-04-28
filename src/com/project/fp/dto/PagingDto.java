@@ -71,7 +71,7 @@ public class PagingDto {
 		// 3. 마지막 블록이 범위를 초과하지 않도록 계산
 		if (blockEnd > totalPage) {
 			blockEnd = totalPage;
-		}
+		} 
 		// 4. 이전을 눌렀을 때 이동할 페이지 번호
 		prevPage = (nowPage == 1) ? 1 : (nowBlock - 1) * DISPLAY_PAGE;
 		// 5. 다음을 눌렀을 때 이동할 페이지 번호

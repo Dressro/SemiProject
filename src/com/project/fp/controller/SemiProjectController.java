@@ -685,7 +685,7 @@ public class SemiProjectController extends HttpServlet {
 			}
 		} else if (command.equals("board_delete")) {
 			String[] board_no = request.getParameterValues("board_no");
-			String userID = request.getParameter("userID");
+			String userNicname = request.getParameter("userNicname");
 			String userGrade = request.getParameter("userGrade");
 			
 			for(int i = 0; i < board_no.length; i++) {
@@ -694,7 +694,7 @@ public class SemiProjectController extends HttpServlet {
 				
 				if(board_no[i] == null || board_no[i].length() == 0) {
 				
-				} else if (b_dto.getMember_id().equals(userID) || userGrade.equals("관리자")) {
+				} else if (b_dto.getMember_id().equals(userNicname) || userGrade.equals("관리자")) {
 						f_t_biz.board_delete(Integer.parseInt(board_no[i]));
 						b_r_biz.board_delete(Integer.parseInt(board_no[i]));
 						int b_res = b_biz.delete(Integer.parseInt(board_no[i]));
