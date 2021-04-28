@@ -846,14 +846,12 @@ public class SemiProjectController extends HttpServlet {
 			String content = "문자 내용 작성";
 			SMS.sendSMS(member_phone, content);
 		} else if (command.equals("translation")) {
-			String text = request.getParameter("text");
+			String text = request.getParameter("msg");
 			String source = request.getParameter("source");
 			String target = request.getParameter("target");
 			String result = papago.getTransSentence(text, source, target);
 			System.out.println(text + " : " + result);
-			request.setAttribute("text", text);
-			request.setAttribute("result", result);
-			dispatch(response, request, "translation_test.jsp");
+			response.getWriter().append(result);
 		} else if (command.equals("payment")) {
 			String pay_method = request.getParameter("pay_method");
 			String product = request.getParameter("product");

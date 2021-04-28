@@ -192,7 +192,7 @@ String member_grade = (String) request.getAttribute("member_grade");
 			function chat_go(num) {
 				var ch_num = num;
 				open("semi.do?command=chatboard&ch_num="+ch_num,"",
-				"width=500 , height= 700");
+				"width=800 , height=800");
 			}
 			function chat_delete(num) {
 				var ch_num = num;
