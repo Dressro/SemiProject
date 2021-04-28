@@ -110,4 +110,20 @@ public class Board_ReplyDaoImpl extends SqlMapConfig implements Board_ReplyDao {
 		return res;
 	}
 
+	@Override
+	public int board_delete(int board_no) {
+		int res = 0;
+
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.delete(namespace + "board_delete", board_no);
+			if (res > 0) {
+				session.commit();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	}
+	
 }

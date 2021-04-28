@@ -589,17 +589,33 @@ public class SemiProjectController extends HttpServlet {
 			}
 		} else if (command.equals("board_delete")) {
 			String[] board_no = request.getParameterValues("board_no");
-			if (board_no == null || board_no.length == 0) {
-			} else {
-				int f_res = f_t_biz.multiDelete(board_no);
-				int b_res = b_biz.multiDelete(board_no);
-				System.out.println(board_no);
-				if (b_res == board_no.length) {
-					jsResponse(response, "선택된 글들이 모두 삭제되었습니다.", "semi.do?command=board_free");
+			String userID = request.getParameter("userID");
+			String userGrade = request.getParameter("userGrade");
+			
+			for(int i = 0; i < board_no.length; i++) {
+				
+				BoardDto b_dto = b_biz.board_selectOne(Integer.parseInt(board_no[i]));
+				
+				if(board_no[i] == null || board_no[i].length() == 0) {
+				
+				} else if (b_dto.getMember_id().equals(userID) || userGrade.equals("관리자")) {
+						f_t_biz.board_delete(Integer.parseInt(board_no[i]));
+						b_r_biz.board_delete(Integer.parseInt(board_no[i]));
+						int b_res = b_biz.delete(Integer.parseInt(board_no[i]));
+						if (b_res > 0) {
+							System.out.println("삭제 성공");
+						} else {
+							jsResponse(response, "선택된 글들이 삭제되지 않았습니다.", "semi.do?command=board_free");
+							return;
+						}
+
 				} else {
-					jsResponse(response, "선택된 글들이 삭제되지 않았습니다.", "semi.do?command=board_free");
+					jsResponse(response, "다른 사용자의 게시물은 삭제되지 않았습니다.", "semi.do?command=board_free");
 				}
 			}
+			
+			jsResponse(response, "선택된 글들이 모두 삭제되었습니다.", "semi.do?command=board_free");
+			
 		} else if (command.equals("board_detail")) {
 			int board_no = Integer.parseInt(request.getParameter("board_no"));
 			BoardDto b_dto = b_biz.board_selectOne(board_no);

@@ -48,11 +48,13 @@
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
+		<c:if test="${dto.member_grade eq '관리자' }">
 		<tr>
 			<td colspan="4" align="right">
 				<input type="button" value="글작성" onclick="location.href='semi.do?command=board_insertform'" />
 			</td>
 		</tr>
+		</c:if>
 	</table>
 	
 	<jsp:include page="/board_paging.jsp">

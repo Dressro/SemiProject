@@ -54,5 +54,11 @@ public class Board_ReplyBizImpl implements Board_ReplyBiz {
 		
 		return (update + insert);
 	}
+	
+	@Override
+	public int board_delete(int board_no) {
+		
+		return dao.board_delete(board_no);
+	}
 
 }
