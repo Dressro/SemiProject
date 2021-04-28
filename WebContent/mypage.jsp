@@ -83,15 +83,10 @@ $(function(){
 </head>
 <body>
 
-<%
 
-MemberDto dto = (MemberDto) session.getAttribute("dto");
-if (dto == null) {
-	pageContext.forward("index.jsp");
-}
-%>
 	<jsp:include page="header.jsp" />
-
+	
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
 	
 	function chk(value){
@@ -106,11 +101,112 @@ if (dto == null) {
 			$(".animal").hide();
 		}
 	}
+	
+	function check() {
+		var member_email = $('input[name=member_email_1]').val() + "@"
+				+ $('select[name=member_email_2]').val();
+		$('input[name=member_email]').attr('value', member_email);
+		var member_phone = $('input[name=member_phone_1]').val() + "-"
+				+ $('input[name=member_phone_2]').val() + "-"
+				+ $('input[name=member_phone_3]').val();
+		$('input[name=member_phone]').attr('value', member_phone);
+		var member_addr = $('input[name=member_addr_1]').val() + " "
+				+ $('input[name=member_addr_2]').val();
+		$('input[name=member_addr]').attr('value', member_addr);
+	}
+	
+	$(function() {
+
+		$('input[name=member_password]').keyup(function() {
+			$('#chkNotice').html('');
+		});
+
+		$('input[name=member_password_chk]').keyup(
+				function() {
+					if ($('input[name=member_password]').val() != $(
+							'input[name=member_password_chk').val()) {
+						$('#chkNotice').html('비밀번호 일치하지 않음');
+						$('#chkNotice').attr('color', '#f82a2aa3');
+					} else {
+						$('#chkNotice').html('비밀번호 일치함');
+						$('#chkNotice').attr('color', '#199894b3');
+					}
+
+				});
+
+	});
+	function sendmailkey() {
+		var member_email = $('input[name=member_email_1]').val() + "@"
+				+ $('select[name=member_email_2]').val();
+		if ($('input[name=member_email_1]').val().trim() == ""
+				|| $('input[name=member_email_1]').val() == null) {
+			alert("이메일을 입력해 주세요");
+		} else {
+			open("semi.do?command=mailsend&member_email=" + member_email, "",
+					"width=200 , height= 200");
+		}
+	}
+
+	function sendsms() {
+		var member_phone = $('input[name=member_phone_1]').val()
+				+ $('input[name=member_phone_2]').val()
+				+ $('input[name=member_phone_3]').val();
+		if ($('input[name=member_phone_1]').val().trim() == ""
+				|| $('input[name=member_phone_1]').val() == null) {
+			alert("전화번호를 입력해 주세요");
+		} else {
+			open("semi.do?command=smssend&member_phone=" + member_phone, "",
+					"width=200 , height= 200");
+		}
+	}
+	
+	function address() {
+		new daum.Postcode(
+				{
+					oncomplete : function(data) {
+						var roadAddr = data.roadAddress;
+						var extraRoadAddr = '';
+
+						if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+							extraRoadAddr += data.bname;
+						}
+
+						if (data.buildingName !== '' && data.apartment === 'Y') {
+							extraRoadAddr += (extraRoadAddr !== '' ? ', '
+									+ data.buildingName : data.buildingName);
+						}
+
+						if (extraRoadAddr !== '') {
+							extraRoadAddr = ' (' + extraRoadAddr + ')';
+						}
+
+						document.getElementById('postcode').value = data.zonecode;
+						document.getElementById("addr_1").value = roadAddr;
+						document.getElementById("addr_1").value = data.jibunAddress;
+
+						if (data.autoRoadAddress) {
+							document.getElementById("addr_1").value = roadAddr;
+						} else if (data.autoJibunAddress) {
+							document.getElementById("addr_1").value = data.jibunAddress;
+						} else {
+						}
+					}
+				}).open();
+	}
+	
+	
 </script>
+<%
+
+MemberDto dto = (MemberDto) session.getAttribute("dto");
+AnimalDto a_dto = (AnimalDto)request.getAttribute("a_dto");
+
+if (dto == null) {
+	pageContext.forward("index.jsp");
+}
+%>
 	
 <form action="semi.do" method="post" >
-<input type="hidden" name="command" value="mypage">
-<input type="hidden" name="command" value="membermod">
 <input type="hidden" name="command" value="membermodres">
 
 
@@ -366,7 +462,6 @@ if (dto == null) {
 											-
 											<input class="general_signup_phone" type="text" name="member_phone_3" maxlength="4" size="3">
 											<input type="button" value="문자 전송" onclick="sendsms();" />
-											<input type="text" name="member_phone" maxlength="5" value="<%=dto.getMember_phone()%>">
 							</td>
 						</tr>
 						<tr>
@@ -405,9 +500,11 @@ if (dto == null) {
 						</table>
 						
 						<%
-						 if (dto.getMember_animal().equals("Y")){
-							 AnimalDto a_dto = (AnimalDto)request.getAttribute("a_dto");
+						 if (dto.getMember_animal().equals("Y")) {
+							
 						%>
+					
+						
 						<div id="animal">
 						<input type="hidden" name="animal_no" value="<%=a_dto.getAnimal_no()%>">
 						<table border="1">
@@ -460,7 +557,7 @@ if (dto == null) {
 						</tr>
 						<tr class="animal">
 							<th>나이</th>
-							<td><select id="id2" name="animal_age">
+							<td><select id="select_age" name="animal_age">
 									<option value="1">1</option>
 									<option value="2">2</option>
 									<option value="3">3</option>
@@ -495,7 +592,7 @@ if (dto == null) {
 						</tr>
 						<tr class="animal">
 							<th>체중</th>
-							<td><select id="id3" name="animal_weight">
+							<td><select id="select_weight" name="animal_weight">
 									<option value="1">1kg</option>
 									<option value="2">2kg</option>
 									<option value="3">3kg</option>
@@ -646,7 +743,7 @@ if (dto == null) {
 						<tr>
 							<td colspan="9" align="right">
 							<button type="submit"
-								value="회원정보수정" onclick="check();" /></button> 
+								value="회원정보수정" onclick="location.href='semi.do?command=membermod&member_id=${dto.member_id }'" /></button> 
 								<input type="button" value="취소"
 								onclick="location.href='index.jsp'" /></td>
 						</tr>
@@ -654,14 +751,27 @@ if (dto == null) {
 					
 			</section>
 			
-			<script type="text/javascript">
+	<script type="text/javascript">
 		var phone = "<%=dto.getMember_phone()%>";
 		var phonesplit = phone.split('-');
 		var phonenum = document.getElementsByClassName("general_signup_phone");
 		for(var i = 0 ; i < phonesplit.length; i++) {
-		    alert(phonesplit[i]);
 		    phonenum[i].value = phonesplit[i];
-		</script>
+		}
+		$(function(){
+		var email = "<%=dto.getMember_email()%>";
+		var emailsplit = email.split('@');
+			document.getElementById("general_signup_email").value = emailsplit[0];
+			$('#select_email').val(emailsplit[1]).prop("selected",true);
+		});
+		
+		$(function(){
+			$('#select_age').val(<%=a_dto.getAnimal_age()%>).prop("selected",true);
+			$('#select_weight').val(<%=a_dto.getAnimal_weight()%>).prop("selected",true);
+		});
+		
+		
+	</script>
 			
 	
 

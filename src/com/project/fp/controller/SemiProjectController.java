@@ -268,7 +268,7 @@ public class SemiProjectController extends HttpServlet {
 			dispatch(response, request, "memberdetail.jsp");
 		} else if(command.equals("membermod")) {
 			String member_id = request.getParameter("member_id");
-			MemberDto m_dto = new MemberDto();
+			MemberDto m_dto = null;
 			MemberDto dto = m_biz.selectOne(m_dto);
 			AnimalDto a_dto = a_biz.selectoneDetail(member_id);
 			request.setAttribute("dto", dto);
