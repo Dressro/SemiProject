@@ -299,7 +299,7 @@
 	<insert id="notice_insert" parameterType="BoardDto">
 		insert into board
 		values
-		(board_no_seq.nextval,null,board_notice_no_seq.nextval,null,null,#{board_title},
+		(board_no_seq.nextval,null,board_notice_seq.nextval,null,null,#{board_title},
 		#{board_content},sysdate,0,0,0,0,'N',#{board_category},#{member_id})
 	</insert>
 	<insert id="qna_insert" parameterType="BoardDto">
@@ -311,7 +311,7 @@
 	<insert id="dec_insert" parameterType="BoardDto">
 		insert into board
 		values
-		(board_no_seq.nextval,null,null,null,board_dec_no_seq.nextval,#{board_title},
+		(board_no_seq.nextval,null,null,null,board_dec_seq.nextval,#{board_title},
 		#{board_content},sysdate,0,0,0,0,'N',#{board_category},#{member_id})
 	</insert>
 	<insert id="free_answerinsert" parameterType="BoardDto">
@@ -332,7 +332,7 @@
 	<insert id="qna_answerinsert" parameterType="BoardDto">
 		insert into board
 		values
-		(board_no_seq.nextval,null,null,board_qna_no_seq.nextval,null,#{board_title},
+		(board_no_seq.nextval,null,null,board_qna_seq.nextval,null,#{board_title},
 		#{board_content},sysdate,0,
 		(select board_groupno from board where
 		board_qna_no = #{board_qna_no}),
