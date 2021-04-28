@@ -18,87 +18,99 @@
 	margin-bottom: 15px;
 	margin-top: 25px;
 }
-#animal_mid_con{
+
+#animal_mid_con {
 	width: 1200px;
 	margin: 0 auto;
 	min-height: 1000px;
 }
-#animal_hospital_search_div{
-	position:relative;
-	height:50px;
+
+#animal_hospital_search_div {
+	position: relative;
+	height: 50px;
 }
-.animal_hospital_search{
-	display:inline-block;
-	background : #fff;
-	height : 20px;
-	width : 50%;
+
+.animal_hospital_search {
+	display: inline-block;
+	background: #fff;
+	height: 20px;
+	width: 50%;
 	border: solid 1px #dadada;
-	padding:13px;
+	padding: 13px;
 	margin-left: 300px;
 }
-.animal_hospital_search_text{
-	display :inline-block;
-	height : 25px;
-	width : 85%;
-	border:none;
+
+.animal_hospital_search_text {
+	display: inline-block;
+	height: 25px;
+	width: 85%;
+	border: none;
 	font-size: 15px;
 	padding-right: 30px;
 	padding-left: 10px;
 }
-.animal_hospital_name{
+
+.animal_hospital_name {
 	padding: 10px;
 }
-.animal_hospital_name_ul{
 
+.animal_hospital_name_ul {
+	
 }
-.animal_hospital_list{
-	height:100px;
-	width:100%;
+
+.animal_hospital_list {
+	height: 100px;
+	width: 100%;
 	border-top: 1px solid #dadada;
 }
-.animal_hospital_list:hover{
+
+.animal_hospital_list:hover {
 	background: #e2e2e2;
 }
-.animal_hospital_list:last-child{
+
+.animal_hospital_list:last-child {
 	border-bottom: 1px solid #dadada;
 }
-.animal_hospital_list_div{
-	float:left;
-	line-height:35px;
-	text-align:center;
-	width:100px;
-	height:100%;
+
+.animal_hospital_list_div {
+	float: left;
+	line-height: 35px;
+	text-align: center;
+	width: 100px;
+	height: 100%;
 }
-.animal_hospital_list_info{
+
+.animal_hospital_list_info {
 	padding: 5px;
 	font-size: 14px;
 	font-weight: bolder;
 }
 </style>
 
+
 </head>
 <body>
-	
-	<jsp:include page="header.jsp" />	
-	
-		<div id="animal_mid_con">
-			
-			<div class="col-lg-12">
+
+	<jsp:include page="header.jsp" />
+
+	<div id="animal_mid_con">
+
+		<div class="col-lg-12">
 			<div class="cart__coupon">
-			<form action="semi.do" method="post">
-			<input type="hidden" name="command" value="animal_hospital_search"/>
-			<input type="text" name="hospitial_name" placeholder="동물병원 검색" value="">
-			<button type="submit">검색</button>
-			</form>
-			</div>	
+				<form action="semi.do" method="post">
+					<input type="hidden" name="command" value="animal_hospital_search" />
+					<input type="text" name="hospitial_name" placeholder="동물병원 검색" value="">
+					<button type="submit">검색</button>
+				</form>
 			</div>
-			<div id="map"></div>
-			
-			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6cb234998221d5b514c1db1f8c50cf56"></script>
-			
-				
-		
-			<script>
+		</div>
+		<div id="map"></div>
+
+		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6cb234998221d5b514c1db1f8c50cf56"></script>
+
+
+
+		<script>
 			<%--
 			var latitude = 0;
 			var longitude = 0;
@@ -176,46 +188,63 @@
 			});
 			</script>
 
+		<div>
 			<div>
-				<div>
-					<div class ="animal_hospital_name">
-						<h3>동물병원</h3>
-					</div>
-					<div class="animal_hospital_name">
-						<ul class = "animal_hospital_name_ul">
+				<div class="animal_hospital_name">
+					<h3>동물병원</h3>
+				</div>
+				<div class="animal_hospital_name">
+					<ul class="animal_hospital_name_ul">
 						<c:forEach items="${list }" var="h_dto">
-							<li class="animal_hospital_list">
-								<div class = "animal_hospital_list_div">
-									img
+							<li class="animal_hospital_list" onclick="animal_hospital_loc('${h_dto.hospital_addr}');">
+								<div class="animal_hospital_list_div">img</div>
+								<div class="animal_hospital_list_info">
+									<span>${h_dto.hospital_addr}</span>
 								</div>
 								<div class="animal_hospital_list_info">
-									<span>${h_dto.hospital_addr}</span>	
+									<span>${h_dto.hospital_name}</span>
 								</div>
 								<div class="animal_hospital_list_info">
-									<span>${h_dto.hospital_name}</span>	
-								</div>
-								<div class="animal_hospital_list_info">
-									<span>${h_dto.hospital_phone}</span>	
+									<span>${h_dto.hospital_phone}</span>
 								</div>
 							</li>
-							
-							</c:forEach>
-						</ul>
-					</div>
+
+						</c:forEach>
+					</ul>
 				</div>
-			<jsp:include page="/animal_hospital_paging.jsp">
-				<jsp:param value="${Animal_hospital_Command }" name="command"/>
-				<jsp:param value="${Pdto.nowBlock}" name="nowBlock" />
-				<jsp:param value="${Pdto.blockBegin }" name="blockBegin"/>
-				<jsp:param value="${Pdto.blockEnd }" name="blockEnd"/>
-	  			<jsp:param value="${Pdto.nowPage}" name="nowPage" />
-	 			<jsp:param value="${Pdto.blockBegin}" name="blockBegin" />
-	  			<jsp:param value="${Pdto.blockEnd}" name="blockEnd" />
-	  			<jsp:param value="${Pdto.totalBlock}" name="totalBlock" />
-			</jsp:include>
 			</div>
+			<jsp:include page="/animal_hospital_paging.jsp">
+				<jsp:param value="${Animal_hospital_Command }" name="command" />
+				<jsp:param value="${Pdto.nowBlock}" name="nowBlock" />
+				<jsp:param value="${Pdto.blockBegin }" name="blockBegin" />
+				<jsp:param value="${Pdto.blockEnd }" name="blockEnd" />
+				<jsp:param value="${Pdto.nowPage}" name="nowPage" />
+				<jsp:param value="${Pdto.blockBegin}" name="blockBegin" />
+				<jsp:param value="${Pdto.blockEnd}" name="blockEnd" />
+				<jsp:param value="${Pdto.totalBlock}" name="totalBlock" />
+			</jsp:include>
 		</div>
-		
-		<jsp:include page="bottom.jsp" />	
+		<script type="text/javascript">
+					function animal_hospital_loc(loc) {
+						var location = loc
+						var geocoder = new kakao.maps.services.Geocoder();
+
+						// 주소로 좌표를 검색합니다
+						geocoder.addressSearch(location, function(result, status) {
+
+						    // 정상적으로 검색이 완료됐으면 
+						     if (status === kakao.maps.services.Status.OK) {
+
+						        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+						        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+						        map.setCenter(coords);
+						    } 
+						});
+					}
+				</script>
+	</div>
+
+	<jsp:include page="bottom.jsp" />
 </body>
 </html>
