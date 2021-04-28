@@ -35,7 +35,7 @@
 				<c:forEach items="${list }" var="dto">
 					<tr>
 						<td>${dto.board_qna_no }</td>
-						<td>${dto.member_nicname }</td>
+						<td>${dto.member_id }</td>
 						<td>
 							<c:forEach begin="1" end="${dto.board_titletab }">
 								&nbsp;
