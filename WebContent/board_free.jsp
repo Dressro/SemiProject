@@ -75,9 +75,9 @@ response.setContentType("text/html; charset=UTF-8");
       <h2 class="mb-5">자유게시판</h2>
       <div style="float: right;">
               <select data-trigger="" name="choices-single-defaul" class="search_category" style="padding: 3.5px;">
-                <option selected value="T_C">제목+내용</option>
+                <option selected value="T_C">작성자+내용</option>
                 <option value="W">작성자</option>
-				<option value="T">제목만</option>
+				<option value="T">내용만</option>
               </select>
             <input id="search" type="text" class="search_text" value=""/>
             <button class="s-btn" type="button" onclick="search();">검색</button>
