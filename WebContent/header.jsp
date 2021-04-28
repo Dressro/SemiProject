@@ -79,6 +79,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 if (dto == null) {
 %>
 					<li id="login"><a class="li_rigit_a" href="semi.do?command=login">로그인</a></li>
+					<li><a href="semi.do?command=signup">회원가입</a></li>
 <%
 } else {
 %>
@@ -88,7 +89,7 @@ if (dto == null) {
 <%
 }
 %>
-					<li><a href="semi.do?command=signup">회원가입</a></li>
+					
 </ul>
  </nav>
 <div class="header__option__right">

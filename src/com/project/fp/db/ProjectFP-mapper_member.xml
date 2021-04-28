@@ -95,10 +95,13 @@
 		MEMBER_PASSWORD = #{member_password}
 		WHERE MEMBER_ID = #{member_id}
 	</update>
-
-
-
-
+	
+	<update id="grade_update" parameterType="MemberDto">
+		UPDATE MEMBER
+		SET
+		MEMBER_GRADE = #{member_grade}
+		WHERE MEMBER_ID = #{member_id}
+	</update>
 	<delete id="delete" parameterType="String">
 		UPDATE MEMBER
 		SET MEMBER_JOIN =
