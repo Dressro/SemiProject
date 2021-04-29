@@ -18,9 +18,9 @@ public interface BoardDao {
 	public List<BoardDto> board_MC_search(BoardDto dto);
 	public List<BoardDto> board_selectList(BoardDto dto);
 	public BoardDto board_selectOne(int board_no);
-	public List<BoardDto> free_M_search(PagingDto Pdto);
-	public List<BoardDto> free_C_search(PagingDto Pdto); 
-	public List<BoardDto> free_MC_search(PagingDto Pdto); 
+	public List<BoardDto> Board_All_M_search(PagingDto Pdto);
+	public List<BoardDto> Board_All_C_search(PagingDto Pdto); 
+	public List<BoardDto> Board_All_MC_search(PagingDto Pdto); 
 	public List<BoardDto> free_selectList(PagingDto Pdto);
 	public List<BoardDto> notice_selectList(PagingDto Pdto);
 	public List<BoardDto> qna_selectList(PagingDto Pdto);

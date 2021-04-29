@@ -269,15 +269,15 @@ public class SemiProjectController extends HttpServlet {
 				dto.setMember_grade(member_grade[i]);
 				res = m_biz.grade_update(dto);
 				res++;
-			} 
-		}else if (command.equals("memberdetail")) {
+			}
+		} else if (command.equals("memberdetail")) {
 			String member_id = request.getParameter("member_id");
 			MemberDto dto = m_biz.selectDetail(member_id);
 			AnimalDto a_dto = a_biz.selectoneDetail(member_id);
 			request.setAttribute("dto", dto);
 			request.setAttribute("a_dto", a_dto);
 			dispatch(response, request, "memberdetail.jsp");
-		} else if(command.equals("membermod")) {
+		} else if (command.equals("membermod")) {
 			String member_id = request.getParameter("member_id");
 			MemberDto m_dto = null;
 			MemberDto dto = m_biz.selectOne(m_dto);
@@ -285,9 +285,8 @@ public class SemiProjectController extends HttpServlet {
 			request.setAttribute("dto", dto);
 			request.setAttribute("a_dto", a_dto);
 			dispatch(response, request, "mypage.jsp");
-			
-			
-		} else if(command.equals("membermodres")) {	
+
+		} else if (command.equals("membermodres")) {
 			String member_nicname = request.getParameter("member_nicname");
 			String member_email = request.getParameter("member_email_1");
 			String member_phone = request.getParameter("member_phone");
@@ -296,7 +295,7 @@ public class SemiProjectController extends HttpServlet {
 			String member_id = request.getParameter("member_id");
 			String member_password = request.getParameter("member_password");
 			MemberDto dto = new MemberDto();
-			
+
 			dto.setMember_nicname(member_nicname);
 			dto.setMember_email(member_email);
 			dto.setMember_phone(member_phone);
@@ -304,7 +303,7 @@ public class SemiProjectController extends HttpServlet {
 			dto.setMember_animal(member_animal);
 			dto.setMember_id(member_id);
 			dto.setMember_password(member_password);
-			
+
 			int m_res = m_biz.mypagemod(dto);
 			int a_res = 0;
 			if (member_animal.equals("Y")) {
@@ -325,14 +324,14 @@ public class SemiProjectController extends HttpServlet {
 				a_dto.setAnimal_unq(animal_unq);
 				a_res = a_biz.update(a_dto);
 			}
-			
-			int res = m_res + a_res; 
+
+			int res = m_res + a_res;
 			if (res > 0) {
 				jsResponse(response, "권한수정 성공", "semi.do?command=memberlist");
 			} else {
 				jsResponse(response, "권한수정 실패", "semi.do?command=memberlist");
 				jsResponse(response, "수정실패", "#");
-			} 
+			}
 		} else if (command.equals("memberdetail")) {
 			String member_id = request.getParameter("member_id");
 			MemberDto dto = m_biz.selectDetail(member_id);
@@ -340,7 +339,7 @@ public class SemiProjectController extends HttpServlet {
 			request.setAttribute("dto", dto);
 			request.setAttribute("a_dto", a_dto);
 			dispatch(response, request, "memberdetail.jsp");
-		} else if(command.equals("memberupdate")) {
+		} else if (command.equals("memberupdate")) {
 			String member_nicname = request.getParameter("member_nicname");
 			String member_email = request.getParameter("member_email_1");
 			String member_phone = request.getParameter("member_phone");
@@ -355,11 +354,11 @@ public class SemiProjectController extends HttpServlet {
 			dto.setMember_addr(member_addr);
 			dto.setMember_animal(member_animal);
 			dto.setMember_id(member_id);
-			
+
 			int m_res = m_biz.mypageupdate(dto);
 			int a_res = 0;
 			if (member_animal.equals("Y")) {
-				
+
 				int animal_no = Integer.parseInt(request.getParameter("animal_no"));
 				String animal_name = request.getParameter("animal_name");
 				String animal_gen = request.getParameter("animal_gen");
@@ -392,21 +391,36 @@ public class SemiProjectController extends HttpServlet {
 			if (request.getParameter("nowPage") != null) {
 				nowPage = Integer.parseInt(request.getParameter("nowPage"));
 			}
-			int count = b_biz.notice_allCount();
-			System.out.println(nowPage);
-			System.out.println(count);
-			PagingDto Pdto = new PagingDto(count, nowPage);
-
-			List<BoardDto> list = b_biz.notice_selectList(Pdto);
-			request.setAttribute("BoardCommand", command);
-			request.setAttribute("list", list);
-			request.setAttribute("Pdto", Pdto);
-			dispatch(response, request, "board_notice.jsp");
+			String category = request.getParameter("category");
+			String s_c = request.getParameter("s_c");
+			String s_t = request.getParameter("s_t");
+			if (s_c == null) {
+				int count = b_biz.notice_allCount();
+				PagingDto Pdto = new PagingDto(count, nowPage);
+				List<BoardDto> list = b_biz.notice_selectList(Pdto);
+				request.setAttribute("BoardCommand", command);
+				request.setAttribute("list", list);
+				request.setAttribute("Pdto", Pdto);
+				dispatch(response, request, "board_notice.jsp");
+			} else {
+				BoardDto dto = new BoardDto();
+				dto.setBoard_title(s_t);
+				dto.setBoard_category(category);
+				List<BoardDto> slist = b_biz.board_C_search(dto);
+				int count = slist.size();
+				PagingDto Pdto = new PagingDto(count, nowPage, s_c, s_t,category);
+				List<BoardDto> list = b_biz.Board_All_C_search(Pdto);
+				request.setAttribute("BoardCommand", command);
+				request.setAttribute("list", list);
+				request.setAttribute("Pdto", Pdto);
+				dispatch(response, request, "board_notice.jsp");
+			}
 		} else if (command.equals("board_free")) {
 			int nowPage = 1;
 			if (request.getParameter("nowPage") != null) {
 				nowPage = Integer.parseInt(request.getParameter("nowPage"));
 			}
+			String category = request.getParameter("category");
 			String s_c = request.getParameter("s_c");
 			String s_t = request.getParameter("s_t");
 			if (s_c == null) {
@@ -420,34 +434,38 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				if (s_c.equals("W")) {
 					BoardDto dto = new BoardDto();
+					dto.setBoard_category(category);
 					dto.setMember_id(s_t);
 					List<BoardDto> slist = b_biz.board_M_search(dto);
 					int count = slist.size();
-					PagingDto Pdto = new PagingDto(count, nowPage, s_c, s_t);
-					List<BoardDto> list = b_biz.free_M_search(Pdto);
+					PagingDto Pdto = new PagingDto(count, nowPage, s_c, s_t,category);
+					List<BoardDto> list = b_biz.Board_All_M_search(Pdto);
 					request.setAttribute("BoardCommand", command);
 					request.setAttribute("list", list);
 					request.setAttribute("Pdto", Pdto);
 					dispatch(response, request, "board_free.jsp");
 				} else if (s_c.equals("T")) {
 					BoardDto dto = new BoardDto();
-					dto.setBoard_content(s_t);
+					dto.setBoard_title(s_t);
+					dto.setBoard_category(category);
+					System.out.println(category);
 					List<BoardDto> slist = b_biz.board_C_search(dto);
 					int count = slist.size();
-					PagingDto Pdto = new PagingDto(count, nowPage, s_c, s_t);
-					List<BoardDto> list = b_biz.free_C_search(Pdto);
+					PagingDto Pdto = new PagingDto(count, nowPage, s_c, s_t,category);
+					List<BoardDto> list = b_biz.Board_All_C_search(Pdto);
 					request.setAttribute("BoardCommand", command);
 					request.setAttribute("list", list);
 					request.setAttribute("Pdto", Pdto);
 					dispatch(response, request, "board_free.jsp");
 				} else if (s_c.equals("T_C")) {
 					BoardDto dto = new BoardDto();
-					dto.setMember_id(s_t);
+					dto.setBoard_category(category);
+					dto.setBoard_title(s_t);
 					dto.setBoard_content(s_t);
 					List<BoardDto> slist = b_biz.board_MC_search(dto);
 					int count = slist.size();
-					PagingDto Pdto = new PagingDto(count, nowPage, s_c, s_t);
-					List<BoardDto> list = b_biz.free_MC_search(Pdto);
+					PagingDto Pdto = new PagingDto(count, nowPage, s_c, s_t,category);
+					List<BoardDto> list = b_biz.Board_All_MC_search(Pdto);
 					request.setAttribute("BoardCommand", command);
 					request.setAttribute("list", list);
 					request.setAttribute("Pdto", Pdto);
@@ -604,7 +622,9 @@ public class SemiProjectController extends HttpServlet {
 				}
 			}
 		} else if (command.equals("board_insertform")) {
-			response.sendRedirect("board_insertform.jsp");
+			String category = request.getParameter("category");
+			request.setAttribute("category", category);
+			dispatch(response, request, "board_insertform.jsp");
 		} else if (command.equals("board_insertres")) {
 
 			String file_path = request.getSession().getServletContext().getRealPath("fileupload");
@@ -692,31 +712,19 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				jsResponse(response, "삭제 실패", "semi.do?command=board_detail&board_no=" + board_no);
 			}
-		} else if (command.equals("board_free_delete")) {
+		} else if (command.equals("board_All_delete")) {
+			String where = request.getParameter("where");
 			String[] board_no = request.getParameterValues("board_no");
 			if (board_no == null || board_no.length == 0) {
 			} else {
 				int f_res = f_t_biz.multiDelete(board_no);
 				int b_res = b_biz.multiDelete(board_no);
 				if (b_res == board_no.length) {
-					jsResponse(response, "선택된 글들이 모두 삭제되었습니다.", "semi.do?command=board_free");
+					jsResponse(response, "선택된 글들이 모두 삭제되었습니다.", "semi.do?command=" + where);
 				} else {
-					jsResponse(response, "다른 사용자의 게시물은 삭제되지 않았습니다.", "semi.do?command=board_free");
+					jsResponse(response, "다른 사용자의 게시물은 삭제되지 않았습니다.", "semi.do?command=" + where);
 				}
 			}
-		} else if (command.equals("board_delete")) {
-			String[] board_no = request.getParameterValues("board_no");
-			if (board_no == null || board_no.length == 0) {
-			} else {
-				int f_res = f_t_biz.multiDelete(board_no);
-				int b_res = b_biz.multiDelete(board_no);
-				if (b_res == board_no.length) {
-					jsResponse(response, "선택된 글들이 모두 삭제되었습니다.", "semi.do?command=boardlist");
-				} else {
-					jsResponse(response, "선택된 글들이 삭제되지 않았습니다.", "semi.do?command=boardlist");
-				}
-			}
-
 		} else if (command.equals("board_detail")) {
 			int board_no = Integer.parseInt(request.getParameter("board_no"));
 			BoardDto b_dto = b_biz.board_selectOne(board_no);
@@ -947,7 +955,9 @@ public class SemiProjectController extends HttpServlet {
 			response.getWriter().append(result.toString());
 		} else if (command.equals("chat_del")) {
 			int ch_num = Integer.parseInt(request.getParameter("ch_num"));
-			int res = c_biz.delete(ch_num);
+			int c_c_res = c_c_biz.delete(ch_num);
+			int c_res = c_biz.delete(ch_num);
+			int res = c_res + c_c_res;
 			if (res > 0) {
 				response.getWriter().append("삭제 성공");
 			} else {
