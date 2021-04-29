@@ -170,11 +170,15 @@ CREATE TABLE FILE_TABLE(
 	CONSTRAINT FILE_TABLE_ANIMAL_NO_KF FOREIGN KEY (ANIMAL_NO) REFERENCES ANIMAL (ANIMAL_NO)
 );
 
+alter table file_table add prod_num number;
+alter table file_table add constraint FILE_TABLE_PROD_NUM FOREIGN KEY (PROD_NUM) REFERENCES PRODUCT(PROD_NUM); 
 
+SELECT * FROM FILE_TABLE;
 
 SELECT * FROM MEMBER;
 
 
+select * from ORDER_TABLE;
 
 select * from member m , file_table f
 where m.member_id = f.member_id

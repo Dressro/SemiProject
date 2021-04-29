@@ -1,13 +1,16 @@
 <%@page import="com.project.fp.dto.File_TableDto"%>
 <%@page import="com.project.fp.dto.BoardDto"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-    
-<% request.setCharacterEncoding("UTF-8"); %>
-<% response.setContentType("text/html; charset=UTF-8"); %>
+
+<%
+request.setCharacterEncoding("UTF-8");
+%>
+<%
+response.setContentType("text/html; charset=UTF-8");
+%>
 
 <!DOCTYPE html>
 <html>
@@ -16,30 +19,59 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-	
-	#down{
+#down {
 	cursor: pointer;
-	width:270px;
-	}
-	#down:hover{color:red;}
-	#text{
-		pointer-events: none;
-	}
-	.replyListParent{
-		margin-left: 20px; border: 1px solid black; width:350px; padding: 2px 12px 2px 12px;
-	}
-	.replyListChild{
-		margin-left: 60px; border: 1px solid black; width:500px; padding: 2px 12px 2px 12px;
-	}
-	
-	
+	width: 270px;
+}
+
+#down:hover {
+	color: red;
+}
+
+#text {
+	pointer-events: none;
+}
+
+.replyListParent {
+	margin-left: 20px;
+	border: 1px solid black;
+	width: 350px;
+	padding: 2px 12px 2px 12px;
+}
+
+.replyListChild {
+	margin-left: 60px;
+	border: 1px solid black;
+	width: 500px;
+	padding: 2px 12px 2px 12px;
+}
+
+#replyWrite {
+	height: 30px;
+}
+
+#reply_nickname {
+	float: left;
+	width: 7%;
+	height: 30px;
+	text-align: center;
+}
+
+#reply_span {
+	display: inline-block;
+	text-align: center;
+	height: 30px;
+}
+
+#reply_regist {
+	height: 30px;
+}
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
-<% BoardDto b_dto = (BoardDto)request.getAttribute("b_dto");
-File_TableDto f_dto = (File_TableDto)request.getAttribute("f_dto");
-%>		
-<%if(f_dto!=null){ %>
+<%BoardDto b_dto = (BoardDto) request.getAttribute("b_dto");
+File_TableDto f_dto = (File_TableDto) request.getAttribute("f_dto");%>		
+<%if (f_dto != null) {%>
 	function filedown(){
 		var url = "semi.do?command=filedown&file_path=<%=f_dto.getFile_path()%>&file_new_name=<%=f_dto.getFile_new_name()%>";
 		$(location).attr('href',encodeURI(url));
@@ -72,28 +104,35 @@ File_TableDto f_dto = (File_TableDto)request.getAttribute("f_dto");
 </head>
 <body>
 	<jsp:include page="header.jsp" />
-	<h3>Detail</h3>
-	<form action="semi.do" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="member_id" value="<%=b_dto.getMember_id()%>" />
-		<input type="hidden" name="command" value="board_updateres" />
-		<div class="container">
+	<div class="container">
+		<form action="semi.do" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="member_id" value="<%=b_dto.getMember_id()%>" />
+			<input type="hidden" name="command" value="board_updateres" />
 			<div class="content" style="width: 70%">
 				<div class="row justify-content-md-center">
 					<div class="col-sm-9">
-						닉&nbsp;네&nbsp;임&nbsp; : <input type="text" name="member_id" value="<%=b_dto.getMember_id() %>" readonly="readonly">
+						닉&nbsp;네&nbsp;임&nbsp; :
+						<input type="text" name="member_id" value="<%=b_dto.getMember_id()%>" readonly="readonly">
 						<div class="input-group mb-3">
-							
-							제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목 : <input type="text" class="form-control" name="board_title" size="100" value="<%=b_dto.getBoard_title()%>" readonly="readonly">
+
+							제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목 :
+							<input type="text" class="form-control" name="board_title" size="100" value="<%=b_dto.getBoard_title()%>" readonly="readonly">
 						</div>
 					</div>
 					<div class="col-sm-3">
 						<div class="input-group mb-3">
-							카테고리 : <input type="text" name="board_category" value="" readonly="readonly">
+							카테고리 :
+							<input type="text" name="board_category" value="" readonly="readonly">
 						</div>
 						<div align="right">
-							<%if(f_dto!=null){ %>
-							<div id="down" onclick="filedown();"><%=f_dto.getFile_ori_name() %>(<%=f_dto.getFile_size() %>)</div>
-							<%} %>
+							<%
+							if (f_dto != null) {
+							%>
+							<div id="down" onclick="filedown();"><%=f_dto.getFile_ori_name()%>(<%=f_dto.getFile_size()%>)
+							</div>
+							<%
+							}
+							%>
 						</div>
 					</div>
 				</div>
@@ -102,7 +141,7 @@ File_TableDto f_dto = (File_TableDto)request.getAttribute("f_dto");
 					<div class="col_c" style="margin-bottom: 30px">
 						<div class="input-group">
 							<div contentEditable="true" id="text">
- 					 			<%=b_dto.getBoard_content() %>
+								<%=b_dto.getBoard_content()%>
 							</div>
 						</div>
 					</div>
@@ -112,128 +151,129 @@ File_TableDto f_dto = (File_TableDto)request.getAttribute("f_dto");
 					<div class="input-group mb-3">
 						<div class="custom-file">
 							<c:if test="${b_dto.member_id == dto.member_nicname || dto.member_grade eq '관리자' }">
-								<button type="button" class="btn btn-outline-secondary" style="float: right; width: 10%; font-weight: bold" onclick="location.href='semi.do?command=deleteres&board_no=<%=b_dto.getBoard_no()%>'">삭  제</button>
+								<button type="button" class="btn btn-outline-secondary" style="float: right; width: 10%; font-weight: bold" onclick="location.href='semi.do?command=deleteres&board_no=<%=b_dto.getBoard_no()%>'">삭 제</button>
 							</c:if>
 							<c:if test="${b_dto.member_id == dto.member_nicname }">
-								<button type="button" class="btn btn-outline-secondary" style="float: right; width: 10%; font-weight: bold; margin-right: 10px;" onclick="location.href='semi.do?command=board_updateform&board_no=<%=b_dto.getBoard_no()%>'">수  정</button>
+								<button type="button" class="btn btn-outline-secondary" style="float: right; width: 10%; font-weight: bold; margin-right: 10px;" onclick="location.href='semi.do?command=board_updateform&board_no=<%=b_dto.getBoard_no()%>'">수 정</button>
 							</c:if>
 						</div>
 					</div>
 				</div>
 			</div>
+		</form>
+
+
+
+
+		<br /> <br /> <br /> <br />
+
+
+		<div>
+			<c:choose>
+				<c:when test="${empty b_r_list }">
+					<p>--------작성된 댓글이 없습니다.----------</p>
+				</c:when>
+				<c:otherwise>
+					<c:forEach var="replyList" items="${b_r_list }">
+						<c:if test="${replyList.reply_groupseq eq 1}">
+							<div class="replyListParent">
+								<div>${replyList.reply_nicname }</div>
+								<div>
+									<fmt:formatDate value="${replyList.reply_regdate}" pattern="yyyy-MM-dd HH:mm:ss" />
+								</div>
+								<hr />
+								<div>
+									<c:if test="${replyList.reply_delflag eq 'Y' }">
+									----삭제된 댓글입니다----
+								</c:if>
+								</div>
+
+								<c:if test="${replyList.reply_delflag eq 'N' }">
+									<div>
+										<textarea rows="4" cols="35" disabled="disabled" name="${replyList.reply_no }" class="reply_content${replyList.reply_no }">${replyList.reply_content }</textarea>
+									</div>
+									<div>
+										<c:if test="${replyList.reply_nicname == dto.member_nicname }">
+											<input type="button" value="수정" class="replyUpdate" name="${replyList.reply_no }">
+										</c:if>
+										<c:if test="${replyList.reply_nicname == dto.member_nicname || dto.member_grade eq '관리자' }">
+											<input type="button" value="삭제" class="replyDelete" name="${replyList.reply_no }">
+										</c:if>
+										<c:if test="${dto ne null }">
+											<input type="button" value="답글달기" class="r_replyUpload" name="${dto.member_nicname }">
+										</c:if>
+									</div>
+								</c:if>
+
+
+							</div>
+							<br />
+						</c:if>
+						<c:if test="${replyList.reply_groupseq ne 1}">
+							<div class="replyListChild">
+								<div>ㄴ${replyList.reply_nicname }</div>
+								<div>
+									<fmt:formatDate value="${replyList.reply_regdate}" pattern="yyyy-MM-dd HH:mm:ss" />
+								</div>
+								<hr />
+								<div>
+									<c:if test="${replyList.reply_delflag eq 'Y' }">
+									----삭제된 댓글입니다----
+								</c:if>
+								</div>
+
+								<c:if test="${replyList.reply_delflag eq 'N' }">
+									<div>
+										<textarea rows="4" cols="35" disabled="disabled" name="${replyList.reply_no }" class="reply_content${replyList.reply_no }">${replyList.reply_content }</textarea>
+									</div>
+									<div>
+										<c:if test="${replyList.reply_nicname == dto.member_nicname }">
+											<input type="button" value="수정" class="replyUpdate" name="${replyList.reply_no }">
+										</c:if>
+										<c:if test="${replyList.reply_nicname == dto.member_nicname || dto.member_grade eq '관리자' }">
+											<input type="button" value="삭제" class="replyDelete" name="${replyList.reply_no }">
+										</c:if>
+										<c:if test="${dto ne null }">
+											<input type="button" value="답글달기" class="r_replyUpload" name="${dto.member_nicname }">
+										</c:if>
+									</div>
+								</c:if>
+							</div>
+							<br />
+						</c:if>
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>
 		</div>
-	</form>
-	
 
-	<br/>
-	<br/>
-	<br/>
-	<br/>
 
-	
-	<div>
-		<c:choose>
-			<c:when test="${empty b_r_list }">
-				<p>--------작성된 댓글이 없습니다.----------</p>
-			</c:when>
-			<c:otherwise>
-				<c:forEach var="replyList" items="${b_r_list }">
-					<c:if test="${replyList.reply_groupseq eq 1}">
-						<div class="replyListParent">
-							<div>${replyList.reply_nicname }</div>
-							<div><fmt:formatDate value="${replyList.reply_regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></div>
-							<hr/>
-							<div>
-								<c:if test="${replyList.reply_delflag eq 'Y' }">
-									----삭제된 댓글입니다----
-								</c:if>
-							</div>
-							
-								<c:if test="${replyList.reply_delflag eq 'N' }">
-									<div>
-									<textarea rows="4" cols="35" disabled="disabled" name="${replyList.reply_no }" class="reply_content${replyList.reply_no }">${replyList.reply_content }</textarea>
-									</div>
-									<div>
-										<c:if test="${replyList.reply_nicname == dto.member_nicname }">
-											<input type="button" value="수정" class="replyUpdate" name="${replyList.reply_no }">
-										</c:if>
-										<c:if test="${replyList.reply_nicname == dto.member_nicname || dto.member_grade eq '관리자' }">
-											<input type="button" value="삭제" class="replyDelete" name="${replyList.reply_no }">
-										</c:if>
-										<c:if test="${dto ne null }">
-											<input type="button" value="답글달기" class="r_replyUpload" name="${dto.member_nicname }">
-										</c:if>
-									</div>
-								</c:if>
-							
-							
-						</div>
-						<br/>
-					</c:if>
-					<c:if test="${replyList.reply_groupseq ne 1}">
-						<div class="replyListChild" >
-							<div>ㄴ${replyList.reply_nicname }</div>
-							<div><fmt:formatDate value="${replyList.reply_regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></div>
-							<hr/>
-							<div>
-								<c:if test="${replyList.reply_delflag eq 'Y' }">
-									----삭제된 댓글입니다----
-								</c:if>
-							</div>
-							
-								<c:if test="${replyList.reply_delflag eq 'N' }">
-									<div>
-									<textarea rows="4" cols="35" disabled="disabled" name="${replyList.reply_no }" class="reply_content${replyList.reply_no }">${replyList.reply_content }</textarea>
-									</div>
-									<div>
-										<c:if test="${replyList.reply_nicname == dto.member_nicname }">
-											<input type="button" value="수정" class="replyUpdate" name="${replyList.reply_no }">
-										</c:if>
-										<c:if test="${replyList.reply_nicname == dto.member_nicname || dto.member_grade eq '관리자' }">
-											<input type="button" value="삭제" class="replyDelete" name="${replyList.reply_no }">
-										</c:if>
-										<c:if test="${dto ne null }">
-											<input type="button" value="답글달기" class="r_replyUpload" name="${dto.member_nicname }">
-										</c:if>
-									</div>
-								</c:if>
-						</div>
-						<br/>
-					</c:if>
-				</c:forEach>
-			</c:otherwise>
-		</c:choose>
-	</div>
+		<br /> <br /> <br /> <br />
 
-	
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	
-	
-	<!-- 댓글 작성 -->
-	<div id="replyWrite">
-		<table id="replyWriteTable">
-			
+
+		<!-- 댓글 작성 -->
+		<div id="replyWrite">
+
 			<c:choose>
 				<c:when test="${dto ne null }">
-					<tr>
-						<th>${dto.member_nicname }</th>
-						<td><textarea rows="3" cols="80" name="reply_content" class="reply_content"></textarea></td>
-					</tr>
-					<tr>
-						<td><input type="button" value="등록" class="replyUpload" name="${dto.member_nicname }"></td>
-					</tr>
+					<div id=reply_nickname>${dto.member_nicname }</div>
+					<div id=reply_regist>
+						<span id=reply_span>
+							<textarea rows="1" cols="80" name="reply_content" class="reply_content"></textarea>
+
+							<input type="button" value="등록" class="replyUpload" name="${dto.member_nicname }">
+						</span>
+					</div>
+
 				</c:when>
 				<c:otherwise>
 					<tr>
-						<td><textarea rows="2" cols="60" disabled="disabled" placeholder="로그인한 사용자만 댓글을 입력할 수 있습니다."></textarea></td>
+						<td>
+							<textarea rows="2" cols="60" disabled="disabled" placeholder="로그인한 사용자만 댓글을 입력할 수 있습니다."></textarea>
+						</td>
 					</tr>
 				</c:otherwise>
 			</c:choose>
-			
-		</table>
+		</div>
 	</div>
 
 
@@ -352,9 +392,9 @@ File_TableDto f_dto = (File_TableDto)request.getAttribute("f_dto");
 			
 		});
 	
-	</script>	
-	
-	
+	</script>
+
+
 	<jsp:include page="bottom.jsp" />
 </body>
 </html>

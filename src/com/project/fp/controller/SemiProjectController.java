@@ -269,13 +269,13 @@ public class SemiProjectController extends HttpServlet {
 				dto.setMember_grade(member_grade[i]);
 				res = m_biz.grade_update(dto);
 				res++;
-			} 
-			if(res > 0) {
+			}
+			if (res > 0) {
 				jsResponse(response, "회원 등급수정 성공", "semi.do?command=adminpage");
-			}else {
+			} else {
 				jsResponse(response, "회원 등급수정 실패", "semi.do?command=adminpage");
 			}
-		}else if (command.equals("memberdetail")) {
+		} else if (command.equals("memberdetail")) {
 			String member_id = request.getParameter("member_id");
 			MemberDto dto = m_biz.selectDetail(member_id);
 			AnimalDto a_dto = a_biz.selectoneDetail(member_id);
@@ -335,7 +335,7 @@ public class SemiProjectController extends HttpServlet {
 				jsResponse(response, "권한수정 성공", "semi.do?command=adminpage");
 			} else {
 				jsResponse(response, "권한수정 실패", "semi.do?command=adminpage");
-			} 
+			}
 		} else if (command.equals("memberdetail")) {
 			String member_id = request.getParameter("member_id");
 			MemberDto dto = m_biz.selectDetail(member_id);
@@ -412,7 +412,7 @@ public class SemiProjectController extends HttpServlet {
 				dto.setBoard_category(category);
 				List<BoardDto> slist = b_biz.board_C_search(dto);
 				int count = slist.size();
-				PagingDto Pdto = new PagingDto(count, nowPage, s_c, s_t,category);
+				PagingDto Pdto = new PagingDto(count, nowPage, s_c, s_t, category);
 				List<BoardDto> list = b_biz.Board_All_C_search(Pdto);
 				request.setAttribute("BoardCommand", command);
 				request.setAttribute("list", list);
@@ -442,7 +442,7 @@ public class SemiProjectController extends HttpServlet {
 					dto.setMember_id(s_t);
 					List<BoardDto> slist = b_biz.board_M_search(dto);
 					int count = slist.size();
-					PagingDto Pdto = new PagingDto(count, nowPage, s_c, s_t,category);
+					PagingDto Pdto = new PagingDto(count, nowPage, s_c, s_t, category);
 					List<BoardDto> list = b_biz.Board_All_M_search(Pdto);
 					request.setAttribute("BoardCommand", command);
 					request.setAttribute("list", list);
@@ -455,7 +455,7 @@ public class SemiProjectController extends HttpServlet {
 					System.out.println(category);
 					List<BoardDto> slist = b_biz.board_C_search(dto);
 					int count = slist.size();
-					PagingDto Pdto = new PagingDto(count, nowPage, s_c, s_t,category);
+					PagingDto Pdto = new PagingDto(count, nowPage, s_c, s_t, category);
 					List<BoardDto> list = b_biz.Board_All_C_search(Pdto);
 					request.setAttribute("BoardCommand", command);
 					request.setAttribute("list", list);
@@ -468,7 +468,7 @@ public class SemiProjectController extends HttpServlet {
 					dto.setBoard_content(s_t);
 					List<BoardDto> slist = b_biz.board_MC_search(dto);
 					int count = slist.size();
-					PagingDto Pdto = new PagingDto(count, nowPage, s_c, s_t,category);
+					PagingDto Pdto = new PagingDto(count, nowPage, s_c, s_t, category);
 					List<BoardDto> list = b_biz.Board_All_MC_search(Pdto);
 					request.setAttribute("BoardCommand", command);
 					request.setAttribute("list", list);
@@ -499,12 +499,12 @@ public class SemiProjectController extends HttpServlet {
 			List<ProductDto> prodlist = p_biz.selectList();
 			List<Order_TableDto> orderlist = o_t_biz.selectList();
 			List<BoardDto> boardlist = b_biz.board_List();
-			
+
 			request.setAttribute("list", list);
 			request.setAttribute("prodlist", prodlist);
 			request.setAttribute("orderlist", orderlist);
 			request.setAttribute("boardlist", boardlist);
-			
+
 			dispatch(response, request, "adminpage.jsp");
 		} else if (command.equals("shop_insertform")) {
 			response.sendRedirect("shop_insertform.jsp");
@@ -951,7 +951,8 @@ public class SemiProjectController extends HttpServlet {
 			b_r_biz.replyProc(b_r_dto);
 		} else if (command.equals("chatlist_chat")) {
 			String member_grade = request.getParameter("member_grade");
-			String member_id = request.getParameter("member_id");;
+			String member_id = request.getParameter("member_id");
+			;
 			ChatDto c_dto = new ChatDto();
 			c_dto.setMember_id(member_id);
 			List<ChatDto> c_list = new ArrayList<ChatDto>();
@@ -979,7 +980,7 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				response.getWriter().append("삭제 실패");
 			}
-		} else if(command.equals("prod_delete")) {
+		} else if (command.equals("prod_delete")) {
 			String[] prod_num = request.getParameterValues("prod_num");
 			if (prod_num == null || prod_num.length == 0) {
 			} else {
