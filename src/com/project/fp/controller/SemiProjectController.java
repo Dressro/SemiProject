@@ -269,8 +269,13 @@ public class SemiProjectController extends HttpServlet {
 				dto.setMember_grade(member_grade[i]);
 				res = m_biz.grade_update(dto);
 				res++;
+			} 
+			if(res > 0) {
+				jsResponse(response, "회원 등급수정 성공", "semi.do?command=adminpage");
+			}else {
+				jsResponse(response, "회원 등급수정 실패", "semi.do?command=adminpage");
 			}
-		} else if (command.equals("memberdetail")) {
+		}else if (command.equals("memberdetail")) {
 			String member_id = request.getParameter("member_id");
 			MemberDto dto = m_biz.selectDetail(member_id);
 			AnimalDto a_dto = a_biz.selectoneDetail(member_id);
@@ -327,11 +332,10 @@ public class SemiProjectController extends HttpServlet {
 
 			int res = m_res + a_res;
 			if (res > 0) {
-				jsResponse(response, "권한수정 성공", "semi.do?command=memberlist");
+				jsResponse(response, "권한수정 성공", "semi.do?command=adminpage");
 			} else {
-				jsResponse(response, "권한수정 실패", "semi.do?command=memberlist");
-				jsResponse(response, "수정실패", "#");
-			}
+				jsResponse(response, "권한수정 실패", "semi.do?command=adminpage");
+			} 
 		} else if (command.equals("memberdetail")) {
 			String member_id = request.getParameter("member_id");
 			MemberDto dto = m_biz.selectDetail(member_id);
@@ -486,25 +490,21 @@ public class SemiProjectController extends HttpServlet {
 			dispatch(response, request, "board_dec.jsp");
 		} else if (command.equals("mypage")) {
 			response.sendRedirect("mypage.jsp");
-		} else if (command.equals("boardlist")) {
-			List<BoardDto> boardlist = b_biz.board_List();
-			request.setAttribute("boardlist", boardlist);
-			dispatch(response, request, "adminpage.jsp");
 		} else if (command.equals("shopping")) {
 			List<ProductDto> list = p_biz.selectList();
 			request.setAttribute("list", list);
 			dispatch(response, request, "shopping.jsp");
-		} else if (command.equals("memberlist")) {
+		} else if (command.equals("adminpage")) {
 			List<MemberDto> list = m_biz.selectList();
-			request.setAttribute("list", list);
-			dispatch(response, request, "adminpage.jsp");
-		} else if (command.equals("prodlist")) {
 			List<ProductDto> prodlist = p_biz.selectList();
-			request.setAttribute("prodlist", prodlist);
-			dispatch(response, request, "adminpage.jsp");
-		} else if (command.equals("orderlist")) {
-			List<Order_TableDto> list = o_t_biz.selectList();
+			List<Order_TableDto> orderlist = o_t_biz.selectList();
+			List<BoardDto> boardlist = b_biz.board_List();
+			
 			request.setAttribute("list", list);
+			request.setAttribute("prodlist", prodlist);
+			request.setAttribute("orderlist", orderlist);
+			request.setAttribute("boardlist", boardlist);
+			
 			dispatch(response, request, "adminpage.jsp");
 		} else if (command.equals("shop_insertform")) {
 			response.sendRedirect("shop_insertform.jsp");
@@ -522,9 +522,9 @@ public class SemiProjectController extends HttpServlet {
 					prod_category, prod_in, 0, null, null, prod_mfr, prod_client);
 			int res = p_biz.insert(pdto);
 			if (res > 0) {
-				jsResponse(response, "성공", "semi.do?command=prodlist");
+				jsResponse(response, "성공", "semi.do?command=adminpage");
 			} else {
-				jsResponse(response, "실패", "semi.do?command=prodlist");
+				jsResponse(response, "실패", "semi.do?command=adminpage");
 			}
 
 		} else if (command.equals("board_qna")) {
@@ -723,6 +723,18 @@ public class SemiProjectController extends HttpServlet {
 					jsResponse(response, "선택된 글들이 모두 삭제되었습니다.", "semi.do?command=" + where);
 				} else {
 					jsResponse(response, "다른 사용자의 게시물은 삭제되지 않았습니다.", "semi.do?command=" + where);
+				}
+			}
+		} else if (command.equals("board_delete")) {
+			String[] board_no = request.getParameterValues("board_no");
+			if (board_no == null || board_no.length == 0) {
+			} else {
+				int f_res = f_t_biz.multiDelete(board_no);
+				int b_res = b_biz.multiDelete(board_no);
+				if (b_res == board_no.length) {
+					jsResponse(response, "선택된 글들이 모두 삭제되었습니다.", "semi.do?command=boardlist");
+				} else {
+					jsResponse(response, "선택된 글들이 삭제되지 않았습니다.", "semi.do?command=adminpage");
 				}
 			}
 		} else if (command.equals("board_detail")) {
@@ -935,7 +947,7 @@ public class SemiProjectController extends HttpServlet {
 			b_r_biz.replyProc(b_r_dto);
 		} else if (command.equals("chatlist_chat")) {
 			String member_grade = request.getParameter("member_grade");
-			String member_id = request.getParameter("member_id");
+			String member_id = request.getParameter("member_id");;
 			ChatDto c_dto = new ChatDto();
 			c_dto.setMember_id(member_id);
 			List<ChatDto> c_list = new ArrayList<ChatDto>();
@@ -962,6 +974,17 @@ public class SemiProjectController extends HttpServlet {
 				response.getWriter().append("삭제 성공");
 			} else {
 				response.getWriter().append("삭제 실패");
+			}
+		} else if(command.equals("prod_delete")) {
+			String[] prod_num = request.getParameterValues("prod_num");
+			if (prod_num == null || prod_num.length == 0) {
+			} else {
+				int res = p_biz.multiDelete(prod_num);
+				if (res == prod_num.length) {
+					jsResponse(response, "선택된 상품들이 모두 삭제되었습니다.", "semi.do?command=adminpage");
+				} else {
+					jsResponse(response, "선택된 상품들이 삭제되지 않았습니다.", "semi.do?command=adminpage");
+				}
 			}
 		}
 

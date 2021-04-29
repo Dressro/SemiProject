@@ -73,7 +73,7 @@ CREATE TABLE MEMBER(
 	CONSTRAINT MEMBER_MEMBER_ANIMAL_CHK CHECK(MEMBER_ANIMAL IN ('Y', 'N')),
 	CONSTRAINT MEMBER_MEMBER_NOTIFY_CHK CHECK(MEMBER_NOTIFY IN ('Y', 'N'))
 );
-
+insert into member values('admin','admin','관리자','관리자','admin@admin.com','010-0000-0000','관리시 관리동','관리자','Y','N',0,NULL,'Y');
 select * from member;
 CREATE TABLE BOARD(
 	BOARD_NO NUMBER PRIMARY KEY,
@@ -189,7 +189,7 @@ SELECT * FROM ANIMAL;
 select * from chat;
 select * from CHAT_CONTENT;
 
-
+update member set member_grade = '관리자' where member_id = 'admin';
 
 CREATE TABLE HOSPITAL(
 	HOSPITAL_NUM NUMBER PRIMARY KEY,
@@ -199,7 +199,7 @@ CREATE TABLE HOSPITAL(
 );
 
 
-
+select * from product;
 select count(*) from hospital order by hospital_num desc;
 select * from member;  
 select * from file_table;

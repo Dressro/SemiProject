@@ -11,5 +11,5 @@ public interface ProductBiz {
 	public int insert(ProductDto dto);
 	public int update(ProductDto dto);
 	public int delete(int prod_num);
-
+	public int multiDelete(String[] prod_nums);
 }

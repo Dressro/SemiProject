@@ -66,14 +66,14 @@ a {
 	function search() {
 		var s_c = $(".search_category option:selected").val();
 		var s_t = $(".search_text").val();
-		location.href = "semi.do?command=board_free&s_c=" + s_c + "&s_t=" + s_t +"&category=F";
+		location.href = "semi.do?command=board_free&s_c=" + s_c + "&s_t=" + s_t
+				+ "&category=F";
 	}
 </script>
 </head>
 <body>
 	<jsp:include page="header.jsp" />
 	<div class="content">
-
 		<div class="container">
 			<h2 class="mb-5">자유게시판</h2>
 			<div style="float: right;">
