@@ -7,7 +7,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Family|Pet</title>
+<link rel="icon" href="resources/images/logo/favicon.ico" type="image/x-icon">
 </head>
 <body>
 <jsp:include page="header.jsp" />	

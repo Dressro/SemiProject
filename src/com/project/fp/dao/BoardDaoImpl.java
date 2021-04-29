@@ -138,6 +138,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		}
 		return list;
 	}
+	
 	@Override
 	public List<BoardDto> free_selectList(PagingDto Pdto) {
 

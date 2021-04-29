@@ -14,7 +14,8 @@ response.setContentType("text/html; charset=UTF-8");
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Family|Pet</title>
+<link rel="icon" href="resources/images/logo/favicon.ico" type="image/x-icon">
 <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">	
