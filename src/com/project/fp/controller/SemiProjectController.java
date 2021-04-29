@@ -270,11 +270,6 @@ public class SemiProjectController extends HttpServlet {
 				res = m_biz.grade_update(dto);
 				res++;
 			} 
-			if(res > 0) {
-				jsResponse(response, "회원 등급수정 성공", "semi.do?command=adminpage");
-			}else {
-				jsResponse(response, "회원 등급수정 실패", "semi.do?command=adminpage");
-			}
 		}else if (command.equals("memberdetail")) {
 			String member_id = request.getParameter("member_id");
 			MemberDto dto = m_biz.selectDetail(member_id);
@@ -282,26 +277,17 @@ public class SemiProjectController extends HttpServlet {
 			request.setAttribute("dto", dto);
 			request.setAttribute("a_dto", a_dto);
 			dispatch(response, request, "memberdetail.jsp");
+			
 		} else if(command.equals("membermod")) {
-			String member_id = request.getParameter("member_id");
-			MemberDto m_dto = null;
-			MemberDto dto = m_biz.selectOne(m_dto);
-			AnimalDto a_dto = a_biz.selectoneDetail(member_id);
-			request.setAttribute("dto", dto);
-			request.setAttribute("a_dto", a_dto);
-			dispatch(response, request, "mypage.jsp");
-			
-			
-		} else if(command.equals("membermodres")) {	
 			String member_nicname = request.getParameter("member_nicname");
-			String member_email = request.getParameter("member_email_1");
+			String member_email = request.getParameter("member_email");
 			String member_phone = request.getParameter("member_phone");
-			String member_addr = request.getParameter("member_addr_1");
+			String member_addr = request.getParameter("member_addr");
 			String member_animal = request.getParameter("member_animal");
 			String member_id = request.getParameter("member_id");
 			String member_password = request.getParameter("member_password");
+
 			MemberDto dto = new MemberDto();
-			
 			dto.setMember_nicname(member_nicname);
 			dto.setMember_email(member_email);
 			dto.setMember_phone(member_phone);
@@ -313,6 +299,7 @@ public class SemiProjectController extends HttpServlet {
 			int m_res = m_biz.mypagemod(dto);
 			int a_res = 0;
 			if (member_animal.equals("Y")) {
+				
 				int animal_no = Integer.parseInt(request.getParameter("animal_no"));
 				String animal_name = request.getParameter("animal_name");
 				String animal_gen = request.getParameter("animal_gen");
@@ -329,14 +316,15 @@ public class SemiProjectController extends HttpServlet {
 				a_dto.setAnimal_weight(animal_weight);
 				a_dto.setAnimal_unq(animal_unq);
 				a_res = a_biz.update(a_dto);
+				
 			}
-			
-			int res = m_res + a_res; 
-			if (res > 0) {
-				jsResponse(response, "권한수정 성공", "semi.do?command=adminpage");
-			} else {
-				jsResponse(response, "권한수정 실패", "semi.do?command=adminpage");
-			} 
+				int res = m_res + a_res;
+				if (res > 0) {
+					jsResponse(response, "수정 성공", "semi.do?command=mypage");
+				} else {
+					jsResponse(response, "수정 실패", "semi.do?command=mypage");
+				} 
+				
 		} else if (command.equals("memberdetail")) {
 			String member_id = request.getParameter("member_id");
 			MemberDto dto = m_biz.selectDetail(member_id);
@@ -346,9 +334,9 @@ public class SemiProjectController extends HttpServlet {
 			dispatch(response, request, "memberdetail.jsp");
 		} else if(command.equals("memberupdate")) {
 			String member_nicname = request.getParameter("member_nicname");
-			String member_email = request.getParameter("member_email_1");
+			String member_email = request.getParameter("member_email");
 			String member_phone = request.getParameter("member_phone");
-			String member_addr = request.getParameter("member_addr_1");
+			String member_addr = request.getParameter("member_addr");
 			String member_animal = request.getParameter("member_animal");
 			String member_id = request.getParameter("member_id");
 
@@ -381,6 +369,14 @@ public class SemiProjectController extends HttpServlet {
 				a_dto.setAnimal_unq(animal_unq);
 				a_res = a_biz.update(a_dto);
 			}
+			
+			int res = m_res + a_res;
+			if (res > 0) {
+				jsResponse(response, "수정 성공", "semi.do?command=adminpage");
+			} else {
+				jsResponse(response, "수정 실패", "semi.do?command=adminpage");
+			} 
+			
 		} else if (command.equals("memberdel")) {
 			String member_id = request.getParameter("member_id");
 			int md_res = 0;
@@ -446,7 +442,7 @@ public class SemiProjectController extends HttpServlet {
 					dispatch(response, request, "board_free.jsp");
 				} else if (s_c.equals("T_C")) {
 					BoardDto dto = new BoardDto();
-					dto.setBoard_title(s_t);
+					dto.setMember_id(s_t);
 					dto.setBoard_content(s_t);
 					List<BoardDto> slist = b_biz.board_MC_search(dto);
 					int count = slist.size();
@@ -472,19 +468,25 @@ public class SemiProjectController extends HttpServlet {
 			dispatch(response, request, "board_dec.jsp");
 		} else if (command.equals("mypage")) {
 			response.sendRedirect("mypage.jsp");
+		} else if (command.equals("boardlist")) {
+			List<BoardDto> boardlist = b_biz.board_List();
+			request.setAttribute("boardlist", boardlist);
+			dispatch(response, request, "adminpage.jsp");
 		} else if (command.equals("shopping")) {
 			List<ProductDto> list = p_biz.selectList();
 			request.setAttribute("list", list);
 			dispatch(response, request, "shopping.jsp");
-		} else if (command.equals("adminpage")) {
+		} else if (command.equals("memberlist")) {
 			List<MemberDto> list = m_biz.selectList();
-			List<ProductDto> prodlist = p_biz.selectList();
-			List<Order_TableDto> orderlist = o_t_biz.selectList();
-			List<BoardDto> boardlist = b_biz.board_List();
 			request.setAttribute("list", list);
+			dispatch(response, request, "adminpage.jsp");
+		} else if (command.equals("prodlist")) {
+			List<ProductDto> prodlist = p_biz.selectList();
 			request.setAttribute("prodlist", prodlist);
-			request.setAttribute("orderlist", orderlist);
-			request.setAttribute("boardlist", boardlist);
+			dispatch(response, request, "adminpage.jsp");
+		} else if (command.equals("orderlist")) {
+			List<Order_TableDto> list = o_t_biz.selectList();
+			request.setAttribute("list", list);
 			dispatch(response, request, "adminpage.jsp");
 		} else if (command.equals("shop_insertform")) {
 			response.sendRedirect("shop_insertform.jsp");

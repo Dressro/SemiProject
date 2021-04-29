@@ -41,9 +41,9 @@ response.setContentType("text/html; charset=UTF-8");
 
 
 </style>
+
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
-
 $(function(){
 		$('.mymenus li').click(function(){
 		$('.mymenus li').find('a').removeClass('active');
@@ -54,10 +54,9 @@ $(function(){
 	});
 		$('.mymenus li').eq(0).trigger('click');
 });
-
-
-
 </script>
+
+
 <link href="resources/css/head.css" rel=stylesheet type="text/css" />
 <style type="text/css">
 	.mymenus li {
@@ -199,15 +198,13 @@ $(function(){
 <%
 
 MemberDto dto = (MemberDto) session.getAttribute("dto");
-AnimalDto a_dto = (AnimalDto)request.getAttribute("a_dto");
-
 if (dto == null) {
 	pageContext.forward("index.jsp");
 }
 %>
 	
 <form action="semi.do" method="post" >
-<input type="hidden" name="command" value="membermodres">
+
 
 
 
@@ -408,6 +405,9 @@ if (dto == null) {
 			</section>
 
 			<section class="mypage">
+				
+			
+			
 					<table border="1">
 					
 						<tr>
@@ -501,18 +501,9 @@ if (dto == null) {
 						
 						<%
 						 if (dto.getMember_animal().equals("Y")) {
-							
-						%>
-						<script type="text/javascript">
-						$(function(){
-							 if $(dto.getMember_animal().equals("Y")) {
-									$('#select_age').val(<%=a_dto.getAnimal_age()%>).prop("selected",true);
-									$('#select_weight').val(<%=a_dto.getAnimal_weight()%>).prop("selected",true);
-								}
-							});
-						
-						</script>
-					
+							 AnimalDto a_dto = (AnimalDto)request.getAttribute("a_dto");
+						 %>
+							 
 						
 						<div id="animal">
 						<input type="hidden" name="animal_no" value="<%=a_dto.getAnimal_no()%>">
@@ -640,6 +631,14 @@ if (dto == null) {
 							</td>
 						</tr>
 						</table>
+						
+						<script type="text/javascript">
+								$(function(){
+									$('#select_age').val(<%=a_dto.getAnimal_age()%>).prop("selected",true);
+									$('#select_weight').val(<%=a_dto.getAnimal_weight()%>).prop("selected",true);
+								});
+						</script>
+						
 						<%
 						 } else {
 						%> 
@@ -751,13 +750,12 @@ if (dto == null) {
 						<table border="1">
 						<tr>
 							<td colspan="9" align="right">
-							<button type="submit"
-								value="회원정보수정" onclick="location.href='semi.do?command=membermod&member_id=${dto.member_id }'" /></button> 
+							<input type="button"
+								value="회원정보수정" onclick="#"/>
 								<input type="button" value="취소"
 								onclick="location.href='index.jsp'" /></td>
 						</tr>
 					</table>
-					
 			</section>
 			
 	<script type="text/javascript">
@@ -774,7 +772,7 @@ if (dto == null) {
 			$('#select_email').val(emailsplit[1]).prop("selected",true);
 		});
 		
-	
+		
 		
 	</script>
 			
@@ -807,7 +805,7 @@ if (dto == null) {
 						</tr>
 						<tr>
 							<td colspan="5" align="center">
-							<input type="submit" value="회원탈퇴"/></td>
+							<input type="button" value="회원탈퇴" onclick="semi.do?command=memberdel&member_id=${dto.member_id }"/></td>
 						</tr>
 					</table>
 			</section>
