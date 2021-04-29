@@ -503,6 +503,15 @@ if (dto == null) {
 						 if (dto.getMember_animal().equals("Y")) {
 							
 						%>
+						<script type="text/javascript">
+						$(function(){
+							 if $(dto.getMember_animal().equals("Y")) {
+									$('#select_age').val(<%=a_dto.getAnimal_age()%>).prop("selected",true);
+									$('#select_weight').val(<%=a_dto.getAnimal_weight()%>).prop("selected",true);
+								}
+							});
+						
+						</script>
 					
 						
 						<div id="animal">
@@ -765,11 +774,7 @@ if (dto == null) {
 			$('#select_email').val(emailsplit[1]).prop("selected",true);
 		});
 		
-		$(function(){
-			$('#select_age').val(<%=a_dto.getAnimal_age()%>).prop("selected",true);
-			$('#select_weight').val(<%=a_dto.getAnimal_weight()%>).prop("selected",true);
-		});
-		
+	
 		
 	</script>
 			
