@@ -78,7 +78,7 @@ response.setContentType("text/html; charset=UTF-8");
               <select data-trigger="" name="choices-single-defaul" class="search_category" style="padding: 3.5px;">
                 <option selected value="T_C">제목+내용</option>
                 <option value="W">작성자</option>
-				<option value="T">내용</option>
+				<option value="T">제목</option>
               </select>
             <input id="search" type="text" class="search_text" value=""/>
             <button class="s-btn" type="button" onclick="search();">검색</button>

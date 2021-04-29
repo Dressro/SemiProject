@@ -1,3 +1,4 @@
+<%@page import="com.project.fp.dto.MemberDto"%>
 <%@page import="com.project.fp.dto.ProductDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
@@ -20,13 +21,18 @@ response.setContentType("text/html; charset=UTF-8");
 </script>
 </head>
 <body>
+<%
+	MemberDto dto = (MemberDto) session.getAttribute("dto");
+	if (dto == null) {
+		pageContext.forward("index.html");
+	}
+%>
 <jsp:include page="header.jsp" />
 	<h3>SHOP_INSERTFORM</h3>
 	<form action="semi.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="command" value="shop_insertres" />
-		
-		
-		
+		<input type="hidden" name="member_id" value="<%=dto.getMember_id()%>">
+				
 		<div class="container">
 			<div class="content" style="width: 70%">
 				<div class="row justify-content-md-center">

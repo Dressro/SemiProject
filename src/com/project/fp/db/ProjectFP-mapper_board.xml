@@ -79,7 +79,7 @@
 		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname as
 		member_id
 		FROM BOARD b, MEMBER m
-		WHERE b.board_content LIKE '%'||#{s_t}||'%'
+		WHERE b.board_title LIKE '%'||#{s_t}||'%'
 		and
 		m.member_id = b.member_id
 		ORDER BY BOARD_REGDATE DESC
@@ -142,8 +142,8 @@
 		as member_id
 		FROM board b, member m
 		WHERE b.BOARD_FREE_NO > 0 AND
-		b.board_content LIKE '%'||#{board_content}||'%' and m.member_id =
-		b.member_id
+		b.board_title LIKE '%'||#{board_title}||'%' 
+		and m.member_id = b.member_id
 		order by board_no desc
 	</select>
 	<select id="board_MC_search" parameterType="BoardDto"

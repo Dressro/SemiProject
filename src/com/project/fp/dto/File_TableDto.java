@@ -15,7 +15,7 @@ public class File_TableDto {
 	private int board_no;
 	private int ch_num;
 	private int animal_no;
-
+	private int prod_num;
 	public File_TableDto() {
 
 	}
@@ -34,6 +34,30 @@ public class File_TableDto {
 		this.board_no = board_no;
 		this.ch_num = ch_num;
 		this.animal_no = animal_no;
+	}
+	
+	public File_TableDto(int file_num, String file_path, String file_ori_name, String file_new_name, String file_type,
+			Date file_date, String file_size, String member_id, int board_no, int ch_num, int animal_no, int prod_num) {
+		this.file_num = file_num;
+		this.file_path = file_path;
+		this.file_ori_name = file_ori_name;
+		this.file_new_name = file_new_name;
+		this.file_type = file_type;
+		this.file_date = file_date;
+		this.file_size = file_size;
+		this.member_id = member_id;
+		this.board_no = board_no;
+		this.ch_num = ch_num;
+		this.animal_no = animal_no;
+		this.prod_num = prod_num;
+	}
+
+	public int getProd_num() {
+		return prod_num;
+	}
+
+	public void setProd_num(int prod_num) {
+		this.prod_num = prod_num;
 	}
 
 	public int getFile_num() {

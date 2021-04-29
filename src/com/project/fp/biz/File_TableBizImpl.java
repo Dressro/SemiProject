@@ -51,7 +51,13 @@ public class File_TableBizImpl implements File_TableBiz {
 
 		return dao.ch_insert(dto);
 	}
-
+	
+	@Override
+	public int prod_insert(File_TableDto dto) {
+		
+		return dao.prod_insert(dto);
+	}
+	
 	@Override
 	public int update(File_TableDto dto) {
 
@@ -75,6 +81,8 @@ public class File_TableBizImpl implements File_TableBiz {
 		
 		return dao.multiDelete(board_nos);
 	}
+
+	
 
 	
 

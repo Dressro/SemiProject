@@ -58,8 +58,6 @@ public class File_TableDaoImpl extends SqlMapConfig implements File_TableDao {
 	public int board_insert(File_TableDto dto) {
 
 		int res = 0;
-		System.out.println(dto.getAnimal_no());
-		System.out.println(dto.getCh_num());
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			res = session.insert(namespace + "board_insert", dto);
 			if (res > 0) {
@@ -76,8 +74,6 @@ public class File_TableDaoImpl extends SqlMapConfig implements File_TableDao {
 	public int animal_insert(File_TableDto dto) {
 
 		int res = 0;
-		System.out.println(dto.getAnimal_no());
-		System.out.println(dto.getCh_num());
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			res = session.insert(namespace + "animal_insert", dto);
 			if (res > 0) {
@@ -94,8 +90,6 @@ public class File_TableDaoImpl extends SqlMapConfig implements File_TableDao {
 	public int ch_insert(File_TableDto dto) {
 
 		int res = 0;
-		System.out.println(dto.getAnimal_no());
-		System.out.println(dto.getCh_num());
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			res = session.insert(namespace + "ch_insert", dto);
 			if (res > 0) {
@@ -107,7 +101,23 @@ public class File_TableDaoImpl extends SqlMapConfig implements File_TableDao {
 
 		return res;
 	}
+	
+	@Override
+	public int prod_insert(File_TableDto dto) {
 
+		int res = 0;
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.insert(namespace + "prod_insert", dto);
+			if (res > 0) {
+				session.commit();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	}
+	
 	@Override
 	public int update(File_TableDto dto) {
 		return 0;
@@ -168,6 +178,8 @@ int count = 0;
 		
 		return count;
 	}
+
+	
 
 	
 

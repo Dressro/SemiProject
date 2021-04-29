@@ -491,6 +491,15 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("shop_insertform")) {
 			response.sendRedirect("shop_insertform.jsp");
 		} else if (command.equals("shop_insertres")) {
+			String file_path = request.getSession().getServletContext().getRealPath("fileupload");
+
+			File Folder = new File(file_path);
+			if (!Folder.exists()) {
+				Folder.mkdir();
+			}
+			String contentType = request.getContentType();
+			
+			String member_id = request.getParameter("member_id");
 			String prod_name = request.getParameter("prod_name");
 			String prod_explain = request.getParameter("prod_explain");
 			String prod_category = request.getParameter("prod_category");
@@ -500,13 +509,46 @@ public class SemiProjectController extends HttpServlet {
 			int prod_sale = Integer.parseInt(request.getParameter("prod_sale"));
 			int prod_stock = Integer.parseInt(request.getParameter("prod_stock"));
 			int prod_in = prod_stock;
+			
 			ProductDto pdto = new ProductDto(0, prod_name, prod_explain, prod_sale, prod_price, 0, prod_stock,
 					prod_category, prod_in, 0, null, null, prod_mfr, prod_client);
+			
 			int res = p_biz.insert(pdto);
+			
 			if (res > 0) {
 				jsResponse(response, "성공", "semi.do?command=adminpage");
 			} else {
 				jsResponse(response, "실패", "semi.do?command=adminpage");
+			}
+			
+			if (contentType != null && contentType.toLowerCase().startsWith("multipart/")) {
+				Collection<Part> parts = request.getParts();
+				File_TableDto f_dto = new File_TableDto();
+
+				for (Part part : parts) {
+					if (part.getHeader("Content-Disposition").contains("filename=")) {
+						String file_ori_name = extractFileName(part.getHeader("Content-Disposition"));
+						if (part.getSize() > 0) {
+							String file_type = file_ori_name.substring(file_ori_name.lastIndexOf("."));
+							String file_size = Long.toString(part.getSize());
+							file_new_name = getRandomFileName(5) + file_ori_name;
+							part.write(file_path + File.separator + file_new_name);
+							part.delete();
+							for(int i=0;i<50;i++) {
+								System.out.println("DB에 넣는중...");
+							}
+							f_dto.setFile_path(file_path);
+							f_dto.setFile_ori_name(file_ori_name);
+							f_dto.setFile_new_name(file_new_name);
+							f_dto.setFile_type(file_type);
+							f_dto.setFile_size(file_size);
+							f_dto.setMember_id(member_id);
+							ProductDto pdto_2 = p_biz.prod_selectone(prod_name);
+							f_dto.setProd_num(pdto_2.getProd_num());
+							int f_res = f_t_biz.prod_insert(f_dto);
+						}
+					}
+				}
 			}
 
 		} else if (command.equals("board_qna")) {
