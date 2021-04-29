@@ -1,7 +1,9 @@
 package com.project.fp.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -89,6 +91,29 @@ public class ProductDaoImpl extends SqlMapConfig implements ProductDao {
 		}
 
 		return res;
+	}
+
+	@Override
+	public int multiDelete(String[] prod_nums) {
+int count = 0;
+		
+		Map<String, String[]> map = new HashMap<String, String[]>();
+		map.put("prod_nums", prod_nums);
+		
+		SqlSession session = null;
+		try {
+			session = getSqlSessionFactory().openSession(false);
+			count = session.delete(namespace+"multiDelete",map);
+			if(count == prod_nums.length) {
+				session.commit();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		
+		return count;
 	}
 
 }

@@ -189,7 +189,7 @@ SELECT * FROM ANIMAL;
 select * from chat;
 select * from CHAT_CONTENT;
 
-
+update member set member_grade = '관리자' where member_id = 'admin';
 
 CREATE TABLE HOSPITAL(
 	HOSPITAL_NUM NUMBER PRIMARY KEY,
@@ -199,7 +199,7 @@ CREATE TABLE HOSPITAL(
 );
 
 
-
+select * from product;
 select count(*) from hospital order by hospital_num desc;
 select * from member;  
 select * from file_table;

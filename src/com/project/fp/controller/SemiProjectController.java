@@ -711,7 +711,7 @@ public class SemiProjectController extends HttpServlet {
 				if (b_res == board_no.length) {
 					jsResponse(response, "선택된 글들이 모두 삭제되었습니다.", "semi.do?command=boardlist");
 				} else {
-					jsResponse(response, "선택된 글들이 삭제되지 않았습니다.", "semi.do?command=boardlist");
+					jsResponse(response, "선택된 글들이 삭제되지 않았습니다.", "semi.do?command=adminpage");
 				}
 			}
 
@@ -950,6 +950,17 @@ public class SemiProjectController extends HttpServlet {
 				response.getWriter().append("삭제 성공");
 			} else {
 				response.getWriter().append("삭제 실패");
+			}
+		} else if(command.equals("prod_delete")) {
+			String[] prod_num = request.getParameterValues("prod_num");
+			if (prod_num == null || prod_num.length == 0) {
+			} else {
+				int res = p_biz.multiDelete(prod_num);
+				if (res == prod_num.length) {
+					jsResponse(response, "선택된 상품들이 모두 삭제되었습니다.", "semi.do?command=adminpage");
+				} else {
+					jsResponse(response, "선택된 상품들이 삭제되지 않았습니다.", "semi.do?command=adminpage");
+				}
 			}
 		}
 
