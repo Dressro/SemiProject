@@ -216,6 +216,8 @@ public class BoardBizImpl implements BoardBiz {
 	}
 
 	
+
+	
 	
 	
 

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.project.fp.board">
 
-
+	
 	<select id="free_allCount" resultType="int">
 		SELECT
 		COUNT(BOARD_FREE_NO) AS cnt
@@ -159,6 +159,7 @@
 		'%'||#{board_content}||'%' or b.board_title LIKE '%'||#{board_title}||'%')
 		order by board_no desc
 	</select>
+	
 	<select id="board_selectList" parameterType="BoardDto"
 		resultType="BoardDto">
 		select
@@ -184,6 +185,7 @@
 		order
 		by board_no desc
 	</select>
+	
 	<select id="free_selectList"
 		parameterType="com.project.fp.dto.PagingDto" resultType="BoardDto">
 		SELECT X.rnum,

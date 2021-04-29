@@ -221,9 +221,9 @@ $(function(){
 			<input type="button" class="s-btn" value="회원등록" onclick="memberinsertPopup();">
 		</td>
 	</tr>
+	
 </table>
 </form>
-</div>
 </div>
 <div class="adminpage_2" style="display: none;">
 
@@ -321,9 +321,10 @@ $(function(){
 	</tr> 
 	</c:forEach>
 	<tr>
-	<td colspan="7" align="right">
-	<input type="submit" class="s-btn" value="글삭제"/>
-	</td></tr>
+		<td colspan="7" align="right">
+			<input type="submit" class="s-btn" value="글삭제"/>
+		</td>
+	</tr>
 	
 </table>
 </form>
@@ -385,16 +386,7 @@ $(function(){
 </table>
 </form>
 </div>
-						<jsp:include page="/board_paging.jsp">
-							<jsp:param value="${BoardCommand }" name="command" />
-							<jsp:param value="${Pdto.nowBlock}" name="nowBlock" />
-							<jsp:param value="${Pdto.blockBegin }" name="blockBegin" />
-							<jsp:param value="${Pdto.blockEnd }" name="blockEnd" />
-							<jsp:param value="${Pdto.nowPage}" name="nowPage" />
-							<jsp:param value="${Pdto.blockBegin}" name="blockBegin" />
-							<jsp:param value="${Pdto.blockEnd}" name="blockEnd" />
-							<jsp:param value="${Pdto.totalBlock}" name="totalBlock" />
-						</jsp:include>
+</div>		
 </div>
 <jsp:include page="bottom.jsp" />	
 

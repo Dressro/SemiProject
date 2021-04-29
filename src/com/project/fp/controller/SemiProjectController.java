@@ -481,10 +481,12 @@ public class SemiProjectController extends HttpServlet {
 			List<ProductDto> prodlist = p_biz.selectList();
 			List<Order_TableDto> orderlist = o_t_biz.selectList();
 			List<BoardDto> boardlist = b_biz.board_List();
+			
 			request.setAttribute("list", list);
 			request.setAttribute("prodlist", prodlist);
 			request.setAttribute("orderlist", orderlist);
 			request.setAttribute("boardlist", boardlist);
+			
 			dispatch(response, request, "adminpage.jsp");
 		} else if (command.equals("shop_insertform")) {
 			response.sendRedirect("shop_insertform.jsp");
@@ -502,9 +504,9 @@ public class SemiProjectController extends HttpServlet {
 					prod_category, prod_in, 0, null, null, prod_mfr, prod_client);
 			int res = p_biz.insert(pdto);
 			if (res > 0) {
-				jsResponse(response, "성공", "semi.do?command=prodlist");
+				jsResponse(response, "성공", "semi.do?command=adminpage");
 			} else {
-				jsResponse(response, "실패", "semi.do?command=prodlist");
+				jsResponse(response, "실패", "semi.do?command=adminpage");
 			}
 
 		} else if (command.equals("board_qna")) {

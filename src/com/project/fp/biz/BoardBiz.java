@@ -20,7 +20,7 @@ public interface BoardBiz {
 	public BoardDto board_selectOne(int board_no);
 	public List<BoardDto> free_M_search(PagingDto Pdto);
 	public List<BoardDto> free_C_search(PagingDto Pdto); 
-	public List<BoardDto> free_MC_search(PagingDto Pdto); 
+	public List<BoardDto> free_MC_search(PagingDto Pdto);
 	public List<BoardDto> free_selectList(PagingDto Pdto);
 	public List<BoardDto> notice_selectList(PagingDto Pdto);
 	public List<BoardDto> qna_selectList(PagingDto Pdto);
