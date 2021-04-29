@@ -82,14 +82,20 @@ if (dto == null) {
 					<li><a href="semi.do?command=signup">회원가입</a></li>
 <%
 } else {
+		if(dto.getMember_grade().equals("관리자")){%>
+					<li><a href="semi.do?command=chatlist&member_id=<%=dto.getMember_id()%>&member_grade=<%=dto.getMember_grade()%>">채팅</a>
+					<li><a href="semi.do?command=adminpage">관리자페이지</a>
+					<li><a href="semi.do?command=logout">로그아웃</a> 
+					
+<%
+
+		}else{
 %>
 					<li><a href="semi.do?command=chatlist&member_id=<%=dto.getMember_id()%>&member_grade=<%=dto.getMember_grade()%>">채팅</a>
 					<li><a href="semi.do?command=mypage">마이페이지</a>
 					<li><a href="semi.do?command=logout">로그아웃</a> 
-<%
-}
-%>
-					
+<%		} 
+	}%>
 </ul>
  </nav>
 <div class="header__option__right">

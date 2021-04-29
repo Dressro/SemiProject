@@ -270,6 +270,11 @@ public class SemiProjectController extends HttpServlet {
 				res = m_biz.grade_update(dto);
 				res++;
 			} 
+			if(res > 0) {
+				jsResponse(response, "회원 등급수정 성공", "semi.do?command=adminpage");
+			}else {
+				jsResponse(response, "회원 등급수정 실패", "semi.do?command=adminpage");
+			}
 		}else if (command.equals("memberdetail")) {
 			String member_id = request.getParameter("member_id");
 			MemberDto dto = m_biz.selectDetail(member_id);
@@ -328,10 +333,9 @@ public class SemiProjectController extends HttpServlet {
 			
 			int res = m_res + a_res; 
 			if (res > 0) {
-				jsResponse(response, "권한수정 성공", "semi.do?command=memberlist");
+				jsResponse(response, "권한수정 성공", "semi.do?command=adminpage");
 			} else {
-				jsResponse(response, "권한수정 실패", "semi.do?command=memberlist");
-				jsResponse(response, "수정실패", "#");
+				jsResponse(response, "권한수정 실패", "semi.do?command=adminpage");
 			} 
 		} else if (command.equals("memberdetail")) {
 			String member_id = request.getParameter("member_id");
@@ -442,7 +446,7 @@ public class SemiProjectController extends HttpServlet {
 					dispatch(response, request, "board_free.jsp");
 				} else if (s_c.equals("T_C")) {
 					BoardDto dto = new BoardDto();
-					dto.setMember_id(s_t);
+					dto.setBoard_title(s_t);
 					dto.setBoard_content(s_t);
 					List<BoardDto> slist = b_biz.board_MC_search(dto);
 					int count = slist.size();
@@ -468,25 +472,19 @@ public class SemiProjectController extends HttpServlet {
 			dispatch(response, request, "board_dec.jsp");
 		} else if (command.equals("mypage")) {
 			response.sendRedirect("mypage.jsp");
-		} else if (command.equals("boardlist")) {
-			List<BoardDto> boardlist = b_biz.board_List();
-			request.setAttribute("boardlist", boardlist);
-			dispatch(response, request, "adminpage.jsp");
 		} else if (command.equals("shopping")) {
 			List<ProductDto> list = p_biz.selectList();
 			request.setAttribute("list", list);
 			dispatch(response, request, "shopping.jsp");
-		} else if (command.equals("memberlist")) {
+		} else if (command.equals("adminpage")) {
 			List<MemberDto> list = m_biz.selectList();
-			request.setAttribute("list", list);
-			dispatch(response, request, "adminpage.jsp");
-		} else if (command.equals("prodlist")) {
 			List<ProductDto> prodlist = p_biz.selectList();
-			request.setAttribute("prodlist", prodlist);
-			dispatch(response, request, "adminpage.jsp");
-		} else if (command.equals("orderlist")) {
-			List<Order_TableDto> list = o_t_biz.selectList();
+			List<Order_TableDto> orderlist = o_t_biz.selectList();
+			List<BoardDto> boardlist = b_biz.board_List();
 			request.setAttribute("list", list);
+			request.setAttribute("prodlist", prodlist);
+			request.setAttribute("orderlist", orderlist);
+			request.setAttribute("boardlist", boardlist);
 			dispatch(response, request, "adminpage.jsp");
 		} else if (command.equals("shop_insertform")) {
 			response.sendRedirect("shop_insertform.jsp");

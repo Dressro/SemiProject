@@ -55,15 +55,23 @@ response.setContentType("text/html; charset=UTF-8");
 		overflow: hidden;
 		list-style: none;
 	}
+	.detail:hover {
+		cursor: pointer;
+		background-color: #E6E6E6;
+	}
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 
-$(function(){
-	});
 
 $(function(){
-	 
+	
+	$(".detail").click(function(){
+		var member_id = $(this).children().val();
+		window.name = "adminpage.jsp";
+		window.open("semi.do?command=memberdetail&member_id="+member_id, "insert",
+	            "width = 550, height = 800, resizable = no, scrollbars = no, status = no");
+	})
     var $checkHead = $("#adminBoard tr th input[type='checkbox']"); 
     var $checkBody = $("#adminBoard tr td input[type='checkbox']"); 
  
@@ -96,20 +104,8 @@ $(function(){
             $checkHead.prop("checked", false);
         }
     });
- 
+    
 });
-
-function detailPopup(member_id) {
-    window.name = "adminpage.jsp";
-    window.open("semi.do?command=memberdetail&member_id="${dto.member_id }, "insert",
-            "width = 550, height = 800, resizable = no, scrollbars = no, status = no");
-}
-
-function memberinsertPopup() {
-    window.name = "adminpage.jsp";
-    window.open("signup.jsp", "insert",
-            "width = 730, height = 800, resizable = no, scrollbars = no, status = no");
-}
 
 </script>
 <style>
@@ -127,16 +123,19 @@ function memberinsertPopup() {
 <section class="section_nav">
   <nav>
     <ul class="adminmenus">
-      <li><a class="adminmenu" href="semi.do?command=memberlist">회원정보관리</a></li>
-      <li><a class="adminmenu" href="semi.do?command=orderlist">전체주문조회</a></li>
-      <li><a class="adminmenu" href="semi.do?command=boardlist">게시글관리</a></li>
-     <li><a class="adminmenu" href="semi.do?command=prodlist">상품관리</a></li>
+      <li><a class="adminmenu" href="javascript:adminpage_1();">회원정보관리</a></li>
+      <li><a class="adminmenu" href="javascript:adminpage_2();">전체주문조회</a></li>
+      <li><a class="adminmenu" href="javascript:adminpage_3();">게시글관리</a></li>
+     <li><a class="adminmenu" href="javascript:adminpage_4();">상품관리</a></li>
      
     </ul>
   </nav>
   
 </section>
-
+<script type="text/javascript">
+	
+	
+</script>
 <div class = "adminpage-body">
 <section class="adminpage_1">
 
@@ -158,7 +157,6 @@ function memberinsertPopup() {
 	<col width="50"/>
 	
 	<tr>
-		<th><input type="checkbox" value=""/></th>
 		<th>ID</th>
 		<th>이름</th>
 		<th>닉네임</th>
@@ -175,8 +173,7 @@ function memberinsertPopup() {
 
 		<c:forEach items="${list }" var="dto"> 
 			<tr>
-				<td><input type="checkbox" value=""></td>
-				<td><a id="detailpop" href="javascript:detailPopup();">${dto.member_id }</a>
+				<td class="detail">${dto.member_id }
 					<input type="hidden" name="member_id" value="${dto.member_id }"></td>
 				<td>${dto.member_name }</td>
 				<td>${dto.member_nicname }</td>
@@ -204,13 +201,13 @@ function memberinsertPopup() {
 	<tr>
 		<td colspan="11" align="right">
 			<input type="submit" value="등급변경">
-			<input type="button" value="회원등록" onclick="javascript:memberinsertPopup();">
+			<input type="button" value="회원등록" onclick="memberinsertPopup();">
 		</td>
 	</tr>
 </table>
 </form>
 </section>
-<section class="adminpage_2">
+<section class="adminpage_2" style="display: none;">
 
 
 
@@ -261,7 +258,7 @@ function memberinsertPopup() {
 </table>
 </section>
 
-<section class="adminpage_3">
+<section class="adminpage_3" style="display: none;">
 
 
 
@@ -311,7 +308,7 @@ function memberinsertPopup() {
 </form>
 </section>
 
-<section class="adminpage_4">
+<section class="adminpage_4" style="display: none;">
 
 <h3>상품관리</h3>
 <input type="hidden" name="command" value="prodlist">
@@ -368,5 +365,39 @@ function memberinsertPopup() {
 </div>
 
 <jsp:include page="bottom.jsp" />	
+
+<script type="text/javascript">
+	
+function adminpage_1(){
+	$('.adminpage_2').css("display","none");
+	$('.adminpage_3').css("display","none");
+	$('.adminpage_4').css("display","none");
+	$('.adminpage_1').css("display","block");
+}
+function adminpage_2(){
+	$('.adminpage_1').css("display","none");
+	$('.adminpage_3').css("display","none");
+	$('.adminpage_4').css("display","none");
+	$('.adminpage_2').css("display","block");
+}
+function adminpage_3(){
+	$('.adminpage_1').css("display","none");
+	$('.adminpage_2').css("display","none");
+	$('.adminpage_4').css("display","none");
+	$('.adminpage_3').css("display","block");
+}
+function adminpage_4(){
+	$('.adminpage_1').css("display","none");
+	$('.adminpage_2').css("display","none");
+	$('.adminpage_3').css("display","none");
+	$('.adminpage_4').css("display","block");
+}
+
+function memberinsertPopup() {
+    window.name = "adminpage.jsp";
+    window.open("signup.jsp", "insert",
+            "width = 730, height = 800, resizable = no, scrollbars = no, status = no");
+}	
+</script>
 </body>
 </html>
