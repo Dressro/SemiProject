@@ -706,6 +706,7 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("deleteres")) {
 			int board_no = Integer.parseInt(request.getParameter("board_no"));
 			int f_res = f_t_biz.board_delete(board_no);
+			int b_r_res = b_r_biz.board_delete(board_no);
 			int b_res = b_biz.delete(board_no);
 			if (b_res > 0) {
 				jsResponse(response, "삭제 성공", "semi.do?command=board_free");
