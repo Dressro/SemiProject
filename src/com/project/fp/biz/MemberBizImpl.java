@@ -18,10 +18,8 @@ public class MemberBizImpl implements MemberBiz {
 		List<MemberDto> list = dao.selectList();
 		for (MemberDto dto : list) {
 			try {
-				dto.setMember_id(AES256_str.Decrypt(dto.getMember_id()));
 				dto.setMember_password(AES256_str.Decrypt(dto.getMember_password()));
 				dto.setMember_name(AES256_str.Decrypt(dto.getMember_name()));
-				dto.setMember_nicname(AES256_str.Decrypt(dto.getMember_nicname()));
 				dto.setMember_email(AES256_str.Decrypt(dto.getMember_email()));
 				dto.setMember_phone(AES256_str.Decrypt(dto.getMember_phone()));
 				dto.setMember_addr(AES256_str.Decrypt(dto.getMember_addr()));
@@ -43,10 +41,8 @@ public class MemberBizImpl implements MemberBiz {
 		List<MemberDto> doclist = dao.selectDoctorList();
 		for (MemberDto dto : doclist) {
 			try {
-				dto.setMember_id(AES256_str.Decrypt(dto.getMember_id()));
 				dto.setMember_password(AES256_str.Decrypt(dto.getMember_password()));
 				dto.setMember_name(AES256_str.Decrypt(dto.getMember_name()));
-				dto.setMember_nicname(AES256_str.Decrypt(dto.getMember_nicname()));
 				dto.setMember_email(AES256_str.Decrypt(dto.getMember_email()));
 				dto.setMember_phone(AES256_str.Decrypt(dto.getMember_phone()));
 				dto.setMember_addr(AES256_str.Decrypt(dto.getMember_addr()));
@@ -68,12 +64,9 @@ public class MemberBizImpl implements MemberBiz {
 		/*
 		MemberDto searchdto = new MemberDto();
 		try {
-			dto.setMember_id(AES256_str.Encrypt(dto.getMember_id()));
 			searchdto = dao.selectSerch(dto);
-			searchdto.setMember_id(AES256_str.Decrypt(searchdto.getMember_id()));
 			searchdto.setMember_password(AES256_str.Decrypt(searchdto.getMember_password()));
 			searchdto.setMember_name(AES256_str.Decrypt(searchdto.getMember_name()));
-			searchdto.setMember_nicname(AES256_str.Decrypt(searchdto.getMember_nicname()));
 			searchdto.setMember_email(AES256_str.Decrypt(searchdto.getMember_email()));
 			searchdto.setMember_phone(AES256_str.Decrypt(searchdto.getMember_phone()));
 			searchdto.setMember_addr(AES256_str.Decrypt(searchdto.getMember_addr()));
@@ -96,10 +89,8 @@ public class MemberBizImpl implements MemberBiz {
 			dto.setMember_name(AES256_str.Encrypt(dto.getMember_name()));
 			dto.setMember_email(AES256_str.Encrypt(dto.getMember_email()));
 			iddto = dao.selectIdSerch(dto);
-			iddto.setMember_id(AES256_str.Decrypt(iddto.getMember_id()));
 			iddto.setMember_password(AES256_str.Decrypt(iddto.getMember_password()));
 			iddto.setMember_name(AES256_str.Decrypt(iddto.getMember_name()));
-			iddto.setMember_nicname(AES256_str.Decrypt(iddto.getMember_nicname()));
 			iddto.setMember_email(AES256_str.Decrypt(iddto.getMember_email()));
 			iddto.setMember_phone(AES256_str.Decrypt(iddto.getMember_phone()));
 			iddto.setMember_addr(AES256_str.Decrypt(iddto.getMember_addr()));
@@ -119,13 +110,10 @@ public class MemberBizImpl implements MemberBiz {
 		/*
 		MemberDto onedto = new MemberDto();
 		try {
-			dto.setMember_id(AES256_str.Encrypt(dto.getMember_id()));
 			dto.setMember_password(AES256_str.Encrypt(dto.getMember_password()));
 			onedto = dao.selectOne(dto);
-			onedto.setMember_id(AES256_str.Decrypt(onedto.getMember_id()));
 			onedto.setMember_password(AES256_str.Decrypt(onedto.getMember_password()));
 			onedto.setMember_name(AES256_str.Decrypt(onedto.getMember_name()));
-			onedto.setMember_nicname(AES256_str.Decrypt(onedto.getMember_nicname()));
 			onedto.setMember_email(AES256_str.Decrypt(onedto.getMember_email()));
 			onedto.setMember_phone(AES256_str.Decrypt(onedto.getMember_phone()));
 			onedto.setMember_addr(AES256_str.Decrypt(onedto.getMember_addr()));
@@ -144,10 +132,8 @@ public class MemberBizImpl implements MemberBiz {
 	public int insert(MemberDto dto) {
 		/*
 		try {
-			dto.setMember_id(AES256_str.Encrypt(dto.getMember_id()));
 			dto.setMember_password(AES256_str.Encrypt(dto.getMember_password()));
 			dto.setMember_name(AES256_str.Encrypt(dto.getMember_name()));
-			dto.setMember_nicname(AES256_str.Encrypt(dto.getMember_nicname()));
 			dto.setMember_email(AES256_str.Encrypt(dto.getMember_email()));
 			dto.setMember_phone(AES256_str.Encrypt(dto.getMember_phone()));
 			dto.setMember_addr(AES256_str.Encrypt(dto.getMember_addr()));
@@ -163,16 +149,7 @@ public class MemberBizImpl implements MemberBiz {
 
 	@Override
 	public int delete(String member_id) {
-		/*
-		String en_id = null;
-		try {
-			en_id = AES256_str.Encrypt(member_id);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return dao.delete(en_id);
-		*/
+
 		return dao.delete(member_id);
 	}
 
@@ -180,7 +157,6 @@ public class MemberBizImpl implements MemberBiz {
 	public int update(MemberDto dto) {
 		/*
 		try {
-			dto.setMember_id(AES256_str.Encrypt(dto.getMember_id()));
 			dto.setMember_password(AES256_str.Encrypt(dto.getMember_password()));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -193,14 +169,10 @@ public class MemberBizImpl implements MemberBiz {
 	@Override
 	public MemberDto selectDetail(String member_id) {
 		/*
-		MemberDto detaildto = new MemberDto();
+		MemberDto detaildto = dao.selectDetail(member_id);
 		try {
-			String en_id = AES256_str.Encrypt(member_id);
-			detaildto = dao.selectDetail(en_id);
-			detaildto.setMember_id(AES256_str.Decrypt(detaildto.getMember_id()));
 			detaildto.setMember_password(AES256_str.Decrypt(detaildto.getMember_password()));
 			detaildto.setMember_name(AES256_str.Decrypt(detaildto.getMember_name()));
-			detaildto.setMember_nicname(AES256_str.Decrypt(detaildto.getMember_nicname()));
 			detaildto.setMember_email(AES256_str.Decrypt(detaildto.getMember_email()));
 			detaildto.setMember_phone(AES256_str.Decrypt(detaildto.getMember_phone()));
 			detaildto.setMember_addr(AES256_str.Decrypt(detaildto.getMember_addr()));
@@ -219,8 +191,6 @@ public class MemberBizImpl implements MemberBiz {
 	public int mypageupdate(MemberDto dto) {
 		/*
 		try {
-			dto.setMember_id(AES256_str.Encrypt(dto.getMember_id()));
-			dto.setMember_nicname(AES256_str.Encrypt(dto.getMember_nicname()));
 			dto.setMember_email(AES256_str.Encrypt(dto.getMember_email()));
 			dto.setMember_phone(AES256_str.Encrypt(dto.getMember_phone()));
 			dto.setMember_addr(AES256_str.Encrypt(dto.getMember_addr()));
@@ -236,9 +206,7 @@ public class MemberBizImpl implements MemberBiz {
 	public int mypagemod(MemberDto dto) {
 		/*
 		try {
-			dto.setMember_id(AES256_str.Encrypt(dto.getMember_id()));
 			dto.setMember_password(AES256_str.Encrypt(dto.getMember_password()));
-			dto.setMember_nicname(AES256_str.Encrypt(dto.getMember_nicname()));
 			dto.setMember_email(AES256_str.Encrypt(dto.getMember_email()));
 			dto.setMember_phone(AES256_str.Encrypt(dto.getMember_phone()));
 			dto.setMember_addr(AES256_str.Encrypt(dto.getMember_addr()));
