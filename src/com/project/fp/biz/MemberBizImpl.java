@@ -14,6 +14,7 @@ public class MemberBizImpl implements MemberBiz {
 
 	@Override
 	public List<MemberDto> selectList() {
+		/*
 		List<MemberDto> list = dao.selectList();
 		for (MemberDto dto : list) {
 			try {
@@ -32,10 +33,13 @@ public class MemberBizImpl implements MemberBiz {
 			}
 		}
 		return list;
+		*/
+		return dao.selectList();
 	}
 	
 	@Override
 	public List<MemberDto> selectDoctorList() {
+		/*
 		List<MemberDto> doclist = dao.selectDoctorList();
 		for (MemberDto dto : doclist) {
 			try {
@@ -54,11 +58,14 @@ public class MemberBizImpl implements MemberBiz {
 			}
 		}
 		return doclist;
+		*/
+		return dao.selectDoctorList();
 	}
 
 	@Override
 
 	public MemberDto selectSerch(MemberDto dto) {
+		/*
 		MemberDto searchdto = new MemberDto();
 		try {
 			dto.setMember_id(AES256_str.Encrypt(dto.getMember_id()));
@@ -77,10 +84,13 @@ public class MemberBizImpl implements MemberBiz {
 			e.printStackTrace();
 		}
 		return searchdto;
+		*/
+		return dao.selectSerch(dto);
 	}
 
 	@Override
 	public MemberDto selectIdSerch(MemberDto dto) {
+		/*
 		MemberDto iddto = new MemberDto();
 		try {
 			dto.setMember_name(AES256_str.Encrypt(dto.getMember_name()));
@@ -100,10 +110,13 @@ public class MemberBizImpl implements MemberBiz {
 			e.printStackTrace();
 		}
 		return iddto;
+		*/
+		return dao.selectIdSerch(dto);
 	}
 	
 	@Override
 	public MemberDto selectOne(MemberDto dto) {
+		/*
 		MemberDto onedto = new MemberDto();
 		try {
 			dto.setMember_id(AES256_str.Encrypt(dto.getMember_id()));
@@ -123,10 +136,13 @@ public class MemberBizImpl implements MemberBiz {
 			e.printStackTrace();
 		}
 		return onedto;
+		*/
+		return dao.selectOne(dto);
 	}
 
 	@Override
 	public int insert(MemberDto dto) {
+		/*
 		try {
 			dto.setMember_id(AES256_str.Encrypt(dto.getMember_id()));
 			dto.setMember_password(AES256_str.Encrypt(dto.getMember_password()));
@@ -141,11 +157,13 @@ public class MemberBizImpl implements MemberBiz {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
 		return dao.insert(dto);
 	}
 
 	@Override
 	public int delete(String member_id) {
+		/*
 		String en_id = null;
 		try {
 			en_id = AES256_str.Encrypt(member_id);
@@ -154,10 +172,13 @@ public class MemberBizImpl implements MemberBiz {
 			e.printStackTrace();
 		}
 		return dao.delete(en_id);
+		*/
+		return dao.delete(member_id);
 	}
 
 	@Override
 	public int update(MemberDto dto) {
+		/*
 		try {
 			dto.setMember_id(AES256_str.Encrypt(dto.getMember_id()));
 			dto.setMember_password(AES256_str.Encrypt(dto.getMember_password()));
@@ -165,11 +186,13 @@ public class MemberBizImpl implements MemberBiz {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
 		return dao.update(dto);
 	}
 
 	@Override
 	public MemberDto selectDetail(String member_id) {
+		/*
 		MemberDto detaildto = new MemberDto();
 		try {
 			String en_id = AES256_str.Encrypt(member_id);
@@ -188,10 +211,13 @@ public class MemberBizImpl implements MemberBiz {
 			e.printStackTrace();
 		}
 		return detaildto;
+		*/
+		return dao.selectDetail(member_id);
 	}
 
 	@Override
 	public int mypageupdate(MemberDto dto) {
+		/*
 		try {
 			dto.setMember_id(AES256_str.Encrypt(dto.getMember_id()));
 			dto.setMember_nicname(AES256_str.Encrypt(dto.getMember_nicname()));
@@ -202,11 +228,13 @@ public class MemberBizImpl implements MemberBiz {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
 		return dao.mypageupdate(dto);
 	}
 
 	@Override
 	public int mypagemod(MemberDto dto) {
+		/*
 		try {
 			dto.setMember_id(AES256_str.Encrypt(dto.getMember_id()));
 			dto.setMember_password(AES256_str.Encrypt(dto.getMember_password()));
@@ -218,6 +246,7 @@ public class MemberBizImpl implements MemberBiz {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
 		return dao.mypagemod(dto);
 	}
 

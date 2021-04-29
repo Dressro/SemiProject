@@ -99,6 +99,12 @@ response.setContentType("text/html; charset=UTF-8");
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
+	$(document).ready(function() { 
+		if($('input[name=member_email_chk]').val() == "ok") {
+			$('.email_auth').show();
+		}
+	});
+	
 	function address() {
 		new daum.Postcode(
 				{
@@ -132,7 +138,7 @@ response.setContentType("text/html; charset=UTF-8");
 					}
 				}).open();
 	}
-	/*
+
 	function idCheckConfirm(){
 		var chk = document.getElementsByName("member_id")[0].title;
 		if(chk == "n") {
@@ -140,7 +146,7 @@ response.setContentType("text/html; charset=UTF-8");
 			document.getElementsByName("member_id")[0].focus();
 		}
 	}
-	 */
+
 	function idCheck() {
 		var member_id = document.getElementsByName("member_id")[0];
 		if (member_id.value.trim() == "" || member_id.value == null) {
@@ -203,7 +209,15 @@ response.setContentType("text/html; charset=UTF-8");
 			alert("이메일을 입력해 주세요");
 		} else {
 			open("semi.do?command=mailsend&member_email=" + member_email, "",
-					"width=200 , height= 200");
+			"width=200 , height= 200");
+		}
+	}
+	
+	function mailcheck() {
+		if ($('input[name=email_user]').val() == $('input[name=email_key]').val()) {
+			$('#mailchk').html('이메일 인증 완료');
+			$('#mailchk').attr('color', '#199894b3');
+			$('input[name=email_certification]').val() = "true";
 		}
 	}
 
@@ -223,6 +237,9 @@ response.setContentType("text/html; charset=UTF-8");
 
 </head>
 <body>
+<%
+	String email_key = (String) session.getAttribute("content");
+%>
 
 <jsp:include page="header.jsp" />
 
@@ -291,8 +308,16 @@ response.setContentType("text/html; charset=UTF-8");
 											<option>gmail.com</option>
 											<option>nate.com</option>
 										</select>
-										<input type="button" name="email_send" value="인증번호 전송" onclick="sendmailkey();" />
+										<input type="button" name="email_send" value="인증번호 받기" onclick="sendmailkey();" />
 										</span>
+									</div>
+									<div>
+										인증번호
+										<input type="text" name="email_user" />
+										<input type="hidden" name="email_key" value="<%=email_key%>">
+										<input type="hidden" name="email_certification" value="false">
+										<input type="button" value="인증하기" onclick="mailcheck();" />
+										<font id="mailchk" size="2"></font>
 									</div>
 								</div>
 								<div class="general_signup_row">
@@ -451,7 +476,7 @@ response.setContentType("text/html; charset=UTF-8");
 							</div>
 							<div id="general_signup_btn">
 								<input type="submit" value="회원가입" onclick="check();" />
-								<input type="button" value="취소" onclick="location.href='index.html'" />
+								<input type="button" value="취소" onclick="location.href='index.jsp'" />
 							</div>
 					</form>
 				</div>
