@@ -111,8 +111,12 @@ File_TableDto f_dto = (File_TableDto)request.getAttribute("f_dto");
 				<div class="row justify-content-md-center">
 					<div class="input-group mb-3">
 						<div class="custom-file">
-							<button type="button" class="btn btn-outline-secondary" style="float: right; width: 10%; font-weight: bold" onclick="location.href='semi.do?command=deleteres&board_no=<%=b_dto.getBoard_no()%>'">삭  제</button>
-							<button type="button" class="btn btn-outline-secondary" style="float: right; width: 10%; font-weight: bold; margin-right: 10px;" onclick="location.href='semi.do?command=board_updateform&board_no=<%=b_dto.getBoard_no()%>'">수  정</button>
+							<c:if test="${b_dto.member_id == dto.member_nicname || dto.member_grade eq '관리자' }">
+								<button type="button" class="btn btn-outline-secondary" style="float: right; width: 10%; font-weight: bold" onclick="location.href='semi.do?command=deleteres&board_no=<%=b_dto.getBoard_no()%>'">삭  제</button>
+							</c:if>
+							<c:if test="${b_dto.member_id == dto.member_nicname }">
+								<button type="button" class="btn btn-outline-secondary" style="float: right; width: 10%; font-weight: bold; margin-right: 10px;" onclick="location.href='semi.do?command=board_updateform&board_no=<%=b_dto.getBoard_no()%>'">수  정</button>
+							</c:if>
 						</div>
 					</div>
 				</div>
@@ -152,6 +156,8 @@ File_TableDto f_dto = (File_TableDto)request.getAttribute("f_dto");
 									<div>
 										<c:if test="${replyList.reply_nicname == dto.member_nicname }">
 											<input type="button" value="수정" class="replyUpdate" name="${replyList.reply_no }">
+										</c:if>
+										<c:if test="${replyList.reply_nicname == dto.member_nicname || dto.member_grade eq '관리자' }">
 											<input type="button" value="삭제" class="replyDelete" name="${replyList.reply_no }">
 										</c:if>
 										<c:if test="${dto ne null }">
@@ -182,6 +188,8 @@ File_TableDto f_dto = (File_TableDto)request.getAttribute("f_dto");
 									<div>
 										<c:if test="${replyList.reply_nicname == dto.member_nicname }">
 											<input type="button" value="수정" class="replyUpdate" name="${replyList.reply_no }">
+										</c:if>
+										<c:if test="${replyList.reply_nicname == dto.member_nicname || dto.member_grade eq '관리자' }">
 											<input type="button" value="삭제" class="replyDelete" name="${replyList.reply_no }">
 										</c:if>
 										<c:if test="${dto ne null }">

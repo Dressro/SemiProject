@@ -38,6 +38,7 @@ public class MemberDto {
 		this.member_notify = member_notify;
 	}
 
+
 	public String getMember_id() {
 		return member_id;
 	}

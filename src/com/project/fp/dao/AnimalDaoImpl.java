@@ -90,4 +90,17 @@ public class AnimalDaoImpl extends SqlMapConfig implements AnimalDao {
 		return res;
 	}
 
+	@Override
+	public AnimalDto selectoneDetail(String member_id) {
+		AnimalDto dto = null;
+		
+		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
+			dto = session.selectOne(namespace+"selectoneDetail", member_id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return dto;
+	}
+
 }

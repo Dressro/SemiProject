@@ -34,13 +34,13 @@
 		UPDATE CHAT
 		SET CH_NAME =
 		#{ch_name}, CH_DATE = SYSDATE, MEMBER_ID = #{member_id}
-		WHERE CHAT_NUM
+		WHERE CH_NUM
 		= #{chat_num}
 	</update>
 
 	<delete id="delete" parameterType="int">
 		DELETE CHAT
-		WHERE CHAT_NUM =
+		WHERE CH_NUM =
 		#{chat_num}
 	</delete>
 

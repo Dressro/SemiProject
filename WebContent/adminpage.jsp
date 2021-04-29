@@ -99,9 +99,9 @@ $(function(){
  
 });
 
-function detailPopup() {
+function detailPopup(member_id) {
     window.name = "adminpage.jsp";
-    window.open("semi.do?command=memberdetail&member_id=${dto.member_id }", "insert",
+    window.open("semi.do?command=memberdetail&member_id="${dto.member_id }, "insert",
             "width = 550, height = 800, resizable = no, scrollbars = no, status = no");
 }
 
@@ -359,8 +359,8 @@ function memberinsertPopup() {
 
 	<tr>
 	<td colspan="12" align="right">
-	<input type="submit"value="상품등록" onclick="location.href='semi.do?command=shop_insertform'" />
-	<input type="submit"value="상품삭제" onclick="#" />
+	<input type="button"value="상품등록" onclick="location.href='semi.do?command=shop_insertform'" />
+	<input type="button"value="상품삭제" onclick="#" />
 	</td></tr>
 	
 </table>

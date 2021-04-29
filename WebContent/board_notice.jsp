@@ -36,23 +36,25 @@
 				<c:forEach items="${list }" var="dto">
 					<tr>
 						<td>${dto.board_notice_no }</td>
-						<td>${dto.member_nicname }</td>
+						<td>${dto.member_id }</td>
 						<td>
 							<c:forEach begin="1" end="${dto.board_titletab }">
 								&nbsp;
 							</c:forEach>
-							<a href="semi.do?command=board_dec_detail&board_no=${dto.board_no }">${dto.board_title }</a>
+							<a href="semi.do?command=board_detail&board_no=${dto.board_no }">${dto.board_title }</a>
 						</td>
 						<td>${dto.board_regdate }</td>
 					</tr>
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
+		<c:if test="${dto.member_grade eq '관리자' }">
 		<tr>
 			<td colspan="4" align="right">
 				<input type="button" value="글작성" onclick="location.href='semi.do?command=board_insertform'" />
 			</td>
 		</tr>
+		</c:if>
 	</table>
 	
 	<jsp:include page="/board_paging.jsp">

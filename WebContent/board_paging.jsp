@@ -25,9 +25,9 @@
 	  </c:if>
 	
 	  <!-- 현재 페이지 블록에 해당하는 페이지 출력 -->
-	  <c:forEach begin="${param.blockBegin}" end="${param.blockEnd}" var="index">
+	  <c:forEach begin="${param.blockBegin}" end="${param.blockEnd}" var="index" >
 		    <c:choose>
-			    <c:when test="${param.nowPage == index}">
+			    <c:when test="${param.nowPage eq index}">
 				     ${index}
 			    </c:when>
 			    <c:otherwise>
