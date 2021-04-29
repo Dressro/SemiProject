@@ -1,3 +1,4 @@
+<%@page import="com.project.fp.gmail.MailSend"%>
 <%@page import="com.project.fp.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
@@ -99,11 +100,6 @@ response.setContentType("text/html; charset=UTF-8");
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
-	$(document).ready(function() { 
-		if($('input[name=member_email_chk]').val() == "ok") {
-			$('.email_auth').show();
-		}
-	});
 	
 	function address() {
 		new daum.Postcode(
@@ -156,6 +152,7 @@ response.setContentType("text/html; charset=UTF-8");
 					"width=300 , height= 300");
 		}
 	}
+	
 	function check() {
 		var member_email = $('input[name=member_email_1]').val() + "@"
 				+ $('select[name=member_email_2]').val();
@@ -201,15 +198,18 @@ response.setContentType("text/html; charset=UTF-8");
 				});
 
 	});
+	
 	function sendmailkey() {
 		var member_email = $('input[name=member_email_1]').val() + "@"
 				+ $('select[name=member_email_2]').val();
+		var email_key = randomkey();
+		$('input[name=email_key]').val(email_key);
 		if ($('input[name=member_email_1]').val().trim() == ""
 				|| $('input[name=member_email_1]').val() == null) {
 			alert("이메일을 입력해 주세요");
 		} else {
-			open("semi.do?command=mailsend&member_email=" + member_email, "",
-			"width=200 , height= 200");
+			open("semi.do?command=mailsend&member_email=" + member_email + "&email_key=" + email_key, "",
+			"width=300 , height= 200");		
 		}
 	}
 	
@@ -217,7 +217,11 @@ response.setContentType("text/html; charset=UTF-8");
 		if ($('input[name=email_user]').val() == $('input[name=email_key]').val()) {
 			$('#mailchk').html('이메일 인증 완료');
 			$('#mailchk').attr('color', '#199894b3');
-			$('input[name=email_certification]').val() = "true";
+			$('input[name=email_certification]').val('true');
+		} else {
+			$('#mailchk').html('인증번호가 틀립니다.');
+			$('#mailchk').attr('color', '#f82a2aa3');
+			$('input[name=email_certification]').val('false');
 		}
 	}
 
@@ -225,21 +229,44 @@ response.setContentType("text/html; charset=UTF-8");
 		var member_phone = $('input[name=member_phone_1]').val()
 				+ $('input[name=member_phone_2]').val()
 				+ $('input[name=member_phone_3]').val();
+		var phone_key = randomkey();
+		$('input[name=phone_key]').val(phone_key);
 		if ($('input[name=member_phone_1]').val().trim() == ""
 				|| $('input[name=member_phone_1]').val() == null) {
 			alert("전화번로를 입력해 주세요");
 		} else {
-			open("semi.do?command=smssend&member_phone=" + member_phone, "",
-					"width=200 , height= 200");
+			open("semi.do?command=smssend&member_phone=" + member_phone + "&phone_key=" + phone_key, "",
+					"width=300 , height= 200");
 		}
 	}
+	
+	function phonecheck() {
+		if ($('input[name=phone_user]').val() == $('input[name=phone_key]').val()) {
+			$('#phonechk').html('휴대폰 번호 인증 완료');
+			$('#phonechk').attr('color', '#199894b3');
+			$('input[name=phone_certification]').val('true');
+		} else {
+			$('#phonechk').html('인증번호가 틀립니다.');
+			$('#phonechk').attr('color', '#f82a2aa3');
+			$('input[name=phone_certification]').val('false');
+		}
+	}
+	
+	function randomkey() {
+		var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ";
+		var string_length = 10;
+		var randomstring = '';
+		for (var i=0; i<string_length; i++) {
+			var rnum = Math.floor(Math.random() * chars.length);
+			randomstring += chars.substring(rnum,rnum+1);
+		}
+		return randomstring;
+	}
+	
 </script>
 
 </head>
 <body>
-<%
-	String email_key = (String) session.getAttribute("content");
-%>
 
 <jsp:include page="header.jsp" />
 
@@ -314,7 +341,7 @@ response.setContentType("text/html; charset=UTF-8");
 									<div>
 										인증번호
 										<input type="text" name="email_user" />
-										<input type="hidden" name="email_key" value="<%=email_key%>">
+										<input type="hidden" name="email_key" value="">
 										<input type="hidden" name="email_certification" value="false">
 										<input type="button" value="인증하기" onclick="mailcheck();" />
 										<font id="mailchk" size="2"></font>
@@ -332,6 +359,14 @@ response.setContentType("text/html; charset=UTF-8");
 											<input class="general_signup_phone" type="text" name="member_phone_3" maxlength="4" size="3">
 											<input type="button" value="문자 전송" onclick="sendsms();" />
 										</span>
+									</div>
+									<div>
+										인증번호
+										<input type="text" name="phone_user" />
+										<input type="hidden" name="phone_key" value="">
+										<input type="hidden" name="phone_certification" value="false">
+										<input type="button" value="인증하기" onclick="phonecheck();" />
+										<font id="phonechk" size="2"></font>
 									</div>
 								</div>
 								<div class="general_signup_row">

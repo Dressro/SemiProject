@@ -817,13 +817,12 @@ public class SemiProjectController extends HttpServlet {
 			String from = "ejsdnlcl@gmail.com"; // 발신자
 			String cc = "scientist-1002@hanmail.net"; // 참조
 			String subject = "FamilyPet 회원가입 이메일 인증번호 입니다.";
-			String content = getRandomPassword(10);
+			String content = request.getParameter("email_key"); 
 			try {
 				MailSend ms = new MailSend();
 				ms.sendEmail(from, member_email, cc, subject, content);
 				System.out.println("전송 성공");
-				session.setAttribute("content", content);
-				response.sendRedirect("signup_emailchk.jsp");
+				response.sendRedirect("signup_cert_num.jsp");
 			} catch (MessagingException me) {
 				System.out.println("메일 전송에 실패하였습니다.");
 				System.out.println("실패 이유 : " + me.getMessage());
@@ -833,22 +832,11 @@ public class SemiProjectController extends HttpServlet {
 				System.out.println("실패 이유 : " + e.getMessage());
 				e.printStackTrace();
 			}
-		} else if (command.equals("mailcheck")) {
-			String AuthenticationKey = request.getParameter("AuthenticationKey");
-			String AuthenticationUser = request.getParameter("AuthenticationUser");
-			if (AuthenticationKey.equals(AuthenticationUser)) {
-				System.out.println("메일 인증 성공");
-				String mail_chk = "ok";
-				request.setAttribute("mail_chk", mail_chk);
-				dispatch(response, request, "general_signup.jsp");
-			} else {
-				System.out.println("메일 인증 실패");
-				dispatch(response, request, "general_signup.jsp");
-			}
 		} else if (command.equals("smssend")) {
 			String member_phone = request.getParameter("member_phone");
-			String content = "문자 내용 작성";
+			String content = request.getParameter("phone_key");
 			SMS.sendSMS(member_phone, content);
+			response.sendRedirect("signup_cert_num.jsp");
 		} else if (command.equals("translation")) {
 			String text = request.getParameter("text");
 			String source = request.getParameter("source");
