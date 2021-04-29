@@ -467,7 +467,12 @@ public class SemiProjectController extends HttpServlet {
 			request.setAttribute("list", list);
 			dispatch(response, request, "board_dec.jsp");
 		} else if (command.equals("mypage")) {
-			response.sendRedirect("mypage.jsp");
+			String member_id = request.getParameter("member_id");
+			MemberDto dto = m_biz.selectDetail(member_id);
+			AnimalDto a_dto = a_biz.selectoneDetail(member_id);
+			session.setAttribute("dto", dto);
+			request.setAttribute("a_dto", a_dto);
+			dispatch(response, request, "mypage.jsp");
 		} else if (command.equals("boardlist")) {
 			List<BoardDto> boardlist = b_biz.board_List();
 			request.setAttribute("boardlist", boardlist);
