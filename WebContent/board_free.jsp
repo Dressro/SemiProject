@@ -86,8 +86,9 @@ response.setContentType("text/html; charset=UTF-8");
       <div class="table-responsive">
 	<form action="semi.do" method="post">
 		<input type="hidden" name="command" value="board_delete">
-		<input type="hidden" name="userID" value="${dto.member_id }">
+		<input type="hidden" name="userNicname" value="${dto.member_nicname }">
 		<input type="hidden" name="userGrade" value="${dto.member_grade }">
+		<input type="hidden" name="command" value="board_free_delete">
         <table class="table custom-table">
           <thead>
             <tr>

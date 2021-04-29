@@ -1,7 +1,9 @@
 package com.project.fp.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -109,6 +111,20 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 	}
 
 	@Override
+	public int grade_update(MemberDto dto) {
+		int res = 0;
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.insert(namespace + "grade_update", dto);
+			if (res > 0) {
+				session.commit();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	}
+	@Override
 	public int mypageupdate(MemberDto dto) {
 		int res = 0;
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
@@ -132,7 +148,7 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 		return res;
 	}
 
-	
+
 
 
 

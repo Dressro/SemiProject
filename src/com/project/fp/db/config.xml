@@ -35,5 +35,6 @@
 		<mapper resource="com/project/fp/db/ProjectFP-mapper_Board_Reply.xml"/>
 		<mapper resource="com/project/fp/db/ProjectFP-mapper_Chat_Content.xml"/>
 		<mapper resource="com/project/fp/db/ProjectFP-mapper_chat.xml"/>
+		<mapper resource="com/project/fp/db/ProjectFP-mapper_Product.xml"/>
 	</mappers>
 </configuration>

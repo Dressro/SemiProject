@@ -36,12 +36,12 @@
 				<c:forEach items="${list }" var="dto">
 					<tr>
 						<td>${dto.board_notice_no }</td>
-						<td>${dto.member_nicname }</td>
+						<td>${dto.member_id }</td>
 						<td>
 							<c:forEach begin="1" end="${dto.board_titletab }">
 								&nbsp;
 							</c:forEach>
-							<a href="semi.do?command=board_dec_detail&board_no=${dto.board_no }">${dto.board_title }</a>
+							<a href="semi.do?command=board_detail&board_no=${dto.board_no }">${dto.board_title }</a>
 						</td>
 						<td>${dto.board_regdate }</td>
 					</tr>

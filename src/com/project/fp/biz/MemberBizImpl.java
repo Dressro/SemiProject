@@ -188,6 +188,12 @@ public class MemberBizImpl implements MemberBiz {
 	}
 
 	@Override
+	public int grade_update(MemberDto dto) {
+		// TODO Auto-generated method stub
+		return dao.grade_update(dto);
+	}
+	
+	@Override
 	public int mypageupdate(MemberDto dto) {
 		/*
 		try {
@@ -217,6 +223,7 @@ public class MemberBizImpl implements MemberBiz {
 		*/
 		return dao.mypagemod(dto);
 	}
+
 
 
 
