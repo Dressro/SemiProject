@@ -503,10 +503,15 @@ public class SemiProjectController extends HttpServlet {
 			request.setAttribute("list", list);
 			dispatch(response, request, "shopping.jsp");
 		} else if (command.equals("adminpage")) {
+			System.out.println("여기왔다.");
 			List<MemberDto> list = m_biz.selectList();
+			System.out.println("여기왔다2.");
 			List<ProductDto> prodlist = p_biz.selectList();
+			System.out.println("여기왔다3.");
 			List<Order_TableDto> orderlist = o_t_biz.selectList();
+			System.out.println("여기왔다4.");
 			List<BoardDto> boardlist = b_biz.board_List();
+			System.out.println("여기왔다5.");
 
 			request.setAttribute("list", list);
 			request.setAttribute("prodlist", prodlist);
