@@ -73,7 +73,7 @@ CREATE TABLE MEMBER(
 	CONSTRAINT MEMBER_MEMBER_ANIMAL_CHK CHECK(MEMBER_ANIMAL IN ('Y', 'N')),
 	CONSTRAINT MEMBER_MEMBER_NOTIFY_CHK CHECK(MEMBER_NOTIFY IN ('Y', 'N'))
 );
-
+insert into member values('admin','admin','관리자','관리자','admin@admin.com','010-0000-0000','관리시 관리동','관리자','Y','N',0,NULL,'Y');
 select * from member;
 CREATE TABLE BOARD(
 	BOARD_NO NUMBER PRIMARY KEY,
@@ -96,7 +96,7 @@ CREATE TABLE BOARD(
 	CONSTRAINT BOARD_MEMBER_ID_FK FOREIGN KEY (MEMBER_ID)
 	REFERENCES MEMBER (MEMBER_ID)
 );
-
+select * from BOARD;
 CREATE TABLE ORDER_TABLE(
 	ORDER_NUM NUMBER PRIMARY KEY,
 	ORDER_DATE DATE NOT NULL,
@@ -111,7 +111,8 @@ CREATE TABLE ORDER_TABLE(
 	CONSTRAINT ORDER_TABLE_PROD_NUM_FK FOREIGN KEY (PROD_NUM) REFERENCES PRODUCT (PROD_NUM),
 	CONSTRAINT ORDER_TABLE_MEMBER_ID_FK FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER (MEMBER_ID)
 );
-
+select * from ORDER_TABLE;
+select * from PRODUCT;
 CREATE TABLE CHAT (
 	CH_NUM NUMBER NOT NULL,
 	DOCTOR_ID VARCHAR2(500) NOT NULL,
@@ -169,11 +170,15 @@ CREATE TABLE FILE_TABLE(
 	CONSTRAINT FILE_TABLE_ANIMAL_NO_KF FOREIGN KEY (ANIMAL_NO) REFERENCES ANIMAL (ANIMAL_NO)
 );
 
+alter table file_table add prod_num number;
+alter table file_table add constraint FILE_TABLE_PROD_NUM FOREIGN KEY (PROD_NUM) REFERENCES PRODUCT(PROD_NUM); 
 
+SELECT * FROM FILE_TABLE;
 
 SELECT * FROM MEMBER;
 
 
+select * from ORDER_TABLE;
 
 select * from member m , file_table f
 where m.member_id = f.member_id
@@ -188,7 +193,7 @@ SELECT * FROM ANIMAL;
 select * from chat;
 select * from CHAT_CONTENT;
 
-
+update member set member_grade = '관리자' where member_id = 'admin';
 
 CREATE TABLE HOSPITAL(
 	HOSPITAL_NUM NUMBER PRIMARY KEY,
@@ -198,7 +203,7 @@ CREATE TABLE HOSPITAL(
 );
 
 
-
+select * from product;
 select count(*) from hospital order by hospital_num desc;
 select * from member;  
 select * from file_table;

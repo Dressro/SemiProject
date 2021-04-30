@@ -111,6 +111,7 @@ response.setContentType("text/html; charset=UTF-8");
 #general_signup_btn {
 	padding-top: 10px;
 }
+
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -284,8 +285,6 @@ response.setContentType("text/html; charset=UTF-8");
 <body>
 
 	<jsp:include page="header.jsp" />
-
-
 
 	<div id="general_signup_mid">
 		<h3>회원가입 (일반)</h3>

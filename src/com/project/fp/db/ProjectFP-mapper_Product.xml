@@ -37,5 +37,13 @@
 		DELETE FROM PRODUCT
 		WHERE PROD_NUM = #{prod_num}
 	</delete>
-
+	
+	<delete id="multiDelete" parameterType="map">
+		delete from product
+		where prod_num in
+		<foreach collection="prod_nums" item="prod_num" open="("
+			separator="," close=")">
+			#{prod_num}
+		</foreach>
+	</delete>
 </mapper>

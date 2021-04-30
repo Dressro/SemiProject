@@ -15,6 +15,18 @@ public class Order_TableBizImpl implements Order_TableBiz {
 
 		return dao.selectList();
 	}
+	
+	@Override
+	public List<Order_TableDto> selectbasketList(String member_id) {
+
+		return dao.selectbasketList(member_id);
+	}
+	
+	@Override
+	public List<Order_TableDto> selectpayList(String member_id) {
+
+		return dao.selectpayList(member_id);
+	}
 
 	@Override
 	public Order_TableDto selectOne(int order_num) {

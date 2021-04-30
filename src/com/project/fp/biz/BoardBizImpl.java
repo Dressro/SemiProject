@@ -71,20 +71,20 @@ public class BoardBizImpl implements BoardBiz {
 	}
 	
 	@Override
-	public List<BoardDto> free_M_search(PagingDto Pdto) {
+	public List<BoardDto> Board_All_M_search(PagingDto Pdto) {
 		// TODO Auto-generated method stub
-		return dao.free_M_search(Pdto);
+		return dao.Board_All_M_search(Pdto);
 	}
 	@Override
-	public List<BoardDto> free_C_search(PagingDto Pdto) {
+	public List<BoardDto> Board_All_C_search(PagingDto Pdto) {
 		// TODO Auto-generated method stub
-		return dao.free_C_search(Pdto);
+		return dao.Board_All_C_search(Pdto);
 	}
 
 	@Override
-	public List<BoardDto> free_MC_search(PagingDto Pdto) {
+	public List<BoardDto> Board_All_MC_search(PagingDto Pdto) {
 		// TODO Auto-generated method stub
-		return dao.free_MC_search(Pdto);
+		return dao.Board_All_MC_search(Pdto);
 	}
 
 	@Override
@@ -214,6 +214,8 @@ public class BoardBizImpl implements BoardBiz {
 		
 		return dao.multiDelete(board_nos);
 	}
+
+	
 
 	
 	

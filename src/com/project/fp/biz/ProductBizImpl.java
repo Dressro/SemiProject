@@ -40,4 +40,10 @@ public class ProductBizImpl implements ProductBiz {
 		return dao.delete(prod_num);
 	}
 
+	@Override
+	public int multiDelete(String[] prod_nums) {
+		
+		return dao.multiDelete(prod_nums);
+	}
+
 }

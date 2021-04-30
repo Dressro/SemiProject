@@ -20,9 +20,10 @@
 		VALUES(#{order_num}, #{receive_name}, #{receive_addr}, #{receive_phone}, #{receive_memo})
 	</insert>
 	
-	<delete id="delete" parameterMap="ReceiveDto">
+	<delete id="delete" parameterType="ReceiveDto">
 		DELETE FROM RECEIVE
 		WHERE ORDER_NUM = #{order_num}
 	</delete>
+
 
 </mapper>

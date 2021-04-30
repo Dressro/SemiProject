@@ -24,6 +24,7 @@ public class PagingDto {
 	private int blockEnd; // 현재 블록의 마지막 페이지 번호
 	private String s_c;
 	private String s_t;
+	private String category;
 	// 파라미터 없는 생성자
 	public PagingDto() {
 	}
@@ -36,22 +37,8 @@ public class PagingDto {
 		setPageRange(); // 페이지 번호 계산
 		setTotalBlock(); // 전체 블록 수 계산
 		setBlockRange(); // 페이지 블록 계산
-		
-		System.out.println("여기 왔다");
-		System.out.println("nowPage:"+nowPage);
-		System.out.println("prevPage:"+prevPage);
-		System.out.println("nextPage:"+nextPage);
-		System.out.println("totalPage:"+totalPage);
-		System.out.println("totalBlock:"+totalBlock);
-		System.out.println("nowBlock:"+nowBlock);
-		System.out.println("prevBlock:"+prevBlock);
-		System.out.println("nextBlock:"+nextBlock);
-		System.out.println("pageBegin:"+pageBegin);
-		System.out.println("pageEnd:"+pageEnd);
-		System.out.println("blockBegin:"+blockBegin);
-		System.out.println("blockEnd:"+blockEnd);
 	}
-	public PagingDto(int count, int nowPage , String s_c, String s_t) {
+	public PagingDto(int count, int nowPage , String s_c, String s_t, String category) {
 		nowBlock = 1; // 현재 페이지 블록
 		this.nowPage = nowPage; // 현재 페이지
 		setTotalPage(count); // 전체 페이지 수 구하기
@@ -60,6 +47,7 @@ public class PagingDto {
 		setBlockRange(); // 페이지 블록 계산
 		this.s_c = s_c;
 		this.s_t = s_t;
+		this.category = category;
 	}
 	// 페이지 블록 계산
 	public void setBlockRange() {
