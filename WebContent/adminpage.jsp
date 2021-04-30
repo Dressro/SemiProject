@@ -81,6 +81,7 @@ response.setContentType("text/html; charset=UTF-8");
 	a{
 		color:#f45d96;
 	}
+	option:disabled{background-color:#EAEAEA;}
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
@@ -160,7 +161,7 @@ $(function(){
 <div class="adminpage_1">
 
 <h2 class="mb-5">회원정보관리</h2>
-<form action="semi.do" method="post" id="memberlist">
+<form action="semi.do" method="post" id="memberlist" onsubmit="return confirm('정말 변경하시겠습니까?');">
 <input type="hidden" name="command" value="member_grade">
 <table border="1" id="adminBoard" class="table custom-table" style="table-layout:fixed">
 	<col width="80"/>
@@ -226,52 +227,152 @@ $(function(){
 </table>
 </form>
 </div>
+
+
 <div class="adminpage_2" style="display: none;">
 
 <h2 class="mb-5">전체주문조회</h2>
+<form action="semi.do" method="post" onsubmit="return confirm('정말 변경하시겠습니까?');">
+<input type="hidden" name="command" value="order_step">
 <table border="1" id="adminBoard" class="table custom-table" style="table-layout:fixed">
 	<col width="30"/>
-	<col width="60"/>
+	<col width="80"/>
 	<col width="100"/>
-	<col width="100"/>
+	<col width="130"/>
+	<col width="80"/>
+	<col width="80"/>
+	<col width="130"/>
+	<col width="150"/>
 	<col width="200"/>
-	<col width="50"/>
-	<col width="70"/>
-	<col width="100"/>
-	<col width="200"/>
-	<col width="50"/>
 	
 	<tr>
 		<th><input type="checkbox" value=""/></th>
 		<th>주문번호</th>
 		<th>회원ID</th>
-		<th>주문일</th>
 		<th>상품명</th>
 		<th>수량</th>
 		<th>결제금액</th>
 		<th>주문상태</th>
+		<th>주문일</th>
 		<th>배송지</th>
 	</tr>
-	
+<c:set var = "tempname" value= ""/>	
 <c:forEach items="${orderlist }" var="dto"> 
-	<tr>
-		<td><input type="checkbox" value=""></td>
-		<td>${dto.order_num }</td>
-		<td>${dto.order_id }</td>
-		<td>${dto.order_date }</td>
-		<td>${dto.prod_name }</td>
+	<c:choose>
+	<c:when test="${dto.order_group eq tempname}">
+		<tr>
+		<td><input type="hidden" name="order_num" value="${dto.order_num }"></td>
+		<td></td>
+		<td style="text-overflow:ellipsis; overflow:hidden;">${dto.member_id }</td>
+		<td style="text-overflow:ellipsis; overflow:hidden;">${dto.prod_name }</td>
 		<td>${dto.order_quantity }</td>
 		<td>${dto.order_price }</td>
-		<td>${dto.order_step }</td>
-		<td></td>
+		<td>
+			<select name="order_step">
+					<c:if test="${dto.order_step eq '미결제'}">
+						<option value="미결제" selected>미결제</option>
+						<option value="결제완료" disabled="disabled">결제완료</option>
+						<option value="배송준비중" disabled="disabled">배송준비중</option>
+						<option value="배송중" disabled="disabled">배송중</option>
+						<option value="배송완료" disabled="disabled">배송완료</option>
+					</c:if>
+					<c:if test="${dto.order_step eq '결제완료'}">
+						<option value="미결제" disabled="disabled">미결제</option>
+						<option value="결제완료" selected>결제완료</option>
+						<option value="배송준비중" disabled="disabled">배송준비중</option>
+						<option value="배송중" disabled="disabled">배송중</option>
+						<option value="배송완료" disabled="disabled">배송완료</option>
+					</c:if>
+					<c:if test="${dto.order_step eq '배송준비중'}">
+						<option value="미결제" disabled="disabled">미결제</option>
+						<option value="결제완료" disabled="disabled">결제완료</option>
+						<option value="배송준비중" selected>배송준비중</option>
+						<option value="배송중" disabled="disabled">배송중</option>
+						<option value="배송완료" disabled="disabled">배송완료</option>
+					</c:if>
+					<c:if test="${dto.order_step eq '배송중'}">
+						<option value="미결제" disabled="disabled">미결제</option>
+						<option value="결제완료" disabled="disabled">결제완료</option>
+						<option value="배송준비중" disabled="disabled">배송준비중</option>
+						<option value="배송중" selected>배송중</option>
+						<option value="배송완료" disabled="disabled">배송완료</option>
+					</c:if>
+					<c:if test="${dto.order_step eq '배송완료'}">
+						<option value="미결제">미결제</option>
+						<option value="결제완료">결제완료</option>
+						<option value="배송준비중">배송준비중</option>
+						<option value="배송중">배송중</option>
+						<option value="배송완료" selected>배송완료</option>
+					</c:if>
+					</select>
+		</td>
+		<td><fmt:formatDate value="${dto.order_date }" pattern="yyyy-MM-dd a hh:mm"/></td>
+		<td style="text-overflow:ellipsis; overflow:hidden;"></td>
+		</tr>
+	</c:when>	
+	<c:otherwise>
+	<tr>
+		<td><input type="hidden" name="order_num" value="${dto.order_num }"></td>
+		<td>${dto.order_num }</td>
+		<td style="text-overflow:ellipsis; overflow:hidden;">${dto.member_id }</td>
+		<td style="text-overflow:ellipsis; overflow:hidden;">${dto.prod_name }</td>
+		<td>${dto.order_quantity }</td>
+		<td>${dto.order_price }</td>
+		<td>
+			<select name="order_step">
+					<c:if test="${dto.order_step eq '미결제'}">
+						<option value="미결제" selected>미결제</option>
+						<option value="결제완료">결제완료</option>
+						<option value="배송준비중">배송준비중</option>
+						<option value="배송중">배송중</option>
+						<option value="배송완료">배송완료</option>
+					</c:if>
+					<c:if test="${dto.order_step eq '결제완료'}">
+						<option value="미결제">미결제</option>
+						<option value="결제완료" selected>결제완료</option>
+						<option value="배송준비중">배송준비중</option>
+						<option value="배송중">배송중</option>
+						<option value="배송완료">배송완료</option>
+					</c:if>
+					<c:if test="${dto.order_step eq '배송준비중'}">
+						<option value="미결제">미결제</option>
+						<option value="결제완료">결제완료</option>
+						<option value="배송준비중" selected>배송준비중</option>
+						<option value="배송중">배송중</option>
+						<option value="배송완료">배송완료</option>
+					</c:if>
+					<c:if test="${dto.order_step eq '배송중'}">
+						<option value="미결제">미결제</option>
+						<option value="결제완료">결제완료</option>
+						<option value="배송준비중">배송준비중</option>
+						<option value="배송중" selected>배송중</option>
+						<option value="배송완료">배송완료</option>
+					</c:if>
+					<c:if test="${dto.order_step eq '배송완료'}">
+						<option value="미결제">미결제</option>
+						<option value="결제완료">결제완료</option>
+						<option value="배송준비중">배송준비중</option>
+						<option value="배송중">배송중</option>
+						<option value="배송완료" selected>배송완료</option>
+					</c:if>
+					</select>
+		</td>
+		<td><fmt:formatDate value="${dto.order_date }" pattern="yyyy-MM-dd a hh:mm"/></td>
+		<td style="text-overflow:ellipsis; overflow:hidden;"></td>
 	</tr>
+	</c:otherwise>
+	</c:choose>
+	<c:set var="tempname" value="${dto.order_group}"/>
+	
 	</c:forEach>
 	<tr>
 	<td colspan="9" align="right">
-	<input type="submit" value="주문상태변경" class="s-btn" onclick="#" />
-	</td></tr>
+	<input type="submit" value="주문상태변경" class="s-btn"/>
+	</td>
+	</tr>
 	
 </table>
+</form>
 </div>
 
 <div class="adminpage_3" style="display: none;">

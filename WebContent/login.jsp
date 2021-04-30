@@ -168,8 +168,9 @@
 </head>
 <body>
 		<jsp:include page="header.jsp" />
+		
 		<div id="semi_login_mid">
-			<div id="semi_login_mid_input">
+			<div id="semi_login_mid_input">	
 				<form action="semi.do" class="semi_login_mid_input_form" method="post" onsubmit="return submitUserForm();">
 					<div class="semi_login_mid_div">
 						<input type="hidden" name="command" value="loginres" />
