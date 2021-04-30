@@ -491,7 +491,9 @@ public class SemiProjectController extends HttpServlet {
 			dispatch(response, request, "board_dec.jsp");
 		} else if (command.equals("mypage")) {
 			String member_id = request.getParameter("member_id");
+			MemberDto dto = m_biz.selectDetail(member_id);
 			AnimalDto a_dto = a_biz.selectoneDetail(member_id);
+			session.setAttribute("dto", dto);
 			request.setAttribute("a_dto", a_dto);
 			dispatch(response, request, "mypage.jsp");
 		} else if (command.equals("boardlist")) {
@@ -914,13 +916,12 @@ public class SemiProjectController extends HttpServlet {
 			String from = "ejsdnlcl@gmail.com"; // 발신자
 			String cc = "scientist-1002@hanmail.net"; // 참조
 			String subject = "FamilyPet 회원가입 이메일 인증번호 입니다.";
-			String content = getRandomPassword(10);
+			String content = request.getParameter("email_key"); 
 			try {
 				MailSend ms = new MailSend();
 				ms.sendEmail(from, member_email, cc, subject, content);
 				System.out.println("전송 성공");
-				session.setAttribute("content", content);
-				response.sendRedirect("signup_emailchk.jsp");
+				response.sendRedirect("signup_cert_num.jsp");
 			} catch (MessagingException me) {
 				System.out.println("메일 전송에 실패하였습니다.");
 				System.out.println("실패 이유 : " + me.getMessage());
@@ -930,22 +931,11 @@ public class SemiProjectController extends HttpServlet {
 				System.out.println("실패 이유 : " + e.getMessage());
 				e.printStackTrace();
 			}
-		} else if (command.equals("mailcheck")) {
-			String AuthenticationKey = request.getParameter("AuthenticationKey");
-			String AuthenticationUser = request.getParameter("AuthenticationUser");
-			if (AuthenticationKey.equals(AuthenticationUser)) {
-				System.out.println("메일 인증 성공");
-				String mail_chk = "ok";
-				request.setAttribute("mail_chk", mail_chk);
-				dispatch(response, request, "general_signup.jsp");
-			} else {
-				System.out.println("메일 인증 실패");
-				dispatch(response, request, "general_signup.jsp");
-			}
 		} else if (command.equals("smssend")) {
 			String member_phone = request.getParameter("member_phone");
-			String content = "문자 내용 작성";
+			String content = request.getParameter("phone_key");
 			SMS.sendSMS(member_phone, content);
+			response.sendRedirect("signup_cert_num.jsp");
 		} else if (command.equals("translation")) {
 			String text = request.getParameter("msg");
 			String source = request.getParameter("source");
@@ -1024,7 +1014,6 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("chatlist_chat")) {
 			String member_grade = request.getParameter("member_grade");
 			String member_id = request.getParameter("member_id");
-			;
 			ChatDto c_dto = new ChatDto();
 			c_dto.setMember_id(member_id);
 			List<ChatDto> c_list = new ArrayList<ChatDto>();
@@ -1089,6 +1078,36 @@ public class SemiProjectController extends HttpServlet {
 					break;
 				}
 
+			}
+		}
+		
+		if (command.equals("basket_insert")) {
+			String member_id = request.getParameter("member_id");
+			int prod_num = Integer.parseInt(request.getParameter("prod_num"));
+			ProductDto p_dto = p_biz.selectOne(prod_num);
+			request.setAttribute("member_id", member_id);
+			request.setAttribute("p_dto", p_dto);
+			dispatch(response, request, "basket_insertform.jsp");
+		} else if (command.equals("basket_insertres")) {
+			String member_id = request.getParameter("member_id");
+			int prod_num = Integer.parseInt(request.getParameter("prod_num"));
+			int prod_price = Integer.parseInt(request.getParameter("prod_price"));
+			int order_quantity = Integer.parseInt(request.getParameter("order_quantity"));
+			int order_price = prod_price * order_quantity;
+			Order_TableDto o_dto = new Order_TableDto();
+			o_dto.setOrder_quantity(order_quantity);
+			o_dto.setOrder_price(order_price);
+			o_dto.setProd_num(prod_num);
+			o_dto.setMember_id(member_id);
+			System.out.println(order_quantity);
+			System.out.println(order_price);
+			System.out.println(prod_num);
+			System.out.println(member_id);
+			int res = o_t_biz.insert(o_dto);
+			if (res > 0) {
+				jsResponse(response, "장바구니에 추가되었습니다.", "semi.do?command=shopping");
+			} else {
+				jsResponse(response, "다시 시도해주십시오.", "semi.do?command=basket_insert&member_id="+ member_id +"&prod_num=" + prod_num);
 			}
 		}
 

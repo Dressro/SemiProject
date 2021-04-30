@@ -10,6 +10,7 @@ public class Order_TableDto {
 	private int order_price;
 	private String order_step;
 	private String order_pay;
+	private int order_group;
 	private int prod_num;
 	private String member_id;
 	
@@ -18,16 +19,18 @@ public class Order_TableDto {
 	}
 
 	public Order_TableDto(int order_num, Date order_date, int order_quantity, int order_price, String order_step,
-			String order_pay, int prod_num, String member_id) {
+			String order_pay, int order_group, int prod_num, String member_id) {
 		this.order_num = order_num;
 		this.order_date = order_date;
 		this.order_quantity = order_quantity;
 		this.order_price = order_price;
 		this.order_step = order_step;
 		this.order_pay = order_pay;
+		this.order_group = order_group;
 		this.prod_num = prod_num;
 		this.member_id = member_id;
 	}
+
 
 	public int getOrder_num() {
 		return order_num;
@@ -92,11 +95,13 @@ public class Order_TableDto {
 	public void setMember_id(String member_id) {
 		this.member_id = member_id;
 	}
-	
-	
-	
-	
-	
-	
+
+	public int getOrder_group() {
+		return order_group;
+	}
+
+	public void setOrder_group(int order_group) {
+		this.order_group = order_group;
+	}
 
 }

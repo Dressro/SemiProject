@@ -96,6 +96,71 @@ response.setContentType("text/html; charset=UTF-8");
 				});
 
 	});
+	
+	function sendmailkey() {
+		var member_email = $('input[name=member_email_1]').val() + "@"
+				+ $('select[name=member_email_2]').val();
+		var email_key = randomkey();
+		$('input[name=email_key]').val(email_key);
+		if ($('input[name=member_email_1]').val().trim() == ""
+				|| $('input[name=member_email_1]').val() == null) {
+			alert("이메일을 입력해 주세요");
+		} else {
+			open("semi.do?command=mailsend&member_email=" + member_email + "&email_key=" + email_key, "",
+			"width=300 , height= 200");		
+		}
+	}
+	
+	function mailcheck() {
+		if ($('input[name=email_user]').val() == $('input[name=email_key]').val()) {
+			$('#mailchk').html('이메일 인증 완료');
+			$('#mailchk').attr('color', '#199894b3');
+			$('input[name=email_certification]').val('true');
+		} else {
+			$('#mailchk').html('인증번호가 틀립니다.');
+			$('#mailchk').attr('color', '#f82a2aa3');
+			$('input[name=email_certification]').val('false');
+		}
+	}
+
+	function sendsms() {
+		var member_phone = $('input[name=member_phone_1]').val()
+				+ $('input[name=member_phone_2]').val()
+				+ $('input[name=member_phone_3]').val();
+		var phone_key = randomkey();
+		$('input[name=phone_key]').val(phone_key);
+		if ($('input[name=member_phone_1]').val().trim() == ""
+				|| $('input[name=member_phone_1]').val() == null) {
+			alert("전화번로를 입력해 주세요");
+		} else {
+			open("semi.do?command=smssend&member_phone=" + member_phone + "&phone_key=" + phone_key, "",
+					"width=300 , height= 200");
+		}
+	}
+	
+	function phonecheck() {
+		if ($('input[name=phone_user]').val() == $('input[name=phone_key]').val()) {
+			$('#phonechk').html('휴대폰 번호 인증 완료');
+			$('#phonechk').attr('color', '#199894b3');
+			$('input[name=phone_certification]').val('true');
+		} else {
+			$('#phonechk').html('인증번호가 틀립니다.');
+			$('#phonechk').attr('color', '#f82a2aa3');
+			$('input[name=phone_certification]').val('false');
+		}
+	}
+	
+	function randomkey() {
+		var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ";
+		var string_length = 10;
+		var randomstring = '';
+		for (var i=0; i<string_length; i++) {
+			var rnum = Math.floor(Math.random() * chars.length);
+			randomstring += chars.substring(rnum,rnum+1);
+		}
+		return randomstring;
+	}
+	
 </script>
 
 <style type="text/css">
@@ -260,8 +325,17 @@ response.setContentType("text/html; charset=UTF-8");
 										<option>daum.net</option>
 										<option>gmail.com</option>
 										<option>nate.com</option>
-									</select> <input type="button" name="email_send" value="인증번호 전송" onclick="sendmailkey();" />
+									</select> 
+								<input type="button" name="email_send" value="인증번호 받기" onclick="sendmailkey();" />
 								</span>
+							</div>
+							<div>
+								인증번호
+								<input type="text" name="email_user" />
+								<input type="hidden" name="email_key" value="">
+								<input type="hidden" name="email_certification" value="false">
+								<input type="button" value="인증하기" onclick="mailcheck();" />
+								<font id="mailchk" size="2"></font>
 							</div>
 						</div>
 						<div class="general_signup_row">
@@ -269,6 +343,14 @@ response.setContentType("text/html; charset=UTF-8");
 							<div class="general_signup_moblie_phone">
 								<span class="general_signup_span"> <input type="hidden" name="member_phone" value=""> <input class="general_signup_phone" type="text" name="member_phone_1" maxlength="3" size="3"> - <input class="general_signup_phone" type="text" name="member_phone_2" maxlength="4" size="3"> - <input class="general_signup_phone" type="text" name="member_phone_3" maxlength="4" size="3"> <input type="button" value="문자 전송" onclick="sendsms();" />
 								</span>
+							</div>
+							<div>
+								인증번호
+								<input type="text" name="phone_user" />
+								<input type="hidden" name="phone_key" value="">
+								<input type="hidden" name="phone_certification" value="false">
+								<input type="button" value="인증하기" onclick="phonecheck();" />
+								<font id="phonechk" size="2"></font>
 							</div>
 						</div>
 						<div class="general_signup_row">
@@ -293,7 +375,7 @@ response.setContentType("text/html; charset=UTF-8");
 						</div>
 						<div id="general_signup_btn">
 							<input type="submit" value="회원가입" onclick="check();" />
-							<input type="button" value="취소" onclick="location.href='index.html'" />
+							<input type="button" value="취소" onclick="location.href='index.jsp'" />
 						</div>
 					</div>
 				</form>
