@@ -271,7 +271,7 @@ response.setContentType("text/html; charset=UTF-8");
 					<input type="hidden" name="member_dr_info" value="없음" />
 					<div id="general_signup_idpw">
 						<div class="general_signup_row">
-							<h3 class="general_signup_title">아이디 *</h3>
+							<h4 class="general_signup_title">아이디 *</h4>
 							<div class="general_signup_id">
 								<span class="general_signup_span">
 									<input class="general_signup_text" type="text" title="n" name="member_id" required="required" />
@@ -280,7 +280,7 @@ response.setContentType("text/html; charset=UTF-8");
 							</div>
 						</div>
 						<div class="general_signup_row">
-							<h3 class="general_signup_title">비밀번호 *</h3>
+							<h4 class="general_signup_title">비밀번호 *</h4>
 							<div class="general_signup_pw">
 								<span class="general_signup_span">
 									<input class="general_signup_text" type="password" name="member_password" onclick="idCheckConfirm();">
@@ -288,7 +288,7 @@ response.setContentType("text/html; charset=UTF-8");
 							</div>
 						</div>
 						<div class="general_signup_row">
-							<h3 class="general_signup_title">비밀번호 확인 *</h3>
+							<h4 class="general_signup_title">비밀번호 확인 *</h4>
 							<div class="general_signup_pw">
 								<span class="general_signup_span">
 									<input class="general_signup_text" type="password" name="member_password_chk" onclick="idCheckConfirm();">
@@ -299,7 +299,7 @@ response.setContentType("text/html; charset=UTF-8");
 					</div>
 					<div id="general_signup_info">
 						<div class="general_signup_row">
-							<h3 class="general_signup_title">이름 *</h3>
+							<h4 class="general_signup_title">이름 *</h4>
 							<div class="general_signup_name">
 								<span class="general_signup_span">
 									<input class="general_signup_text" type="text" name="member_name" onclick="idCheckConfirm();">
@@ -308,15 +308,15 @@ response.setContentType("text/html; charset=UTF-8");
 						</div>
 
 						<div class="general_signup_row">
-							<h3 class="general_signup_title">닉네임 *</h3>
+							<h4 class="general_signup_title">닉네임 *</h4>
 							<div class="general_signup_nickname">
 								<span class="general_signup_span">
-									<input class="general_signup_text" type="text" name="member_nicname" maxlength="5" onclick="idCheckConfirm();">
+									<input class="general_signup_text" type="text" name="member_nicname" maxlength="10" onclick="idCheckConfirm();">
 								</span>
 							</div>
 						</div>
 						<div class="general_signup_row">
-							<h3 class="general_signup_title">이메일 *</h3>
+							<h4 class="general_signup_title">이메일 *</h4>
 							<div class="general_signup_email">
 								<input type="hidden" name="member_email" value="">
 								<span class="general_signup_span">
@@ -341,7 +341,7 @@ response.setContentType("text/html; charset=UTF-8");
 							</div>
 						</div>
 						<div class="general_signup_row">
-							<h3 class="general_signup_title">휴대폰 *</h3>
+							<h4 class="general_signup_title">휴대폰 *</h4>
 							<div class="general_signup_moblie_phone">
 								<span class="general_signup_span">
 									<input type="hidden" name="member_phone" value="">
@@ -355,7 +355,7 @@ response.setContentType("text/html; charset=UTF-8");
 							</div>
 						</div>
 						<div class="general_signup_row">
-							<h3 class="general_signup_title">주소 *</h3>
+							<h4 class="general_signup_title">주소 *</h4>
 							<div class="general_signup_home_addr">
 								<span class="general_signup_span_home_addr">
 									<input type="hidden" name="member_addr" value="">
@@ -368,7 +368,7 @@ response.setContentType("text/html; charset=UTF-8");
 							</div>
 						</div>
 						<div class="general_signup_row">
-							<h3 class="general_signup_animal_yn">반려동물 여부</h3>
+							<h4 class="general_signup_animal_yn">반려동물 여부</h4>
 							<div class="general_signup_animal_yn">
 								<span class="general_signup_animal_yn">
 									<input type="radio" name="member_animal" value="N" onclick="chk(this.value);" checked>
@@ -380,11 +380,12 @@ response.setContentType("text/html; charset=UTF-8");
 						</div>
 					</div>
 					<div id="animal">
+						<hr>
 						<div class="general_signup_animal_info">
-							<h3 class="general_signup_title">반려동물 정보</h3>
+							<h4 class="general_signup_title">반려동물 정보</h4>
 						</div>
 						<div class="general_signup_animal_info">
-							<h3 class="general_signup_title">반려동물 이름*</h3>
+							<h4 class="general_signup_title">반려동물 이름*</h4>
 							<div class="general_signup_animalname">
 								<span class="general_signup_span">
 									<input class="general_signup_text" type="text" name="animal_name" />
@@ -393,7 +394,7 @@ response.setContentType("text/html; charset=UTF-8");
 						</div>
 						<div class="general_signup_animal_info">
 
-							<h3 class="general_signup_animal_gender">성별*</h3>
+							<h4 class="general_signup_animal_gender">성별*</h4>
 							<div class="general_signup_animal_gender">
 								<span class="general_signup_animal_gender">
 									<input type="radio" id="animal_gen_chk" name="animal_gen" value="M">
@@ -404,7 +405,7 @@ response.setContentType("text/html; charset=UTF-8");
 							</div>
 						</div>
 						<div class="general_signup_animal_info">
-							<h3 class="general_signup_title">품종</h3>
+							<h4 class="general_signup_title">품종</h4>
 							<div class="general_signup_animal_type">
 								<span class="general_signup_span">
 									<input class="general_signup_text" type="text" name="animal_type" maxlength="20" />
@@ -413,7 +414,7 @@ response.setContentType("text/html; charset=UTF-8");
 						</div>
 
 						<div class="general_signup_animal_info">
-							<h3 class="general_signup_age">나이</h3>
+							<h4 class="general_signup_age">나이</h4>
 							<select name="animal_age">
 								<option value="1">1</option>
 								<option value="2">2</option>
@@ -449,7 +450,7 @@ response.setContentType("text/html; charset=UTF-8");
 						</div>
 
 						<div class="general_signup_animal_info">
-							<h3 class="general_signup_weight">몸무게</h3>
+							<h4 class="general_signup_weight">몸무게</h4>
 							<select name="animal_weight">
 								<option value="1">1kg</option>
 								<option value="2">2kg</option>
@@ -485,7 +486,7 @@ response.setContentType("text/html; charset=UTF-8");
 						</div>
 
 						<div class="general_signup_animal_info">
-							<h3 class="general_signup_weight">특이사항(질병,기타사항)</h3>
+							<h4 class="general_signup_weight">특이사항(질병,기타사항)</h4>
 							<div class="general_signup_animal_special_note">
 								<span class="general_signup_span">
 									<textarea class="general_signup_text" rows="10" cols="30" name="animal_unq"></textarea>

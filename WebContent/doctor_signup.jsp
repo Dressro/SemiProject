@@ -214,21 +214,21 @@ response.setContentType("text/html; charset=UTF-8");
 					<input type="hidden" name="member_animal" value="N" />
 					<div id="general_signup_idpw">
 						<div class="general_signup_row">
-							<h3 class="general_signup_title">아이디 *</h3>
+							<h4 class="general_signup_title">아이디 *</h4>
 							<div class="general_signup_id">
 								<span class="general_signup_span"> <input class="general_signup_text" type="text" title="n" name="member_id" required="required" /> <input type="button" name="member_id_chk" value="중복체크" onclick="idCheck();" />
 								</span>
 							</div>
 						</div>
 						<div class="general_signup_row">
-							<h3 class="general_signup_title">비밀번호 *</h3>
+							<h4 class="general_signup_title">비밀번호 *</h4>
 							<div class="general_signup_pw">
 								<span class="general_signup_span"> <input class="general_signup_text" type="password" name="member_password" onclick="idCheckConfirm();">
 								</span>
 							</div>
 						</div>
 						<div class="general_signup_row">
-							<h3 class="general_signup_title">비밀번호 확인 *</h3>
+							<h4 class="general_signup_title">비밀번호 확인 *</h4>
 							<div class="general_signup_pw">
 								<span class="general_signup_span"> <input class="general_signup_text" type="password" name="member_password_chk" onclick="idCheckConfirm();">
 								</span>
@@ -238,21 +238,21 @@ response.setContentType("text/html; charset=UTF-8");
 					</div>
 					<div id="general_signup_info">
 						<div class="general_signup_row">
-							<h3 class="general_signup_title">이름 *</h3>
+							<h4 class="general_signup_title">이름 *</h4>
 							<div class="general_signup_name">
 								<span class="general_signup_span"> <input class="general_signup_text" type="text" name="member_name" onclick="idCheckConfirm();">
 								</span>
 							</div>
 						</div>
 						<div class="general_signup_row">
-							<h3 class="general_signup_title">닉네임 *</h3>
+							<h4 class="general_signup_title">닉네임 *</h4>
 							<div class="general_signup_nickname">
-								<span class="general_signup_span"> <input class="general_signup_text" type="text" name="member_nicname" maxlength="5" onclick="idCheckConfirm();">
+								<span class="general_signup_span"> <input class="general_signup_text" type="text" name="member_nicname" maxlength="10" onclick="idCheckConfirm();">
 								</span>
 							</div>
 						</div>
 						<div class="general_signup_row">
-							<h3 class="general_signup_title">이메일 *</h3>
+							<h4 class="general_signup_title">이메일 *</h4>
 							<div class="general_signup_email">
 								<input type="hidden" name="member_email" value="">
 								<span class="general_signup_span"> <input type="text" id="general_signup_email" name="member_email_1" maxlength="30" onclick="idCheckConfirm();"> @ <select name="member_email_2">
@@ -265,14 +265,14 @@ response.setContentType("text/html; charset=UTF-8");
 							</div>
 						</div>
 						<div class="general_signup_row">
-							<h3 class="general_signup_title">휴대폰 *</h3>
+							<h4 class="general_signup_title">휴대폰 *</h4>
 							<div class="general_signup_moblie_phone">
 								<span class="general_signup_span"> <input type="hidden" name="member_phone" value=""> <input class="general_signup_phone" type="text" name="member_phone_1" maxlength="3" size="3"> - <input class="general_signup_phone" type="text" name="member_phone_2" maxlength="4" size="3"> - <input class="general_signup_phone" type="text" name="member_phone_3" maxlength="4" size="3"> <input type="button" value="문자 전송" onclick="sendsms();" />
 								</span>
 							</div>
 						</div>
 						<div class="general_signup_row">
-							<h3 class="general_signup_title">주소 *</h3>
+							<h4 class="general_signup_title">주소 *</h4>
 							<div class="general_signup_home_addr">
 								<span class="general_signup_span_home_addr">
 									<input type="hidden" name="member_addr" value="">
@@ -285,9 +285,9 @@ response.setContentType("text/html; charset=UTF-8");
 							</div>
 						</div>
 						<div class="general_signup_row">
-							<h3 class="general_signup_title">소속기관(병원 등) *</h3>
+							<h4 class="general_signup_title">소속기관(병원 등) *</h4>
 							<div class="general_signup_aff">
-								<span class="general_signup_span"> <input class="general_signup_text" type="text" name="member_nicname" maxlength="5" onclick="idCheckConfirm();">
+								<span class="general_signup_span"> <input class="general_signup_text" type="text" name="member_nicname" maxlength="10" onclick="idCheckConfirm();">
 								</span>
 							</div>
 						</div>

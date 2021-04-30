@@ -85,6 +85,19 @@
 	font-size: 14px;
 	font-weight: bolder;
 }
+
+#paging {
+	text-align: center;
+	font-size: 20pt;
+}
+
+#paging a {
+	font-size: 20pt;
+}
+
+a {
+	color: #f45d96;
+}
 </style>
 
 

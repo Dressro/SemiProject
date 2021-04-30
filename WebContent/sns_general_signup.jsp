@@ -194,21 +194,21 @@ response.setContentType("text/html; charset=UTF-8");
 
 					<div id="general_signup_info">
 						<div class="general_signup_row">
-							<h3 class="general_signup_title">이름 *</h3>
+							<h4 class="general_signup_title">이름 *</h4>
 							<div class="general_signup_name">
 								<span class="general_signup_span"> <input class="general_signup_text" type="text" name="member_name" onclick="idCheckConfirm();">
 								</span>
 							</div>
 						</div>
 						<div class="general_signup_row">
-							<h3 class="general_signup_title">닉네임 *</h3>
+							<h4 class="general_signup_title">닉네임 *</h4>
 							<div class="general_signup_nickname">
-								<span class="general_signup_span"> <input class="general_signup_text" type="text" name="member_nicname" maxlength="5" onclick="idCheckConfirm();">
+								<span class="general_signup_span"> <input class="general_signup_text" type="text" name="member_nicname" maxlength="10" onclick="idCheckConfirm();">
 								</span>
 							</div>
 						</div>
 						<div class="general_signup_row">
-							<h3 class="general_signup_title">이메일 *</h3>
+							<h4 class="general_signup_title">이메일 *</h4>
 							<div class="general_signup_email">
 								<input type="hidden" name="member_email" value="">
 								<span class="general_signup_span"> <input type="text" id="general_signup_email" name="member_email_1" maxlength="30" onclick="idCheckConfirm();"> @ <select name="member_email_2">
@@ -221,21 +221,21 @@ response.setContentType("text/html; charset=UTF-8");
 							</div>
 						</div>
 						<div class="general_signup_row">
-							<h3 class="general_signup_title">휴대폰 *</h3>
+							<h4 class="general_signup_title">휴대폰 *</h4>
 							<div class="general_signup_moblie_phone">
 								<span class="general_signup_span"> <input type="hidden" name="member_phone" value=""> <input class="general_signup_phone" type="text" name="member_phone_1" maxlength="3" size="3"> - <input class="general_signup_phone" type="text" name="member_phone_2" maxlength="4" size="3"> - <input class="general_signup_phone" type="text" name="member_phone_3" maxlength="4" size="3"> <input type="button" value="문자 전송" onclick="sendsms();" />
 								</span>
 							</div>
 						</div>
 						<div class="general_signup_row">
-							<h3 class="general_signup_title">주소 *</h3>
+							<h4 class="general_signup_title">주소 *</h4>
 							<div class="general_signup_home_addr">
 								<span class="general_signup_span_home_addr"> <input type="hidden" name="member_addr" value=""> <input class="general_signup_addr" type="text" id="postcode" placeholder="우편번호" readonly="readonly"> <input type="button" onclick="address();" value="우편번호 찾기"> <br> <input class="general_signup_addr" type="text" name="member_addr_1" id="addr_1" placeholder="기본주소" readonly="readonly"> <input class="general_signup_addr" type="text" name="member_addr_2" id="addr_2" placeholder="상세주소" required="required">
 								</span>
 							</div>
 						</div>
 						<div class="general_signup_row">
-							<h3 class="general_signup_animal_yn">반려동물 여부</h3>
+							<h4 class="general_signup_animal_yn">반려동물 여부</h4>
 							<div class="general_signup_animal_yn">
 								<span class="general_signup_animal_yn"> <input type="radio" name="member_animal" value="N" onclick="chk(this.value);" checked> 없음 <input type="radio" name="member_animal" value="Y" onclick="chk(this.value);"> 있음
 								</span>
@@ -243,11 +243,12 @@ response.setContentType("text/html; charset=UTF-8");
 						</div>
 					</div>
 					<div id="animal">
+						<hr>
 						<div class="general_signup_animal_info">
-							<h3 class="general_signup_title">반려동물 정보</h3>
+							<h4 class="general_signup_title">반려동물 정보</h4>
 						</div>
 						<div class="general_signup_animal_info">
-							<h3 class="general_signup_title">반려동물 이름*</h3>
+							<h4 class="general_signup_title">반려동물 이름*</h4>
 							<div class="general_signup_animalname">
 								<span class="general_signup_span"> <input class="general_signup_text" type="text" name="animal_name" />
 								</span>
@@ -255,14 +256,14 @@ response.setContentType("text/html; charset=UTF-8");
 						</div>
 						<div class="general_signup_animal_info">
 
-							<h3 class="general_signup_animal_gender">성별*</h3>
+							<h4 class="general_signup_animal_gender">성별*</h4>
 							<div class="general_signup_animal_gender">
 								<span class="general_signup_animal_gender"> <input type="radio" id="animal_gen_chk" name="animal_gen" value="M"> <img src="resources/images/male.svg" style="width: 20px; height: 20px;"> <input type="radio" name="animal_gen" value="F"> <img src="resources/images/female.svg" style="width: 20px; height: 20px;">
 								</span>
 							</div>
 						</div>
 						<div class="general_signup_animal_info">
-							<h3 class="general_signup_title">품종</h3>
+							<h4 class="general_signup_title">품종</h4>
 							<div class="general_signup_animal_type">
 								<span class="general_signup_span"> <input class="general_signup_text" type="text" name="animal_type" maxlength="20" />
 								</span>
@@ -270,7 +271,7 @@ response.setContentType("text/html; charset=UTF-8");
 						</div>
 
 						<div class="general_signup_animal_info">
-							<h3 class="general_signup_age">나이</h3>
+							<h4 class="general_signup_age">나이</h4>
 							<select name="animal_age">
 								<option value="1">1</option>
 								<option value="2">2</option>
@@ -306,7 +307,7 @@ response.setContentType("text/html; charset=UTF-8");
 						</div>
 
 						<div class="general_signup_animal_info">
-							<h3 class="general_signup_weight">몸무게</h3>
+							<h4 class="general_signup_weight">몸무게</h4>
 							<select name="animal_weight">
 								<option value="1">1kg</option>
 								<option value="2">2kg</option>
@@ -342,7 +343,7 @@ response.setContentType("text/html; charset=UTF-8");
 						</div>
 
 						<div class="general_signup_animal_info">
-							<h3 class="general_signup_weight">특이사항(질병,기타사항)</h3>
+							<h4 class="general_signup_weight">특이사항(질병,기타사항)</h4>
 							<div class="general_signup_animal_special_note">
 								<span class="general_signup_span"> <textarea class="general_signup_text" rows="10" cols="30" name="animal_unq"></textarea>
 								</span>
