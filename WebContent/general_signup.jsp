@@ -14,6 +14,7 @@ response.setContentType("text/html; charset=UTF-8");
 <meta charset="UTF-8">
 <title>Family|Pet</title>
 <link rel="icon" href="resources/images/logo/favicon.ico" type="image/x-icon">
+
 <style type="text/css">
 #animal {
 	display: none;
@@ -115,6 +116,12 @@ response.setContentType("text/html; charset=UTF-8");
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
+	$(document).ready(function() {
+		if ($('input[name=member_email_chk]').val() == "ok") {
+			$('.email_auth').show();
+		}
+	});
+
 	function address() {
 		new daum.Postcode(
 				{
@@ -148,13 +155,14 @@ response.setContentType("text/html; charset=UTF-8");
 					}
 				}).open();
 	}
-	function idCheckConfirm(){
+	function idCheckConfirm() {
 		var chk = document.getElementsByName("member_id")[0].title;
-		if(chk == "n") {
+		if (chk == "n") {
 			alert("id 중복체크를 먼저 해주세요.");
 			document.getElementsByName("member_id")[0].focus();
 		}
 	}
+
 	function idCheck() {
 		var member_id = document.getElementsByName("member_id")[0];
 		if (member_id.value.trim() == "" || member_id.value == null) {
@@ -221,6 +229,15 @@ response.setContentType("text/html; charset=UTF-8");
 		}
 	}
 
+	function mailcheck() {
+		if ($('input[name=email_user]').val() == $('input[name=email_key]')
+				.val()) {
+			$('#mailchk').html('이메일 인증 완료');
+			$('#mailchk').attr('color', '#199894b3');
+			$('input[name=email_certification]').val() = "true";
+		}
+	}
+
 	function sendsms() {
 		var member_phone = $('input[name=member_phone_1]').val()
 				+ $('input[name=member_phone_2]').val()
@@ -237,6 +254,9 @@ response.setContentType("text/html; charset=UTF-8");
 
 </head>
 <body>
+	<%
+	String email_key = (String) session.getAttribute("content");
+	%>
 
 	<jsp:include page="header.jsp" />
 
@@ -255,21 +275,25 @@ response.setContentType("text/html; charset=UTF-8");
 						<div class="general_signup_row">
 							<h3 class="general_signup_title">아이디 *</h3>
 							<div class="general_signup_id">
-								<span class="general_signup_span"> <input class="general_signup_text" type="text" title="n" name="member_id" required="required" /> <input type="button" name="member_id_chk" value="중복체크" onclick="idCheck();" />
+								<span class="general_signup_span">
+									<input class="general_signup_text" type="text" title="n" name="member_id" required="required" />
+									<input type="button" name="member_id_chk" value="중복체크" onclick="idCheck();" />
 								</span>
 							</div>
 						</div>
 						<div class="general_signup_row">
 							<h3 class="general_signup_title">비밀번호 *</h3>
 							<div class="general_signup_pw">
-								<span class="general_signup_span"> <input class="general_signup_text" type="password" name="member_password" onclick="idCheckConfirm();">
+								<span class="general_signup_span">
+									<input class="general_signup_text" type="password" name="member_password" onclick="idCheckConfirm();">
 								</span>
 							</div>
 						</div>
 						<div class="general_signup_row">
 							<h3 class="general_signup_title">비밀번호 확인 *</h3>
 							<div class="general_signup_pw">
-								<span class="general_signup_span"> <input class="general_signup_text" type="password" name="member_password_chk" onclick="idCheckConfirm();">
+								<span class="general_signup_span">
+									<input class="general_signup_text" type="password" name="member_password_chk" onclick="idCheckConfirm();">
 								</span>
 							</div>
 							<font id="chkNotice" size="2"></font>
@@ -279,14 +303,17 @@ response.setContentType("text/html; charset=UTF-8");
 						<div class="general_signup_row">
 							<h3 class="general_signup_title">이름 *</h3>
 							<div class="general_signup_name">
-								<span class="general_signup_span"> <input class="general_signup_text" type="text" name="member_name" onclick="idCheckConfirm();">
+								<span class="general_signup_span">
+									<input class="general_signup_text" type="text" name="member_name" onclick="idCheckConfirm();">
 								</span>
 							</div>
 						</div>
+
 						<div class="general_signup_row">
 							<h3 class="general_signup_title">닉네임 *</h3>
 							<div class="general_signup_nickname">
-								<span class="general_signup_span"> <input class="general_signup_text" type="text" name="member_nicname" maxlength="5" onclick="idCheckConfirm();">
+								<span class="general_signup_span">
+									<input class="general_signup_text" type="text" name="member_nicname" maxlength="5" onclick="idCheckConfirm();">
 								</span>
 							</div>
 						</div>
@@ -294,33 +321,62 @@ response.setContentType("text/html; charset=UTF-8");
 							<h3 class="general_signup_title">이메일 *</h3>
 							<div class="general_signup_email">
 								<input type="hidden" name="member_email" value="">
-								<span class="general_signup_span"> <input type="text" id="general_signup_email" name="member_email_1" maxlength="30" onclick="idCheckConfirm();"> @ <select name="member_email_2">
+								<span class="general_signup_span">
+									<input type="text" id="general_signup_email" name="member_email_1" maxlength="30" onclick="idCheckConfirm();">
+									@
+									<select name="member_email_2">
 										<option>naver.com</option>
 										<option>daum.net</option>
 										<option>gmail.com</option>
 										<option>nate.com</option>
-									</select> <input type="button" name="email_send" value="인증번호 전송" onclick="sendmailkey();" />
+									</select>
+									<input type="button" name="email_send" value="인증번호 받기" onclick="sendmailkey();" />
 								</span>
+							</div>
+							<div>
+								인증번호
+								<input type="text" name="email_user" />
+								<input type="hidden" name="email_key" value="<%=email_key%>">
+								<input type="hidden" name="email_certification" value="false">
+								<input type="button" value="인증하기" onclick="mailcheck();" />
+								<font id="mailchk" size="2"></font>
 							</div>
 						</div>
 						<div class="general_signup_row">
 							<h3 class="general_signup_title">휴대폰 *</h3>
 							<div class="general_signup_moblie_phone">
-								<span class="general_signup_span"> <input type="hidden" name="member_phone" value=""> <input class="general_signup_phone" type="text" name="member_phone_1" maxlength="3" size="3"> - <input class="general_signup_phone" type="text" name="member_phone_2" maxlength="4" size="3"> - <input class="general_signup_phone" type="text" name="member_phone_3" maxlength="4" size="3"> <input type="button" value="문자 전송" onclick="sendsms();" />
+								<span class="general_signup_span">
+									<input type="hidden" name="member_phone" value="">
+									<input class="general_signup_phone" type="text" name="member_phone_1" maxlength="3" size="3">
+									-
+									<input class="general_signup_phone" type="text" name="member_phone_2" maxlength="4" size="3">
+									-
+									<input class="general_signup_phone" type="text" name="member_phone_3" maxlength="4" size="3">
+									<input type="button" value="문자 전송" onclick="sendsms();" />
 								</span>
 							</div>
 						</div>
 						<div class="general_signup_row">
 							<h3 class="general_signup_title">주소 *</h3>
 							<div class="general_signup_home_addr">
-								<span class="general_signup_span_home_addr"> <input type="hidden" name="member_addr" value=""> <input class="general_signup_addr" type="text" id="postcode" placeholder="우편번호" readonly="readonly"> <input type="button" onclick="address();" value="우편번호 찾기"> <br> <input class="general_signup_addr" type="text" name="member_addr_1" id="addr_1" placeholder="기본주소" readonly="readonly"> <input class="general_signup_addr" type="text" name="member_addr_2" id="addr_2" placeholder="상세주소" required="required">
+								<span class="general_signup_span_home_addr">
+									<input type="hidden" name="member_addr" value="">
+									<input class="general_signup_addr" type="text" id="postcode" placeholder="우편번호" readonly="readonly">
+									<input type="button" onclick="address();" value="우편번호 찾기">
+									<br>
+									<input class="general_signup_addr" type="text" name="member_addr_1" id="addr_1" placeholder="기본주소" readonly="readonly">
+									<input class="general_signup_addr" type="text" name="member_addr_2" id="addr_2" placeholder="상세주소" required="required">
 								</span>
 							</div>
 						</div>
 						<div class="general_signup_row">
 							<h3 class="general_signup_animal_yn">반려동물 여부</h3>
 							<div class="general_signup_animal_yn">
-								<span class="general_signup_animal_yn"> <input type="radio" name="member_animal" value="N" onclick="chk(this.value);" checked> 없음 <input type="radio" name="member_animal" value="Y" onclick="chk(this.value);"> 있음
+								<span class="general_signup_animal_yn">
+									<input type="radio" name="member_animal" value="N" onclick="chk(this.value);" checked>
+									없음
+									<input type="radio" name="member_animal" value="Y" onclick="chk(this.value);">
+									있음
 								</span>
 							</div>
 						</div>
@@ -332,7 +388,8 @@ response.setContentType("text/html; charset=UTF-8");
 						<div class="general_signup_animal_info">
 							<h3 class="general_signup_title">반려동물 이름*</h3>
 							<div class="general_signup_animalname">
-								<span class="general_signup_span"> <input class="general_signup_text" type="text" name="animal_name" />
+								<span class="general_signup_span">
+									<input class="general_signup_text" type="text" name="animal_name" />
 								</span>
 							</div>
 						</div>
@@ -340,14 +397,19 @@ response.setContentType("text/html; charset=UTF-8");
 
 							<h3 class="general_signup_animal_gender">성별*</h3>
 							<div class="general_signup_animal_gender">
-								<span class="general_signup_animal_gender"> <input type="radio" id="animal_gen_chk" name="animal_gen" value="M"> <img src="resources/images/male.svg" style="width: 20px; height: 20px;"> <input type="radio" name="animal_gen" value="F"> <img src="resources/images/female.svg" style="width: 20px; height: 20px;">
+								<span class="general_signup_animal_gender">
+									<input type="radio" id="animal_gen_chk" name="animal_gen" value="M">
+									<img src="resources/images/male.svg" style="width: 20px; height: 20px;">
+									<input type="radio" name="animal_gen" value="F">
+									<img src="resources/images/female.svg" style="width: 20px; height: 20px;">
 								</span>
 							</div>
 						</div>
 						<div class="general_signup_animal_info">
 							<h3 class="general_signup_title">품종</h3>
 							<div class="general_signup_animal_type">
-								<span class="general_signup_span"> <input class="general_signup_text" type="text" name="animal_type" maxlength="20" />
+								<span class="general_signup_span">
+									<input class="general_signup_text" type="text" name="animal_type" maxlength="20" />
 								</span>
 							</div>
 						</div>
@@ -427,7 +489,8 @@ response.setContentType("text/html; charset=UTF-8");
 						<div class="general_signup_animal_info">
 							<h3 class="general_signup_weight">특이사항(질병,기타사항)</h3>
 							<div class="general_signup_animal_special_note">
-								<span class="general_signup_span"> <textarea class="general_signup_text" rows="10" cols="30" name="animal_unq"></textarea>
+								<span class="general_signup_span">
+									<textarea class="general_signup_text" rows="10" cols="30" name="animal_unq"></textarea>
 								</span>
 							</div>
 

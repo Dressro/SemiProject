@@ -205,7 +205,7 @@ response.setContentType("text/html; charset=UTF-8");
 <body>
 	<jsp:include page="header.jsp" />
 	<div id="general_signup_mid">
-	<h3>회원가입(전문의)</h3>
+		<h3>회원가입(전문의)</h3>
 		<div class="join_table">
 			<div id="member_join">
 				<form action="semi.do" method="POST">
@@ -275,7 +275,13 @@ response.setContentType("text/html; charset=UTF-8");
 						<div class="general_signup_row">
 							<h3 class="general_signup_title">주소 *</h3>
 							<div class="general_signup_home_addr">
-								<span class="general_signup_span_home_addr"> <input type="hidden" name="member_addr" value=""> <input class="general_signup_addr" type="text" id="postcode" placeholder="우편번호" readonly="readonly"> <input type="button" onclick="address();" value="우편번호 찾기"> <br> <input class="general_signup_addr" type="text" name="member_addr_1" id="addr_1" placeholder="기본주소" readonly="readonly"> <input class="general_signup_addr" type="text" name="member_addr_2" id="addr_2" placeholder="상세주소" required="required">
+								<span class="general_signup_span_home_addr">
+									<input type="hidden" name="member_addr" value="">
+									<input class="general_signup_addr" type="text" id="postcode" placeholder="우편번호" readonly="readonly">
+									<input type="button" onclick="address();" value="우편번호 찾기">
+									<br>
+									<input class="general_signup_addr" type="text" name="member_addr_1" id="addr_1" placeholder="기본주소" readonly="readonly">
+									<input class="general_signup_addr" type="text" name="member_addr_2" id="addr_2" placeholder="상세주소" required="required">
 								</span>
 							</div>
 						</div>

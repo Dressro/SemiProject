@@ -17,13 +17,13 @@
 	
 	<insert id="insert" parameterType="Chat_ContentDto">
 		INSERT INTO CHAT_CONTENT
-		VALUES(1, #{member_nickname}, #{ch_content}, SYSDATE)
+		VALUES(#{ch_num}, #{member_nickname}, #{ch_content}, SYSDATE)
 	</insert>
 
 
 	<delete id="delete" parameterType="Chat_ContentDto">
 		DELETE FROM CHAT_CONTENT
-		WHERE CHAT_NUM = #{chat_num}
+		WHERE CH_NUM = #{ch_num}
 	</delete>
 
 </mapper>

@@ -7,7 +7,7 @@ request.setCharacterEncoding("UTF-8");
 <%
 response.setContentType("text/html; charset=UTF-8");
 %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,22 +16,22 @@ response.setContentType("text/html; charset=UTF-8");
 <link rel="icon" href="resources/images/logo/favicon.ico" type="image/x-icon">
 <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
-	window.onload = function(){
+	window.onload = function() {
 		var op = document.getElementId("inputGroupSelect03");
 	}
 	function goback() {
 		window.history.back();
 	}
-	
 </script>
 </head>
 <body>
-<jsp:include page="header.jsp" />
+	<jsp:include page="header.jsp" />
 	<%
 	MemberDto dto = (MemberDto) session.getAttribute("dto");
 	if (dto == null) {
 		pageContext.forward("index.html");
 	}
+	String category = (String) request.getAttribute("category");
 	%>
 	<h3>BOARD_INSERTFORM</h3>
 	<form action="semi.do" method="post" enctype="multipart/form-data">
@@ -48,13 +48,20 @@ response.setContentType("text/html; charset=UTF-8");
 					<div class="col-sm-3">
 						<div class="input-group mb-3">
 							<select class="custom-select" id="inputGroupSelect03" name="board_category">
-								<option selected>게시판을 선택해 주세요.</option>
-								<c:if test="${dto.member_grade eq '관리자' }">
-								<option value="N">공지사항</option>
-								</c:if>
-								<option value="F">자유게시판</option>
-								<option value="Q">상품문의</option>
-								<option value="D">실종신고</option>
+								<c:choose>
+									<c:when test="${category eq 'N' }">
+										<option value="N" selected="selected">공지사항</option>
+									</c:when>
+									<c:when test="${category eq 'F' }">
+										<option value="F" selected="selected">자유게시판</option>
+									</c:when>
+									<c:when test="${category eq 'Q' }">
+										<option value="Q" selected="selected">상품문의</option>
+									</c:when>
+									<c:when test="${category eq 'D' }">
+										<option value="D" selected="selected">실종신고</option>
+									</c:when>
+								</c:choose>
 							</select>
 						</div>
 					</div>
@@ -89,6 +96,6 @@ response.setContentType("text/html; charset=UTF-8");
 			</div>
 		</div>
 	</form>
-<jsp:include page="bottom.jsp" />	
+	<jsp:include page="bottom.jsp" />
 </body>
 </html>

@@ -11,8 +11,12 @@
 <link rel="icon" href="resources/images/logo/favicon.ico" type="image/x-icon">
 </head>
 <body>
-<%String s_c = request.getParameter("s_c");
-  String s_t = request.getParameter("s_t");%>
+<%
+	String s_c = request.getParameter("s_c");
+	String s_t = request.getParameter("s_t");
+	String category = request.getParameter("category");
+	
+%>
   <%if(s_c ==null){ %>
 <div id = "paging">
 
@@ -52,7 +56,7 @@
 
 	  <!-- 이전 페이지 블록으로 이동 -->
 	  <c:if test="${param.nowBlock > 1}">
-		    <a href="${action}?command=${param.command}&nowPage=${param.blockBegin-1}&s_c=<%=s_c%>&s_t=<%=s_t%>">◀</a>
+		    <a href="${action}?command=${param.command}&nowPage=${param.blockBegin-1}&s_c=<%=s_c%>&s_t=<%=s_t%>&category=<%=category%>">◀</a>
 	  </c:if>
 	
 	  <!-- 현재 페이지 블록에 해당하는 페이지 출력 -->
@@ -62,14 +66,14 @@
 				     ${index}
 			    </c:when>
 			    <c:otherwise>
-            		 <a href="${action}?command=${param.command}&nowPage=${index}&s_c=<%=s_c%>&s_t=<%=s_t%>">${index}</a>
+            		 <a href="${action}?command=${param.command}&nowPage=${index}&s_c=<%=s_c%>&s_t=<%=s_t%>&category=<%=category%>">${index}</a>
 			    </c:otherwise>
 		    </c:choose>
 	  </c:forEach>
 
 	  <!-- 다음 페이지 블록으로 이동 -->
 	  <c:if test="${param.nowBlock < param.totalBlock}">
-		    <a href="${action}?command=${param.command}&nowPage=${param.blockEnd+1}&s_c=<%=s_c%>&s_t=<%=s_t%>">▶</a>
+		    <a href="${action}?command=${param.command}&nowPage=${param.blockEnd+1}&s_c=<%=s_c%>&s_t=<%=s_t%>&category=<%=category%>">▶</a>
 	  </c:if>
 
 </div>

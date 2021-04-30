@@ -32,21 +32,21 @@
 		INSERT INTO FILE_TABLE
 		VALUES(FILE_NUM_SEQ.nextval, #{file_path}, #{file_ori_name},
 		#{file_new_name}, #{file_type}, SYSDATE, #{file_size},
-		#{member_id},#{board_no},null,null)
+		#{member_id},#{board_no},null,null,null)
 	</insert>
 	
 	<insert id="animal_insert" parameterType="File_TableDto">
 		INSERT INTO FILE_TABLE
 		VALUES(FILE_NUM_SEQ.nextval, #{file_path}, #{file_ori_name},
 		#{file_new_name}, #{file_type}, SYSDATE, #{file_size},
-		#{member_id},null,null,#{animal_no})
+		#{member_id},null,null,#{animal_no},null)
 	</insert>
 	
 	<insert id="ch_insert" parameterType="File_TableDto">
 		INSERT INTO FILE_TABLE
 		VALUES(FILE_NUM_SEQ.nextval, #{file_path}, #{file_ori_name},
 		#{file_new_name}, #{file_type}, SYSDATE, #{file_size},
-		#{member_id},null,#{ch_num},null)
+		#{member_id},null,#{ch_num},null,null)
 	</insert>
 	
 	<insert id="prod_insert" parameterType="File_TableDto">
