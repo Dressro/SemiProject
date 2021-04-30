@@ -26,12 +26,12 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 	}
 	
 	@Override
-	public List<Order_TableDto> selectbasketList(String member_id) {
-		
-		List<Order_TableDto> list = new ArrayList<Order_TableDto>();
+	public List<Order_TableDto> groupList() {
+
+			List<Order_TableDto> list = new ArrayList<Order_TableDto>();
 		
 		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
-			list = session.selectList(namespace+"selectbasketList", member_id);
+			list = session.selectList(namespace+"groupList");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -39,20 +39,6 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 		return list;
 	}
 	
-	@Override
-	public List<Order_TableDto> selectpayList(String member_id) {
-		
-		List<Order_TableDto> list = new ArrayList<Order_TableDto>();
-		
-		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
-			list = session.selectList(namespace+"selectpayList", member_id);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return list;
-	}
-
 	@Override
 	public Order_TableDto selectOne(int order_num) {
 		
@@ -102,6 +88,22 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 	}
 
 	@Override
+	public int update_group(Order_TableDto dto) {
+int res = 0;
+		
+		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.update(namespace+"update_group",dto);
+			if (res > 0) {
+				session.commit();
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	}
+	
+	@Override
 	public int delete(int order_num) {
 		
 		int res = 0;
@@ -117,5 +119,8 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 
 		return res;
 	}
+
+	
+
 
 }

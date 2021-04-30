@@ -26,7 +26,21 @@ public class ProductDaoImpl extends SqlMapConfig implements ProductDao {
 
 		return list;
 	}
+	
+	@Override
+	public ProductDto prod_selectone(String prod_name) {
+		
+		ProductDto dto = null;
+		
+		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
+			dto = session.selectOne(namespace + "prod_selectone", prod_name);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
+		return dto;
+	}
+	
 	@Override
 	public ProductDto selectOne(int prod_num) {
 
@@ -115,5 +129,9 @@ int count = 0;
 		
 		return count;
 	}
+
+	
+
+	
 
 }

@@ -17,7 +17,8 @@ response.setContentType("text/html; charset=UTF-8");
 <head>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Family|Pet</title>
+<link rel="icon" href="resources/images/logo/favicon.ico" type="image/x-icon">
 <style type="text/css">
 .semiproject_board {
 	width: 1000px;

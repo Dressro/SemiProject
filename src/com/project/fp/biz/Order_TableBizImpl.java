@@ -17,15 +17,9 @@ public class Order_TableBizImpl implements Order_TableBiz {
 	}
 	
 	@Override
-	public List<Order_TableDto> selectbasketList(String member_id) {
-
-		return dao.selectbasketList(member_id);
-	}
-	
-	@Override
-	public List<Order_TableDto> selectpayList(String member_id) {
-
-		return dao.selectpayList(member_id);
+	public List<Order_TableDto> groupList() {
+		// TODO Auto-generated method stub
+		return dao.groupList();
 	}
 
 	@Override
@@ -45,11 +39,21 @@ public class Order_TableBizImpl implements Order_TableBiz {
 
 		return dao.update(dto);
 	}
-
+	
+	@Override
+	public int update_group(Order_TableDto dto) {
+		// TODO Auto-generated method stub
+		return dao.update_group(dto);
+	}
+	
 	@Override
 	public int delete(int order_num) {
 
 		return dao.delete(order_num);
 	}
+
+	
+
+	
 
 }
