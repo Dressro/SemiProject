@@ -1,7 +1,7 @@
 <%@page import="com.project.fp.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8"); %>
 
@@ -31,6 +31,7 @@
 </head>
 <%
 MemberDto dto = (MemberDto) session.getAttribute("dto");
+
 %>
 <body>
 
@@ -85,16 +86,16 @@ if (dto == null) {
 		if(dto.getMember_grade().equals("관리자")){%>
 					<li><a href="semi.do?command=chatlist&member_id=<%=dto.getMember_id()%>&member_grade=<%=dto.getMember_grade()%>">채팅</a>
 					<li><a href="semi.do?command=adminpage">관리자페이지</a>
-					<li><a href="semi.do?command=logout">로그아웃</a> 
-					
+					<li><a href="semi.do?command=logout">로그아웃</a>
+
 <%
 
 		}else{
 %>
 					<li><a href="semi.do?command=chatlist&member_id=<%=dto.getMember_id()%>&member_grade=<%=dto.getMember_grade()%>">채팅</a>
-					<li><a href="semi.do?command=mypage">마이페이지</a>
-					<li><a href="semi.do?command=logout">로그아웃</a> 
-<%		} 
+					<li><a href="semi.do?command=mypage&member_id=<%=dto.getMember_id()%>">마이페이지</a>
+					<li><a href="semi.do?command=logout">로그아웃</a>
+<%		}
 	}%>
 </ul>
  </nav>
