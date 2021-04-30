@@ -48,7 +48,7 @@ $(function(){
 		$('.mymenus li').click(function(){
 		$('.mymenus li').find('a').removeClass('active');
 	    $(this).find('a').addClass('active');
-	    $('.mypage').hide();		   
+	    $('.mypage').hide();
 		var i = $(this).index();
 		$('.mypage').eq(i).show();
 	});
@@ -84,10 +84,10 @@ $(function(){
 
 
 	<jsp:include page="header.jsp" />
-	
+
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
-	
+
 	function chk(value){
 		$('.animal').trigger('click');
 		if(value == "Y"){
@@ -100,7 +100,7 @@ $(function(){
 			$(".animal").hide();
 		}
 	}
-	
+
 	function check() {
 		var member_email = $('input[name=member_email_1]').val() + "@"
 				+ $('select[name=member_email_2]').val();
@@ -113,7 +113,7 @@ $(function(){
 				+ $('input[name=member_addr_2]').val();
 		$('input[name=member_addr]').attr('value', member_addr);
 	}
-	
+
 	$(function() {
 
 		$('input[name=member_password]').keyup(function() {
@@ -158,7 +158,7 @@ $(function(){
 					"width=200 , height= 200");
 		}
 	}
-	
+
 	function address() {
 		new daum.Postcode(
 				{
@@ -192,23 +192,23 @@ $(function(){
 					}
 				}).open();
 	}
-	
-	
+
+
 </script>
 <%
 
 MemberDto dto = (MemberDto) session.getAttribute("dto");
+AnimalDto a_dto = (AnimalDto)request.getAttribute("a_dto");
+
 if (dto == null) {
 	pageContext.forward("index.jsp");
 }
 %>
-	
-<form action="semi.do" method="post" >
 
 
 
 
-		<section>
+		<div>
 			<nav>
 				<ul class="mymenus">
 					<li><a class="mymenu" href="#">마이페이지</a></li>
@@ -220,10 +220,11 @@ if (dto == null) {
 				</ul>
 			</nav>
 
-		</section>
+		</div>
 
 		<div class="mypage-body">
-			<section class="mypage">
+			<form action="semi.do" method="post" class="mypage" >
+
 				<table border="1">
 
 					<col width="400" />
@@ -239,7 +240,7 @@ if (dto == null) {
 						<td><%=dto.getMember_point() %> point</td>
 					</tr>
 					</table>
-					
+
 					<!-- <div class="orderIng">
 					<ol style="padding: 25px">
 						<li class="step1">
@@ -259,7 +260,7 @@ if (dto == null) {
 						</li>
 					</ol>
 				<br> -->
-				
+
 				<table border="1">
 					<colgroup>
 		            <col width="100">
@@ -267,7 +268,7 @@ if (dto == null) {
 		            <col width="20%">
 		            <col width="20%">
 		            <col width="20%">
-		            
+
 					</colgroup>
 					<tr>
 						<th colspan="5">최근 본 상품</th>
@@ -279,10 +280,10 @@ if (dto == null) {
 						<td>최근 본 상품</td>
 						<td>최근 본 상품</td>
 					</tr>
-					
+
 					</table>
-					
-					
+
+
 				<table border="1">
 					<colgroup>
 		            <col width="100">
@@ -290,7 +291,7 @@ if (dto == null) {
 		            <col width="20%">
 		            <col width="20%">
 		            <col width="20%">
-		            
+
 					</colgroup>
 					<tr>
 						<th colspan="5">주문내역</th>
@@ -301,7 +302,7 @@ if (dto == null) {
 						<th>상품명</th>
 						<th>결제금액</th>
 						<th>주문상태</th>
-						
+
 					</tr>
 					<tr>
 						<td>no</td>
@@ -317,22 +318,20 @@ if (dto == null) {
 						<td></td>
 						<td></td>
 					</tr>
-					
+
 					</table>
-				
-				
-			</section>
-			
-			<section class="mypage">
+				</form>
+
+			<form action="semi.do" method="post" class="mypage" >
 			<h1>캘린더</h1>
-			
-				
-			
-			
-			</section>
-			
-			<section class="mypage">
-							
+
+
+
+
+			</form>
+
+			<form action="semi.do" method="post" class="mypage" >
+
 				<%
 					Order_TableBiz obiz = new Order_TableBizImpl();
 					List<Order_TableDto> orderlist = obiz.selectList();
@@ -347,7 +346,7 @@ if (dto == null) {
 				<col width="100"/>
 				<col width="100"/>
 				<col width="200"/>
-				
+
 				<tr>
 					<th>주문번호</th>
 					<th>주문일</th>
@@ -357,12 +356,12 @@ if (dto == null) {
 					<th>주문상태</th>
 					<th>배송지</th>
 				</tr>
-								
-				
+
+
 			<%
 				for (Order_TableDto odto : orderlist ) {
 			%>
-			
+
 				<tr>
 					<td><%=odto.getOrder_num() %></td>
 					<td><%=odto.getOrder_date() %></td>
@@ -372,16 +371,16 @@ if (dto == null) {
 					<td><%=odto.getOrder_step() %></td>
 					<td></td>
 				</tr>
-			
+
 			<%
 				}
-			%> 
-				
-				
-			</table>
-			</section>
+			%>
 
-			<section class="mypage">
+
+			</table>
+			</form>
+
+			<form action="semi.do" method="post" class="mypage" >
 			<h1>취소/반품/교환/환불내역</h1>
 			<table border="1">
 				<col width="60"/>
@@ -391,7 +390,7 @@ if (dto == null) {
 				<col width="100"/>
 				<col width="100"/>
 				<col width="200"/>
-				
+
 				<tr>
 					<th>주문번호</th>
 					<th>주문일</th>
@@ -402,14 +401,15 @@ if (dto == null) {
 					<th>배송지</th>
 				</tr>
 			</table>
-			</section>
+			</form>
 
-			<section class="mypage">
-				
-			
-			
+
+
+			<form action="semi.do" method="post" class="mypage" >
+			<input type="hidden" name="command" value="membermod">
+
 					<table border="1">
-					
+
 						<tr>
 							<th>회원정보 수정</th>
 						</tr>
@@ -442,7 +442,8 @@ if (dto == null) {
 						</tr>
 						<tr>
 							<th>이메일 *</th>
-							<td><input type="text" id="general_signup_email" name="member_email_1" maxlength="30" onclick="idCheckConfirm();">
+							<td><input type="hidden" name="member_email" value="">
+								<input type="text" id="general_signup_email" name="member_email_1" maxlength="30" onclick="idCheckConfirm();">
 										@
 										<select id="select_mail" name="member_email_2">
 											<option>naver.com</option>
@@ -479,35 +480,33 @@ if (dto == null) {
 							<td>
 								<%
 								if (dto.getMember_animal().equals("Y")) {
-								%> 
+								%>
 								<input type="radio" name="member_animal" value="N"
 								onclick="chk(this.value);">없음 <input type="radio"
 								name="member_animal" value="Y" onclick="chk(this.value);"
 								checked>있음
 								 <%
 								 } else if (dto.getMember_animal().equals("N")) {
-								 %> 
+								 %>
 								 <input type="radio" name="member_animal" value="N"
 								onclick="chk(this.value);" checked>없음 <input
 								type="radio" name="member_animal" value="Y"
-								onclick="chk(this.value);">있음 
+								onclick="chk(this.value);">있음
 								<%
 								 }
 								 %>
 
 							</td>
 						</tr>
-						</table>
-						
+
+
 						<%
 						 if (dto.getMember_animal().equals("Y")) {
-							 AnimalDto a_dto = (AnimalDto)request.getAttribute("a_dto");
 						 %>
-							 
-						
-						<div id="animal">
+
+
+				<div id="animal">
 						<input type="hidden" name="animal_no" value="<%=a_dto.getAnimal_no()%>">
-						<table border="1">
 						<tr class="animal">
 							<th>반려동물 정보</th>
 						</tr>
@@ -520,31 +519,31 @@ if (dto == null) {
 							<td>
 								<%
 								if (a_dto.getAnimal_gen().equals("M")) {
-								%> 
+								%>
 								<input type="radio" id="animal_gen_chk" name="animal_gen"
 								value="M" checked><img src="resources/images/male.svg"
 								style="width: 20px; height: 20px;"> <input type="radio"
 								name="animal_gen" value="F"><img
 								src="resources/images/female.svg"
-								style="width: 20px; height: 20px;"> 
+								style="width: 20px; height: 20px;">
 								<%
 								 } else if (a_dto.getAnimal_gen().equals("F")) {
-								 %> 
+								 %>
 								 <input type="radio" id="animal_gen_chk" name="animal_gen"
 								value="M"><img src="resources/images/male.svg"
 								style="width: 20px; height: 20px;"> <input type="radio"
 								name="animal_gen" value="F" checked><img
 								src="resources/images/female.svg"
-								style="width: 20px; height: 20px;"> 
+								style="width: 20px; height: 20px;">
 								<%
 								 } else {
-								 %> 
+								 %>
 								 <input type="radio" id="animal_gen_chk" name="animal_gen"
 								value="M"><img src="resources/images/male.svg"
 								style="width: 20px; height: 20px;"> <input type="radio"
 								name="animal_gen" value="F"><img
 								src="resources/images/female.svg"
-								style="width: 20px; height: 20px;"> 
+								style="width: 20px; height: 20px;">
 								<%
 								 }
 								 %>
@@ -630,134 +629,124 @@ if (dto == null) {
 							<td><textarea rows="10" cols="30" name="animal_unq"><%=a_dto.getAnimal_unq() %></textarea>
 							</td>
 						</tr>
-						</table>
-						
-						<script type="text/javascript">
-								$(function(){
-									$('#select_age').val(<%=a_dto.getAnimal_age()%>).prop("selected",true);
-									$('#select_weight').val(<%=a_dto.getAnimal_weight()%>).prop("selected",true);
-								});
-						</script>
-						
+						</div>
+							<%
+							 } else {
+							%>
+									<tr class="animal">
+										<th>반려동물 정보</th>
+									</tr>
+									<tr class="animal">
+										<th>이름 *</th>
+										<td><input type="text" name="animal_name" value="" /></td>
+									</tr>
+									<tr class="animal">
+										<th>성별 *</th>
+										<td>
+											 <input type="radio" id="animal_gen_chk" name="animal_gen"
+											value="M"><img src="resources/images/male.svg"
+											style="width: 20px; height: 20px;"> <input type="radio"
+											name="animal_gen" value="F"><img
+											src="resources/images/female.svg"
+											style="width: 20px; height: 20px;">
+										</td>
+									</tr>
+									<tr class="animal">
+										<th>품종</th>
+										<td><input type="text" name="animal_type" maxlength="20"
+											value="" /></td>
+									</tr>
+									<tr class="animal">
+										<th>나이</th>
+										<td><select name="animal_age">
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+												<option value="6">6</option>
+												<option value="7">7</option>
+												<option value="8">8</option>
+												<option value="9">9</option>
+												<option value="10">10</option>
+												<option value="11">11</option>
+												<option value="12">12</option>
+												<option value="13">13</option>
+												<option value="14">14</option>
+												<option value="15">15</option>
+												<option value="16">16</option>
+												<option value="17">17</option>
+												<option value="18">18</option>
+												<option value="19">19</option>
+												<option value="20">20</option>
+												<option value="21">21</option>
+												<option value="22">22</option>
+												<option value="23">23</option>
+												<option value="24">24</option>
+												<option value="25">25</option>
+												<option value="26">26</option>
+												<option value="27">27</option>
+												<option value="28">28</option>
+												<option value="29">29</option>
+												<option value="30">30</option>
+										</select></td>
+									</tr>
+									<tr class="animal">
+										<th>체중</th>
+										<td><select name="animal_weight">
+												<option value="1">1kg</option>
+												<option value="2">2kg</option>
+												<option value="3">3kg</option>
+												<option value="4">4kg</option>
+												<option value="5">5kg</option>
+												<option value="6">6kg</option>
+												<option value="7">7kg</option>
+												<option value="8">8kg</option>
+												<option value="9">9kg</option>
+												<option value="10">10kg</option>
+												<option value="11">11kg</option>
+												<option value="12">12kg</option>
+												<option value="13">13kg</option>
+												<option value="14">14kg</option>
+												<option value="15">15kg</option>
+												<option value="16">16kg</option>
+												<option value="17">17kg</option>
+												<option value="18">18kg</option>
+												<option value="19">19kg</option>
+												<option value="20">20kg</option>
+												<option value="21">21kg</option>
+												<option value="22">22kg</option>
+												<option value="23">23kg</option>
+												<option value="24">24kg</option>
+												<option value="25">25kg</option>
+												<option value="26">26kg</option>
+												<option value="27">27kg</option>
+												<option value="28">28kg</option>
+												<option value="29">29kg</option>
+												<option value="30">30kg</option>
+										</select></td>
+									</tr>
+									<tr class="animal">
+										<th>특이사항(질병,기타사항)</th>
+										<td><textarea rows="10" cols="30" name="animal_unq"></textarea>
+										</td>
+									</tr>
+
 						<%
-						 } else {
-						%> 
-							 <table border="1">
-								<tr class="animal">
-									<th>반려동물 정보</th>
-								</tr>
-								<tr class="animal">
-									<th>이름 *</th>
-									<td><input type="text" name="animal_name" value="" /></td>
-								</tr>
-								<tr class="animal">
-									<th>성별 *</th>
-									<td>
-										 <input type="radio" id="animal_gen_chk" name="animal_gen"
-										value="M"><img src="resources/images/male.svg"
-										style="width: 20px; height: 20px;"> <input type="radio"
-										name="animal_gen" value="F"><img
-										src="resources/images/female.svg"
-										style="width: 20px; height: 20px;"> 
-									</td>
-								</tr>
-								<tr class="animal">
-									<th>품종</th>
-									<td><input type="text" name="animal_type" maxlength="20"
-										value="" /></td>
-								</tr>
-								<tr class="animal">
-									<th>나이</th>
-									<td><select name="animal_age">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-											<option value="10">10</option>
-											<option value="11">11</option>
-											<option value="12">12</option>
-											<option value="13">13</option>
-											<option value="14">14</option>
-											<option value="15">15</option>
-											<option value="16">16</option>
-											<option value="17">17</option>
-											<option value="18">18</option>
-											<option value="19">19</option>
-											<option value="20">20</option>
-											<option value="21">21</option>
-											<option value="22">22</option>
-											<option value="23">23</option>
-											<option value="24">24</option>
-											<option value="25">25</option>
-											<option value="26">26</option>
-											<option value="27">27</option>
-											<option value="28">28</option>
-											<option value="29">29</option>
-											<option value="30">30</option>
-									</select></td>
-								</tr>
-								<tr class="animal">
-									<th>체중</th>
-									<td><select name="animal_weight">
-											<option value="1">1kg</option>
-											<option value="2">2kg</option>
-											<option value="3">3kg</option>
-											<option value="4">4kg</option>
-											<option value="5">5kg</option>
-											<option value="6">6kg</option>
-											<option value="7">7kg</option>
-											<option value="8">8kg</option>
-											<option value="9">9kg</option>
-											<option value="10">10kg</option>
-											<option value="11">11kg</option>
-											<option value="12">12kg</option>
-											<option value="13">13kg</option>
-											<option value="14">14kg</option>
-											<option value="15">15kg</option>
-											<option value="16">16kg</option>
-											<option value="17">17kg</option>
-											<option value="18">18kg</option>
-											<option value="19">19kg</option>
-											<option value="20">20kg</option>
-											<option value="21">21kg</option>
-											<option value="22">22kg</option>
-											<option value="23">23kg</option>
-											<option value="24">24kg</option>
-											<option value="25">25kg</option>
-											<option value="26">26kg</option>
-											<option value="27">27kg</option>
-											<option value="28">28kg</option>
-											<option value="29">29kg</option>
-											<option value="30">30kg</option>
-									</select></td>
-								</tr>
-								<tr class="animal">
-									<th>특이사항(질병,기타사항)</th>
-									<td><textarea rows="10" cols="30" name="animal_unq"></textarea>
-									</td>
-								</tr>
-								</table>
-								</div>
-								
-					<%
-						 }
-					%>
-						<table border="1">
-						<tr>
+							 }
+						%>
+
+							<tr>
 							<td colspan="9" align="right">
-							<input type="button"
-								value="회원정보수정" onclick="#"/>
+							<input type="submit"
+								value="회원정보수정" onclick="check();"/>
 								<input type="button" value="취소"
 								onclick="location.href='index.jsp'" /></td>
 						</tr>
 					</table>
-			</section>
-			
+
+
+
 	<script type="text/javascript">
 		var phone = "<%=dto.getMember_phone()%>";
 		var phonesplit = phone.split('-');
@@ -771,15 +760,17 @@ if (dto == null) {
 			document.getElementById("general_signup_email").value = emailsplit[0];
 			$('#select_email').val(emailsplit[1]).prop("selected",true);
 		});
-		
-		
-		
-	</script>
-			
-	
 
-			<section class="mypage">
+		$(function(){
+			$('#select_age').val(<%=a_dto.getAnimal_age()%>).prop("selected",true);
+			$('#select_weight').val(<%=a_dto.getAnimal_weight()%>).prop("selected",true);
+		});
+		</script>
 
+		</form>
+
+
+			<form action="semi.do" method="post" class="mypage" >
 				<h1>회원탈퇴</h1>
 					<table border="1">
 						<col width="200" />
@@ -800,21 +791,18 @@ if (dto == null) {
 						<tr>
 							<th>비밀번호확인</th>
 							<td><input type="password" name="member_password_chk"
-								onclick="idCheckConfirm();"> 
+								onclick="idCheckConfirm();">
 								<font id="chkNotice" size="2"></font></td>
 						</tr>
 						<tr>
 							<td colspan="5" align="center">
-							<input type="button" value="회원탈퇴" onclick="semi.do?command=memberdel&member_id=${dto.member_id }"/></td>
+							<input type="button" value="회원탈퇴" onclick="semi.do?command=memberdel&member_id=<%=dto.getMember_id()%>"/></td>
 						</tr>
 					</table>
-			</section>
+			</form>
 		</div>
-		</form>
-		
-		
-	
-	
+
+
 	<jsp:include page="bottom.jsp" />
 </body>
 </html>

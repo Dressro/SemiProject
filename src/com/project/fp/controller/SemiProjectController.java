@@ -321,13 +321,12 @@ public class SemiProjectController extends HttpServlet {
 				a_dto.setAnimal_weight(animal_weight);
 				a_dto.setAnimal_unq(animal_unq);
 				a_res = a_biz.update(a_dto);
-
 			}
 			int res = m_res + a_res;
 			if (res > 0) {
-				jsResponse(response, "수정 성공", "semi.do?command=mypage");
+				jsResponse(response, "수정 성공", "semi.do?command=mypage&member_id="+ member_id);
 			} else {
-				jsResponse(response, "수정 실패", "semi.do?command=mypage");
+				jsResponse(response, "수정 실패", "semi.do?command=mypage&member_id="+ member_id);
 			}
 		} else if (command.equals("memberdetail")) {
 			String member_id = request.getParameter("member_id");
@@ -491,7 +490,10 @@ public class SemiProjectController extends HttpServlet {
 			request.setAttribute("list", list);
 			dispatch(response, request, "board_dec.jsp");
 		} else if (command.equals("mypage")) {
-			response.sendRedirect("mypage.jsp");
+			String member_id = request.getParameter("member_id");
+			AnimalDto a_dto = a_biz.selectoneDetail(member_id);
+			request.setAttribute("a_dto", a_dto);
+			dispatch(response, request, "mypage.jsp");
 		} else if (command.equals("boardlist")) {
 			List<BoardDto> boardlist = b_biz.board_List();
 			request.setAttribute("boardlist", boardlist);
