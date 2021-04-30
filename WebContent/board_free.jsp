@@ -91,6 +91,7 @@ a {
 					<input type="hidden" name="command" value="board_All_delete">
 					<input type="hidden" name="userNicname" value="${dto.member_nicname }">
 					<input type="hidden" name="userGrade" value="${dto.member_grade }">
+					<%-- 삭제 후 장소 이동 --%>
 					<input type="hidden" name="where" value="board_free">
 					<table class="table custom-table">
 						<thead>
