@@ -56,6 +56,8 @@ import com.project.fp.biz.File_TableBiz;
 import com.project.fp.biz.File_TableBizImpl;
 import com.project.fp.biz.HospitalBiz;
 import com.project.fp.biz.HospitalBizImpl;
+import com.project.fp.biz.Lost_AnimalBiz;
+import com.project.fp.biz.Lost_AnimalBizImpl;
 import com.project.fp.biz.MemberBiz;
 import com.project.fp.biz.MemberBizImpl;
 import com.project.fp.biz.Order_TableBiz;
@@ -71,6 +73,7 @@ import com.project.fp.dto.ChatDto;
 import com.project.fp.dto.Chat_ContentDto;
 import com.project.fp.dto.File_TableDto;
 import com.project.fp.dto.HospitalDto;
+import com.project.fp.dto.Lost_AnimalDto;
 import com.project.fp.dto.MemberDto;
 import com.project.fp.dto.Order_TableDto;
 import com.project.fp.dto.PagingDto;
@@ -105,6 +108,7 @@ public class SemiProjectController extends HttpServlet {
 		ReceiveBiz r_biz = new ReceiveBizImpl();
 		HospitalBiz h_biz = new HospitalBizImpl();
 		Board_ReplyBiz b_r_biz = new Board_ReplyBizImpl();
+		Lost_AnimalBiz l_biz = new Lost_AnimalBizImpl();
 		HttpSession session = request.getSession();
 
 		if (command.equals("signup")) {
@@ -786,8 +790,19 @@ public class SemiProjectController extends HttpServlet {
 				}
 			} else if (board_category.equals("D")) {
 				res = b_biz.dec_insert(b_dto);
+				double lost_latitude = Double.parseDouble(request.getParameter("lost_latitude"));
+				double lost_longitude = Double.parseDouble(request.getParameter("lost_longitude"));
 				if (res > 0) {
-					jsResponse(response, "등록 성공", "semi.do?command=board_dec");
+					List<BoardDto> b_list = b_biz.board_selectList(b_dto);
+					int board_no = b_list.get(0).getBoard_no();
+					Lost_AnimalDto l_dto = new Lost_AnimalDto();
+					l_dto.setLost_lat(lost_latitude);
+					l_dto.setLost_lng(lost_longitude);
+					l_dto.setBoard_no(board_no);
+					int l_res = l_biz.insert(l_dto);
+					if (l_res > 0) {
+						jsResponse(response, "등록 성공", "semi.do?command=board_dec");
+					}
 				} else {
 					jsResponse(response, "등록 실패", "semi.do?command=board_dec");
 				}
@@ -1129,7 +1144,10 @@ public class SemiProjectController extends HttpServlet {
 			}else {
 				jsResponse(response, "수정 실패", "semi.do?command=adminpage");
 			}
+		} else if (command.equals("dec_insert")) {
+			response.sendRedirect("dec_insertform.jsp");
 		}
+
 
 		if (command.equals("test")) {
 			File fi = new File("C://Users//alahx/test123123123678678678.csv");
