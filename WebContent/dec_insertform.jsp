@@ -48,8 +48,6 @@
 
 	
 	<div class="container">
-
-		<div class="content" style="width: 70%">
 			<div class="content" style="margin-right: 250px;">
 				<div style="margin-left: 150px;">
 				<div class="col-sm-3">
@@ -77,9 +75,9 @@
 						<input type="text" class="form-control" name="board_title" size="100" placeholder="제목을 입력해주세요.">
 					</div>
 				</div>
-				</div>
+
 			</div>
-		</div>
+
 
 		
 		<br/><br/>
@@ -161,7 +159,7 @@
 				</div>
 			</div>
 		</div>
-		
+	</div>
 	</div>
 </form>
 

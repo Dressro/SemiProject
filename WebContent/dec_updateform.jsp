@@ -31,10 +31,11 @@ File_TableDto f_dto = (File_TableDto) request.getAttribute("f_dto");%>
 </script>
 <style type="text/css">
 #map {
-	width: 100%;
+	width: 1000px;
 	height: 400px;
 	margin-bottom: 15px;
 	margin-top: 25px;
+	margin-left: 150px;
 }
 </style>
 </head>
@@ -70,7 +71,7 @@ File_TableDto f_dto = (File_TableDto) request.getAttribute("f_dto");%>
 				
 				<hr>
 
-					<p>실종 위치를 찾아 아래 지도에 표시해주세요</p>
+					<p style="margin-left: 150px;">실종 위치를 찾아 아래 지도에 표시해주세요</p>
 					<div id="map"></div>
 					<div id="clickLatlng"></div>
 					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6cb234998221d5b514c1db1f8c50cf56"></script>
