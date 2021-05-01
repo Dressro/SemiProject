@@ -44,7 +44,7 @@
 		ANIMAL_TYPE = #{animal_type},
 		ANIMAL_AGE = #{animal_age}, ANIMAL_WEIGHT=#{animal_weight}, ANIMAL_UNQ=#{animal_unq}
 		
-		WHERE ANIMAL_NO = #{animal_no}
+		WHERE MEMBER_ID = #{member_id}
 	</update>
 
 	<delete id="delete" parameterType="int">

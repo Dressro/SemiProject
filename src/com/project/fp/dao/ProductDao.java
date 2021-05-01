@@ -7,6 +7,7 @@ import com.project.fp.dto.ProductDto;
 public interface ProductDao {
 	
 	public List<ProductDto> selectList();
+	public List<ProductDto> selectcategory(String prod_category);
 	public ProductDto prod_selectone(String prod_name);
 	public ProductDto selectOne(int prod_num);
 	public int insert(ProductDto dto);
