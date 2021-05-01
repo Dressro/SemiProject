@@ -38,6 +38,11 @@
 
 }
 </style>
+<script type="text/javascript">
+
+
+
+</script>
 <body>
 <%
 	MemberDto dto = (MemberDto) session.getAttribute("dto");
@@ -45,8 +50,7 @@
 %>
 
 <jsp:include page="header.jsp" />
-		<form action="semi.do" method="post">
-		<input type="hidden" name="command" value="basket_add">
+		<form method="post">
 		<input type="hidden" name="member_id" value="${dto.member_id}">
 		<input type="hidden" name="prod_num" value="${p_dto.prod_num}">
 		
@@ -124,8 +128,8 @@
 						</span>
 					</div>
 						
-		      <input type="submit" class="btn" value="[장바구니 담기]">
-		      <input type="button" class="btn" value="[바로 구매하기]" onclick="#">
+		      <input type="submit" class="btn" value="[장바구니 담기]" formaction="semi.do?command=basket_add">
+		      <input type="submit" class="btn" value="[바로 구매하기]" formaction="semi.do?command=">
 		      	</div>
 			</div>			
 			
