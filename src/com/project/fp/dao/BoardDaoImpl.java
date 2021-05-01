@@ -279,26 +279,58 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 
 	@Override
 	public int free_update(BoardDto dto) {
-
-		return 0;
+		int res = 0;
+		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.update(namespace+"board_update",dto);
+			if(res > 0) {
+				session.commit();
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return res;
 	}
 
 	@Override
 	public int notice_update(BoardDto dto) {
-
-		return 0;
+		int res = 0;
+		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.update(namespace+"board_update",dto);
+			if(res > 0) {
+				session.commit();
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return res;
 	}
 
 	@Override
 	public int qna_update(BoardDto dto) {
-
-		return 0;
+		int res = 0;
+		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.update(namespace+"board_update",dto);
+			if(res > 0) {
+				session.commit();
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return res;
 	}
 
 	@Override
 	public int dec_update(BoardDto dto) {
-
-		return 0;
+		int res = 0;
+		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.update(namespace+"board_update",dto);
+			if(res > 0) {
+				session.commit();
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return res;
 	}
 
 	@Override
