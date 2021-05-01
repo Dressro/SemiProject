@@ -32,7 +32,6 @@ response.setContentType("text/html; charset=UTF-8");
 	.li_right {
 	float: right;
 	}
-
 	.li_rigit_a {
 	padding: 15px 20px 15px 0px;
 	}
@@ -85,8 +84,6 @@ response.setContentType("text/html; charset=UTF-8");
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
-
-
 $(function(){
 	
 	$(".detail").click(function(){
@@ -129,14 +126,11 @@ $(function(){
     });
     
 });
-
 </script>
 <style>
-
 #detailpop {
 	text-decoration:  underline;
 }
-
 </style>
 
 </head>
@@ -261,14 +255,14 @@ $(function(){
 	<c:choose>
 	<c:when test="${dto.order_group eq tempname}">
 		<tr>
-		<td><input type="hidden" name="order_num" value="${dto.order_num }"></td>
+		<td></td>
 		<td></td>
 		<td style="text-overflow:ellipsis; overflow:hidden;">${dto.member_id }</td>
 		<td style="text-overflow:ellipsis; overflow:hidden;">${dto.prod_name }</td>
 		<td>${dto.order_quantity }</td>
 		<td>${dto.order_price }</td>
 		<td>
-			<select name="order_step">
+			<select>
 					<c:if test="${dto.order_step eq '미결제'}">
 						<option value="미결제" selected>미결제</option>
 						<option value="결제완료" disabled="disabled">결제완료</option>
@@ -312,7 +306,9 @@ $(function(){
 	</c:when>	
 	<c:otherwise>
 	<tr>
-		<td><input type="hidden" name="order_num" value="${dto.order_num }"></td>
+		<td><input type="checkbox" name="order_group" value="${dto.order_group }">
+		<input type="hidden" name="order_group" value="${dto.order_group }">
+			</td>
 		<td>${dto.order_num }</td>
 		<td style="text-overflow:ellipsis; overflow:hidden;">${dto.member_id }</td>
 		<td style="text-overflow:ellipsis; overflow:hidden;">${dto.prod_name }</td>
@@ -368,6 +364,8 @@ $(function(){
 	<tr>
 	<td colspan="9" align="right">
 	<input type="submit" value="주문상태변경" class="s-btn"/>
+	<input type="submit" value="주문삭제" class="s-btn" formaction="semi.do?command=order_delete"
+                          formmethod="post"/>
 	</td>
 	</tr>
 	
@@ -518,7 +516,6 @@ function adminpage_4(){
 	$('.adminpage_3').css("display","none");
 	$('.adminpage_4').css("display","block");
 }
-
 function memberinsertPopup() {
     window.name = "adminpage.jsp";
     window.open("signup.jsp", "insert",

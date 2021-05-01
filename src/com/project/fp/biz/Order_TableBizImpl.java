@@ -21,13 +21,19 @@ public class Order_TableBizImpl implements Order_TableBiz {
 		// TODO Auto-generated method stub
 		return dao.groupList();
 	}
-
+	
+	@Override
+	public Order_TableDto group_del_select(int order_num) {
+		// TODO Auto-generated method stub
+		return dao.group_del_select(order_num);
+	}
+	
 	@Override
 	public Order_TableDto selectOne(int order_num) {
 
 		return dao.selectOne(order_num);
 	}
-
+	
 	@Override
 	public int insert(Order_TableDto dto) {
 
@@ -47,10 +53,18 @@ public class Order_TableBizImpl implements Order_TableBiz {
 	}
 	
 	@Override
-	public int delete(int order_num) {
+	public int delete(int order_group) {
 
-		return dao.delete(order_num);
+		return dao.delete(order_group);
 	}
+
+	@Override
+	public int multiDelete(int[] order_groups) {
+		// TODO Auto-generated method stub
+		return dao.multiDelete(order_groups);
+	}
+
+	
 
 	
 

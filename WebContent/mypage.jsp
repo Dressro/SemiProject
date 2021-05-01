@@ -493,6 +493,7 @@ if (dto == null) {
 								onclick="chk(this.value);" checked>없음 <input
 								type="radio" name="member_animal" value="Y"
 								onclick="chk(this.value);">있음
+								<input type="hidden" name="animalN_Y" value="N_Y">
 								<%
 								 }
 								 %>
@@ -761,11 +762,14 @@ if (dto == null) {
 			document.getElementById("general_signup_email").value = emailsplit[0];
 			$('#select_email').val(emailsplit[1]).prop("selected",true);
 		});
-
+		<%if(dto.getMember_animal().equals("Y")) {%>
 		$(function(){
+			
+			$(function(){
 			$('#select_age').val(<%=a_dto.getAnimal_age()%>).prop("selected",true);
 			$('#select_weight').val(<%=a_dto.getAnimal_weight()%>).prop("selected",true);
 		});
+		<%}%>
 		</script>
 
 		</form>
