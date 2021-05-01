@@ -284,7 +284,7 @@ Lost_AnimalDto l_dto = (Lost_AnimalDto) request.getAttribute("l_dto");
 				</div>
 				<hr>
 				
-				
+				<h5 style="font-weight: bold;">위치</h5>
 				<div id="map"></div>
 				<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6cb234998221d5b514c1db1f8c50cf56"></script>
 				<script>

@@ -1,12 +1,12 @@
 package com.project.fp.dto;
 
 public class Lost_AnimalDto {
-	
+
 	private int lost_no;
 	private double lost_lat;
 	private double lost_lng;
 	private int board_no;
-	
+
 	public Lost_AnimalDto() {
 	}
 
@@ -48,6 +48,12 @@ public class Lost_AnimalDto {
 
 	public void setBoard_no(int board_no) {
 		this.board_no = board_no;
+	}
+
+	@Override
+	public String toString() {
+		return "Lost_AnimalDto [lost_no=" + lost_no + ", lost_lat=" + lost_lat + ", lost_lng=" + lost_lng
+				+ ", board_no=" + board_no + "]";
 	}
 
 }

@@ -20,10 +20,11 @@
 
 <style type="text/css">
 #map {
-	width: 100%;
+	width: 1000px;
 	height: 400px;
 	margin-bottom: 15px;
 	margin-top: 25px;
+	margin-left: 150px;
 }
 </style>
 
@@ -49,11 +50,33 @@
 	<div class="container">
 
 		<div class="content" style="width: 70%">
-			<div class="row justify-content-md-center">
+			<div class="content" style="margin-right: 250px;">
+				<div style="margin-left: 150px;">
+				<div class="col-sm-3">
+						<div class="input-group mb-3">
+							<select class="custom-select" id="inputGroupSelect03" name="board_category">
+								<c:choose>
+									<c:when test="${category eq 'N' }">
+										<option value="N" selected="selected">공지사항</option>
+									</c:when>
+									<c:when test="${category eq 'F' }">
+										<option value="F" selected="selected">자유게시판</option>
+									</c:when>
+									<c:when test="${category eq 'Q' }">
+										<option value="Q" selected="selected">상품문의</option>
+									</c:when>
+									<c:when test="${category eq 'D' }">
+										<option value="D" selected="selected">실종신고</option>
+									</c:when>
+								</c:choose>
+							</select>
+						</div>
+					</div>
 				<div class="col-sm-9">
 					<div class="input-group mb-3">
 						<input type="text" class="form-control" name="board_title" size="100" placeholder="제목을 입력해주세요.">
 					</div>
+				</div>
 				</div>
 			</div>
 		</div>
@@ -61,7 +84,7 @@
 		
 		<br/><br/>
 		
-		<p>실종 위치를 찾아 아래 지도에 표시해주세요</p>
+		<p style="margin-left: 150px;">실종 위치를 찾아 아래 지도에 표시해주세요</p>
 		<div id="map"></div>
 		<div id="clickLatlng"></div>
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6cb234998221d5b514c1db1f8c50cf56"></script>
@@ -108,20 +131,27 @@
 		</script>
 
 		
-		<div class="row justify-content-md-center">
+		<div style="margin-left: 150px;">
 			<div class="col_c" style="margin-bottom: 30px">
 				<div class="input-group">
-					<textarea class="form-control" id="p_content" name="board_content"></textarea>
+					<textarea class="form-control" id="p_content" name="board_content">
+						<p>반려 동물 이름 : </p>
+						<br>
+						<br>
+						<br>
+						<p>반려 동물 특징 :</p>
+					</textarea>
 					<script type="text/javascript">
 						CKEDITOR.replace('p_content', {
-							height : 500
+							height : 500,
+							width : 700
 						});
 					</script>
 				</div>
 			</div>
 		</div>
 		
-		<div class="row justify-content-md-center">
+		<div style="margin-left: 150px;">
 			<div class="input-group mb-3">
 				<div class="custom-file">
 					&nbsp;
