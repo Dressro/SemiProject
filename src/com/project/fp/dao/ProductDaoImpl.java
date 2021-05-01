@@ -130,6 +130,18 @@ int count = 0;
 		return count;
 	}
 
+	@Override
+	public List<ProductDto> selectcategory(String prod_category) {
+			List<ProductDto> list = null;
+			try(SqlSession session = getSqlSessionFactory().openSession(false)) {
+				list = session.selectList(namespace+"selectcategoryList",prod_category);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return list;
+		}
+
 	
 
 	
