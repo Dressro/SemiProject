@@ -58,9 +58,7 @@
 		
 			// 지도를 생성합니다    
 			var map = new kakao.maps.Map(mapContainer, mapOption);
-			
-			
-			// -----------여기서부터 반복문 시작
+
 			// 마커가 표시될 위치입니다 
 			var markerPosition  = new kakao.maps.LatLng(33.450701,126.570667); 
 
@@ -111,7 +109,7 @@
 					<input type="hidden" name="command" value="board_All_delete">
 					<input type="hidden" name="userNicname" value="${dto.member_nicname }">
 					<input type="hidden" name="userGrade" value="${dto.member_grade }">
-					<input type="hidden" name="where" value="board_free">
+					<input type="hidden" name="where" value="board_dec">
 					<table class="table custom-table">
 						<thead>
 							<tr>

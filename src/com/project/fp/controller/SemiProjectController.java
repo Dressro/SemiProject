@@ -839,6 +839,7 @@ public class SemiProjectController extends HttpServlet {
 			int board_no = Integer.parseInt(request.getParameter("board_no"));
 			int f_res = f_t_biz.board_delete(board_no);
 			int b_r_res = b_r_biz.board_delete(board_no);
+			int l_res = l_biz.delete(board_no);
 			int b_res = b_biz.delete(board_no);
 			if (b_res > 0) {
 				jsResponse(response, "삭제 성공", "semi.do?command=board_free");
@@ -1162,6 +1163,15 @@ public class SemiProjectController extends HttpServlet {
 			request.setAttribute("f_dto", f_dto);
 			request.setAttribute("l_dto", l_dto);
 			dispatch(response, request, "dec_detail.jsp");
+		} else if (command.equals("dec_updateform")) {
+			int board_no = Integer.parseInt(request.getParameter("board_no"));
+			BoardDto b_dto = b_biz.board_selectOne(board_no);
+			File_TableDto f_dto = f_t_biz.board_selectOne(board_no);
+			Lost_AnimalDto l_dto = l_biz.selectOne(board_no);
+			request.setAttribute("b_dto", b_dto);
+			request.setAttribute("f_dto", f_dto);
+			request.setAttribute("l_dto", l_dto);
+			dispatch(response, request, "dec_updateform.jsp");
 		}
 
 		if (command.equals("test")) {
