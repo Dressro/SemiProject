@@ -759,9 +759,21 @@ public class SemiProjectController extends HttpServlet {
 					jsResponse(response, "등록 실패", "semi.do?command=board_qna");
 				}
 			} else if (board_category.equals("D")) {
+				System.out.println("여기?");
 				res = b_biz.dec_update(b_dto);
+				System.out.println(res);
+				double lost_latitude = Double.parseDouble(request.getParameter("lost_latitude"));
+				double lost_longitude = Double.parseDouble(request.getParameter("lost_longitude"));
 				if (res > 0) {
-					jsResponse(response, "등록 성공", "semi.do?command=board_dec");
+					
+					Lost_AnimalDto l_dto = new Lost_AnimalDto();
+					l_dto.setLost_lat(lost_latitude);
+					l_dto.setLost_lng(lost_longitude);
+					l_dto.setBoard_no(board_no);
+					int l_res = l_biz.update(l_dto);
+					if (l_res > 0) {
+						jsResponse(response, "등록 성공", "semi.do?command=board_dec");
+					}
 				} else {
 					jsResponse(response, "등록 실패", "semi.do?command=board_dec");
 				}
