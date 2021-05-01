@@ -38,6 +38,11 @@
 
 }
 </style>
+<script type="text/javascript">
+
+
+
+</script>
 <body>
 <%
 	MemberDto dto = (MemberDto) session.getAttribute("dto");
@@ -45,8 +50,9 @@
 %>
 
 <jsp:include page="header.jsp" />
-		<form action="semi.do" method="post">
-		<input type="hidden" name="command" value="shopping_detail">
+		<form method="post">
+		<input type="hidden" name="member_id" value="${dto.member_id}">
+		<input type="hidden" name="prod_num" value="${p_dto.prod_num}">
 		
 		<nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom"> <a class="navbar-brand ml-2 font-weight-bold" href="#">MENU</a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor" aria-controls="navbarColor" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
     <div class="collapse navbar-collapse" id="navbarColor">
@@ -75,57 +81,59 @@
 </div>
 <div class="semiproject_shopping_detail">
 		<div class="detail">
-				<div>
-						<div>			
-							<span class="prod_img">
-								<img src="resources/images/product/280.jfif">
-							</span>
-						</div>
-					<div class="prod_info">
-						<div>
-							<span class="prod_name">
-								<span> 상&nbsp;품&nbsp;명&nbsp; : </span>
-								${p_dto.prod_name}
-							</span>
-						</div>
-						<div>
-							<span> 판&nbsp;매&nbsp;가&nbsp; : </span>
-							<span>
-								<fmt:formatNumber value="${p_dto.prod_price}" pattern="#,###"/>
-							</span>
-						</div>
-						<div>
-							<span> 할&nbsp;인&nbsp;율&nbsp; : </span>
-							<span>
-								${p_dto.prod_sale}
-							</span>
-						</div>
-						<div>
-							<span> 구매수량 : </span>
-							<span>
-								 <input type="number" min="1" max="50" value="1" />
-							</span>
-						</div>
-						<div>
-							<span> 남은수량 : </span>
-							<span>
-								 ${p_dto.prod_stock}
-							</span>
-						</div>
-						<div>
-							<span> 제&nbsp;조&nbsp;사&nbsp; : </span>
-							<span>
-								 ${p_dto.prod_mfr}
-							</span>
-						</div>
-					
-       			
-		      <input type="button" class="btn" value="[장바구니 담기]" onclick="#" >
-		      <input type="button" class="btn" value="[바로 구매하기]" onclick="#">
-		      </div>
-		      </div>			
-		      			
-       	</div>
+
+			<div>
+				<div>			
+					<span class="prod_img">
+						<img src="resources/images/product/280.jfif">
+					</span>
+				</div>
+				<div class="prod_info">
+					<div>
+						<span class="prod_name">
+							<span> 상&nbsp;품&nbsp;명&nbsp; : </span>
+							${p_dto.prod_name}
+						</span>
+					</div>
+					<div>
+						<span> 판&nbsp;매&nbsp;가&nbsp; : </span>
+						<span>
+							<fmt:formatNumber value="${p_dto.prod_price}" pattern="#,###"/>
+							<input type="hidden" name="prod_price" value="${p_dto.prod_price}">
+						</span>
+					</div>
+					<div>
+						<span> 할&nbsp;인&nbsp;율&nbsp; : </span>
+						<span>
+							${p_dto.prod_sale}
+						</span>
+					</div>
+					<div>
+						<span> 구매수량 : </span>
+						<span>
+							<input type="number" name="order_quantity" min="1" max="50" value="1" />
+						</span>
+					</div>
+					<div>
+						<span> 남은수량 : </span>
+						<span>
+							${p_dto.prod_stock}
+							<input type="hidden" name="prod_stock" value="${p_dto.prod_stock}">
+						</span>
+					</div>
+					<div>
+						<span> 제&nbsp;조&nbsp;사&nbsp; : </span>
+						<span>
+							${p_dto.prod_mfr}
+						</span>
+					</div>
+						
+		      <input type="submit" class="btn" value="[장바구니 담기]" formaction="semi.do?command=basket_add">
+		      <input type="submit" class="btn" value="[바로 구매하기]" formaction="semi.do?command=">
+		      	</div>
+			</div>			
+			
+      	</div>
       </div>
       <hr>
 		<div class="detail_explain">
