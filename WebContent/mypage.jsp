@@ -424,12 +424,12 @@ if (dto == null) {
 						<tr>
 							<th>비밀번호 *</th>
 							<td><input type="password" name="member_password"
-								onclick="idCheckConfirm();"></td>
+								></td>
 						</tr>
 						<tr>
 							<th>비밀번호확인 *</th>
 							<td><input type="password" name="member_password_chk"
-								onclick="idCheckConfirm();"></td>
+								></td>
 						</tr>
 						<tr>
 							<th>이름 *</th>
@@ -439,13 +439,12 @@ if (dto == null) {
 						<tr>
 							<th>닉네임 *</th>
 							<td><input type="text" name="member_nicname" maxlength="5"
-								onclick="idCheckConfirm();"
 								value="<%=dto.getMember_nicname()%>"></td>
 						</tr>
 						<tr>
 							<th>이메일 *</th>
 							<td><input type="hidden" name="member_email" value="">
-								<input type="text" id="general_signup_email" name="member_email_1" maxlength="30" onclick="idCheckConfirm();">
+								<input type="text" id="general_signup_email" name="member_email_1" maxlength="30" >
 										@
 										<select id="select_mail" name="member_email_2" >
 											<option>naver.com</option>
@@ -498,7 +497,7 @@ if (dto == null) {
 
 							</td>
 						</tr>
-						</table>
+						
 
 						<%
 						 if (dto.getMember_animal().equals("Y")) {
@@ -506,7 +505,7 @@ if (dto == null) {
 						 %>
 						
 				
-					<div id="animal">
+				<div id="animal">
 					<table border="1">
 						<tr class="animal"> <th>반려동물 정보</th></tr>
 						<tr class="animal">
@@ -620,9 +619,8 @@ if (dto == null) {
 							<td><textarea rows="10" cols="30" name="animal_unq"><%=a_dto.getAnimal_unq() %></textarea>
 							</td>
 						</tr>
-						</div>
+						
 						<script type="text/javascript">
-
 						$(function(){
 							$('#select_age').val(<%=a_dto.getAnimal_age()%>).prop("selected",true);
 							$('#select_weight').val(<%=a_dto.getAnimal_weight()%>).prop("selected",true);
@@ -632,7 +630,6 @@ if (dto == null) {
 							<%
 							 } else {
 							%>
-							<div id="animal">
 									<tr class="animal">
 										<th>반려동물 정보</th>
 									</tr>
@@ -731,7 +728,8 @@ if (dto == null) {
 										<td><textarea rows="10" cols="30" name="animal_unq"></textarea>
 										</td>
 									</tr>
-						<%
+									</div>
+						<%		
 							 }
 						%>
 
@@ -742,7 +740,7 @@ if (dto == null) {
 								<input type="button" value="취소"
 								onclick="location.href='index.jsp'" /></td>
 							</tr>
-		
+							</table>
 
 
 	<script type="text/javascript">
@@ -763,7 +761,7 @@ if (dto == null) {
 		
 		
 		</script>
-		</table>
+		
 		</form>
 
 
