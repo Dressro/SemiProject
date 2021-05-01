@@ -301,34 +301,42 @@ public class SemiProjectController extends HttpServlet {
 			dto.setMember_animal(member_animal);
 			dto.setMember_id(member_id);
 			dto.setMember_password(member_password);
-
+			
 			int m_res = m_biz.mypagemod(dto);
 			int a_res = 0;
-			if (member_animal.equals("Y")) {
-
-				int animal_no = Integer.parseInt(request.getParameter("animal_no"));
-				String animal_name = request.getParameter("animal_name");
-				String animal_gen = request.getParameter("animal_gen");
-				String animal_type = request.getParameter("animal_type");
-				int animal_age = Integer.parseInt(request.getParameter("animal_age"));
-				double animal_weight = Double.parseDouble(request.getParameter("animal_weight"));
-				String animal_unq = request.getParameter("animal_unq");
-				AnimalDto a_dto = new AnimalDto();
-				a_dto.setAnimal_no(animal_no);
-				a_dto.setAnimal_name(animal_name);
-				a_dto.setAnimal_gen(animal_gen);
-				a_dto.setAnimal_type(animal_type);
-				a_dto.setAnimal_age(animal_age);
-				a_dto.setAnimal_weight(animal_weight);
-				a_dto.setAnimal_unq(animal_unq);
-				a_res = a_biz.update(a_dto);
-			}
-			int res = m_res + a_res;
-			if (res > 0) {
-				jsResponse(response, "수정 성공", "semi.do?command=mypage&member_id="+ member_id);
-			} else {
-				jsResponse(response, "수정 실패", "semi.do?command=mypage&member_id="+ member_id);
-			}
+			
+			
+				if (member_animal.equals("Y")) { 
+					
+					String a_member_id = request.getParameter("member_id");
+					String animal_name = request.getParameter("animal_name");
+					String animal_gen = request.getParameter("animal_gen");
+					String animal_type = request.getParameter("animal_type");
+					int animal_age = Integer.parseInt(request.getParameter("animal_age"));
+					double animal_weight = Double.parseDouble(request.getParameter("animal_weight"));
+					String animal_unq = request.getParameter("animal_unq");
+					AnimalDto a_dto = new AnimalDto();
+					a_dto.setAnimal_name(animal_name);
+					a_dto.setAnimal_gen(animal_gen);
+					a_dto.setAnimal_type(animal_type);
+					a_dto.setAnimal_age(animal_age);
+					a_dto.setAnimal_weight(animal_weight);
+					a_dto.setAnimal_unq(animal_unq);
+					a_dto.setMember_id(a_member_id);
+					
+					if (a_dto.getAnimal_no() < 0) {
+						a_res = a_biz.insert(a_dto);
+					} else if (a_dto.getAnimal_no() > 0)
+						a_res = a_biz.update(a_dto);
+					} 
+		
+				int res = m_res + a_res;
+					if (res > 0) {
+						jsResponse(response, "수정 성공", "semi.do?command=mypage&member_id="+ member_id);
+					} else {
+						jsResponse(response, "수정 실패", "semi.do?command=mypage&member_id="+ member_id);
+					}
+		
 		} else if (command.equals("memberdetail")) {
 			String member_id = request.getParameter("member_id");
 			MemberDto dto = m_biz.selectDetail(member_id);
@@ -356,7 +364,6 @@ public class SemiProjectController extends HttpServlet {
 			int a_res = 0;
 			if (member_animal.equals("Y")) {
 
-				int animal_no = Integer.parseInt(request.getParameter("animal_no"));
 				String animal_name = request.getParameter("animal_name");
 				String animal_gen = request.getParameter("animal_gen");
 				String animal_type = request.getParameter("animal_type");
@@ -364,7 +371,6 @@ public class SemiProjectController extends HttpServlet {
 				double animal_weight = Double.parseDouble(request.getParameter("animal_weight"));
 				String animal_unq = request.getParameter("animal_unq");
 				AnimalDto a_dto = new AnimalDto();
-				a_dto.setAnimal_no(animal_no);
 				a_dto.setAnimal_name(animal_name);
 				a_dto.setAnimal_gen(animal_gen);
 				a_dto.setAnimal_type(animal_type);
@@ -388,8 +394,10 @@ public class SemiProjectController extends HttpServlet {
 			if (md_res > 0) {
 				jsResponse(response, "회원탈퇴", "index.jsp");
 			} else {
-				jsResponse(response, "회원탈퇴실패", "mypage.jsp");
+				jsResponse(response, "회원탈퇴실패", "semi.do?command=mypage&member_id="+ member_id );
 			}
+			session.invalidate();
+			response.sendRedirect("index.jsp");
 
 		} else if (command.equals("board_notice")) {
 			int nowPage = 1;
@@ -505,6 +513,46 @@ public class SemiProjectController extends HttpServlet {
 			List<ProductDto> list = p_biz.selectList();
 			request.setAttribute("list", list);
 			dispatch(response, request, "shopping.jsp");
+		} else if (command.equals("shopping_detail")) {
+			int prod_num = Integer.parseInt(request.getParameter("prod_num"));
+			System.out.println(prod_num);
+			ProductDto p_dto = p_biz.selectOne(prod_num);
+			request.setAttribute("p_dto", p_dto);
+			dispatch(response, request, "shopping_detail.jsp");
+		} else if (command.equals("basket_add")) {
+			String member_id = request.getParameter("member_id");
+			if (member_id.equals("")) {
+				jsResponse(response, "로그인 후 이용가능합니다.", "login.jsp");
+			} else {
+				int prod_num = Integer.parseInt(request.getParameter("prod_num"));
+				int prod_price = Integer.parseInt(request.getParameter("prod_price"));
+				int prod_stock = Integer.parseInt(request.getParameter("prod_stock"));
+				int order_quantity = Integer.parseInt(request.getParameter("order_quantity"));
+				MemberDto m_dto = m_biz.selectDetail(member_id);
+				if (order_quantity > prod_stock) {
+					session.setAttribute("dto", m_dto);
+					jsResponse(response, "남은 수량을 초과하여 장바구니에 담을 수 없습니다.", "semi.do?command=shopping_detail"+"&prod_num=" + prod_num);
+				} else {
+					int order_price = prod_price * order_quantity;		
+					Order_TableDto o_dto = new Order_TableDto();
+					o_dto.setOrder_quantity(order_quantity);
+					o_dto.setOrder_price(order_price);
+					o_dto.setProd_num(prod_num);
+					o_dto.setMember_id(member_id);
+					System.out.println(order_quantity);
+					System.out.println(order_price);
+					System.out.println(prod_num);
+					System.out.println(member_id);
+					int res = o_t_biz.basket_insert(o_dto);
+					if (res > 0) {
+						session.setAttribute("dto", m_dto);
+						jsResponse(response, "장바구니에 추가되었습니다.", "semi.do?command=shopping");
+					} else {
+						session.setAttribute("dto", m_dto);
+						jsResponse(response, "다시 시도해주십시오.", "semi.do?command=shopping_detail"+"&prod_num=" + prod_num);
+					}
+				} 
+			}
 		} else if (command.equals("adminpage")) {
 			System.out.println("여기왔다.");
 			List<MemberDto> list = m_biz.selectList();
@@ -1156,47 +1204,6 @@ public class SemiProjectController extends HttpServlet {
 				}
 
 			}
-		}
-		
-		if (command.equals("shopping_detail1")) {
-			int prod_num = Integer.parseInt(request.getParameter("prod_num"));
-			ProductDto p_dto = p_biz.selectOne(prod_num);
-			request.setAttribute("p_dto", p_dto);
-			dispatch(response, request, "shopping_detail1.jsp");
-		} else if (command.equals("basket_insertres")) {
-			String member_id = request.getParameter("member_id");
-			int prod_num = Integer.parseInt(request.getParameter("prod_num"));
-			int prod_price = Integer.parseInt(request.getParameter("prod_price"));
-			int order_quantity = Integer.parseInt(request.getParameter("order_quantity"));
-			int order_price = prod_price * order_quantity;
-			MemberDto m_dto = m_biz.selectDetail(member_id);
-			Order_TableDto o_dto = new Order_TableDto();
-			o_dto.setOrder_quantity(order_quantity);
-			o_dto.setOrder_price(order_price);
-			o_dto.setProd_num(prod_num);
-			o_dto.setMember_id(member_id);
-			System.out.println(order_quantity);
-			System.out.println(order_price);
-			System.out.println(prod_num);
-			System.out.println(member_id);
-			int res = o_t_biz.basket_insert(o_dto);
-			if (res > 0) {
-				session.setAttribute("dto", m_dto);
-				jsResponse(response, "장바구니에 추가되었습니다.", "semi.do?command=shopping");
-			} else {
-				session.setAttribute("dto", m_dto);
-				jsResponse(response, "다시 시도해주십시오.", "semi.do?command=shopping_detail"+"&prod_num=" + prod_num);
-			}
-		}
-		
-		if (command.equals("basket_list")) {
-			String member_id = request.getParameter("member_id");
-			List<Order_TableDto> b_list = o_t_biz.selectbasketList(member_id);
-			List<ProductDto> p_list = p_biz.selectList();
-			request.setAttribute("member_id", member_id);
-			request.setAttribute("b_list", b_list);
-			request.setAttribute("p_list", p_list);
-			dispatch(response, request, "basket_list.jsp");
 		}
 
 	}

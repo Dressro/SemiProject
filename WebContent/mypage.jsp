@@ -43,20 +43,6 @@ response.setContentType("text/html; charset=UTF-8");
 
 </style>
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript">
-$(function(){
-		$('.mymenus li').click(function(){
-		$('.mymenus li').find('a').removeClass('active');
-	    $(this).find('a').addClass('active');
-	    $('.mypage').hide();
-		var i = $(this).index();
-		$('.mypage').eq(i).show();
-	});
-		$('.mymenus li').eq(0).trigger('click');
-});
-</script>
-
 
 <link href="resources/css/head.css" rel=stylesheet type="text/css" />
 <style type="text/css">
@@ -86,20 +72,21 @@ $(function(){
 
 	<jsp:include page="header.jsp" />
 
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
 
 	function chk(value){
 		$('.animal').trigger('click');
-		if(value == "Y"){
-			$(".animal").show();
-			$("input[id=animal_gen_chk]").attr("checked","checked");
-			$("input[name=animal_name]").attr("required","true");
-		}else if(value == "N"){
-			$("input[name=animal_name]").attr("required","false");
-			$("input[id=animal_gen_chk]").attr("checked","unchecked");
-			$(".animal").hide();
-		}
+			if(value == "N"){
+				$("input[name=animal_name]").attr("required","false");
+				$("input[id=animal_gen_chk]").attr("checked","unchecked");
+				$(".animal").hide();
+			}else{
+				$(".animal").show();
+				$("input[id=animal_gen_chk]").attr("checked","checked");
+				$("input[name=animal_name]").attr("required","true");
+			}
 	}
 
 	function check() {
@@ -115,26 +102,7 @@ $(function(){
 		$('input[name=member_addr]').attr('value', member_addr);
 	}
 
-	$(function() {
-
-		$('input[name=member_password]').keyup(function() {
-			$('#chkNotice').html('');
-		});
-
-		$('input[name=member_password_chk]').keyup(
-				function() {
-					if ($('input[name=member_password]').val() != $(
-							'input[name=member_password_chk').val()) {
-						$('#chkNotice').html('비밀번호 일치하지 않음');
-						$('#chkNotice').attr('color', '#f82a2aa3');
-					} else {
-						$('#chkNotice').html('비밀번호 일치함');
-						$('#chkNotice').attr('color', '#199894b3');
-					}
-
-				});
-
-	});
+	
 	function sendmailkey() {
 		var member_email = $('input[name=member_email_1]').val() + "@"
 				+ $('select[name=member_email_2]').val();
@@ -194,12 +162,45 @@ $(function(){
 				}).open();
 	}
 
+	$(function(){
+			$('.mymenus li').click(function(){
+			$('.mymenus li').find('a').removeClass('active');
+		    $(this).find('a').addClass('active');
+		    $('.mypage').hide();
+			var i = $(this).index();
+			$('.mypage').eq(i).show();
+		});
+			$('.mymenus li').eq(0).trigger('click');
+	});
 
-</script>
+	$(function() {
+
+		$('input[name=member_password]').keyup(function() {
+			$('#chkNotice').html('');
+		});
+
+		$('input[name=member_password_chk]').keyup(
+				function() {
+					if ($('input[name=member_password]').val() != $(
+							'input[name=member_password_chk').val()) {
+						$('#chkNotice').html('비밀번호 일치하지 않음');
+						$('#chkNotice').attr('color', '#f82a2aa3');
+					} else {
+						$('#chkNotice').html('비밀번호 일치함');
+						$('#chkNotice').attr('color', '#199894b3');
+					}
+
+				});
+
+	});
+	</script>
+
+
+
 <%
 
 MemberDto dto = (MemberDto) session.getAttribute("dto");
-AnimalDto a_dto = (AnimalDto)request.getAttribute("a_dto");
+
 
 if (dto == null) {
 	pageContext.forward("index.jsp");
@@ -423,12 +424,12 @@ if (dto == null) {
 						<tr>
 							<th>비밀번호 *</th>
 							<td><input type="password" name="member_password"
-								onclick="idCheckConfirm();"></td>
+								></td>
 						</tr>
 						<tr>
 							<th>비밀번호확인 *</th>
 							<td><input type="password" name="member_password_chk"
-								onclick="idCheckConfirm();"></td>
+								></td>
 						</tr>
 						<tr>
 							<th>이름 *</th>
@@ -438,15 +439,14 @@ if (dto == null) {
 						<tr>
 							<th>닉네임 *</th>
 							<td><input type="text" name="member_nicname" maxlength="5"
-								onclick="idCheckConfirm();"
 								value="<%=dto.getMember_nicname()%>"></td>
 						</tr>
 						<tr>
 							<th>이메일 *</th>
 							<td><input type="hidden" name="member_email" value="">
-								<input type="text" id="general_signup_email" name="member_email_1" maxlength="30" onclick="idCheckConfirm();">
+								<input type="text" id="general_signup_email" name="member_email_1" maxlength="30" >
 										@
-										<select id="select_mail" name="member_email_2">
+										<select id="select_mail" name="member_email_2" >
 											<option>naver.com</option>
 											<option>daum.net</option>
 											<option>gmail.com</option>
@@ -472,7 +472,7 @@ if (dto == null) {
 								<input type="text" id="postcode" placeholder="우편번호"> <input
 								type="button" onclick="address();" value="우편번호 찾기"><br>
 								<input type="text" name="member_addr_1" id="addr_1"
-								placeholder="기본주소" value="<%=dto.getMember_addr()%>"readonly="readonly">
+								placeholder="기본주소" value="<%=dto.getMember_addr()%>">
 								<input class="general_signup_addr" type="text" name="member_addr_2" id="addr_2" placeholder="상세주소" required="required">
 							</td>
 						</tr>
@@ -482,35 +482,32 @@ if (dto == null) {
 								<%
 								if (dto.getMember_animal().equals("Y")) {
 								%>
-								<input type="radio" name="member_animal" value="N"
-								onclick="chk(this.value);">없음 <input type="radio"
-								name="member_animal" value="Y" onclick="chk(this.value);"
-								checked>있음
+								<input type="radio" name="member_animal" value="N" onclick="chk(this.value);">없음 
+								<input type="radio" name="member_animal" value="Y" onclick="chk(this.value);" checked>있음
+								
 								 <%
 								 } else if (dto.getMember_animal().equals("N")) {
+									 
 								 %>
-								 <input type="radio" name="member_animal" value="N"
-								onclick="chk(this.value);" checked>없음 <input
-								type="radio" name="member_animal" value="Y"
-								onclick="chk(this.value);">있음
+								 <input type="radio" name="member_animal" value="N" onclick="chk(this.value);"checked>없음 
+								<input type="radio" name="member_animal" value="Y" onclick="chk(this.value);">신규등록
 								<%
 								 }
 								 %>
 
 							</td>
 						</tr>
-
+						
 
 						<%
 						 if (dto.getMember_animal().equals("Y")) {
+							 AnimalDto a_dto = (AnimalDto)request.getAttribute("a_dto");
 						 %>
-
-
+						
+				
 				<div id="animal">
-						<input type="hidden" name="animal_no" value="<%=a_dto.getAnimal_no()%>">
-						<tr class="animal">
-							<th>반려동물 정보</th>
-						</tr>
+					<table border="1">
+						<tr class="animal"> <th>반려동물 정보</th></tr>
 						<tr class="animal">
 							<th>이름 *</th>
 							<td><input type="text" name="animal_name" value="<%=a_dto.getAnimal_name()%>" /></td>
@@ -537,17 +534,9 @@ if (dto == null) {
 								src="resources/images/female.svg"
 								style="width: 20px; height: 20px;">
 								<%
-								 } else {
+								 } 
 								 %>
-								 <input type="radio" id="animal_gen_chk" name="animal_gen"
-								value="M"><img src="resources/images/male.svg"
-								style="width: 20px; height: 20px;"> <input type="radio"
-								name="animal_gen" value="F"><img
-								src="resources/images/female.svg"
-								style="width: 20px; height: 20px;">
-								<%
-								 }
-								 %>
+								
 							</td>
 						</tr>
 						<tr class="animal">
@@ -630,7 +619,14 @@ if (dto == null) {
 							<td><textarea rows="10" cols="30" name="animal_unq"><%=a_dto.getAnimal_unq() %></textarea>
 							</td>
 						</tr>
-						</div>
+						
+						<script type="text/javascript">
+						$(function(){
+							$('#select_age').val(<%=a_dto.getAnimal_age()%>).prop("selected",true);
+							$('#select_weight').val(<%=a_dto.getAnimal_weight()%>).prop("selected",true);
+							});
+						</script>
+						
 							<%
 							 } else {
 							%>
@@ -694,7 +690,7 @@ if (dto == null) {
 									</tr>
 									<tr class="animal">
 										<th>체중</th>
-										<td><select name="animal_weight">
+										<td><select name="animal_weight" >
 												<option value="1">1kg</option>
 												<option value="2">2kg</option>
 												<option value="3">3kg</option>
@@ -732,8 +728,8 @@ if (dto == null) {
 										<td><textarea rows="10" cols="30" name="animal_unq"></textarea>
 										</td>
 									</tr>
-
-						<%
+									</div>
+						<%		
 							 }
 						%>
 
@@ -743,9 +739,8 @@ if (dto == null) {
 								value="회원정보수정" onclick="check();"/>
 								<input type="button" value="취소"
 								onclick="location.href='index.jsp'" /></td>
-						</tr>
-					</table>
-
+							</tr>
+							</table>
 
 
 	<script type="text/javascript">
@@ -759,19 +754,19 @@ if (dto == null) {
 		var email = "<%=dto.getMember_email()%>";
 		var emailsplit = email.split('@');
 			document.getElementById("general_signup_email").value = emailsplit[0];
-			$('#select_email').val(emailsplit[1]).prop("selected",true);
+			$('#select_mail').val(emailsplit[1]).prop("selected",true);
 		});
 
-		$(function(){
-			$('#select_age').val(<%=a_dto.getAnimal_age()%>).prop("selected",true);
-			$('#select_weight').val(<%=a_dto.getAnimal_weight()%>).prop("selected",true);
-		});
+		
+		
+		
 		</script>
-
+		
 		</form>
 
 
 			<form action="semi.do" method="post" class="mypage" >
+			<input type="hidden" name="command" value="memberdel">
 				<h1>회원탈퇴</h1>
 					<table border="1">
 						<col width="200" />
@@ -786,18 +781,16 @@ if (dto == null) {
 						</tr>
 						<tr>
 							<th>비밀번호</th>
-							<td><input type="password" name="member_password"
-								onclick="idCheckConfirm();"></td>
+							<td><input type="password" name="member_password">
+								</td>
 						</tr>
 						<tr>
 							<th>비밀번호확인</th>
-							<td><input type="password" name="member_password_chk"
-								onclick="idCheckConfirm();">
-								<font id="chkNotice" size="2"></font></td>
+							<td><input type="password" name="member_password_chk">
 						</tr>
 						<tr>
 							<td colspan="5" align="center">
-							<input type="button" value="회원탈퇴" onclick="semi.do?command=memberdel&member_id=<%=dto.getMember_id()%>"/></td>
+							<input type="submit" value="회원탈퇴"/></td>
 						</tr>
 					</table>
 			</form>
