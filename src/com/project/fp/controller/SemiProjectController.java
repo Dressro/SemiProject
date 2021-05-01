@@ -490,9 +490,10 @@ public class SemiProjectController extends HttpServlet {
 			}
 			int count = b_biz.free_allCount();
 			PagingDto Pdto = new PagingDto(count, nowPage);
-
+			List<Lost_AnimalDto> l_list = l_biz.selectList();
 			List<BoardDto> list = b_biz.dec_selectList(Pdto);
 			request.setAttribute("list", list);
+			request.setAttribute("l_list", l_list);
 			dispatch(response, request, "board_dec.jsp");
 		} else if (command.equals("mypage")) {
 			String member_id = request.getParameter("member_id");
@@ -1146,8 +1147,22 @@ public class SemiProjectController extends HttpServlet {
 			}
 		} else if (command.equals("dec_insert")) {
 			response.sendRedirect("dec_insertform.jsp");
+		} else if (command.equals("dec_detail")) {
+			int board_no = Integer.parseInt(request.getParameter("board_no"));
+			BoardDto b_dto = b_biz.board_selectOne(board_no);
+			List<Board_ReplyDto> b_r_list = b_r_biz.reply_selectList(board_no);
+			request.setAttribute("b_r_list", b_r_list);
+			int res = b_biz.board_read(b_dto);
+			if (res < 0) {
+				jsResponse(response, "조회수 실패", "index.html");
+			}
+			File_TableDto f_dto = f_t_biz.board_selectOne(board_no);
+			Lost_AnimalDto l_dto = l_biz.selectOne(board_no);
+			request.setAttribute("b_dto", b_dto);
+			request.setAttribute("f_dto", f_dto);
+			request.setAttribute("l_dto", l_dto);
+			dispatch(response, request, "dec_detail.jsp");
 		}
-
 
 		if (command.equals("test")) {
 			File fi = new File("C://Users//alahx/test123123123678678678.csv");
