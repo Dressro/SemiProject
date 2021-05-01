@@ -94,7 +94,7 @@ if (dto == null) {
 %>
 					<li><a href="semi.do?command=chatlist&member_id=<%=dto.getMember_id()%>&member_grade=<%=dto.getMember_grade()%>">채팅</a>
 					<li><a href="semi.do?command=mypage&member_id=<%=dto.getMember_id()%>">마이페이지</a>
-					<li><a href="semi.do?command=basket&member_id=<%=dto.getMember_id()%>">장바구니</a>
+					<li><a href="semi.do?command=basket_list&member_id=<%=dto.getMember_id()%>">장바구니</a>
 					<li><a href="semi.do?command=logout">로그아웃</a> 
 <%		} 
 

@@ -126,8 +126,9 @@ select * from ORDER_TABLE;
 select * from PRODUCT;
 
 INSERT INTO ORDER_TABLE
-		VALUES(ORDER_NUM_SEQ.nextval, sysdate, '1', '10000', 
-		'미결제', 'N','1' ,'2', 'test');
+		VALUES(ORDER_NUM_SEQ.nextval, sysdate, '2', '20000', 
+		'미결제', 'N',ORDER_group_seq.nextval ,12, 'test');
+SELECT COLUMN_NAME, DATA_TYPE FROM all_tab_columns where table_name='ORDER_TABLE';
 UPDATE ORDER_TABLE SET ORDER_STEP = ''
 WHERE ORDER_GROUP = '1';
 select * from order_table;

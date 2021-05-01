@@ -1158,19 +1158,18 @@ public class SemiProjectController extends HttpServlet {
 			}
 		}
 		
-		if (command.equals("basket_insert")) {
-			String member_id = request.getParameter("member_id");
+		if (command.equals("shopping_detail1")) {
 			int prod_num = Integer.parseInt(request.getParameter("prod_num"));
 			ProductDto p_dto = p_biz.selectOne(prod_num);
-			request.setAttribute("member_id", member_id);
 			request.setAttribute("p_dto", p_dto);
-			dispatch(response, request, "basket_insertform.jsp");
+			dispatch(response, request, "shopping_detail1.jsp");
 		} else if (command.equals("basket_insertres")) {
 			String member_id = request.getParameter("member_id");
 			int prod_num = Integer.parseInt(request.getParameter("prod_num"));
 			int prod_price = Integer.parseInt(request.getParameter("prod_price"));
 			int order_quantity = Integer.parseInt(request.getParameter("order_quantity"));
 			int order_price = prod_price * order_quantity;
+			MemberDto m_dto = m_biz.selectDetail(member_id);
 			Order_TableDto o_dto = new Order_TableDto();
 			o_dto.setOrder_quantity(order_quantity);
 			o_dto.setOrder_price(order_price);
@@ -1180,12 +1179,24 @@ public class SemiProjectController extends HttpServlet {
 			System.out.println(order_price);
 			System.out.println(prod_num);
 			System.out.println(member_id);
-			int res = o_t_biz.insert(o_dto);
+			int res = o_t_biz.basket_insert(o_dto);
 			if (res > 0) {
+				session.setAttribute("dto", m_dto);
 				jsResponse(response, "장바구니에 추가되었습니다.", "semi.do?command=shopping");
 			} else {
-				jsResponse(response, "다시 시도해주십시오.", "semi.do?command=basket_insert&member_id="+ member_id +"&prod_num=" + prod_num);
+				session.setAttribute("dto", m_dto);
+				jsResponse(response, "다시 시도해주십시오.", "semi.do?command=shopping_detail"+"&prod_num=" + prod_num);
 			}
+		}
+		
+		if (command.equals("basket_list")) {
+			String member_id = request.getParameter("member_id");
+			List<Order_TableDto> b_list = o_t_biz.selectbasketList(member_id);
+			List<ProductDto> p_list = p_biz.selectList();
+			request.setAttribute("member_id", member_id);
+			request.setAttribute("b_list", b_list);
+			request.setAttribute("p_list", p_list);
+			dispatch(response, request, "basket_list.jsp");
 		}
 
 	}

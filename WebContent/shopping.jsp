@@ -50,7 +50,7 @@
             <div class="col-lg-3 col-sm-4 col-11 offset-sm-0 offset-1">
                 <div class="card"> <img class="card-img-top" src="#" alt="shopimage">
                     <div class="card-body">
-                        <p class="card-text"><a href="semi.do?command=shopping_detail&prod_num=${dto.prod_num }">${dto.prod_name }</a></p>
+                        <p class="card-text"><a href="semi.do?command=shopping_detail1&prod_num=${dto.prod_num }">${dto.prod_name }</a></p>
                         <p>${dto.prod_price }</p> <span class="fa fa-circle" id="red"></span> <span class="fa fa-circle" id="teal"></span> <span class="fa fa-circle" id="blue"></span>
                     </div>
                 </div>
