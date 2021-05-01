@@ -7,7 +7,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Family|Pet</title>
+<link rel="icon" href="resources/images/logo/favicon.ico" type="image/x-icon">
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6cb234998221d5b514c1db1f8c50cf56&libraries=services,clusterer,drawing"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -84,6 +85,19 @@
 	padding: 5px;
 	font-size: 14px;
 	font-weight: bolder;
+}
+
+#paging {
+	text-align: center;
+	font-size: 20pt;
+}
+
+#paging a {
+	font-size: 20pt;
+}
+
+a {
+	color: #f45d96;
 }
 </style>
 

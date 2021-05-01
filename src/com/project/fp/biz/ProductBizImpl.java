@@ -15,7 +15,17 @@ public class ProductBizImpl implements ProductBiz {
 
 		return dao.selectList();
 	}
-
+	
+	@Override
+	public ProductDto prod_selectone(String prod_name) {
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		return dao.prod_selectone(prod_name);
+	}
 	@Override
 	public ProductDto selectOne(int prod_num) {
 
@@ -45,5 +55,10 @@ public class ProductBizImpl implements ProductBiz {
 		
 		return dao.multiDelete(prod_nums);
 	}
+
+
+	
+
+	
 
 }

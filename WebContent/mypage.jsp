@@ -25,7 +25,8 @@ response.setContentType("text/html; charset=UTF-8");
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Family|Pet</title>
+<link rel="icon" href="resources/images/logo/favicon.ico" type="image/x-icon">
 
 <style type="text/css">
 
@@ -796,7 +797,6 @@ if (dto == null) {
 					</table>
 			</form>
 		</div>
-
 
 	<jsp:include page="bottom.jsp" />
 </body>

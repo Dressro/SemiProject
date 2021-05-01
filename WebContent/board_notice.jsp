@@ -11,7 +11,9 @@ response.setContentType("text/html; charset=UTF-8");
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Family|Pet</title>
+<link rel="icon" href="resources/images/logo/favicon.ico" type="image/x-icon">
+
 <link rel="stylesheet" href="resources/css/board_1.css">
 <link rel="stylesheet" href="resources/css/board_2.css">
 <link rel="stylesheet" href="resources/css/board_3.css">
@@ -88,6 +90,7 @@ a {
 					<input type="hidden" name="command" value="board_All_delete">
 					<input type="hidden" name="userNicname" value="${dto.member_nicname }">
 					<input type="hidden" name="userGrade" value="${dto.member_grade }">
+					<%-- 삭제 후 장소 이동 --%>
 					<input type="hidden" name="where" value="board_notice">
 					<table class="table custom-table">
 						<thead>

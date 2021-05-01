@@ -79,11 +79,11 @@ response.setContentType("text/html; charset=UTF-8");
 					<div class="filter__controls">
 						<ul>
 							<li class="active" data-filter="*">All</li>
-							<li data-filter=".bouquet">Bouquet</li>
-							<li data-filter=".flower-box">Flower box</li>
-							<li data-filter=".flower-shelf">Flower shelf</li>
-							<li data-filter=".basket">Basket of flower</li>
-							<li data-filter=".gift">Gift combos</li>
+							<li data-filter=".bouquet">사료/간식</li>
+							<li data-filter=".flower-box">케어</li>
+							<li data-filter=".flower-shelf">리빙</li>
+							<li data-filter=".basket">장난감</li>
+							<li data-filter=".gift">패션</li>
 						</ul>
 					</div>
 				</div>
@@ -91,19 +91,8 @@ response.setContentType("text/html; charset=UTF-8");
 			<div class="row product__filter">
 				<div class="d-col mix bouquet">
 					<div class="product__item">
-						<div class="product__item__pic set-bg" data-setbg="resources/images/product/product-1.jpg">
+						<div class="product__item__pic set-bg" data-setbg="resources/images/product/280.jfif">
 							<div class="label">New</div>
-							<ul class="product__item__hover">
-								<li><a href="#">
-										<span class="icon_search"></span>
-									</a></li>
-								<li><a href="#">
-										<span class="icon_bag_alt"></span>
-									</a></li>
-								<li><a href="#">
-										<span class="icon_heart_alt"></span>
-									</a></li>
-							</ul>
 						</div>
 						<div class="product__item__text">
 							<h5>

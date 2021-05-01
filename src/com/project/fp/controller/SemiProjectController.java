@@ -263,6 +263,7 @@ public class SemiProjectController extends HttpServlet {
 			String[] member_id = request.getParameterValues("member_id");
 			String[] member_grade = request.getParameterValues("member_grade");
 			int res = 0;
+			
 			for (int i = 0; i < member_id.length; i++) {
 				MemberDto dto = new MemberDto();
 				dto.setMember_id(member_id[i]);
@@ -499,7 +500,9 @@ public class SemiProjectController extends HttpServlet {
 			dispatch(response, request, "board_dec.jsp");
 		} else if (command.equals("mypage")) {
 			String member_id = request.getParameter("member_id");
+			MemberDto dto = m_biz.selectDetail(member_id);
 			AnimalDto a_dto = a_biz.selectoneDetail(member_id);
+			session.setAttribute("dto", dto);
 			request.setAttribute("a_dto", a_dto);
 			dispatch(response, request, "mypage.jsp");
 		} else if (command.equals("boardlist")) {
@@ -511,10 +514,15 @@ public class SemiProjectController extends HttpServlet {
 			request.setAttribute("list", list);
 			dispatch(response, request, "shopping.jsp");
 		} else if (command.equals("adminpage")) {
+			System.out.println("여기왔다.");
 			List<MemberDto> list = m_biz.selectList();
+			System.out.println("여기왔다2.");
 			List<ProductDto> prodlist = p_biz.selectList();
+			System.out.println("여기왔다3.");
 			List<Order_TableDto> orderlist = o_t_biz.selectList();
+			System.out.println("여기왔다4.");
 			List<BoardDto> boardlist = b_biz.board_List();
+			System.out.println("여기왔다5.");
 
 			request.setAttribute("list", list);
 			request.setAttribute("prodlist", prodlist);
@@ -537,6 +545,15 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("shop_insertform")) {
 			response.sendRedirect("shop_insertform.jsp");
 		} else if (command.equals("shop_insertres")) {
+			String file_path = request.getSession().getServletContext().getRealPath("fileupload");
+
+			File Folder = new File(file_path);
+			if (!Folder.exists()) {
+				Folder.mkdir();
+			}
+			String contentType = request.getContentType();
+			
+			String member_id = request.getParameter("member_id");
 			String prod_name = request.getParameter("prod_name");
 			String prod_explain = request.getParameter("prod_explain");
 			String prod_category = request.getParameter("prod_category");
@@ -546,13 +563,46 @@ public class SemiProjectController extends HttpServlet {
 			int prod_sale = Integer.parseInt(request.getParameter("prod_sale"));
 			int prod_stock = Integer.parseInt(request.getParameter("prod_stock"));
 			int prod_in = prod_stock;
+			
 			ProductDto pdto = new ProductDto(0, prod_name, prod_explain, prod_sale, prod_price, 0, prod_stock,
 					prod_category, prod_in, 0, null, null, prod_mfr, prod_client);
+			
 			int res = p_biz.insert(pdto);
+			
 			if (res > 0) {
 				jsResponse(response, "성공", "semi.do?command=adminpage");
 			} else {
 				jsResponse(response, "실패", "semi.do?command=adminpage");
+			}
+			
+			if (contentType != null && contentType.toLowerCase().startsWith("multipart/")) {
+				Collection<Part> parts = request.getParts();
+				File_TableDto f_dto = new File_TableDto();
+
+				for (Part part : parts) {
+					if (part.getHeader("Content-Disposition").contains("filename=")) {
+						String file_ori_name = extractFileName(part.getHeader("Content-Disposition"));
+						if (part.getSize() > 0) {
+							String file_type = file_ori_name.substring(file_ori_name.lastIndexOf("."));
+							String file_size = Long.toString(part.getSize());
+							file_new_name = getRandomFileName(5) + file_ori_name;
+							part.write(file_path + File.separator + file_new_name);
+							part.delete();
+							for(int i=0;i<50;i++) {
+								System.out.println("DB에 넣는중...");
+							}
+							f_dto.setFile_path(file_path);
+							f_dto.setFile_ori_name(file_ori_name);
+							f_dto.setFile_new_name(file_new_name);
+							f_dto.setFile_type(file_type);
+							f_dto.setFile_size(file_size);
+							f_dto.setMember_id(member_id);
+							ProductDto pdto_2 = p_biz.prod_selectone(prod_name);
+							f_dto.setProd_num(pdto_2.getProd_num());
+							int f_res = f_t_biz.prod_insert(f_dto);
+						}
+					}
+				}
 			}
 
 		} else if (command.equals("board_qna")) {
@@ -560,13 +610,59 @@ public class SemiProjectController extends HttpServlet {
 			if (request.getParameter("nowPage") != null) {
 				nowPage = Integer.parseInt(request.getParameter("nowPage"));
 			}
-			int count = b_biz.qna_allCount();
-			PagingDto Pdto = new PagingDto(count, nowPage);
-			request.setAttribute("BoardCommand", command);
-			List<BoardDto> list = b_biz.qna_selectList(Pdto);
-			request.setAttribute("Pdto", Pdto);
-			request.setAttribute("list", list);
-			dispatch(response, request, "board_qna.jsp");
+			String category = request.getParameter("category");
+			String s_c = request.getParameter("s_c");
+			String s_t = request.getParameter("s_t");
+			if (s_c == null) {
+				int count = b_biz.qna_allCount();
+				PagingDto Pdto = new PagingDto(count, nowPage);
+				request.setAttribute("BoardCommand", command);
+				List<BoardDto> list = b_biz.qna_selectList(Pdto);
+				request.setAttribute("Pdto", Pdto);
+				request.setAttribute("list", list);
+				dispatch(response, request, "board_qna.jsp");
+			} else {
+				if (s_c.equals("W")) {
+					BoardDto dto = new BoardDto();
+					dto.setBoard_category(category);
+					dto.setMember_id(s_t);
+					List<BoardDto> slist = b_biz.board_M_search(dto);
+					int count = slist.size();
+					PagingDto Pdto = new PagingDto(count, nowPage, s_c, s_t, category);
+					List<BoardDto> list = b_biz.Board_All_M_search(Pdto);
+					request.setAttribute("BoardCommand", command);
+					request.setAttribute("list", list);
+					request.setAttribute("Pdto", Pdto);
+					dispatch(response, request, "board_qna.jsp");
+				} else if (s_c.equals("T")) {
+					BoardDto dto = new BoardDto();
+					dto.setBoard_title(s_t);
+					dto.setBoard_category(category);
+					System.out.println(category);
+					List<BoardDto> slist = b_biz.board_C_search(dto);
+					int count = slist.size();
+					PagingDto Pdto = new PagingDto(count, nowPage, s_c, s_t, category);
+					List<BoardDto> list = b_biz.Board_All_C_search(Pdto);
+					request.setAttribute("BoardCommand", command);
+					request.setAttribute("list", list);
+					request.setAttribute("Pdto", Pdto);
+					dispatch(response, request, "board_qna.jsp");
+				} else if (s_c.equals("T_C")) {
+					BoardDto dto = new BoardDto();
+
+					dto.setBoard_category(category);
+					dto.setBoard_title(s_t);
+					dto.setBoard_content(s_t);
+					List<BoardDto> slist = b_biz.board_MC_search(dto);
+					int count = slist.size();
+					PagingDto Pdto = new PagingDto(count, nowPage, s_c, s_t, category);
+					List<BoardDto> list = b_biz.Board_All_MC_search(Pdto);
+					request.setAttribute("BoardCommand", command);
+					request.setAttribute("list", list);
+					request.setAttribute("Pdto", Pdto);
+					dispatch(response, request, "board_qna.jsp");
+				}
+			}
 		} else if (command.equals("board_updateform")) {
 			int board_no = Integer.parseInt(request.getParameter("board_no"));
 			BoardDto b_dto = b_biz.board_selectOne(board_no);
@@ -871,13 +967,12 @@ public class SemiProjectController extends HttpServlet {
 			String from = "ejsdnlcl@gmail.com"; // 발신자
 			String cc = "scientist-1002@hanmail.net"; // 참조
 			String subject = "FamilyPet 회원가입 이메일 인증번호 입니다.";
-			String content = getRandomPassword(10);
+			String content = request.getParameter("email_key"); 
 			try {
 				MailSend ms = new MailSend();
 				ms.sendEmail(from, member_email, cc, subject, content);
 				System.out.println("전송 성공");
-				session.setAttribute("content", content);
-				response.sendRedirect("signup_emailchk.jsp");
+				response.sendRedirect("signup_cert_num.jsp");
 			} catch (MessagingException me) {
 				System.out.println("메일 전송에 실패하였습니다.");
 				System.out.println("실패 이유 : " + me.getMessage());
@@ -887,22 +982,11 @@ public class SemiProjectController extends HttpServlet {
 				System.out.println("실패 이유 : " + e.getMessage());
 				e.printStackTrace();
 			}
-		} else if (command.equals("mailcheck")) {
-			String AuthenticationKey = request.getParameter("AuthenticationKey");
-			String AuthenticationUser = request.getParameter("AuthenticationUser");
-			if (AuthenticationKey.equals(AuthenticationUser)) {
-				System.out.println("메일 인증 성공");
-				String mail_chk = "ok";
-				request.setAttribute("mail_chk", mail_chk);
-				dispatch(response, request, "general_signup.jsp");
-			} else {
-				System.out.println("메일 인증 실패");
-				dispatch(response, request, "general_signup.jsp");
-			}
 		} else if (command.equals("smssend")) {
 			String member_phone = request.getParameter("member_phone");
-			String content = "문자 내용 작성";
+			String content = request.getParameter("phone_key");
 			SMS.sendSMS(member_phone, content);
+			response.sendRedirect("signup_cert_num.jsp");
 		} else if (command.equals("translation")) {
 			String text = request.getParameter("msg");
 			String source = request.getParameter("source");
@@ -981,7 +1065,6 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("chatlist_chat")) {
 			String member_grade = request.getParameter("member_grade");
 			String member_id = request.getParameter("member_id");
-			;
 			ChatDto c_dto = new ChatDto();
 			c_dto.setMember_id(member_id);
 			List<ChatDto> c_list = new ArrayList<ChatDto>();
@@ -1020,6 +1103,40 @@ public class SemiProjectController extends HttpServlet {
 					jsResponse(response, "선택된 상품들이 삭제되지 않았습니다.", "semi.do?command=adminpage");
 				}
 			}
+		} else if(command.equals("order_step")) {
+			String[] order_num_str = request.getParameterValues("order_num");
+			String[] order_step = request.getParameterValues("order_step");
+			int res = 0;
+			int[] order_num = null;
+			if(order_num_str != null){
+				order_num = new int[order_num_str.length];
+				for(int i=0;i<order_num_str.length;i++) {
+					order_num[i] = Integer.parseInt(order_num_str[i]);
+				}
+			}
+			for (int i = 0; i < order_step.length; i++) {
+				Order_TableDto dto = new Order_TableDto();
+				dto.setOrder_num(order_num[i]);
+				dto.setOrder_step(order_step[i]);
+				res = o_t_biz.update(dto);
+				res++;
+			}
+			List<Order_TableDto> list = o_t_biz.groupList();
+			for(int j = 0; j<list.size()-1;j++) {
+				if(list.get(j).getOrder_group()==list.get(j+1).getOrder_group()) { 
+					Order_TableDto dto = new Order_TableDto();
+					int group = list.get(j).getOrder_group();
+					String step = list.get(j).getOrder_step();
+					dto.setOrder_step(step);
+					dto.setOrder_group(group);
+					res = o_t_biz.update_group(dto);
+				}
+			}
+			if(res > 0) {
+				jsResponse(response, "수정 성공", "semi.do?command=adminpage");
+			}else {
+				jsResponse(response, "수정 실패", "semi.do?command=adminpage");
+			}
 		}
 
 		if (command.equals("test")) {
@@ -1046,6 +1163,36 @@ public class SemiProjectController extends HttpServlet {
 					break;
 				}
 
+			}
+		}
+		
+		if (command.equals("basket_insert")) {
+			String member_id = request.getParameter("member_id");
+			int prod_num = Integer.parseInt(request.getParameter("prod_num"));
+			ProductDto p_dto = p_biz.selectOne(prod_num);
+			request.setAttribute("member_id", member_id);
+			request.setAttribute("p_dto", p_dto);
+			dispatch(response, request, "basket_insertform.jsp");
+		} else if (command.equals("basket_insertres")) {
+			String member_id = request.getParameter("member_id");
+			int prod_num = Integer.parseInt(request.getParameter("prod_num"));
+			int prod_price = Integer.parseInt(request.getParameter("prod_price"));
+			int order_quantity = Integer.parseInt(request.getParameter("order_quantity"));
+			int order_price = prod_price * order_quantity;
+			Order_TableDto o_dto = new Order_TableDto();
+			o_dto.setOrder_quantity(order_quantity);
+			o_dto.setOrder_price(order_price);
+			o_dto.setProd_num(prod_num);
+			o_dto.setMember_id(member_id);
+			System.out.println(order_quantity);
+			System.out.println(order_price);
+			System.out.println(prod_num);
+			System.out.println(member_id);
+			int res = o_t_biz.insert(o_dto);
+			if (res > 0) {
+				jsResponse(response, "장바구니에 추가되었습니다.", "semi.do?command=shopping");
+			} else {
+				jsResponse(response, "다시 시도해주십시오.", "semi.do?command=basket_insert&member_id="+ member_id +"&prod_num=" + prod_num);
 			}
 		}
 

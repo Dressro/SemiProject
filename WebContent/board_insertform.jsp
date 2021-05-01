@@ -12,12 +12,10 @@ response.setContentType("text/html; charset=UTF-8");
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Family|Pet</title>
+<link rel="icon" href="resources/images/logo/favicon.ico" type="image/x-icon">
 <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
-	window.onload = function() {
-		var op = document.getElementId("inputGroupSelect03");
-	}
 	function goback() {
 		window.history.back();
 	}
@@ -32,18 +30,13 @@ response.setContentType("text/html; charset=UTF-8");
 	}
 	String category = (String) request.getAttribute("category");
 	%>
-	<h3>BOARD_INSERTFORM</h3>
 	<form action="semi.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="member_id" value="<%=dto.getMember_id()%>" />
 		<input type="hidden" name="command" value="board_insertres" />
 		<div class="container">
-			<div class="content" style="width: 70%">
-				<div class="row justify-content-md-center">
-					<div class="col-sm-9">
-						<div class="input-group mb-3">
-							<input type="text" class="form-control" name="board_title" size="100" placeholder="제목을 입력해주세요.">
-						</div>
-					</div>
+			<h3>게시판 글쓰기</h3>
+			<div class="content" style="margin-right: 250px;">
+				<div style="margin-left: 150px;">
 					<div class="col-sm-3">
 						<div class="input-group mb-3">
 							<select class="custom-select" id="inputGroupSelect03" name="board_category">
@@ -64,25 +57,31 @@ response.setContentType("text/html; charset=UTF-8");
 							</select>
 						</div>
 					</div>
+					<div class="col-sm-9">
+						<div class="input-group mb-3">
+							<input type="text" class="form-control" name="board_title" size="100" placeholder="제목을 입력해주세요.">
+						</div>
+					</div>
 
 				</div>
 
 				<hr>
 
-				<div class="row justify-content-md-center">
+				<div style="margin-left: 150px;">
 					<div class="col_c" style="margin-bottom: 30px">
 						<div class="input-group">
 							<textarea class="form-control" id="p_content" name="board_content"></textarea>
 							<script type="text/javascript">
 								CKEDITOR.replace('p_content', {
-									height : 500
+									height : 500,
+									width : 700
 								});
 							</script>
 						</div>
 					</div>
 				</div>
 
-				<div class="row justify-content-md-center">
+				<div style="margin-left: 150px;">
 					<div class="input-group mb-3">
 						<div class="custom-file">
 							&nbsp;

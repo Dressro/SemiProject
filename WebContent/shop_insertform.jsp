@@ -1,3 +1,4 @@
+<%@page import="com.project.fp.dto.MemberDto"%>
 <%@page import="com.project.fp.dto.ProductDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
@@ -11,7 +12,8 @@ response.setContentType("text/html; charset=UTF-8");
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Family|Pet</title>
+<link rel="icon" href="resources/images/logo/favicon.ico" type="image/x-icon">
 <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
@@ -19,13 +21,18 @@ response.setContentType("text/html; charset=UTF-8");
 </script>
 </head>
 <body>
+<%
+	MemberDto dto = (MemberDto) session.getAttribute("dto");
+	if (dto == null) {
+		pageContext.forward("index.html");
+	}
+%>
 <jsp:include page="header.jsp" />
 	<h3>SHOP_INSERTFORM</h3>
 	<form action="semi.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="command" value="shop_insertres" />
-		
-		
-		
+		<input type="hidden" name="member_id" value="<%=dto.getMember_id()%>">
+				
 		<div class="container">
 			<div class="content" style="width: 70%">
 				<div class="row justify-content-md-center">

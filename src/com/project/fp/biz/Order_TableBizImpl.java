@@ -15,6 +15,12 @@ public class Order_TableBizImpl implements Order_TableBiz {
 
 		return dao.selectList();
 	}
+	
+	@Override
+	public List<Order_TableDto> groupList() {
+		// TODO Auto-generated method stub
+		return dao.groupList();
+	}
 
 	@Override
 	public Order_TableDto selectOne(int order_num) {
@@ -33,11 +39,21 @@ public class Order_TableBizImpl implements Order_TableBiz {
 
 		return dao.update(dto);
 	}
-
+	
+	@Override
+	public int update_group(Order_TableDto dto) {
+		// TODO Auto-generated method stub
+		return dao.update_group(dto);
+	}
+	
 	@Override
 	public int delete(int order_num) {
 
 		return dao.delete(order_num);
 	}
+
+	
+
+	
 
 }
