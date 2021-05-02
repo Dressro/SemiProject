@@ -122,7 +122,6 @@ CREATE TABLE ORDER_TABLE(
 );
 SELECT COLUMN_NAME, DATA_TYPE FROM all_tab_columns where table_name='ORDER_TABLE'; 
 
-
 select * from ORDER_TABLE;
 select * from PRODUCT;
 

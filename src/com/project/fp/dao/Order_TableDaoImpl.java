@@ -204,6 +204,38 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 		return count;
 	}
 
+	@Override
+	public int direct_pay_insert(Order_TableDto dto) {
+		int res = 0;
+		
+		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.insert(namespace+"direct_pay_insert",dto);
+			if (res > 0) {
+				session.commit();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	}
+
+	@Override
+	public int update_pay(int order_num) {
+		int res = 0;
+		
+		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.update(namespace+"update_pay",order_num);
+			if (res > 0) {
+				session.commit();
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	}
+
 
 	
 

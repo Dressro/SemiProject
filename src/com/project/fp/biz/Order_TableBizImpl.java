@@ -83,6 +83,18 @@ public class Order_TableBizImpl implements Order_TableBiz {
 		return dao.multiDelete(order_groups);
 	}
 
+	@Override
+	public int direct_pay_insert(Order_TableDto dto) {
+
+		return dao.direct_pay_insert(dto);
+	}
+
+	@Override
+	public int update_pay(int order_num) {
+
+		return dao.update_pay(order_num);
+	}
+
 	
 
 	

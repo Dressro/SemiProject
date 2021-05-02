@@ -61,6 +61,12 @@ public class ProductBizImpl implements ProductBiz {
 		return dao.selectcategory(prod_category);
 	}
 
+	@Override
+	public int pay_update(ProductDto dto) {
+
+		return dao.pay_update(dto);
+	}
+
 
 	
 

@@ -1,3 +1,4 @@
+<%@page import="com.project.fp.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -5,12 +6,13 @@
 <% response.setContentType("text/html; charset=UTF-8"); %>
 
 <%
+	MemberDto dto = (MemberDto)session.getAttribute("dto");
 	String pay_method = (String)request.getAttribute("pay_method");
 	String product = (String)request.getAttribute("product");
-    String name = (String)request.getAttribute("name");
-    String email = (String)request.getAttribute("email");
-    String phone = (String)request.getAttribute("phone");
-    String address = (String)request.getAttribute("address");
+    String name = dto.getMember_name();
+    String email = dto.getMember_email();
+    String phone = dto.getMember_phone();
+    String address = dto.getMember_addr();
     int totalPrice = (int)request.getAttribute("totalPrice");    
 %>
 
@@ -48,7 +50,7 @@
                 msg += '\n결제 금액 : ' + rsp.paid_amount;
                 msg += '\n카드 승인번호 : ' + rsp.apply_num;
 	            //성공시 이동할 페이지
-	            location.href='index.jsp';
+	            location.href='semi.do?command=paysuccess';
 	        } else {
 	            msg = '결제에 실패하였습니다.';
 	            msg += '\n에러내용 : ' + rsp.error_msg;
