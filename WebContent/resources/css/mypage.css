@@ -1,0 +1,157 @@
+@charset "UTF-8";
+
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+#mypage {
+	width: 1200px;
+	margin: 0 auto;
+	min-height: 1000px;
+}
+
+#mypage_nav {
+	margin-bottom: 20px;
+}
+
+.mypage_h3 {
+	font-weight: bolder;
+}
+
+.mypage_info {
+	height: 100px;
+	margin-bottom: 15px;
+}
+
+.mypage_info_id {
+	float: left;
+	height: 100px;
+	width: 150px;
+	text-align: center;
+}
+
+.mypage_info_name {
+	display: block;
+	height: 25px;
+	font-weight: bolder;
+}
+
+.mypage_product {
+	margin-bottom: 15px;
+}
+
+.order_list {
+	height: 100px;
+}
+
+.order_img_div {
+	float: left;
+	width: 200px;
+	height: 100px;
+	text-align: center;
+}
+
+.order_img {
+	width: 100px;
+	height: 100px;
+}
+
+.order_info {
+	float: left;
+	width: 900px;
+	height: 100px;
+}
+
+.order_info_num {
+	display: block;
+	height: 10%;
+	font-size: 10px;
+	margin-bottom: 2px;
+}
+
+.order_info_name {
+	display: block;
+	height: 50%;
+	font-weight: bolder;
+	font-size: 30px;
+	line-height: 1.5;
+}
+
+.order_info_count {
+	padding-right: 10px;
+	border-right: 1px solid #dadada;
+}
+
+.order_info_money {
+	margin-left: 10px;
+	padding-right: 10px;
+	border-right: 1px solid #dadada;
+}
+
+.order_info_date {
+	margin-left: 10px;
+	color: #dadada;
+}
+
+.order_status {
+	float: left;
+	padding-top: 30px;
+	width: 100px;
+	height: 100px;
+}
+
+.mymenus li {
+	float: left;
+}
+
+.mymenu {
+	display: block;
+	color: black;
+	text-align: center;
+	padding: 15px 20px;
+	text-decoration: none;
+}
+
+.mymenus {
+	list-style-type: none;
+	margin: 0;
+	overflow: hidden;
+	list-style: none;
+}
+
+.animal {
+	display: none;
+}
+
+.orderIng ol li {
+	left: 61px;
+	padding-right: 45px;
+}
+
+#general_signup_idpw {
+	margin-top:20px;
+	height: 250px;
+}
+
+.general_signup_span {
+	display: block;
+	border: solid 1px #dadada;
+	width: 450px;
+	height: 50px;
+}
+
+.general_signup_text {
+	display: inline-block;
+	height: 40px;
+	width: 75%;
+	border: none;
+	padding-left: 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 5px;
+}
+
+#general_signup_btn {
+	padding-top: 20px;
+}

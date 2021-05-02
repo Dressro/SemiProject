@@ -11,6 +11,8 @@
 <%@page import="com.project.fp.biz.MemberBizImpl"%>
 <%@page import="com.project.fp.biz.MemberBiz"%>
 <%@page import="com.project.fp.dto.MemberDto"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 

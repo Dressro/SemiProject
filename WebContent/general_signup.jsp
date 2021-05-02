@@ -112,7 +112,6 @@ response.setContentType("text/html; charset=UTF-8");
 #general_signup_btn {
 	padding-top: 10px;
 }
-<<<<<<< HEAD
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
