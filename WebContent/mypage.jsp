@@ -489,8 +489,17 @@ if (dto == null) {
 								 } else if (dto.getMember_animal().equals("N")) {
 									 
 								 %>
+
 								 <input type="radio" name="member_animal" value="N" onclick="chk(this.value);"checked>없음 
 								<input type="radio" name="member_animal" value="Y" onclick="chk(this.value);">신규등록
+
+								 <input type="radio" name="member_animal" value="N"
+								onclick="chk(this.value);" checked>없음 
+								<input
+								type="radio" name="member_animal" value="Y"
+								onclick="chk(this.value);">있음
+								<input type="hidden" name="animalN_Y" value="N_Y">
+
 								<%
 								 }
 								 %>
@@ -757,9 +766,13 @@ if (dto == null) {
 			$('#select_mail').val(emailsplit[1]).prop("selected",true);
 		});
 
-		
-		
-		
+		<%if(dto.getMember_animal().equals("Y")) {%>
+		$(function(){
+			
+			$(function(){
+			
+		});
+		<%}%>
 		</script>
 		
 		</form>

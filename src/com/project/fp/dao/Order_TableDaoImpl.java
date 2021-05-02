@@ -1,7 +1,9 @@
 package com.project.fp.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -39,6 +41,19 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 		return list;
 	}
 	
+	@Override
+	public Order_TableDto group_del_select(int order_num) {
+		
+		Order_TableDto dto = null;
+		
+		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
+			dto = session.selectOne(namespace+"group_del_select", order_num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return dto;
+	}
 	@Override
 	public Order_TableDto selectOne(int order_num) {
 		
@@ -105,12 +120,12 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 	}
 	
 	@Override
-	public int delete(int order_num) {
+	public int delete(int order_group) {
 		
 		int res = 0;
 		
 		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
-			res = session.delete(namespace+"delete", order_num);
+			res = session.delete(namespace+"delete", order_group);
 			if (res > 0) {
 				session.commit();
 			}
@@ -165,6 +180,30 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 
 		return res;
 	}
+
+	@Override
+	public int multiDelete(int[] order_groups) {
+		int count = 0;
+		
+		Map<String, int[]> map = new HashMap<String, int[]>();
+		map.put("order_groups", order_groups);
+		
+		SqlSession session = null;
+		try {
+			session = getSqlSessionFactory().openSession(false);
+			count = session.delete(namespace+"multiDelete",map);
+			if(count == order_groups.length) {
+				session.commit();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		
+		return count;
+	}
+
 
 	
 

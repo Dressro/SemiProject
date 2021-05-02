@@ -29,6 +29,12 @@
 		where ORDER_GROUP > 0
 		ORDER BY ORDER_GROUP DESC
 	</select>
+	<select id="group_del_select" parameterType="int" resultType="Order_TableDto">
+		SELECT ORDER_GROUP 
+		FROM ORDER_TABLE
+		where ORDER_NUM = #{order_num}
+		ORDER BY ORDER_GROUP DESC
+	</select>
 	<select id="selectOne" parameterType="int" resultType="Order_TableDto">
 		SELECT ORDER_NUM, ORDER_DATE, ORDER_QUANTITY, ORDER_PRICE, ORDER_STEP, ORDER_PAY, ORDER_GROUP, PROD_NUM, MEMBER_ID
 		FROM ORDER_TABLE
@@ -48,17 +54,26 @@
 	<update id="update" parameterType="Order_TableDto">
 		UPDATE ORDER_TABLE
 		SET ORDER_STEP = #{order_step}
-		WHERE ORDER_NUM = #{order_num}
+		WHERE ORDER_GROUP = #{order_group}
  	</update>
 	<update id="update_group" parameterType="Order_TableDto">
 		UPDATE ORDER_TABLE
 		SET ORDER_STEP = #{order_step}
-		WHERE ORDER_GROUP = #{order_group}
+		WHERE ORDER_group = #{order_group}
 	</update>
 
-	<delete id="delete" parameterType="Order_TableDto">
+	<delete id="delete" parameterType="int">
 		DELETE FROM ORDER_TABLE
-		WHERE ORDER_NUM = #{order_num}
+		WHERE ORDER_GROUP = #{order_group}
+	</delete>
+	
+	<delete id="multiDelete" parameterType="map">
+		delete from order_table
+		where order_group in
+		<foreach collection="order_groups" item="order_group" open="("
+			separator="," close=")">
+			#{order_group}
+		</foreach>
 	</delete>
 
 </mapper>
