@@ -391,9 +391,8 @@ public class SemiProjectController extends HttpServlet {
 
 		} else if (command.equals("memberdel")) {
 			String member_id = request.getParameter("member_id");
-			int md_res = 0;
-			md_res = m_biz.delete(member_id);
-			if (md_res > 0) {
+			int res = m_biz.delete(member_id);
+			if (res > 0) {
 				jsResponse(response, "회원탈퇴", "index.jsp");
 			} else {
 				jsResponse(response, "회원탈퇴실패", "semi.do?command=mypage&member_id=" + member_id);

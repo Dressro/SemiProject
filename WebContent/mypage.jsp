@@ -217,28 +217,9 @@ response.setContentType("text/html; charset=UTF-8");
 			            $checkHead.prop("checked", false);
 			        }
 			    });
+			    	
 	});
 
-	$(function() {
-
-		$('input[name=member_password]').keyup(function() {
-			$('#chkNotice').html('');
-		});
-
-		$('input[name=member_password_chk]').keyup(
-				function() {
-					if ($('input[name=member_password]').val() != $(
-							'input[name=member_password_chk').val()) {
-						$('#chkNotice').html('비밀번호 일치하지 않음');
-						$('#chkNotice').attr('color', '#f82a2aa3');
-					} else {
-						$('#chkNotice').html('비밀번호 일치함');
-						$('#chkNotice').attr('color', '#199894b3');
-					}
-
-				});
-
-	});
 	</script>
 
 
@@ -269,6 +250,7 @@ if (dto == null) {
 		</div>
 
 		<div class="mypage-body">
+			<form action="semi.do" method="post" class="mypage" >
 
 				<table border="1">
 
@@ -305,6 +287,8 @@ if (dto == null) {
 						</li>
 					</ol>
 				<br> -->
+
+				</form>
 
 			<form action="semi.do" method="post" class="mypage" >
 			<h1>캘린더</h1>
@@ -779,31 +763,48 @@ if (dto == null) {
 					<table border="1">
 						<col width="200" />
 						<tr>
-							<th>회원정보</th>
-						</tr>
-
-						<tr>
 							<th>아이디</th>
 							<td><input type="text" name="member_id" title="n"
 								readonly="readonly" value="<%=dto.getMember_id() %>" /></td>
 						</tr>
 						<tr>
 							<th>비밀번호</th>
-							<td><input type="password" name="member_password">
+							<td><input type="password" class="member_password" name="member_password" value="">
 								</td>
 						</tr>
 						<tr>
 							<th>비밀번호확인</th>
-							<td><input type="password" name="member_password_chk">
+							<td><input type="password" class="member_password_chk" name="member_password_chk" value="">
+						</tr>
+						<tr>
+							<td colspan="5" align="right"><font id="chkNotice" size="2"></font></td>
 						</tr>
 						<tr>
 							<td colspan="5" align="center">
 							<input type="submit" value="회원탈퇴"/></td>
 						</tr>
+							
 					</table>
 			</form>
 		</div>
+		<script type="text/javascript">
+		$(function(){
+			$('.member_password').keyup(function() {
+				$('#chkNotice').html('');
+			});
 
+			$('.member_password_chk').keyup(function() {
+					if ($('.member_password').val() != $('.member_password_chk').val()) {
+						$('#chkNotice').html('비밀번호 일치하지 않음');
+						$('#chkNotice').attr('color', '#f82a2aa3');
+					} else {
+						$('#chkNotice').html('비밀번호 일치함');
+						$('#chkNotice').attr('color', '#199894b3');
+					}
+
+				});
+		})
+		</script>
 	<jsp:include page="bottom.jsp" />
 </body>
 </html>
