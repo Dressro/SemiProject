@@ -81,7 +81,9 @@ CREATE TABLE MEMBER(
 	CONSTRAINT MEMBER_MEMBER_NOTIFY_CHK CHECK(MEMBER_NOTIFY IN ('Y', 'N'))
 );
 insert into member values('admin','admin','관리자','관리자','admin@admin.com','010-0000-0000','관리시 관리동','관리자','Y','N',0,NULL,'Y');
+update member set member_animal = 'N' where member_id = '1';
 select * from member;
+select * from animal;
 CREATE TABLE BOARD(
 	BOARD_NO NUMBER PRIMARY KEY,
 	BOARD_FREE_NO NUMBER,
@@ -128,7 +130,7 @@ select * from PRODUCT;
 
 INSERT INTO ORDER_TABLE
 		VALUES(ORDER_NUM_SEQ.nextval, sysdate, '2', '20000', 
-		'미결제', 'N',ORDER_group_seq.nextval ,12, 'test');
+		'결제완료', 'N','30' ,12, 'test');
 SELECT COLUMN_NAME, DATA_TYPE FROM all_tab_columns where table_name='ORDER_TABLE';
 UPDATE ORDER_TABLE SET ORDER_STEP = ''
 WHERE ORDER_GROUP = '1';
@@ -315,3 +317,9 @@ CREATE TABLE LOST_ANIMAL(
 	CONSTRAINT LOST_ANIMAL_BOARD_NO_FK FOREIGN KEY (BOARD_NO) REFERENCES BOARD (BOARD_NO)
 );
 select * from lost_animal;
+SELECT o.ORDER_NUM, o.ORDER_DATE, o.ORDER_QUANTITY, o.ORDER_PRICE, o.ORDER_STEP, o.ORDER_PAY, o.order_group, p.PROD_NAME, o.MEMBER_ID
+		FROM ORDER_TABLE o, product p
+		WHERE o.MEMBER_ID = 'test'
+		and o.prod_num = p.prod_num
+		AND o.ORDER_STEP != '미결제'
+		ORDER BY ORDER_NUM DESC

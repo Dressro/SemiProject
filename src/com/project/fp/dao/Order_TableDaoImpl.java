@@ -26,7 +26,20 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 
 		return list;
 	}
-	
+
+	@Override
+	public List<Order_TableDto> mypageList(String member_id) {
+		
+		List<Order_TableDto> list = new ArrayList<Order_TableDto>();
+		
+		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace+"mypageList",member_id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
 	@Override
 	public List<Order_TableDto> groupList() {
 
@@ -137,6 +150,28 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 	}
 
 	@Override
+	public int multiDelete(int[] order_groups) {
+		int count = 0;
+		
+		Map<String, int[]> map = new HashMap<String, int[]>();
+		map.put("order_groups", order_groups);
+		
+		SqlSession session = null;
+		try {
+			session = getSqlSessionFactory().openSession(false);
+			count = session.delete(namespace+"multiDelete",map);
+			if(count == order_groups.length) {
+				session.commit();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		
+		return count;
+	}
+
 	public List<Order_TableDto> selectbasketList(String member_id) {
 		
 		List<Order_TableDto> list = new ArrayList<Order_TableDto>();
@@ -179,29 +214,6 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 		}
 
 		return res;
-	}
-
-	@Override
-	public int multiDelete(int[] order_groups) {
-		int count = 0;
-		
-		Map<String, int[]> map = new HashMap<String, int[]>();
-		map.put("order_groups", order_groups);
-		
-		SqlSession session = null;
-		try {
-			session = getSqlSessionFactory().openSession(false);
-			count = session.delete(namespace+"multiDelete",map);
-			if(count == order_groups.length) {
-				session.commit();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
-		
-		return count;
 	}
 
 

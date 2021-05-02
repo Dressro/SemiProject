@@ -14,7 +14,10 @@ public class Order_TableDto {
 	private int prod_num;
 	private String member_id;
 	private String prod_name;
+	private int total_price;
 	
+	
+
 	public Order_TableDto(int order_num, Date order_date, int order_quantity, int order_price, String order_step,
 			String order_pay, int order_group, int prod_num, String member_id, String prod_name) {
 		super();
@@ -29,7 +32,44 @@ public class Order_TableDto {
 		this.member_id = member_id;
 		this.prod_name = prod_name;
 	}
+	
+	public Order_TableDto(int order_num, Date order_date, int order_quantity, int order_price, String order_step,
+			String order_pay, int order_group, int prod_num, String member_id) {
+		this.order_num = order_num;
+		this.order_date = order_date;
+		this.order_quantity = order_quantity;
+		this.order_price = order_price;
+		this.order_step = order_step;
+		this.order_pay = order_pay;
+		this.order_group = order_group;
+		this.prod_num = prod_num;
+		this.member_id = member_id;
+	}
 
+	public Order_TableDto(int order_num, Date order_date, int order_quantity, int order_price, String order_step,
+			String order_pay, int order_group, int prod_num, String member_id, String prod_name, int total_price) {
+		super();
+		this.order_num = order_num;
+		this.order_date = order_date;
+		this.order_quantity = order_quantity;
+		this.order_price = order_price;
+		this.order_step = order_step;
+		this.order_pay = order_pay;
+		this.order_group = order_group;
+		this.prod_num = prod_num;
+		this.member_id = member_id;
+		this.prod_name = prod_name;
+		this.total_price = total_price;
+	}
+
+	public int getTotal_price() {
+		return total_price;
+	}
+
+	public void setTotal_price(int total_price) {
+		this.total_price = total_price;
+	}
+	
 	public int getOrder_group() {
 		return order_group;
 	}
@@ -49,20 +89,6 @@ public class Order_TableDto {
 	public Order_TableDto() {
 
 	}
-
-	public Order_TableDto(int order_num, Date order_date, int order_quantity, int order_price, String order_step,
-			String order_pay, int order_group, int prod_num, String member_id) {
-		this.order_num = order_num;
-		this.order_date = order_date;
-		this.order_quantity = order_quantity;
-		this.order_price = order_price;
-		this.order_step = order_step;
-		this.order_pay = order_pay;
-		this.order_group = order_group;
-		this.prod_num = prod_num;
-		this.member_id = member_id;
-	}
-
 
 	public int getOrder_num() {
 		return order_num;
