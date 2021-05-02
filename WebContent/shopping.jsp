@@ -16,6 +16,14 @@
 <link rel="icon" href="resources/images/logo/favicon.ico" type="image/x-icon">
 </head>
 <style>
+#paging {
+	text-align: center;
+	font-size: 20pt;
+}
+
+#paging a {
+	font-size: 20pt;
+}
 
 </style>
 
@@ -69,7 +77,7 @@
     </div>
 </section>
 
-	<jsp:include page="/board_paging.jsp">
+					<jsp:include page="/shopping_paging.jsp">
 						<jsp:param value="${BoardCommand }" name="command" />
 						<jsp:param value="${Pdto.nowBlock}" name="nowBlock" />
 						<jsp:param value="${Pdto.blockBegin }" name="blockBegin" />
