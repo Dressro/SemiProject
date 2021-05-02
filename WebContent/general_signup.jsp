@@ -498,8 +498,8 @@ response.setContentType("text/html; charset=UTF-8");
 						</div>
 					</div>
 					<div id="general_signup_btn">
-						<input type="submit" value="회원가입" onclick="check();" />
-						<input type="button" value="취소" onclick="location.href='index.html'" />
+						<input type="submit" value="회원가입"  class="btn btn-outline-secondary" style="font-weight: bold" onclick="check();" />
+						<input type="button" value="취소"  class="btn btn-outline-secondary" style="font-weight: bold" onclick="location.href='index.html'" />
 					</div>
 				</form>
 			</div>
