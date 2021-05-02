@@ -15,6 +15,11 @@ public class Order_TableBizImpl implements Order_TableBiz {
 
 		return dao.selectList();
 	}
+	@Override
+	public List<Order_TableDto> mypageList(String member_id) {
+		// TODO Auto-generated method stub
+		return dao.mypageList(member_id);
+	}
 	
 	@Override
 	public List<Order_TableDto> groupList() {
@@ -62,6 +67,24 @@ public class Order_TableBizImpl implements Order_TableBiz {
 	public int multiDelete(int[] order_groups) {
 		// TODO Auto-generated method stub
 		return dao.multiDelete(order_groups);
+	}
+
+	
+	public List<Order_TableDto> selectbasketList(String member_id) {
+
+		return dao.selectbasketList(member_id);
+	}
+
+	@Override
+	public List<Order_TableDto> selectpayList(String member_id) {
+
+		return dao.selectpayList(member_id);
+	}
+
+	@Override
+	public int basket_insert(Order_TableDto dto) {
+
+		return dao.basket_insert(dto);
 	}
 
 	

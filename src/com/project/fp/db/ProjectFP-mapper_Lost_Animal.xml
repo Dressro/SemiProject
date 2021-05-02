@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.project.fp.lost_animal">
+
+	<select id="selectList" resultType="Lost_AnimalDto">
+		SELECT LOST_NO, LOST_LAT, LOST_LNG, BOARD_NO
+		FROM LOST_ANIMAL
+	</select>
+	
+	<select id="selectOne" resultType="Lost_AnimalDto" parameterType="int">
+		SELECT LOST_NO, LOST_LAT, LOST_LNG, BOARD_NO
+		FROM LOST_ANIMAL
+		WHERE BOARD_NO = #{board_no}
+	</select>
+	
+	<insert id="insert" parameterType="Lost_AnimalDto">
+		INSERT INTO LOST_ANIMAL
+		VALUES(
+			LOST_NO_SEQ.NEXTVAL, #{lost_lat}, #{lost_lng}, #{board_no}
+		)
+	</insert> 
+	
+	<update id="update" parameterType="Lost_AnimalDto">
+		UPDATE LOST_ANIMAL
+		SET
+		LOST_LAT = #{lost_lat}, LOST_LNG = #{lost_lng}
+		WHERE BOARD_NO = #{board_no}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM LOST_ANIMAL
+		WHERE BOARD_NO = #{board_no}
+	</delete>
+
+</mapper>

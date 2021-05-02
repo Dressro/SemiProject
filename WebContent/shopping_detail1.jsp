@@ -1,6 +1,8 @@
 <%@page import="com.project.fp.dto.ProductDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 request.setCharacterEncoding("UTF-8");
 %>
@@ -19,15 +21,16 @@ response.setContentType("text/html; charset=UTF-8");
 </script>
 </head>
 <%
-	String member_id = (String) request.getAttribute("member_id");
 	ProductDto p_dto = (ProductDto) request.getAttribute("p_dto");
 %>
 <body>
 <jsp:include page="header.jsp" />
-	<h3>BASKET_INSERTFORM</h3>
+	<h3>SHOPPING_DETAIL</h3>
 	<form action="semi.do" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="command" value="basket_insertres" />
-		<input type="hidden" name="member_id" value="<%=member_id %>" />
+		<c:if test="${dto ne null }">
+			<input type="hidden" name="member_id" value="${dto.member_id }" />
+		</c:if>
 		<input type="hidden" name="prod_num" value="<%=p_dto.getProd_num() %>" />
 		<div class="container">
 			<div class="content" style="width: 70%">
@@ -61,7 +64,7 @@ response.setContentType("text/html; charset=UTF-8");
 						<div class="custom-file">
 							&nbsp;
 							<button type="submit" class="btn btn-outline-secondary" style="float: right; width: 30%; font-weight: bold; margin-right: 10px;">장바구니에 추가</button>
-							<button type="button" class="btn btn-outline-secondary" style="float: right; width: 10%; font-weight: bold" onclick="location.href='semi.do?command=prodlist'">취 소</button>
+							<button type="button" class="btn btn-outline-secondary" style="float: right; width: 10%; font-weight: bold" onclick="location.href='semi.do?command=shopping'">취 소</button>
 						</div>
 					</div>
 				</div>

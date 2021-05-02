@@ -56,6 +56,11 @@ public class ProductBizImpl implements ProductBiz {
 		return dao.multiDelete(prod_nums);
 	}
 
+	@Override
+	public List<ProductDto> selectcategory(String prod_category) {
+		return dao.selectcategory(prod_category);
+	}
+
 
 	
 

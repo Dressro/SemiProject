@@ -9,6 +9,28 @@
 		where o.prod_num = p.prod_num
 		ORDER BY ORDER_NUM DESC
 	</select>
+	<select id="mypageList" parameterType="String" resultType="Order_TableDto">
+		SELECT o.ORDER_NUM, o.ORDER_DATE, o.ORDER_QUANTITY, o.ORDER_PRICE, o.ORDER_STEP, o.ORDER_PAY, o.order_group, p.PROD_NAME, o.MEMBER_ID
+		FROM ORDER_TABLE o, product p
+		WHERE o.MEMBER_ID = #{member_id}
+		and o.prod_num = p.prod_num
+		and o.order_step != '미결제'
+		order by o.order_num desc
+	</select>
+	<select id="selectbasketList"  parameterType="String" resultType="Order_TableDto">
+		SELECT ORDER_NUM, ORDER_DATE, ORDER_QUANTITY, ORDER_PRICE, ORDER_STEP, ORDER_PAY, ORDER_GROUP, PROD_NUM, MEMBER_ID
+		FROM ORDER_TABLE
+		WHERE MEMBER_ID = #{member_id}
+		AND ORDER_STEP = '미결제'
+		ORDER BY ORDER_NUM DESC
+	</select>
+	<select id="selectpayList"  parameterType="String" resultType="Order_TableDto">
+		SELECT o.ORDER_NUM, o.ORDER_DATE, o.ORDER_QUANTITY, o.ORDER_PRICE, o.ORDER_STEP, o.ORDER_PAY, o.order_group, p.PROD_NAME, o.MEMBER_ID
+		FROM ORDER_TABLE o, product p
+		WHERE o.MEMBER_ID = #{member_id}
+		and o.prod_num = p.prod_num
+	
+	</select>
 	<select id="groupList" resultType="Order_TableDto">
 		SELECT ORDER_NUM ,ORDER_GROUP , MEMBER_ID , ORDER_STEP
 		FROM ORDER_TABLE
@@ -29,7 +51,12 @@
 	
 	<insert id="insert" parameterType="Order_TableDto">
 		INSERT INTO ORDER_TABLE
-		VALUES(ORDER_NUM_SEQ, to_char(sysdate,'yyyy.mm.dd hh24:mi'), #{order_quantity}, #{order_price}, #{order_step}, #{order_pay}, #{prod_num}, #{member_id});
+		VALUES(ORDER_NUM_SEQ, to_char(sysdate,'yyyy.mm.dd hh24:mi'), #{order_quantity}, #{order_price}, #{order_step}, #{order_pay}, #{prod_num}, #{member_id})
+	</insert>
+	
+	<insert id="basket_insert" parameterType="Order_TableDto">
+		INSERT INTO ORDER_TABLE
+		VALUES(ORDER_NUM_SEQ.NEXTVAL, SYSDATE, #{order_quantity}, #{order_price}, '미결제', 'N', ORDER_GROUP_SEQ.NEXTVAL, #{prod_num}, #{member_id})
 	</insert>
 
 	<update id="update" parameterType="Order_TableDto">

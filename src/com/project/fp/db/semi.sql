@@ -81,7 +81,9 @@ CREATE TABLE MEMBER(
 	CONSTRAINT MEMBER_MEMBER_NOTIFY_CHK CHECK(MEMBER_NOTIFY IN ('Y', 'N'))
 );
 insert into member values('admin','admin','관리자','관리자','admin@admin.com','010-0000-0000','관리시 관리동','관리자','Y','N',0,NULL,'Y');
+update member set member_animal = 'N' where member_id = '1';
 select * from member;
+select * from animal;
 CREATE TABLE BOARD(
 	BOARD_NO NUMBER PRIMARY KEY,
 	BOARD_FREE_NO NUMBER,
@@ -127,8 +129,9 @@ select * from ORDER_TABLE;
 select * from PRODUCT;
 
 INSERT INTO ORDER_TABLE
-		VALUES(ORDER_NUM_SEQ.nextval, sysdate, '1', '10000', 
-		'미결제', 'N','1' ,'2', 'test');
+		VALUES(ORDER_NUM_SEQ.nextval, sysdate, '2', '20000', 
+		'결제완료', 'N','30' ,12, 'test');
+SELECT COLUMN_NAME, DATA_TYPE FROM all_tab_columns where table_name='ORDER_TABLE';
 UPDATE ORDER_TABLE SET ORDER_STEP = ''
 WHERE ORDER_GROUP = '1';
 select * from order_table;
@@ -301,9 +304,22 @@ SELECT  board_no
 		WHERE BOARD_FREE_NO > 0 AND MEMBER_ID LIKE '%ss%'
 		order by board_no desc
 
+--실종신고 위치 정보 받아오기
+DROP SEQUENCE LOST_NO_SEQ;
+DROP TABLE LOST_ANIMAL;
 
-
--- 댓글 테이블 (아직 수정중)
-
-
-
+CREATE SEQUENCE LOST_NO_SEQ;
+CREATE TABLE LOST_ANIMAL(
+	LOST_NO NUMBER PRIMARY KEY,
+	LOST_LAT NUMBER NOT NULL,
+	LOST_LNG NUMBER NOT NULL,
+	BOARD_NO NUMBER NOT NULL,
+	CONSTRAINT LOST_ANIMAL_BOARD_NO_FK FOREIGN KEY (BOARD_NO) REFERENCES BOARD (BOARD_NO)
+);
+select * from lost_animal;
+SELECT o.ORDER_NUM, o.ORDER_DATE, o.ORDER_QUANTITY, o.ORDER_PRICE, o.ORDER_STEP, o.ORDER_PAY, o.order_group, p.PROD_NAME, o.MEMBER_ID
+		FROM ORDER_TABLE o, product p
+		WHERE o.MEMBER_ID = 'test'
+		and o.prod_num = p.prod_num
+		AND o.ORDER_STEP != '미결제'
+		ORDER BY ORDER_NUM DESC
