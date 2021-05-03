@@ -551,9 +551,6 @@ public class SemiProjectController extends HttpServlet {
 			List<Order_TableDto> list = o_t_biz.mypageList(member_id);
 			request.setAttribute("a_dto", a_dto);
 			request.setAttribute("list", list);
-			for (Order_TableDto dto : list) {
-				System.out.println(dto);
-			}
 			dispatch(response, request, "mypage.jsp");
 		} else if (command.equals("boardlist")) {
 			List<BoardDto> boardlist = b_biz.board_List();
