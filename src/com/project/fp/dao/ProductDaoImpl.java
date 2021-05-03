@@ -144,6 +144,24 @@ int count = 0;
 		}
 
 	@Override
+	public int pay_update(ProductDto dto) {
+
+		int res = 0;
+
+		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.update(namespace+"pay_update", dto);
+			if (res > 0) {
+				session.commit();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+	
+	@Override
 	public int count() {
 		int res = 0;
 

@@ -30,4 +30,6 @@ public interface MemberBiz {
 	
 	public int mypagemod(MemberDto dto);
 	
+	public int myanimalupdate(MemberDto dto);
+	
 }

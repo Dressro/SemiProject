@@ -3,10 +3,9 @@
 <%@page import="com.project.fp.biz.ProductBiz"%>
 <%@page import="com.project.fp.biz.ProductBizImpl"%>
 <%@page import="com.project.fp.dto.ProductDto"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
- <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>  
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html>
@@ -24,15 +23,14 @@
 #paging a {
 	font-size: 20pt;
 }
-
 </style>
 
 <jsp:include page="header.jsp" />
 <body>
-<%
+	<%
 	MemberDto dto = (MemberDto) session.getAttribute("dto");
-%>
-		<form action="semi.do" method="post">
+	%>
+	<form action="semi.do" method="post">
 		<input type="hidden" name="command" value="shopping">
 		
 		<nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom"> <a class="navbar-brand ml-2 font-weight-bold" href="#">MENU</a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor" aria-controls="navbarColor" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
@@ -74,18 +72,19 @@
     </div>
 </section>
 
-					<jsp:include page="/shopping_paging.jsp">
-						<jsp:param value="${BoardCommand }" name="command" />
-						<jsp:param value="${Pdto.nowBlock}" name="nowBlock" />
-						<jsp:param value="${Pdto.blockBegin }" name="blockBegin" />
-						<jsp:param value="${Pdto.blockEnd }" name="blockEnd" />
-						<jsp:param value="${Pdto.nowPage}" name="nowPage" />
-						<jsp:param value="${Pdto.blockBegin}" name="blockBegin" />
-						<jsp:param value="${Pdto.blockEnd}" name="blockEnd" />
-						<jsp:param value="${Pdto.totalBlock}" name="totalBlock" />
-					</jsp:include>
+		<jsp:include page="/shopping_paging.jsp">
+			<jsp:param value="${BoardCommand }" name="command" />
+			<jsp:param value="${Pdto.nowBlock}" name="nowBlock" />
+			<jsp:param value="${Pdto.blockBegin }" name="blockBegin" />
+			<jsp:param value="${Pdto.blockEnd }" name="blockEnd" />
+			<jsp:param value="${Pdto.nowPage}" name="nowPage" />
+			<jsp:param value="${Pdto.blockBegin}" name="blockBegin" />
+			<jsp:param value="${Pdto.blockEnd}" name="blockEnd" />
+			<jsp:param value="${Pdto.totalBlock}" name="totalBlock" />
+		</jsp:include>
 
-</form>
+	</form>
+
 	<jsp:include page="bottom.jsp" />
 
 </body>

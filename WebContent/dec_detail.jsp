@@ -1,3 +1,4 @@
+<%@page import="com.project.fp.dto.Lost_AnimalDto"%>
 <%@page import="com.project.fp.dto.File_TableDto"%>
 <%@page import="com.project.fp.dto.BoardDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -18,6 +19,8 @@ response.setContentType("text/html; charset=UTF-8");
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 <meta charset="UTF-8">
 <title>Family|Pet</title>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6cb234998221d5b514c1db1f8c50cf56&libraries=services,clusterer,drawing"></script>
 <link rel="icon" href="resources/images/logo/favicon.ico" type="image/x-icon">
 <style type="text/css">
 .semiproject_board {
@@ -188,11 +191,20 @@ response.setContentType("text/html; charset=UTF-8");
 	border: none;
 	color: #adadad;
 }
+
+#map {
+	width: 100%;
+	height: 400px;
+	margin-bottom: 15px;
+	margin-top: 25px;
+}
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 <%BoardDto b_dto = (BoardDto) request.getAttribute("b_dto");
-File_TableDto f_dto = (File_TableDto) request.getAttribute("f_dto");%>		
+File_TableDto f_dto = (File_TableDto) request.getAttribute("f_dto");
+Lost_AnimalDto l_dto = (Lost_AnimalDto) request.getAttribute("l_dto");
+%>		
 <%if (f_dto != null) {%>
 	function filedown(){
 		var url = "semi.do?command=filedown&file_path=<%=f_dto.getFile_path()%>&file_new_name=<%=f_dto.getFile_new_name()%>";
@@ -270,6 +282,36 @@ File_TableDto f_dto = (File_TableDto) request.getAttribute("f_dto");%>
 						</div>
 					</div>
 				</div>
+				<hr>
+				
+				<h5 style="font-weight: bold;">위치</h5>
+				<div id="map"></div>
+				<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6cb234998221d5b514c1db1f8c50cf56"></script>
+				<script>
+					var lost_lat = '${l_dto.lost_lat}';
+					var lost_lng = '${l_dto.lost_lng}';
+					var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+					
+				    mapOption = { 
+				            center: new kakao.maps.LatLng(lost_lat, lost_lng), // 지도의 중심좌표
+				            level: 3 // 지도의 확대 레벨
+				        };
+					
+				    var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+				    
+				 	// 마커가 표시될 위치입니다 
+				 	var markerPosition  = new kakao.maps.LatLng(lost_lat, lost_lng); 
+				 
+					// 마커를 생성합니다
+					var marker = new kakao.maps.Marker({
+					    position: markerPosition
+					});
+					
+					// 마커가 지도 위에 표시되도록 설정합니다
+					marker.setMap(map);
+					
+				</script>
+				
 				<hr>
 				<div class="board_content">
 					<%=b_dto.getBoard_content()%>

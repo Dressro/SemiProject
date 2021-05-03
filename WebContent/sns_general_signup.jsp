@@ -157,7 +157,7 @@ response.setContentType("text/html; charset=UTF-8");
 				+ $('input[name=member_phone_2]').val() + "-"
 				+ $('input[name=member_phone_3]').val();
 		$('input[name=member_phone]').attr('value', member_phone);
-		var member_addr = $('input[name=member_addr_1]').val() + " "
+		var member_addr = $('input[name=member_addr_1]').val() + ","
 				+ $('input[name=member_addr_2]').val();
 		$('input[name=member_addr]').attr('value', member_addr);
 	}

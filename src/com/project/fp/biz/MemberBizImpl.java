@@ -224,6 +224,12 @@ public class MemberBizImpl implements MemberBiz {
 		return dao.mypagemod(dto);
 	}
 
+	@Override
+	public int myanimalupdate(MemberDto dto) {
+		// TODO Auto-generated method stub
+		return dao.myanimalupdate(dto);
+	}
+
 
 
 

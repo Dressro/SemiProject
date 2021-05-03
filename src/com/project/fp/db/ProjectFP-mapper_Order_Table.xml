@@ -9,10 +9,47 @@
 		where o.prod_num = p.prod_num
 		ORDER BY ORDER_NUM DESC
 	</select>
+	<select id="mypageList" parameterType="String" resultType="Order_TableDto">
+		SELECT o.ORDER_NUM, o.ORDER_DATE, o.ORDER_QUANTITY, o.ORDER_PRICE, o.ORDER_STEP, o.ORDER_PAY, o.order_group, p.PROD_NAME, o.MEMBER_ID
+		FROM ORDER_TABLE o, product p
+		WHERE o.MEMBER_ID = #{member_id}
+		and o.prod_num = p.prod_num
+		and o.order_step != '미결제'
+		order by o.order_num desc
+	</select>
+	<select id="basketList"  parameterType="String" resultType="Order_TableDto">
+		SELECT o.ORDER_NUM, o.ORDER_DATE, o.ORDER_QUANTITY, o.ORDER_PRICE, o.ORDER_STEP, o.ORDER_PAY, o.order_group, p.PROD_NAME, o.MEMBER_ID
+		FROM ORDER_TABLE o, product p
+		WHERE o.MEMBER_ID = #{member_id}
+		and o.prod_num = p.prod_num
+		and o.order_step = '미결제'
+		order by o.order_num desc
+	</select>
+	<select id="selectbasketList"  parameterType="String" resultType="Order_TableDto">
+		SELECT o.ORDER_NUM, o.ORDER_DATE, o.ORDER_QUANTITY, o.ORDER_PRICE, o.ORDER_STEP, o.ORDER_PAY, o.order_group, p.PROD_NAME, o.MEMBER_ID
+		FROM ORDER_TABLE o, product p
+		WHERE o.MEMBER_ID = #{member_id}
+		and o.prod_num = p.prod_num
+		and o.order_step = '미결제'
+	</select>
+	<select id="selectpayList"  parameterType="String" resultType="Order_TableDto">
+		SELECT o.ORDER_NUM, o.ORDER_DATE, o.ORDER_QUANTITY, o.ORDER_PRICE, o.ORDER_STEP, o.ORDER_PAY, o.order_group, p.PROD_NAME, o.MEMBER_ID
+		FROM ORDER_TABLE o, product p
+		WHERE o.MEMBER_ID = #{member_id}
+		and o.prod_num = p.prod_num
+		and o.order_step = '미결제'
+		order by o.order_num desc
+	</select>
 	<select id="groupList" resultType="Order_TableDto">
 		SELECT ORDER_NUM ,ORDER_GROUP , MEMBER_ID , ORDER_STEP
 		FROM ORDER_TABLE
 		where ORDER_GROUP > 0
+		ORDER BY ORDER_GROUP DESC
+	</select>
+	<select id="group_del_select" parameterType="int" resultType="Order_TableDto">
+		SELECT ORDER_GROUP 
+		FROM ORDER_TABLE
+		where ORDER_NUM = #{order_num}
 		ORDER BY ORDER_GROUP DESC
 	</select>
 	<select id="selectOne" parameterType="int" resultType="Order_TableDto">
@@ -23,23 +60,47 @@
 	
 	<insert id="insert" parameterType="Order_TableDto">
 		INSERT INTO ORDER_TABLE
-		VALUES(ORDER_NUM_SEQ, to_char(sysdate,'yyyy.mm.dd hh24:mi'), #{order_quantity}, #{order_price}, #{order_step}, #{order_pay}, #{prod_num}, #{member_id});
+		VALUES(ORDER_NUM_SEQ, to_char(sysdate,'yyyy.mm.dd hh24:mi'), #{order_quantity}, #{order_price}, #{order_step}, #{order_pay}, #{prod_num}, #{member_id})
+	</insert>
+	
+	<insert id="basket_insert" parameterType="Order_TableDto">
+		INSERT INTO ORDER_TABLE
+		VALUES(ORDER_NUM_SEQ.NEXTVAL, SYSDATE, #{order_quantity}, #{order_price}, '미결제', 'N', ORDER_GROUP_SEQ.NEXTVAL, #{prod_num}, #{member_id})
+	</insert>
+	
+	<insert id="direct_pay_insert" parameterType="Order_TableDto">
+		INSERT INTO ORDER_TABLE
+		VALUES(ORDER_NUM_SEQ.NEXTVAL, SYSDATE, #{order_quantity}, #{order_price}, '결제완료', 'Y', ORDER_GROUP_SEQ.NEXTVAL, #{prod_num}, #{member_id})
 	</insert>
 
 	<update id="update" parameterType="Order_TableDto">
 		UPDATE ORDER_TABLE
 		SET ORDER_STEP = #{order_step}
-		WHERE ORDER_NUM = #{order_num}
+		WHERE ORDER_GROUP = #{order_group}
  	</update>
 	<update id="update_group" parameterType="Order_TableDto">
 		UPDATE ORDER_TABLE
 		SET ORDER_STEP = #{order_step}
-		WHERE ORDER_GROUP = #{order_group}
+		WHERE ORDER_group = #{order_group}
 	</update>
-
-	<delete id="delete" parameterType="Order_TableDto">
-		DELETE FROM ORDER_TABLE
+	<update id="update_pay" parameterType="int">
+		UPDATE ORDER_TABLE
+		SET ORDER_STEP = '결제완료', ORDER_PAY = 'Y'
 		WHERE ORDER_NUM = #{order_num}
+ 	</update>
+
+	<delete id="delete" parameterType="int">
+		DELETE FROM ORDER_TABLE
+		WHERE ORDER_GROUP = #{order_group}
+	</delete>
+	
+	<delete id="multiDelete" parameterType="map">
+		delete from order_table
+		where order_group in
+		<foreach collection="order_groups" item="order_group" open="("
+			separator="," close=")">
+			#{order_group}
+		</foreach>
 	</delete>
 
 </mapper>

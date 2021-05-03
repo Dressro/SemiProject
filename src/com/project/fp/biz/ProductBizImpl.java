@@ -70,10 +70,17 @@ public class ProductBizImpl implements ProductBiz {
 	}
 
 	@Override
+	public int pay_update(ProductDto dto) {
+
+		return dao.pay_update(dto);
+	}
+
+	@Override
 	public int count() {
 		// TODO Auto-generated method stub
 		return dao.count();
 	}
+
 
 	
 	
