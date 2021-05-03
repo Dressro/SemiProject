@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.project.fp.dao.ProductDao;
 import com.project.fp.dao.ProductDaoImpl;
+import com.project.fp.dto.PagingDto;
 import com.project.fp.dto.ProductDto;
 
 public class ProductBizImpl implements ProductBiz {
@@ -15,6 +16,13 @@ public class ProductBizImpl implements ProductBiz {
 
 		return dao.selectList();
 	}
+	
+
+	@Override
+	public List<ProductDto> prod_selectList(PagingDto Pdto) {
+		return dao.prod_selectList(Pdto);
+	}
+	
 	
 	@Override
 	public ProductDto prod_selectone(String prod_name) {
@@ -67,9 +75,15 @@ public class ProductBizImpl implements ProductBiz {
 		return dao.pay_update(dto);
 	}
 
+	@Override
+	public int count() {
+		// TODO Auto-generated method stub
+		return dao.count();
+	}
+
 
 	
-
+	
 	
 
 }
