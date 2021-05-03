@@ -38,13 +38,13 @@
 	<select id="product_selectList"
 		parameterType="com.project.fp.dto.PagingDto" resultType="ProductDto">
 		select
-		b.rnum,b.prod_num,b.prod_name,b.prod_category
+		b.rnum,b.prod_num,b.prod_name,b.prod_category,b.prod_price
 		from
 		(select rownum as rnum,
-		a.prod_num,a.prod_name,a.prod_category
+		a.prod_num,a.prod_name,a.prod_category,a.prod_price
 		from
 		(select
-		prod_num, prod_name, prod_category
+		prod_num, prod_name, prod_category,prod_price
 		from product
 		order by prod_num desc)a
 		where rownum <![CDATA[ <= ]]>
