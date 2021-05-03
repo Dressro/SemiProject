@@ -7,6 +7,7 @@
 		SELECT o.ORDER_NUM, o.ORDER_DATE, o.ORDER_QUANTITY, o.ORDER_PRICE, o.ORDER_STEP, o.ORDER_PAY, o.order_group, p.PROD_NAME, o.MEMBER_ID
 		FROM ORDER_TABLE o , product p
 		where o.prod_num = p.prod_num
+		and o.order_step != '미결제'
 		ORDER BY ORDER_NUM DESC
 	</select>
 	<select id="mypageList" parameterType="String" resultType="Order_TableDto">
@@ -22,6 +23,15 @@
 		FROM ORDER_TABLE o, product p
 		WHERE o.MEMBER_ID = #{member_id}
 		and o.prod_num = p.prod_num
+		and o.order_step = '미결제'
+		order by o.order_num desc
+	</select>
+	<select id="payList"  parameterType="Order_TableDto" resultType="Order_TableDto">
+		SELECT o.ORDER_NUM, o.ORDER_DATE, o.ORDER_QUANTITY, o.ORDER_PRICE, o.ORDER_STEP, o.ORDER_PAY, o.order_group, p.PROD_NAME, o.MEMBER_ID
+		FROM ORDER_TABLE o, product p
+		WHERE o.MEMBER_ID = #{member_id}
+		and o.prod_num = p.prod_num
+		and o.order_group = #{order_group}
 		and o.order_step = '미결제'
 		order by o.order_num desc
 	</select>
@@ -65,7 +75,7 @@
 	
 	<insert id="basket_insert" parameterType="Order_TableDto">
 		INSERT INTO ORDER_TABLE
-		VALUES(ORDER_NUM_SEQ.NEXTVAL, SYSDATE, #{order_quantity}, #{order_price}, '미결제', 'N', ORDER_GROUP_SEQ.NEXTVAL, #{prod_num}, #{member_id})
+		VALUES(ORDER_NUM_SEQ.NEXTVAL, SYSDATE, #{order_quantity}, #{order_price}, '미결제', 'N', '0', #{prod_num}, #{member_id})
 	</insert>
 	
 	<insert id="direct_pay_insert" parameterType="Order_TableDto">
@@ -102,5 +112,13 @@
 			#{order_group}
 		</foreach>
 	</delete>
-
+	
+	<delete id="mulDelete" parameterType="map">
+		delete from order_table
+		where order_num in
+		<foreach collection="order_nums" item="order_num" open="("
+			separator="," close=")">
+			#{order_num}
+		</foreach>
+	</delete>
 </mapper>
