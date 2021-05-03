@@ -5,7 +5,7 @@
 	padding: 0px;
 }
 
-#mypage {
+.mypage-body {
 	width: 1200px;
 	margin: 0 auto;
 	min-height: 1000px;
@@ -42,6 +42,9 @@
 }
 
 .order_list {
+	margin-top:5px;
+	margin-bottom : 5px;
+	border-bottom : 1px solid #dadada;
 	height: 100px;
 }
 
@@ -54,7 +57,7 @@
 
 .order_img {
 	width: 100px;
-	height: 100px;
+	height: 99px;
 }
 
 .order_info {
@@ -129,15 +132,39 @@
 	padding-right: 45px;
 }
 
-#general_signup_idpw {
-	margin-top:20px;
-	height: 250px;
+.general_signup_idpw {
+	height: 500px;
+}
+
+#general_signup_mid {
+	width: 500px;
+	margin: 0 auto;
+	min-height: 1000px;
+}
+
+.general_signup_idpw {
+	height: 500px;
 }
 
 .general_signup_span {
 	display: block;
 	border: solid 1px #dadada;
 	width: 450px;
+	height: 50px;
+}
+
+.general_signup_span_home_addr {
+	display: block;
+	border: solid 1px #dadada;
+	width: 450px;
+	height: 60px;
+}
+
+.general_signup_animal {
+	display: block;
+	padding-top: 10px;
+	border: none;
+	width: 400px;
 	height: 50px;
 }
 
@@ -152,6 +179,48 @@
 	margin-left: 5px;
 }
 
+#general_signup_email {
+	display: inline-block;
+	height: 40px;
+	width: 40%;
+	border: solid 1px #dadada;
+	padding-left: 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 5px;
+}
+
+.general_signup_phone {
+	display: inline-block;
+	height: 40px;
+	width: 20%;
+	border: solid 1px #dadada;
+	padding-left: 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 5px;
+}
+
+.general_signup_addr {
+	border: solid 1px #dadada;
+	padding-left: 10px;
+}
+
+.general_signup_title {
+	display: block;
+	margin-bottom: 3px;
+	margin-top: 10px;
+}
+
+.general_signup_age, .general_signup_weight,
+	.general_signup_animal_gender, .general_signup_animal_yn {
+	display: inline-block;
+	padding-right: 10px;
+	margin-bottom: 3px;
+	margin-top: 10px;
+	height: 20px;
+}
+
 #general_signup_btn {
-	padding-top: 20px;
+	padding-top: 10px;
 }

@@ -130,6 +130,8 @@ public class SemiProjectController extends HttpServlet {
 			String member_dr_info = request.getParameter("member_dr_info");
 			String member_notify = request.getParameter("member_notify");
 
+			System.out.println(member_animal);
+
 			MemberDto m_dto = new MemberDto(member_id, member_password, member_name, member_nicname, member_email,
 					member_phone, member_addr, member_grade, "Y", member_animal, 0, member_dr_info, member_notify);
 			int m_res = m_biz.insert(m_dto);
@@ -298,9 +300,18 @@ public class SemiProjectController extends HttpServlet {
 			dto.setMember_id(member_id);
 			dto.setMember_password(member_password);
 
+			System.out.println(member_nicname);
+			System.out.println(member_email);
+			System.out.println(member_phone);
+			System.out.println(member_addr);
+			System.out.println(member_animal);
+			System.out.println(member_id);
+			System.out.println(member_password);
+
 			int m_res = m_biz.mypagemod(dto);
 			int a_res = 0;
-			if (request.getParameter("animalN_Y") != null) {
+			if (request.getParameter("animalN_Y") != null && member_animal.equals("Y")) {
+				m_res += m_biz.myanimalupdate(dto);
 				String animal_name = request.getParameter("animal_name");
 				String animal_gen = request.getParameter("animal_gen");
 				String animal_type = request.getParameter("animal_type");
@@ -317,8 +328,7 @@ public class SemiProjectController extends HttpServlet {
 				a_dto.setMember_id(member_id);
 				a_res = a_biz.insert(a_dto);
 				System.out.println("animal insert 성공");
-			} else {
-				int animal_no = Integer.parseInt(request.getParameter("animal_no"));
+			} else if(request.getParameter("animalN_Y") == null && member_animal.equals("Y")){
 				String animal_name = request.getParameter("animal_name");
 				String animal_gen = request.getParameter("animal_gen");
 				String animal_type = request.getParameter("animal_type");
@@ -338,7 +348,10 @@ public class SemiProjectController extends HttpServlet {
 				a_res = a_biz.update(a_dto);
 				System.out.println("animal update 성공");
 			}
-
+			System.out.println(m_res);
+			MemberDto m_dto = m_biz.selectOne(dto);
+			session.setAttribute("dto", m_dto);
+			session.setMaxInactiveInterval(3600);
 			int res = m_res + a_res;
 			if (res > 0) {
 				jsResponse(response, "수정 성공", "semi.do?command=mypage&member_id=" + member_id);
@@ -533,10 +546,14 @@ public class SemiProjectController extends HttpServlet {
 			}
 		} else if (command.equals("mypage")) {
 			String member_id = request.getParameter("member_id");
-			AnimalDto a_dto = a_biz.selectoneDetail(member_id);
+			AnimalDto a_dto = null;
+			a_dto = a_biz.selectoneDetail(member_id);
 			List<Order_TableDto> list = o_t_biz.mypageList(member_id);
 			request.setAttribute("a_dto", a_dto);
 			request.setAttribute("list", list);
+			for (Order_TableDto dto : list) {
+				System.out.println(dto);
+			}
 			dispatch(response, request, "mypage.jsp");
 		} else if (command.equals("boardlist")) {
 			List<BoardDto> boardlist = b_biz.board_List();

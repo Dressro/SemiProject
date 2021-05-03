@@ -171,9 +171,6 @@ response.setContentType("text/html; charset=UTF-8");
 
 
 
-
-	<div id=mypage>
-
 		<div id="mypage_nav">
 			<nav>
 				<ul class="mymenus">
