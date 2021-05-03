@@ -355,6 +355,9 @@ response.setContentType("text/html; charset=UTF-8");
 								</span>
 							</div>
 						</div>
+						<%
+							String [] addr = dto.getMember_addr().split(",");
+						%>
 						<div class="general_signup_row">
 							<h4 class="general_signup_title">주소</h4>
 							<div class="general_signup_home_addr">
@@ -368,6 +371,10 @@ response.setContentType("text/html; charset=UTF-8");
 								</span>
 							</div>
 						</div>
+						<script type="text/javascript">
+							$("#addr_1").val("<%=addr[0]%>");
+							$("#addr_2").val("<%=addr[1]%>");
+						</script>
 						<div class="general_signup_row">
 							<h4 class="general_signup_animal_yn">반려동물 여부</h4>
 							<div class="general_signup_animal_yn">
