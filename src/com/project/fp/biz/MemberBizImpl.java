@@ -5,6 +5,7 @@ import java.util.List;
 import com.project.fp.dao.MemberDao;
 import com.project.fp.dao.MemberDaoImpl;
 import com.project.fp.dto.MemberDto;
+import com.project.fp.dto.PagingDto;
 import com.project.fp.security.AES256_str;
 import com.project.fp.security.RSA_num;
 
@@ -56,6 +57,31 @@ public class MemberBizImpl implements MemberBiz {
 		return doclist;
 		*/
 		return dao.selectDoctorList();
+	}
+	
+
+	@Override
+	public List<MemberDto> selectDoctorListPaging(PagingDto Pdto) {
+		// TODO Auto-generated method stub
+		/*
+		List<MemberDto> doclist = dao.selectDoctorList();
+		for (MemberDto dto : doclist) {
+			try {
+				dto.setMember_password(AES256_str.Decrypt(dto.getMember_password()));
+				dto.setMember_name(AES256_str.Decrypt(dto.getMember_name()));
+				dto.setMember_email(AES256_str.Decrypt(dto.getMember_email()));
+				dto.setMember_phone(AES256_str.Decrypt(dto.getMember_phone()));
+				dto.setMember_addr(AES256_str.Decrypt(dto.getMember_addr()));
+				dto.setMember_point(RSA_num.decryption(dto.getMember_point()));
+				dto.setMember_dr_info(AES256_str.Decrypt(dto.getMember_dr_info()));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return doclist;
+		*/
+		return dao.selectDoctorListPaging(Pdto);
 	}
 
 	@Override
@@ -229,6 +255,7 @@ public class MemberBizImpl implements MemberBiz {
 		// TODO Auto-generated method stub
 		return dao.myanimalupdate(dto);
 	}
+
 
 
 

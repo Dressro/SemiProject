@@ -162,6 +162,7 @@ int ch_num = (int) request.getAttribute("ch_num");
 	webSocket.onmessage = function(event) {
 		onMessage(event)
 	};
+	
 	function onMessage(event) {
 		var c_msg = event.data;
 		var $chat = $("<div class='chat-box'><div class='chat'>" + c_msg + "</div></div>");
@@ -190,7 +191,7 @@ int ch_num = (int) request.getAttribute("ch_num");
 		$.ajax({
 			url:"semi.do",
 			method:"post",
-			data:{command:"chat_insert", member_nickname:member_nickname.value, ch_content:inputMessage.value},
+			data:{command:"chat_insert", member_nickname:member_nickname.value, ch_content:inputMessage.value,ch_num:ch_num},
 			dataType:"text",
 			success: function(data){
 				alert(data);

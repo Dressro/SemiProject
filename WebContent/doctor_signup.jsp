@@ -370,7 +370,7 @@ response.setContentType("text/html; charset=UTF-8");
 						<div class="general_signup_row">
 							<h4 class="general_signup_title">소속기관(병원 등) *</h4>
 							<div class="general_signup_aff">
-								<span class="general_signup_span"> <input class="general_signup_text" type="text" name="member_nicname" maxlength="10" onclick="idCheckConfirm();">
+								<span class="general_signup_span"> <input class="general_signup_text" type="text" name="member_dr_info" maxlength="10" onclick="idCheckConfirm();">
 								</span>
 							</div>
 						</div>

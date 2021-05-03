@@ -1007,28 +1007,29 @@ public class SemiProjectController extends HttpServlet {
 			request.setAttribute("list", list);
 			dispatch(response, request, "animal_hospital.jsp");
 		} else if (command.equals("chatlist")) {
-			String member_id = request.getParameter("member_id");
-			String member_grade = request.getParameter("member_grade");
-			ChatDto c_dto = new ChatDto();
-			c_dto.setMember_id(member_id);
-			List<ChatDto> c_list = new ArrayList<ChatDto>();
-			if (member_grade.equals("개인")) {
-				c_list = c_biz.selectUserList(c_dto);
-			} else if (member_grade.equals("전문의")) {
-				c_list = c_biz.selectDoctorList(c_dto);
+			int nowPage = 1;
+			if (request.getParameter("nowPage") != null) {
+				nowPage = Integer.parseInt(request.getParameter("nowPage"));
 			}
+			String member_grade = request.getParameter("member_grade");
 			List<MemberDto> m_list = m_biz.selectDoctorList();
-			request.setAttribute("c_list", c_list);
+			int count = m_list.size();
+			PagingDto pdto = new PagingDto(count, nowPage);
+			m_list = m_biz.selectDoctorListPaging(pdto);
+			request.setAttribute("Chat_Command", command);
 			request.setAttribute("m_list", m_list);
+			request.setAttribute("Pdto", pdto);
 			request.setAttribute("member_grade", member_grade);
 			dispatch(response, request, "chatlist.jsp");
 		} else if (command.equals("chat_insert")) {
+			int ch_num = Integer.parseInt(request.getParameter("ch_num"));
 			String member_nickname = request.getParameter("member_nickname");
 			String ch_content = request.getParameter("ch_content");
 			System.out.println(ch_content);
 			System.out.println(member_nickname);
 
 			Chat_ContentDto c_c_dto = new Chat_ContentDto();
+			c_c_dto.setCh_num(ch_num);
 			c_c_dto.setCh_content(ch_content);
 			c_c_dto.setMember_nickname(member_nickname);
 			int res = c_c_biz.insert(c_c_dto);
