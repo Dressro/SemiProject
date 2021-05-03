@@ -266,29 +266,6 @@ option:disabled {
 															</c:if>
 														</select>
 													</td>
-													<td>${dto.order_num }</td>
-													<td style="text-overflow: ellipsis; overflow: hidden;">${dto.prod_name }</td>
-													<td>${dto.order_quantity }</td>
-													<td>${dto.order_price }</td>
-													<td>
-														<select name="order_step">
-															<c:if test="${dto.order_step eq '결제완료'}">
-																<option value="결제완료" selected>결제완료</option>
-															</c:if>
-															<c:if test="${dto.order_step eq '배송준비중'}">
-																<option value="배송준비중" selected>배송준비중</option>
-															</c:if>
-															<c:if test="${dto.order_step eq '배송중'}">
-																<option value="배송중" selected>배송중</option>
-															</c:if>
-															<c:if test="${dto.order_step eq '배송완료'}">
-																<option value="배송완료" selected>배송완료</option>
-															</c:if>
-															<c:if test="${dto.order_step eq '취소요청'}">
-																<option value="취소요청" selected>취소요청</option>
-															</c:if>
-														</select>
-													</td>
 													<td>
 														<fmt:formatDate value="${dto.order_date }" pattern="yyyy-MM-dd a hh:mm" />
 													</td>
@@ -338,7 +315,6 @@ option:disabled {
 							<c:choose>
 								<c:when test="${empty list }">
 									<tr>
-
 										<th colspan="6">----------주문내역이 존재하지 않습니다----------</th>
 									</tr>
 								</c:when>
