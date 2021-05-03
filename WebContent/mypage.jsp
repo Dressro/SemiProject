@@ -29,56 +29,7 @@ response.setContentType("text/html; charset=UTF-8");
 <meta charset="UTF-8">
 <title>Family|Pet</title>
 <link rel="icon" href="resources/images/logo/favicon.ico" type="image/x-icon">
-<<<<<<< HEAD
 <link href="resources/css/mypage.css" rel="stylesheet" type="text/css" />
-=======
-
-<style type="text/css">
-.animal {
-	display: none;
-}
-.orderIng ol li {
-    left: 61px;
-    padding-right: 45px;
-}
-</style>
-<style type="text/css">
-	.mymenus li {
-	float: left;
-	}
-	.mymenu {
-	display: block;
-	color: black;
-	text-align: center;
-	padding: 15px 20px;
-	text-decoration: none;
-	}
-	.mymenus {
-	list-style-type: none;
-	margin: 0;
-	overflow: hidden;
-	list-style: none;
-	}
-	.s-btn{
-	border: none;
-	display: inline-block;
-	padding: 5px 5px 5px 8px;
-	background: #f45d96;
-	font-size: 14px;
-	color: #ffffff;
-	font-weight: 600;
-	letter-spacing: 4px;
-	text-transform: uppercase;
-	}
-</style>
-
-</head>
-<body>
-
-
-	<jsp:include page="header.jsp" />
-
->>>>>>> a6ae71cef81e9506045cce74ef1d045db18cc7ce
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
