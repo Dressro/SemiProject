@@ -16,19 +16,26 @@
 <link rel="icon" href="resources/images/logo/favicon.ico" type="image/x-icon">
 </head>
 <style>
+
 .semiproject_shopping_detail {
+
 	padding-left: 15px;
 	padding-right:15px;
 	margin-left: 82px;
 	margin-top: -140px;
 }
+
 .prod_info {
 	margin-left: 300px;
 	margin-top: -200px;
 }
+
+
 .detail_explain {
+
 	margin-top: 50px;
 	margin-left: 200px;
+
 }
 </style>
 <body>

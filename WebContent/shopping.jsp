@@ -15,6 +15,8 @@
 <link rel="icon" href="resources/images/logo/favicon.ico" type="image/x-icon">
 </head>
 <style>
+
+
 #paging {
 	text-align: center;
 	font-size: 20pt;
@@ -28,6 +30,7 @@ function search() {
 	var s_t = $(".search_text").val();
 	location.href = "semi.do?command=shopping&s_t=" + s_t;
 }
+
 </script>
 
 <jsp:include page="header.jsp" />
@@ -80,7 +83,7 @@ function search() {
 </section>
 
 		<jsp:include page="/shopping_paging.jsp">
-			<jsp:param value="${BoardCommand }" name="command" />
+			<jsp:param value="${ProdCommand }" name="command" />
 			<jsp:param value="${Pdto.nowBlock}" name="nowBlock" />
 			<jsp:param value="${Pdto.blockBegin }" name="blockBegin" />
 			<jsp:param value="${Pdto.blockEnd }" name="blockEnd" />
