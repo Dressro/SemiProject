@@ -30,6 +30,28 @@
 		WHERE PROD_NUM = #{prod_num}
 	</select>
 	
+	<select id="product_allCount" resultType="int">
+		SELECT COUNT(*)
+		FROM PRODUCT
+	</select>
+	
+	<select id="product_selectList"
+		parameterType="com.project.fp.dto.PagingDto" resultType="ProductDto">
+		select
+		b.rnum,b.prod_num,b.prod_name,b.prod_category
+		from
+		(select rownum as rnum,
+		a.prod_num,a.prod_name,a.prod_category
+		from
+		(select
+		prod_num, prod_name, prod_category
+		from product
+		order by prod_num desc)a
+		where rownum <![CDATA[ <= ]]>
+		#{pageEnd})b
+		where b.rnum <![CDATA[ >= ]]>
+		#{pageBegin}
+	</select>	
 	
 	
 	<insert id="insert" parameterType="ProductDto">

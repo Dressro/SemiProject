@@ -269,6 +269,7 @@ $(function(){
 						<option value="배송준비중" disabled="disabled">배송준비중</option>
 						<option value="배송중" disabled="disabled">배송중</option>
 						<option value="배송완료" disabled="disabled">배송완료</option>
+						<option value="취소요청" disabled="disabled">취소요청</option>
 					</c:if>
 					<c:if test="${dto.order_step eq '결제완료'}">
 						<option value="미결제" disabled="disabled">미결제</option>
@@ -276,6 +277,7 @@ $(function(){
 						<option value="배송준비중" disabled="disabled">배송준비중</option>
 						<option value="배송중" disabled="disabled">배송중</option>
 						<option value="배송완료" disabled="disabled">배송완료</option>
+						<option value="취소요청" disabled="disabled">취소요청</option>
 					</c:if>
 					<c:if test="${dto.order_step eq '배송준비중'}">
 						<option value="미결제" disabled="disabled">미결제</option>
@@ -283,6 +285,7 @@ $(function(){
 						<option value="배송준비중" selected>배송준비중</option>
 						<option value="배송중" disabled="disabled">배송중</option>
 						<option value="배송완료" disabled="disabled">배송완료</option>
+						<option value="취소요청" disabled="disabled">취소요청</option>
 					</c:if>
 					<c:if test="${dto.order_step eq '배송중'}">
 						<option value="미결제" disabled="disabled">미결제</option>
@@ -290,13 +293,23 @@ $(function(){
 						<option value="배송준비중" disabled="disabled">배송준비중</option>
 						<option value="배송중" selected>배송중</option>
 						<option value="배송완료" disabled="disabled">배송완료</option>
+						<option value="취소요청" disabled="disabled">취소요청</option>
 					</c:if>
 					<c:if test="${dto.order_step eq '배송완료'}">
-						<option value="미결제">미결제</option>
-						<option value="결제완료">결제완료</option>
-						<option value="배송준비중">배송준비중</option>
-						<option value="배송중">배송중</option>
+						<option value="미결제" disabled="disabled">미결제</option>
+						<option value="결제완료" disabled="disabled">결제완료</option>
+						<option value="배송준비중" disabled="disabled">배송준비중</option>
+						<option value="배송중" disabled="disabled">배송중</option>
 						<option value="배송완료" selected>배송완료</option>
+						<option value="취소요청" disabled="disabled">취소요청</option>
+					</c:if>
+					<c:if test="${dto.order_step eq '취소요청'}">
+						<option value="미결제" disabled="disabled">미결제</option>
+						<option value="결제완료" disabled="disabled">결제완료</option>
+						<option value="배송준비중" disabled="disabled">배송준비중</option>
+						<option value="배송중" disabled="disabled">배송중</option>
+						<option value="배송완료" disabled="disabled">배송완료</option>
+						<option value="취소요청" selected>취소요청</option>
 					</c:if>
 					</select>
 		</td>
@@ -322,6 +335,7 @@ $(function(){
 						<option value="배송준비중">배송준비중</option>
 						<option value="배송중">배송중</option>
 						<option value="배송완료">배송완료</option>
+						<option value="취소요청">취소요청</option>
 					</c:if>
 					<c:if test="${dto.order_step eq '결제완료'}">
 						<option value="미결제">미결제</option>
@@ -329,6 +343,7 @@ $(function(){
 						<option value="배송준비중">배송준비중</option>
 						<option value="배송중">배송중</option>
 						<option value="배송완료">배송완료</option>
+						<option value="취소요청">취소요청</option>
 					</c:if>
 					<c:if test="${dto.order_step eq '배송준비중'}">
 						<option value="미결제">미결제</option>
@@ -336,6 +351,7 @@ $(function(){
 						<option value="배송준비중" selected>배송준비중</option>
 						<option value="배송중">배송중</option>
 						<option value="배송완료">배송완료</option>
+						<option value="취소요청">취소요청</option>
 					</c:if>
 					<c:if test="${dto.order_step eq '배송중'}">
 						<option value="미결제">미결제</option>
@@ -350,6 +366,15 @@ $(function(){
 						<option value="배송준비중">배송준비중</option>
 						<option value="배송중">배송중</option>
 						<option value="배송완료" selected>배송완료</option>
+						<option value="취소요청">취소요청</option>
+					</c:if>
+					<c:if test="${dto.order_step eq '취소요청'}">
+						<option value="미결제">미결제</option>
+						<option value="결제완료">결제완료</option>
+						<option value="배송준비중">배송준비중</option>
+						<option value="배송중">배송중</option>
+						<option value="배송완료" >배송완료</option>
+						<option value="취소요청" selected>취소요청</option>
 					</c:if>
 					</select>
 		</td>

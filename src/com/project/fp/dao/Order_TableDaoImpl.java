@@ -26,7 +26,33 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 
 		return list;
 	}
-	
+
+	@Override
+	public List<Order_TableDto> mypageList(String member_id) {
+		
+		List<Order_TableDto> list = new ArrayList<Order_TableDto>();
+		
+		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace+"mypageList",member_id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+	@Override
+	public List<Order_TableDto> basketList(String member_id) {
+		
+		List<Order_TableDto> list = new ArrayList<Order_TableDto>();
+		
+		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace+"basketList",member_id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
 	@Override
 	public List<Order_TableDto> groupList() {
 
@@ -235,7 +261,6 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 
 		return res;
 	}
-
 
 	
 

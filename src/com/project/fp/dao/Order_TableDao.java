@@ -7,6 +7,8 @@ import com.project.fp.dto.Order_TableDto;
 public interface Order_TableDao {
 	
 	public List<Order_TableDto> selectList();
+	public List<Order_TableDto> mypageList(String member_id);
+	public List<Order_TableDto> basketList(String member_id);
 	public List<Order_TableDto> selectbasketList(String member_id);
 	public List<Order_TableDto> selectpayList(String member_id);
 	public List<Order_TableDto> groupList();

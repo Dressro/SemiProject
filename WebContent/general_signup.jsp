@@ -112,7 +112,6 @@ response.setContentType("text/html; charset=UTF-8");
 #general_signup_btn {
 	padding-top: 10px;
 }
-<<<<<<< HEAD
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -181,7 +180,7 @@ response.setContentType("text/html; charset=UTF-8");
 				+ $('input[name=member_phone_2]').val() + "-"
 				+ $('input[name=member_phone_3]').val();
 		$('input[name=member_phone]').attr('value', member_phone);
-		var member_addr = $('input[name=member_addr_1]').val() + " "
+		var member_addr = $('input[name=member_addr_1]').val() + ","
 				+ $('input[name=member_addr_2]').val();
 		$('input[name=member_addr]').attr('value', member_addr);
 	}
@@ -531,8 +530,8 @@ response.setContentType("text/html; charset=UTF-8");
 						</div>
 					</div>
 					<div id="general_signup_btn">
-						<input type="submit" value="회원가입" onclick="check();" />
-						<input type="button" value="취소" onclick="location.href='index.html'" />
+						<input type="submit" value="회원가입"  class="btn btn-outline-secondary" style="font-weight: bold" onclick="check();" />
+						<input type="button" value="취소"  class="btn btn-outline-secondary" style="font-weight: bold" onclick="location.href='index.html'" />
 					</div>
 				</form>
 			</div>

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.project.fp.dto.PagingDto;
 import com.project.fp.dto.ProductDto;
 
 public class ProductDaoImpl extends SqlMapConfig implements ProductDao {
@@ -160,7 +161,32 @@ int count = 0;
 	}
 
 	
+	@Override
+	public int count() {
+		int res = 0;
 
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.selectOne(namespace + "product_allCount");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	}
+
+	@Override
+	public List<ProductDto> prod_selectList(PagingDto Pdto) {
+			List<ProductDto> list = new ArrayList<ProductDto>();
+			
+			try(SqlSession session = getSqlSessionFactory().openSession(false)) {
+				list = session.selectList(namespace+"product_selectList", Pdto);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return list;
+		}
+	
 	
 
 }
