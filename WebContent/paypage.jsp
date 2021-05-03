@@ -17,10 +17,11 @@
 	function cancle() {
 		var purch = document.getElementsByName("pur")[0];
 		var prod_num = document.getElementsByName("product_num")[0];
+		var member_id = document.getElementsByName("member_id")[0];
 		if (purch == 1) {
 			location.href="semi.do?command=shopping_detail&prod_num="+prod_num;
 		} else {
-			location.href="";
+			location.href="semi.do?command=basket_list&member_id="_member_id;
 		}
 	}
 
@@ -31,6 +32,9 @@
 	int pur = (int)request.getAttribute("pur");
 	int product_num = (int)request.getAttribute("product_num");
 	String product_name = (String)request.getAttribute("product_name");
+	
+	MemberDto dto = (MemberDto)session.getAttribute("dto");
+	String member_id = dto.getMember_id();
 %>
 <body>
 <jsp:include page="header.jsp" />
@@ -38,6 +42,7 @@
 
 	<form action="semi.do" method="POST">
 		<input type="hidden" name="command" value="payment" />
+		<input type="hidden" name="member_id" value="<%=member_id%>" />
 		<input type="hidden" name="product_num" value="<%=product_num %>" />
 		<input type="hidden" name="product" value="<%=product_name %>" />
 		<input type="hidden" name="totalPrice" value="<%=total_price %>" />

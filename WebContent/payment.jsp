@@ -13,7 +13,8 @@
     String email = dto.getMember_email();
     String phone = dto.getMember_phone();
     String address = dto.getMember_addr();
-    int totalPrice = (int)request.getAttribute("totalPrice");    
+    int totalPrice = (int)request.getAttribute("totalPrice"); 
+    int pur = (int)request.getAttribute("pur"); 
 %>
 
 <!DOCTYPE html>
@@ -45,12 +46,12 @@
 	    }, function(rsp) {
 	        if ( rsp.success ) {
 	            msg = '결제가 완료되었습니다.';
-                msg += '\n고유ID : ' + rsp.imp_uid;
-                msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-                msg += '\n결제 금액 : ' + rsp.paid_amount;
-                msg += '\n카드 승인번호 : ' + rsp.apply_num;
+                // msg += '\n고유ID : ' + rsp.imp_uid;
+                // msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+                msg += '\n결제 금액 : ' + rsp.paid_amount + '원';
+                // msg += '\n카드 승인번호 : ' + rsp.apply_num;
 	            //성공시 이동할 페이지
-	            location.href='semi.do?command=paysuccess';
+	            location.href='semi.do?command=paysuccess&pur='+<%=pur%>;
 	        } else {
 	            msg = '결제에 실패하였습니다.';
 	            msg += '\n에러내용 : ' + rsp.error_msg;

@@ -1118,8 +1118,8 @@ public class SemiProjectController extends HttpServlet {
 					dispatch(response, request, "paypage.jsp");
 				} else {
 					// 다중 물품 결제
-					List<Order_TableDto> o_list = (List<Order_TableDto>) request.getAttribute("");
-					int count = Integer.parseInt(request.getParameter(""));
+					List<Order_TableDto> o_list = (List<Order_TableDto>) request.getAttribute("list");
+					int count = Integer.parseInt(purch);
 					int total_price = 0;
 					int p_n = 0;
 					for (Order_TableDto dto : o_list) {
@@ -1129,10 +1129,12 @@ public class SemiProjectController extends HttpServlet {
 
 					ProductDto p_dto = p_biz.selectOne(p_n);
 					String product_name = p_dto.getProd_name();
+					product_name += " 등 " + count + "종";
 					session.setAttribute("o_list", o_list);
 					request.setAttribute("total_price", total_price);
 					request.setAttribute("pur", count);
 					request.setAttribute("product_name", product_name);
+					request.setAttribute("product_num", p_n);
 					dispatch(response, request, "paypage.jsp");
 				}
 			}
@@ -1148,30 +1150,74 @@ public class SemiProjectController extends HttpServlet {
 			request.setAttribute("totalPrice", totalPrice);
 			dispatch(response, request, "payment.jsp");
 		} else if (command.equals("paysuccess")) {
-			Order_TableDto o_dto = (Order_TableDto) session.getAttribute("o_dto");
-
-			int prod_num = o_dto.getProd_num();
-			int order_quantity = o_dto.getOrder_quantity();
-			ProductDto p_dto = p_biz.selectOne(prod_num);
-			int prod_stock = p_dto.getProd_stock();
-			prod_stock -= order_quantity;
-			p_dto.setProd_stock(prod_stock);
-
-			int pr_res = p_biz.pay_update(p_dto);
-			if (pr_res > 0) {
-				System.out.println("재고량 수정 성공");
+			int pur = Integer.parseInt(request.getParameter("pur"));
+			if (pur == 1) {
+				Order_TableDto o_dto = (Order_TableDto) session.getAttribute("o_dto");
+				
+				int prod_num = o_dto.getProd_num();
+				int order_quantity = o_dto.getOrder_quantity();
+				ProductDto p_dto = p_biz.selectOne(prod_num);
+				int prod_stock = p_dto.getProd_stock();
+				prod_stock -= order_quantity;
+				p_dto.setProd_stock(prod_stock);
+				
+				int pr_res = p_biz.pay_update(p_dto);
+				if (pr_res > 0) {
+					System.out.println("재고량 수정 성공");
+				} else {
+					System.out.println("재고량 수정 실패");
+				}
+				
+				int o_res = o_t_biz.direct_pay_insert(o_dto);
+				if (o_res > 0) {
+					System.out.println("결제 후 주문 기록 성공");
+				} else {
+					System.out.println("결제 후 주문 기록 실패");
+				}				
+				response.sendRedirect("semi.do?command=shopping_detail&prod_num="+prod_num);
 			} else {
-				System.out.println("재고량 수정 실패");
+				List<Order_TableDto> o_list = (List<Order_TableDto>) session.getAttribute("o_list");
+				int prod_num = 0;
+				int order_quantity = 0;
+				int prod_stock = 0;
+				int order_num = 0;
+				int pr_res = 0;
+				int o_res = 0;
+				int pr_count = 0;
+				int o_count = 0;
+				for (Order_TableDto o_dto : o_list) {
+					pr_res = 0;
+					o_res = 0;
+					
+					prod_num = o_dto.getProd_num();
+					order_quantity = o_dto.getOrder_quantity();
+					ProductDto p_dto = p_biz.selectOne(prod_num);
+					prod_stock = p_dto.getProd_stock();
+					prod_stock -= order_quantity;
+					p_dto.setProd_stock(prod_stock);
+					
+					pr_res = p_biz.pay_update(p_dto);
+					if (pr_res > 0) {
+						System.out.println("재고량 수정 성공 - " + pr_count);
+					} else {
+						System.out.println("재고량 수정 실패 - " + pr_count);
+					}
+					pr_count++;
+					
+					order_num = o_dto.getOrder_num();
+					o_res = o_t_biz.update_pay(order_num);
+					if (o_res > 0) {
+						System.out.println("주문 기록 수정 성공 - " + o_count);
+					} else {
+						System.out.println("주문 기록 수정 실패 - " + o_count);
+					}
+					o_count++;
+				}
+				
+				MemberDto m_dto = (MemberDto)session.getAttribute("dto");
+				String member_id = m_dto.getMember_id();
+				response.sendRedirect("semi.do?command=basket_list&member_id="+member_id);
 			}
-
-			int o_res = o_t_biz.direct_pay_insert(o_dto);
-			if (o_res > 0) {
-				System.out.println("결제 후 주문 기록 성공");
-			} else {
-				System.out.println("결제 후 주문 기록 실패");
-			}
-
-			response.sendRedirect("semi.do?command=shopping_detail&prod_num=" + prod_num);
 		} else if (command.equals("chat_board_insert")) {
 			String member_id = request.getParameter("member_id");
 			String doctor_id = request.getParameter("doctor_id");
@@ -1404,7 +1450,9 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				jsResponse(response, "수정 실패", "index.jsp");
 			}
-		} else if (command.equals("paylist")) {
+		} else if(command.equals("paylist")) {
+			MemberDto m_dto = (MemberDto)session.getAttribute("dto");
+			String member_id = m_dto.getMember_id();
 			String[] order_num_str = request.getParameterValues("order_num");
 			int[] order_num = null;
 			List<Order_TableDto> list = new ArrayList<Order_TableDto>();
@@ -1418,8 +1466,9 @@ public class SemiProjectController extends HttpServlet {
 				Order_TableDto dto = o_t_biz.selectOne(order_num[j]);
 				list.add(dto);
 			}
+			int purch = order_num.length;
 			request.setAttribute("list", list);
-			dispatch(response, request, "semi.do?command=paypage");
+			dispatch(response, request, "semi.do?command=paypage&member_id="+member_id+"&purch="+purch);
 		}
 
 		if (command.equals("test")) {
