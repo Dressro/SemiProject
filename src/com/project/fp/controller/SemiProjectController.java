@@ -570,7 +570,7 @@ public class SemiProjectController extends HttpServlet {
 				MemberDto m_dto = m_biz.selectDetail(member_id);
 				if (order_quantity > prod_stock) {
 					session.setAttribute("dto", m_dto);
-					jsResponse(response, "남은 수량을 초과하여 장바구니에 담을 수 없습니다.",
+					jsResponse(response, "남은 수량은 초과하였습니다.",
 							"semi.do?command=shopping_detail" + "&prod_num=" + prod_num);
 				} else {
 					int order_price = prod_price * order_quantity;
@@ -1027,7 +1027,7 @@ public class SemiProjectController extends HttpServlet {
 				ms.sendEmail(from, member_email, cc, subject, content);
 				System.out.println("전송 성공");
 				session.setAttribute("content", content);
-				response.sendRedirect("signup_emailchk.jsp");
+				response.sendRedirect("signup_cert_num.jsp");
 			} catch (MessagingException me) {
 				System.out.println("메일 전송에 실패하였습니다.");
 				System.out.println("실패 이유 : " + me.getMessage());
@@ -1051,8 +1051,9 @@ public class SemiProjectController extends HttpServlet {
 			}
 		} else if (command.equals("smssend")) {
 			String member_phone = request.getParameter("member_phone");
-			String content = "문자 내용 작성";
+			String content = request.getParameter("phone_key");
 			SMS.sendSMS(member_phone, content);
+			response.sendRedirect("signup_cert_num.jsp");
 		} else if (command.equals("translation")) {
 			String text = request.getParameter("msg");
 			String source = request.getParameter("source");
@@ -1060,22 +1061,91 @@ public class SemiProjectController extends HttpServlet {
 			String result = papago.getTransSentence(text, source, target);
 			System.out.println(text + " : " + result);
 			response.getWriter().append(result);
+		} else if (command.equals("paypage")) {
+			String member_id = request.getParameter("member_id");
+			if (member_id.equals("")) {
+				jsResponse(response, "로그인 후 이용가능합니다.", "login.jsp");
+			} else {
+				String purch = request.getParameter("purch");
+				if (purch.equals("1")) { 
+					// 단일 물품 결제
+					int prod_price = Integer.parseInt(request.getParameter("prod_price"));
+					int prod_num = Integer.parseInt(request.getParameter("prod_num"));
+					int order_quantity = Integer.parseInt(request.getParameter("order_quantity"));
+					ProductDto p_dto = p_biz.selectOne(prod_num);
+					String product_name = p_dto.getProd_name();
+					int total_price = prod_price * order_quantity;
+					int pur = 1;
+					
+					request.setAttribute("product_num", prod_num);
+					request.setAttribute("total_price", total_price);
+					request.setAttribute("pur", pur);
+					request.setAttribute("product_name", product_name);
+					
+					Order_TableDto o_dto = new Order_TableDto();
+					o_dto.setOrder_quantity(order_quantity);
+					o_dto.setOrder_price(total_price);
+					o_dto.setProd_num(prod_num);
+					o_dto.setMember_id(member_id);
+					session.setAttribute("o_dto", o_dto);
+					
+					dispatch(response, request, "paypage.jsp");
+				} else { 
+					// 다중 물품 결제
+					List<Order_TableDto> o_list = (List<Order_TableDto>) request.getAttribute("");
+					int count = Integer.parseInt(request.getParameter(""));
+					int total_price = 0;
+					int p_n = 0;
+					for (Order_TableDto dto : o_list) {
+						p_n = dto.getProd_num();
+						total_price += dto.getOrder_price();
+					}
+					
+					ProductDto p_dto = p_biz.selectOne(p_n);
+					String product_name = p_dto.getProd_name();
+					session.setAttribute("o_list", o_list);
+					request.setAttribute("total_price", total_price);
+					request.setAttribute("pur", count);
+					request.setAttribute("product_name", product_name);
+					dispatch(response, request, "paypage.jsp");
+				}
+			}
 		} else if (command.equals("payment")) {
 			String pay_method = request.getParameter("pay_method");
 			String product = request.getParameter("product");
-			String name = request.getParameter("name");
-			String email = request.getParameter("email");
-			String phone = request.getParameter("phone");
-			String address = request.getParameter("address");
+			int pur = Integer.parseInt(request.getParameter("pur"));
 			int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));
+
 			request.setAttribute("pay_method", pay_method);
 			request.setAttribute("product", product);
-			request.setAttribute("name", name);
-			request.setAttribute("email", email);
-			request.setAttribute("phone", phone);
-			request.setAttribute("address", address);
+			request.setAttribute("pur", pur);
 			request.setAttribute("totalPrice", totalPrice);
-			dispatch(response, request, "payment_test.jsp");
+			dispatch(response, request, "payment.jsp");
+		} else if (command.equals("paysuccess")) {
+			Order_TableDto o_dto = (Order_TableDto) session.getAttribute("o_dto");
+			
+			int prod_num = o_dto.getProd_num();
+			int order_quantity = o_dto.getOrder_quantity();
+			ProductDto p_dto = p_biz.selectOne(prod_num);
+			int prod_stock = p_dto.getProd_stock();
+			prod_stock -= order_quantity;
+			p_dto.setProd_stock(prod_stock);
+			
+			int pr_res = p_biz.pay_update(p_dto);
+			if (pr_res > 0) {
+				System.out.println("재고량 수정 성공");
+			} else {
+				System.out.println("재고량 수정 실패");
+			}
+			
+			int o_res = o_t_biz.direct_pay_insert(o_dto);
+			if (o_res > 0) {
+				System.out.println("결제 후 주문 기록 성공");
+			} else {
+				System.out.println("결제 후 주문 기록 실패");
+			}
+			
+			response.sendRedirect("semi.do?command=shopping_detail&prod_num="+prod_num);
 		} else if (command.equals("chat_board_insert")) {
 			String member_id = request.getParameter("member_id");
 			String doctor_id = request.getParameter("doctor_id");

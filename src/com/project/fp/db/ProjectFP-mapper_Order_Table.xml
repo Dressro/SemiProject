@@ -58,6 +58,11 @@
 		INSERT INTO ORDER_TABLE
 		VALUES(ORDER_NUM_SEQ.NEXTVAL, SYSDATE, #{order_quantity}, #{order_price}, '미결제', 'N', ORDER_GROUP_SEQ.NEXTVAL, #{prod_num}, #{member_id})
 	</insert>
+	
+	<insert id="direct_pay_insert" parameterType="Order_TableDto">
+		INSERT INTO ORDER_TABLE
+		VALUES(ORDER_NUM_SEQ.NEXTVAL, SYSDATE, #{order_quantity}, #{order_price}, '결제완료', 'Y', ORDER_GROUP_SEQ.NEXTVAL, #{prod_num}, #{member_id})
+	</insert>
 
 	<update id="update" parameterType="Order_TableDto">
 		UPDATE ORDER_TABLE
@@ -69,6 +74,11 @@
 		SET ORDER_STEP = #{order_step}
 		WHERE ORDER_group = #{order_group}
 	</update>
+	<update id="update_pay" parameterType="int">
+		UPDATE ORDER_TABLE
+		SET ORDER_STEP = '결제완료', ORDER_PAY = 'Y'
+		WHERE ORDER_NUM = #{order_num}
+ 	</update>
 
 	<delete id="delete" parameterType="int">
 		DELETE FROM ORDER_TABLE
