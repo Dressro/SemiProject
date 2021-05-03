@@ -115,8 +115,15 @@
 		MEMBER_EMAIL = #{member_email},
 		MEMBER_PHONE = #{member_phone},
 		MEMBER_ADDR = #{member_addr},
+		MEMBER_PASSWORD = #{member_password}
+		WHERE MEMBER_ID = #{member_id}
+	</update>
+	
+	<update id="myanimal_update" parameterType="MemberDto">
+		UPDATE MEMBER
+		SET
 		MEMBER_ANIMAL = #{member_animal}
-		WHERE MEMBER_ID = #{member_id} AND MEMBER_PASSWORD = #{member_password}
+		WHERE MEMBER_ID = #{member_id}
 	</update>
 	
 	

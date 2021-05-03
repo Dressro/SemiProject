@@ -22,7 +22,7 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 		}
 		return list;
 	}
-	
+
 	@Override
 	public List<MemberDto> selectDoctorList() {
 		// TODO Auto-generated method stub
@@ -37,18 +37,18 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 	public MemberDto selectSerch(MemberDto dto) {
 		// TODO Auto-generated method stub
 		MemberDto m_dto = null;
-		try (SqlSession session = getSqlSessionFactory().openSession(false)){
-			m_dto = session.selectOne(namespace+"selectSerch",dto);
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			m_dto = session.selectOne(namespace + "selectSerch", dto);
 		}
 		return m_dto;
 	}
-	
+
 	@Override
 	public MemberDto selectIdSerch(MemberDto dto) {
 		// TODO Auto-generated method stub
 		MemberDto m_dto = null;
-		try(SqlSession session = getSqlSessionFactory().openSession(false)){
-			m_dto = session.selectOne(namespace+"selectIdSerch", dto);
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			m_dto = session.selectOne(namespace + "selectIdSerch", dto);
 		}
 		return m_dto;
 	}
@@ -102,7 +102,7 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 	}
 
 	@Override
-	public MemberDto selectDetail (String member_id) {
+	public MemberDto selectDetail(String member_id) {
 		MemberDto m_dto = null;
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			m_dto = session.selectOne(namespace + "selectDetail", member_id);
@@ -124,6 +124,7 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 
 		return res;
 	}
+
 	@Override
 	public int mypageupdate(MemberDto dto) {
 		int res = 0;
@@ -148,9 +149,16 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 		return res;
 	}
 
-
-
-
-
+	@Override
+	public int myanimalupdate(MemberDto dto) {
+		int res = 0;
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.delete(namespace + "myanimal_update", dto);
+			if (res > 0) {
+				session.commit();
+			}
+		}
+		return res;
+	}
 
 }

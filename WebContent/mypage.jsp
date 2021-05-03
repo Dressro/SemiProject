@@ -324,20 +324,20 @@ response.setContentType("text/html; charset=UTF-8");
 						</div>
 						<%-- email_2 결정 --%>
 						<script type="text/javascript">
-							(function () {
-								if(<%=email_addr%> == "naver.com"){
+					
+								if("<%=email_addr%>" == "naver.com"){
 									$('#addr option:eq(0)').prop("selected",true);
 								}
-								else if(<%=email_addr%> == "daum.net"){
+								else if("<%=email_addr%>" == "daum.net"){
 									$('#addr option:eq(1)').prop("selected",true);
 								}
-								else if(<%=email_addr%> == "gmail.com"){
+								else if("<%=email_addr%>" == "gmail.com"){
 									$('#addr option:eq(2)').prop("selected",true);
 								}
-								else if(<%=email_addr%> == "nate.com"){
+								else if("<%=email_addr%>" == "nate.com"){
 									$('#addr option:eq(3)').prop("selected",true);
 								}
-							});
+
 						</script>
 						<%
 							String [] phone_num = dto.getMember_phone().split("-");
@@ -410,7 +410,7 @@ response.setContentType("text/html; charset=UTF-8");
 							<h4 class="general_signup_animal_gender">성별*</h4>
 							<div class="general_signup_animal_gender">
 								<span class="general_signup_animal_gender">
-									<input type="radio" id="animal_gen_chk" name="animal_gen" value="M">
+									<input type="radio" name="animal_gen" value="M">
 									<img src="resources/images/male.svg" style="width: 20px; height: 20px;">
 									<input type="radio" name="animal_gen" value="F">
 									<img src="resources/images/female.svg" style="width: 20px; height: 20px;">
@@ -514,6 +514,7 @@ response.setContentType("text/html; charset=UTF-8");
 						
 						$('input[name=animal_name]').val('<%=a_dto.getAnimal_name()%>');
 						$('input[name=animal_type]').val('<%=a_dto.getAnimal_type()%>');
+						$('input[name="animal_gen"]:radio[value="<%=a_dto.getAnimal_gen()%>"]').prop('checked', true);
 						$('#select_age').val('<%=a_dto.getAnimal_age()%>').prop("selected",true);
 						$('#select_weight').val('<%=(int)a_dto.getAnimal_weight()%>').prop("selected",true);
 						
