@@ -12,6 +12,19 @@
 <link rel="icon" href="resources/images/logo/favicon.ico" type="image/x-icon">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript">
+
+	function cancle() {
+		var purch = document.getElementsByName("pur")[0];
+		var prod_num = document.getElementsByName("product_num")[0];
+		if (purch == 1) {
+			location.href="semi.do?command=shopping_detail&prod_num="+prod_num;
+		} else {
+			location.href="";
+		}
+	}
+
+</script>
 </head>
 <%
 	int total_price = (int)request.getAttribute("total_price");
@@ -25,9 +38,10 @@
 
 	<form action="semi.do" method="POST">
 		<input type="hidden" name="command" value="payment" />
+		<input type="hidden" name="product_num" value="<%=product_num %>" />
 		<input type="hidden" name="product" value="<%=product_name %>" />
 		<input type="hidden" name="totalPrice" value="<%=total_price %>" />
-		
+		<input type="hidden" name="pur" value="<%=pur %>" />
 		<table border="1">
 			<tr>
 				<th>결제방식</th>

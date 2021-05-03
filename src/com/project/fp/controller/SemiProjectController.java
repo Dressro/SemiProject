@@ -1034,7 +1034,7 @@ public class SemiProjectController extends HttpServlet {
 				ms.sendEmail(from, member_email, cc, subject, content);
 				System.out.println("전송 성공");
 				session.setAttribute("content", content);
-				response.sendRedirect("signup_emailchk.jsp");
+				response.sendRedirect("signup_cert_num.jsp");
 			} catch (MessagingException me) {
 				System.out.println("메일 전송에 실패하였습니다.");
 				System.out.println("실패 이유 : " + me.getMessage());
@@ -1058,8 +1058,9 @@ public class SemiProjectController extends HttpServlet {
 			}
 		} else if (command.equals("smssend")) {
 			String member_phone = request.getParameter("member_phone");
-			String content = "문자 내용 작성";
+			String content = request.getParameter("phone_key");
 			SMS.sendSMS(member_phone, content);
+			response.sendRedirect("signup_cert_num.jsp");
 		} else if (command.equals("translation")) {
 			String text = request.getParameter("msg");
 			String source = request.getParameter("source");
@@ -1100,23 +1101,16 @@ public class SemiProjectController extends HttpServlet {
 					// 다중 물품 결제
 					List<Order_TableDto> o_list = (List<Order_TableDto>) request.getAttribute("");
 					int count = Integer.parseInt(request.getParameter(""));
-					List<Integer> order_quantity = new ArrayList<Integer>();
-					List<Integer> prod_num = new ArrayList<Integer>();
 					int total_price = 0;
-					int i = 0;
 					int p_n = 0;
 					for (Order_TableDto dto : o_list) {
 						p_n = dto.getProd_num();
-						prod_num.add(dto.getProd_num());
-						order_quantity.add(dto.getOrder_quantity());
 						total_price += dto.getOrder_price();
-						i++;
 					}
 					
 					ProductDto p_dto = p_biz.selectOne(p_n);
 					String product_name = p_dto.getProd_name();
-					request.setAttribute("product_num", prod_num.toString());
-					request.setAttribute("order_quantity", order_quantity.toString());
+					session.setAttribute("o_list", o_list);
 					request.setAttribute("total_price", total_price);
 					request.setAttribute("pur", count);
 					request.setAttribute("product_name", product_name);
@@ -1126,10 +1120,12 @@ public class SemiProjectController extends HttpServlet {
 		} else if (command.equals("payment")) {
 			String pay_method = request.getParameter("pay_method");
 			String product = request.getParameter("product");
+			int pur = Integer.parseInt(request.getParameter("pur"));
 			int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));
 
 			request.setAttribute("pay_method", pay_method);
 			request.setAttribute("product", product);
+			request.setAttribute("pur", pur);
 			request.setAttribute("totalPrice", totalPrice);
 			dispatch(response, request, "payment.jsp");
 		} else if (command.equals("paysuccess")) {
