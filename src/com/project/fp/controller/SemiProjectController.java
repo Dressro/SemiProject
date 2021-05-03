@@ -1309,6 +1309,7 @@ public class SemiProjectController extends HttpServlet {
 				list.add(dto);
 			}
 			request.setAttribute("list", list);
+			dispatch(response, request, "semi.do?command=paypage");
 		}
 
 		if (command.equals("test")) {
