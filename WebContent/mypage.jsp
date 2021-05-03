@@ -13,7 +13,8 @@
 <%@page import="com.project.fp.biz.MemberBizImpl"%>
 <%@page import="com.project.fp.biz.MemberBiz"%>
 <%@page import="com.project.fp.dto.MemberDto"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
@@ -29,23 +30,70 @@ response.setContentType("text/html; charset=UTF-8");
 <meta charset="UTF-8">
 <title>Family|Pet</title>
 <link rel="icon" href="resources/images/logo/favicon.ico" type="image/x-icon">
-<link href="resources/css/mypage.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.animal {
+	display: none;
+}
+.orderIng ol li {
+    left: 61px;
+    padding-right: 45px;
+}
+</style>
+
+
+<link href="resources/css/head.css" rel=stylesheet type="text/css" />
+<style type="text/css">
+	.mymenus li {
+	float: left;
+	}
+	.mymenu {
+	display: block;
+	color: black;
+	text-align: center;
+	padding: 15px 20px;
+	text-decoration: none;
+	}
+	.mymenus {
+	list-style-type: none;
+	margin: 0;
+	overflow: hidden;
+	list-style: none;
+	}
+	.s-btn{
+	border: none;
+	display: inline-block;
+	padding: 5px 5px 5px 8px;
+	background: #f45d96;
+	font-size: 14px;
+	color: #ffffff;
+	font-weight: 600;
+	letter-spacing: 4px;
+	text-transform: uppercase;
+	}
+</style>
+
+</head>
+<body>
+
+
+	<jsp:include page="header.jsp" />
+
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
-	function chk(value) {
+	function chk(value){
 		$('.animal').trigger('click');
-		if (value == "N") {
-			$("input[name=animal_name]").attr("required", "false");
-			$("input[id=animal_gen_chk]").attr("checked", "unchecked");
-			$(".animal").hide();
-		} else {
-			$(".animal").show();
-			$("input[id=animal_gen_chk]").attr("checked", "checked");
-			$("input[name=animal_name]").attr("required", "true");
-		}
+			if(value == "N"){
+				$("input[name=animal_name]").attr("required","false");
+				$("input[id=animal_gen_chk]").attr("checked","unchecked");
+				$(".animal").hide();
+			}else{
+				$(".animal").show();
+				$("input[id=animal_gen_chk]").attr("checked","checked");
+				$("input[name=animal_name]").attr("required","true");
+			}
 	}
-
 	function check() {
 		var member_email = $('input[name=member_email_1]').val() + "@"
 				+ $('select[name=member_email_2]').val();
@@ -57,6 +105,30 @@ response.setContentType("text/html; charset=UTF-8");
 		var member_addr = $('input[name=member_addr_1]').val() + ","
 				+ $('input[name=member_addr_2]').val();
 		$('input[name=member_addr]').attr('value', member_addr);
+	}
+	
+	function sendmailkey() {
+		var member_email = $('input[name=member_email_1]').val() + "@"
+				+ $('select[name=member_email_2]').val();
+		if ($('input[name=member_email_1]').val().trim() == ""
+				|| $('input[name=member_email_1]').val() == null) {
+			alert("이메일을 입력해 주세요");
+		} else {
+			open("semi.do?command=mailsend&member_email=" + member_email, "",
+					"width=200 , height= 200");
+		}
+	}
+	function sendsms() {
+		var member_phone = $('input[name=member_phone_1]').val()
+				+ $('input[name=member_phone_2]').val()
+				+ $('input[name=member_phone_3]').val();
+		if ($('input[name=member_phone_1]').val().trim() == ""
+				|| $('input[name=member_phone_1]').val() == null) {
+			alert("전화번호를 입력해 주세요");
+		} else {
+			open("semi.do?command=smssend&member_phone=" + member_phone, "",
+					"width=200 , height= 200");
+		}
 	}
 	function sendmailkey() {
 		var member_email = $('input[name=member_email_1]').val() + "@"
@@ -577,3 +649,4 @@ response.setContentType("text/html; charset=UTF-8");
 <jsp:include page="bottom.jsp" />
 </body>
 </html>
+

@@ -332,7 +332,7 @@ public class SemiProjectController extends HttpServlet {
 				a_dto.setMember_id(member_id);
 				a_res = a_biz.insert(a_dto);
 				System.out.println("animal insert 성공");
-			} else if(request.getParameter("animalN_Y") == null && member_animal.equals("Y")){
+			} else if (request.getParameter("animalN_Y") == null && member_animal.equals("Y")) {
 				String animal_name = request.getParameter("animal_name");
 				String animal_gen = request.getParameter("animal_gen");
 				String animal_type = request.getParameter("animal_type");
@@ -1306,21 +1306,22 @@ public class SemiProjectController extends HttpServlet {
 				} else {
 					jsResponse(response, "삭제 실패", "semi.do?command=adminpage");
 				}
-			}			
-		} else if(command.equals("order_my_delete")){
+			}
+		} else if (command.equals("order_my_delete")) {
 			String[] order_num_str = request.getParameterValues("order_num");
 			int[] order_num = null;
-			if(order_num_str != null){
+			if (order_num_str != null) {
 				order_num = new int[order_num_str.length];
-				for(int i=0;i<order_num_str.length;i++) {
+				for (int i = 0; i < order_num_str.length; i++) {
 					order_num[i] = Integer.parseInt(order_num_str[i]);
 				}
-					int res = o_t_biz.mulDelete(order_num);
-				if(res > 0) {
-					jsResponse(response, "삭제 성공", "index.jsp");
-				} else {
-					jsResponse(response, "삭제 실패", "index.jsp");
-				}
+			}
+
+			int res = o_t_biz.mulDelete(order_num);
+			if (res > 0) {
+				jsResponse(response, "삭제 성공", "index.jsp");
+			} else {
+				jsResponse(response, "삭제 실패", "index.jsp");
 			}
 
 		} else if (command.equals("dec_insert")) {
@@ -1404,24 +1405,25 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				jsResponse(response, "수정 실패", "index.jsp");
 			}
-		} else if(command.equals("paylist")) {
+		} else if (command.equals("paylist")) {
 			String[] order_num_str = request.getParameterValues("order_num");
 			int[] order_num = null;
 			List<Order_TableDto> list = new ArrayList<Order_TableDto>();
-			if(order_num_str != null){
+			if (order_num_str != null) {
 				order_num = new int[order_num_str.length];
-				for(int i=0;i<order_num_str.length;i++) {
+				for (int i = 0; i < order_num_str.length; i++) {
 					order_num[i] = Integer.parseInt(order_num_str[i]);
 				}
 			}
-			for(int j=0;j<order_num.length;j++) {
+			for (int j = 0; j < order_num.length; j++) {
 				Order_TableDto dto = o_t_biz.selectOne(order_num[j]);
 				list.add(dto);
 			}
 			request.setAttribute("list", list);
+			dispatch(response, request, "semi.do?command=paypage");
 		}
 
-		if (command.equals("test")){
+		if (command.equals("test")) {
 			File fi = new File("C://Users//alahx/test123123123678678678.csv");
 			BufferedReader br = new BufferedReader(new BufferedReader(new FileReader(fi)));
 			String line = "";

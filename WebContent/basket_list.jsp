@@ -264,28 +264,6 @@ option:disabled {
 															<c:if test="${dto.order_step eq '취소요청'}">
 																<option value="취소요청" selected>취소요청</option>
 															</c:if>
-													</td>
-													<td>${dto.order_num }</td>
-													<td style="text-overflow: ellipsis; overflow: hidden;">${dto.prod_name }</td>
-													<td>${dto.order_quantity }</td>
-													<td>${dto.order_price }</td>
-													<td>
-														<select name="order_step">
-															<c:if test="${dto.order_step eq '결제완료'}">
-																<option value="결제완료" selected>결제완료</option>
-															</c:if>
-															<c:if test="${dto.order_step eq '배송준비중'}">
-																<option value="배송준비중" selected>배송준비중</option>
-															</c:if>
-															<c:if test="${dto.order_step eq '배송중'}">
-																<option value="배송중" selected>배송중</option>
-															</c:if>
-															<c:if test="${dto.order_step eq '배송완료'}">
-																<option value="배송완료" selected>배송완료</option>
-															</c:if>
-															<c:if test="${dto.order_step eq '취소요청'}">
-																<option value="취소요청" selected>취소요청</option>
-															</c:if>
 														</select>
 													</td>
 													<td>
@@ -306,7 +284,6 @@ option:disabled {
 								</c:otherwise>
 							</c:choose>
 						</tbody>
-
 					</table>
 				</form>
 			</div>
