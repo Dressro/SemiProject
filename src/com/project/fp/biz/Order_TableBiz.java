@@ -8,6 +8,7 @@ public interface Order_TableBiz {
 	
 	public List<Order_TableDto> selectList();
 	public List<Order_TableDto> mypageList(String member_id);
+	public List<Order_TableDto> basketList(String member_id);
 	public List<Order_TableDto> selectbasketList(String member_id);
 	public List<Order_TableDto> selectpayList(String member_id);
 	public List<Order_TableDto> groupList();
