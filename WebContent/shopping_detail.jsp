@@ -55,8 +55,6 @@
         </ul>
     </div>
 </nav>
-<div class="filter"> <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#mobile-filter" aria-expanded="false" aria-controls="mobile-filter">Filters<span class="fa fa-filter pl-1"></span></button>
-</div>
 <div id="mobile-filter">
     <div>
         <h6 class="p-1 border-bottom">SHOP</h6>

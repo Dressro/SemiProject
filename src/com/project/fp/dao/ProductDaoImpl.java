@@ -186,7 +186,20 @@ int count = 0;
 
 			return list;
 		}
-	
+
+	@Override
+	public int category_count(String prod_category) {
+		int res = 0;
+
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.selectOne(namespace + "product_categoryCount",prod_category );
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	}
+
 	
 
 }

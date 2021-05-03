@@ -15,6 +15,8 @@
 <link rel="icon" href="resources/images/logo/favicon.ico" type="image/x-icon">
 </head>
 <style>
+
+
 #paging {
 	text-align: center;
 	font-size: 20pt;
@@ -24,6 +26,14 @@
 	font-size: 20pt;
 }
 </style>
+<script type="text/javascript">
+
+function search() {
+	var s_t = $(".search_text").val();
+	location.href = "semi.do?command=shopping&s_t=" + s_t;
+}
+
+</script>
 
 <jsp:include page="header.jsp" />
 <body>
@@ -36,15 +46,15 @@
 		<nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom"> <a class="navbar-brand ml-2 font-weight-bold" href="#">MENU</a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor" aria-controls="navbarColor" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
     <div class="collapse navbar-collapse" id="navbarColor">
         <ul class="navbar-nav">
-            <li class="nav-item "><a class="nav-link" href="semi.do?command=shopping">Home</a> </li>
+            <li class="nav-item"><a class="nav-link" href="semi.do?command=shopping">Home</a> </li>
         </ul>
     </div>
+ 		<input id="search" type="text" class="search_text" value="" placeholder="상품명을 입력하세요" style="width:300px; float: right;"/>
+    <button class="s-btn" type="button" onclick="search();" style="float: right;">검색</button>
 </nav>
-<div class="filter"> <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#mobile-filter" aria-expanded="false" aria-controls="mobile-filter">Filters<span class="fa fa-filter pl-1"></span></button>
-</div>
+		
 <div id="mobile-filter">
     <div>
-        <h6 class="p-1 border-bottom">SHOP</h6>
         <ul>
            					 <li><a href="semi.do?command=category&prod_category=feed">사료/간식</a>
 							 <li><a href="semi.do?command=category&prod_category=care">케어</a></li>
@@ -53,10 +63,12 @@
 							 <li><a href="semi.do?command=category&prod_category=toy">장난감</a></li>
 							 <li><a href="semi.do?command=category&prod_category=fashion">패션</a></li>
         </ul>
+      
     </div>
 </div>
 <section id="products">
     <div class="container">
+    	
         <div class="row">
 		<c:forEach items="${list }" var="dto"> 
             <div class="col-lg-3 col-sm-4 col-11 offset-sm-0 offset-1">

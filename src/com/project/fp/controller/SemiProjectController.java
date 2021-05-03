@@ -570,9 +570,17 @@ public class SemiProjectController extends HttpServlet {
 			request.setAttribute("Pdto", pdto);
 			dispatch(response, request, "shopping.jsp");
 		} else if (command.equals("category")) {
+			int nowPage = 1;
+			if (request.getParameter("nowPage") != null) {
+				nowPage = Integer.parseInt(request.getParameter("nowPage"));
+			}
 			String prod_category = request.getParameter("prod_category");
-			List<ProductDto> list = p_biz.selectcategory(prod_category);
+			int count = p_biz.category_count(prod_category);
+			List<ProductDto> list = new ArrayList<ProductDto>();
+			PagingDto pdto = new PagingDto(count, nowPage, prod_category);
+			list = p_biz.prod_selectList(pdto);
 			request.setAttribute("list", list);
+			request.setAttribute("Pdto", pdto);
 			dispatch(response, request, "shopping.jsp");
 		} else if (command.equals("shopping_detail")) {
 			int prod_num = Integer.parseInt(request.getParameter("prod_num"));

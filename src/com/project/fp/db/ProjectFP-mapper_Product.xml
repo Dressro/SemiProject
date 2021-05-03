@@ -35,10 +35,16 @@
 		FROM PRODUCT
 	</select>
 	
-	<select id="product_selectList"
+	<select id="product_categoryCount" resultType="int">
+		SELECT COUNT(*)
+		FROM PRODUCT
+		WHERE PROD_CATEGORY = #{prod_category}
+	</select>
+	
+	<select id="product_category_selectList"
 		parameterType="com.project.fp.dto.PagingDto" resultType="ProductDto">
 		select
-		b.rnum,b.prod_num,b.prod_name,b.prod_category
+		b.rnum,b.prod_num,b.prod_name,prod_category
 		from
 		(select rownum as rnum,
 		a.prod_num,a.prod_name,a.prod_category
