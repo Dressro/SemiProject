@@ -117,7 +117,13 @@ public class SemiProjectController extends HttpServlet {
 
 		if (command.equals("signup")) {
 			response.sendRedirect("signup.jsp");
-		} else if (command.equals("general_signup")) {
+		} else if(command.equals("index")){
+			List<BoardDto> f_list = b_biz.index_free();
+			List<BoardDto> n_list = b_biz.index_notice();
+			session.setAttribute("f_list", f_list);
+			session.setAttribute("n_list", n_list);
+			dispatch(response, request, "index.jsp");
+		}else if (command.equals("general_signup")) {
 			response.sendRedirect("general_signup.jsp");
 		} else if (command.equals("doctor_signup")) {
 			response.sendRedirect("doctor_signup.jsp");

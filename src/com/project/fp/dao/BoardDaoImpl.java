@@ -68,6 +68,24 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 	}
 	
 	@Override
+	public List<BoardDto> index_free() {
+		List<BoardDto> list = new ArrayList<BoardDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "index_free");
+		}
+		return list;
+	}
+
+	@Override
+	public List<BoardDto> index_notice() {
+		List<BoardDto> list = new ArrayList<BoardDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "index_notice");
+		}
+		return list;
+	}
+
+	@Override
 	public List<BoardDto> board_List() {
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
@@ -461,6 +479,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		return count;
 	}
 
+	
 	
 
 	
