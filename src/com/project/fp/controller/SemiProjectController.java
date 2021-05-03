@@ -577,7 +577,7 @@ public class SemiProjectController extends HttpServlet {
 			String prod_category = request.getParameter("prod_category");
 			int count = p_biz.category_count(prod_category);
 			List<ProductDto> list = new ArrayList<ProductDto>();
-			PagingDto pdto = new PagingDto(count, nowPage, prod_category);
+			PagingDto pdto = new PagingDto(count, nowPage);
 			list = p_biz.prod_selectList(pdto);
 			request.setAttribute("list", list);
 			request.setAttribute("Pdto", pdto);
