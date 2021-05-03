@@ -53,6 +53,20 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 
 		return list;
 	}
+	
+	@Override
+	public List<Order_TableDto> payList(Order_TableDto dto) {
+		
+		List<Order_TableDto> list = new ArrayList<Order_TableDto>();
+		
+		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace+"payList",dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
 	@Override
 	public List<Order_TableDto> groupList() {
 
@@ -231,6 +245,31 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 
 		return res;
 	}
+
+	@Override
+	public int mulDelete(int[] order_nums) {
+		int count = 0;
+		
+		Map<String, int[]> map = new HashMap<String, int[]>();
+		map.put("order_nums", order_nums);
+		
+		SqlSession session = null;
+		try {
+			session = getSqlSessionFactory().openSession(false);
+			count = session.delete(namespace+"mulDelete",map);
+			if(count == order_nums.length) {
+				session.commit();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		
+		return count;
+	}
+
+	
 
 	
 

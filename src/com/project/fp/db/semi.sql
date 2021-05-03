@@ -130,11 +130,12 @@ select * from PRODUCT;
 
 INSERT INTO ORDER_TABLE
 		VALUES(ORDER_NUM_SEQ.nextval, sysdate, '2', '20000', 
-		'결제완료', 'N','30' ,12, 'test');
+		'미결제', 'N','30' ,12, 'test');
 SELECT COLUMN_NAME, DATA_TYPE FROM all_tab_columns where table_name='ORDER_TABLE';
 UPDATE ORDER_TABLE SET ORDER_STEP = ''
 WHERE ORDER_GROUP = '1';
 select * from order_table;
+select * from order_table where order_group='40' and order_step = '미결제';
 
 CREATE TABLE CHAT (
 	CH_NUM NUMBER NOT NULL,

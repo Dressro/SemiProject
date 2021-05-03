@@ -332,7 +332,7 @@ if (dto == null) {
 											<td style="text-overflow:ellipsis; overflow:hidden;"></td>
 											<td style="text-overflow:ellipsis; overflow:hidden;">${dto.prod_name }</td>
 											<td>${dto.order_quantity }</td>
-											<td>${dto.order_price }</td>
+											<td>${dto.order_price }원</td>
 											<td>
 												<select>
 														<c:if test="${dto.order_step eq '결제완료'}">
@@ -361,7 +361,7 @@ if (dto == null) {
 											<td>${dto.order_num }</td>
 											<td style="text-overflow:ellipsis; overflow:hidden;">${dto.prod_name }</td>
 											<td>${dto.order_quantity }</td>
-											<td>${dto.order_price }</td>
+											<td>${dto.order_price }원</td>
 											<td>
 												<select name="order_step">
 														<c:if test="${dto.order_step eq '결제완료'}">

@@ -28,6 +28,12 @@ public class Order_TableBizImpl implements Order_TableBiz {
 	}
 	
 	@Override
+	public List<Order_TableDto> payList(Order_TableDto dto) {
+		// TODO Auto-generated method stub
+		return dao.payList(dto);
+	}
+	
+	@Override
 	public List<Order_TableDto> groupList() {
 		// TODO Auto-generated method stub
 		return dao.groupList();
@@ -92,6 +98,12 @@ public class Order_TableBizImpl implements Order_TableBiz {
 
 		return dao.basket_insert(dto);
 	}
+	@Override
+	public int mulDelete(int[] order_nums) {
+		// TODO Auto-generated method stub
+		return dao.mulDelete(order_nums);
+	}
+	
 	
 
 	
