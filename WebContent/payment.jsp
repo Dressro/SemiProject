@@ -48,7 +48,7 @@
 	            msg = '결제가 완료되었습니다.';
                 // msg += '\n고유ID : ' + rsp.imp_uid;
                 // msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-                msg += '\n결제 금액 : ' + rsp.paid_amount;
+                msg += '\n결제 금액 : ' + rsp.paid_amount + '원';
                 // msg += '\n카드 승인번호 : ' + rsp.apply_num;
 	            //성공시 이동할 페이지
 	            location.href='semi.do?command=paysuccess&pur='+<%=pur%>;

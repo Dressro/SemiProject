@@ -1119,8 +1119,8 @@ public class SemiProjectController extends HttpServlet {
 					dispatch(response, request, "paypage.jsp");
 				} else {
 					// 다중 물품 결제
-					List<Order_TableDto> o_list = (List<Order_TableDto>) request.getAttribute("");
-					int count = Integer.parseInt(request.getParameter(""));
+					List<Order_TableDto> o_list = (List<Order_TableDto>) request.getAttribute("list");
+					int count = Integer.parseInt(purch);
 					int total_price = 0;
 					int p_n = 0;
 					for (Order_TableDto dto : o_list) {
@@ -1135,6 +1135,7 @@ public class SemiProjectController extends HttpServlet {
 					request.setAttribute("total_price", total_price);
 					request.setAttribute("pur", count);
 					request.setAttribute("product_name", product_name);
+					request.setAttribute("product_num", p_n);
 					dispatch(response, request, "paypage.jsp");
 				}
 			}
@@ -1213,6 +1214,10 @@ public class SemiProjectController extends HttpServlet {
 					}
 					o_count++;
 				}
+				
+				MemberDto m_dto = (MemberDto)session.getAttribute("dto");
+				String member_id = m_dto.getMember_id();
+				response.sendRedirect("semi.do?command=basket_list&member_id="+member_id);
 			}
 		} else if (command.equals("chat_board_insert")) {
 			String member_id = request.getParameter("member_id");
@@ -1447,6 +1452,8 @@ public class SemiProjectController extends HttpServlet {
 				jsResponse(response, "수정 실패", "index.jsp");
 			}
 		} else if(command.equals("paylist")) {
+			MemberDto m_dto = (MemberDto)session.getAttribute("dto");
+			String member_id = m_dto.getMember_id();
 			String[] order_num_str = request.getParameterValues("order_num");
 			int[] order_num = null;
 			List<Order_TableDto> list = new ArrayList<Order_TableDto>();
@@ -1460,8 +1467,9 @@ public class SemiProjectController extends HttpServlet {
 				Order_TableDto dto = o_t_biz.selectOne(order_num[j]);
 				list.add(dto);
 			}
+			int purch = order_num.length;
 			request.setAttribute("list", list);
-			dispatch(response, request, "semi.do?command=paypage");
+			dispatch(response, request, "semi.do?command=paypage&member_id="+member_id+"&purch="+purch);
 		}
 
 		if (command.equals("test")){
