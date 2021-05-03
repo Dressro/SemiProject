@@ -210,7 +210,7 @@ option:disabled {
 													<td style="text-overflow: ellipsis; overflow: hidden;"></td>
 													<td style="text-overflow: ellipsis; overflow: hidden;">${dto.prod_name }</td>
 													<td>${dto.order_quantity }</td>
-													<td>${dto.order_price }</td>
+													<td>${dto.order_price }원</td>
 													<td>
 														<select>
 															<c:if test="${dto.order_step eq '결제완료'}">
@@ -242,6 +242,29 @@ option:disabled {
 														<c:if test="${dto.order_step eq '결제완료' }">
 															<input type="checkbox" name="order_group" value="${dto.order_group }">
 														</c:if>
+													</td>
+													<td>${dto.order_num }</td>
+													<td style="text-overflow: ellipsis; overflow: hidden;">${dto.prod_name }</td>
+													<td>${dto.order_quantity }</td>
+													<td>${dto.order_price }원</td>
+													<td>
+														<select name="order_step">
+															<c:if test="${dto.order_step eq '결제완료'}">
+																<option value="결제완료" selected>결제완료</option>
+															</c:if>
+															<c:if test="${dto.order_step eq '배송준비중'}">
+																<option value="배송준비중" selected>배송준비중</option>
+															</c:if>
+															<c:if test="${dto.order_step eq '배송중'}">
+																<option value="배송중" selected>배송중</option>
+															</c:if>
+															<c:if test="${dto.order_step eq '배송완료'}">
+																<option value="배송완료" selected>배송완료</option>
+															</c:if>
+															<c:if test="${dto.order_step eq '취소요청'}">
+																<option value="취소요청" selected>취소요청</option>
+															</c:if>
+														</select>
 													</td>
 													<td>${dto.order_num }</td>
 													<td style="text-overflow: ellipsis; overflow: hidden;">${dto.prod_name }</td>
@@ -293,87 +316,55 @@ option:disabled {
 				<h2 class="mb-5">장바구니 목록</h2>
 
 				<form action="semi.do" method="post">
-					<input type="hidden" name="command" value="shop_insertform">
+					<input type="hidden" name="command" value="paylist">
+					<input type="hidden" name="member_id" value="${dto.member_id }">
 					<table border="1" class="table custom-table" style="table-layout: fixed">
-						<col width="30" />
+						<col width="50" />
+						<col width="300" />
+						<col width="100" />
 						<col width="100" />
 						<col width="130" />
-						<col width="80" />
-						<col width="80" />
-						<col width="130" />
-						<col width="150" />
-						<col width="200" />
+						<col width="250" />
 
 						<tr>
 							<th></th>
-							<th>주문번호</th>
 							<th>상품명</th>
 							<th>수량</th>
-							<th>결제금액</th>
+							<th>금액</th>
 							<th>주문상태</th>
-							<th>주문일</th>
 							<th>배송지</th>
 						</tr>
 						<tbody>
 							<c:choose>
 								<c:when test="${empty list }">
 									<tr>
-										<th colspan="8">----------주문내역이 존재하지 않습니다----------</th>
+
+										<th colspan="6">----------주문내역이 존재하지 않습니다----------</th>
 									</tr>
 								</c:when>
 								<c:otherwise>
-									<c:set var="tempname" value="" />
 									<c:forEach items="${list }" var="dto">
-										<c:choose>
-											<c:when test="${dto.order_group eq tempname}">
-												<tr>
-													<td></td>
-													<td style="text-overflow: ellipsis; overflow: hidden;"></td>
-													<td style="text-overflow: ellipsis; overflow: hidden;">${dto.prod_name }</td>
-													<td>${dto.order_quantity }</td>
-													<td>${dto.order_price }</td>
-													<td>
-														<select>
-															<c:if test="${dto.order_step eq '미결제'}">
-																<option value="미결제" selected>미결제</option>
-															</c:if>
-
-														</select>
-													</td>
-													<td>
-														<fmt:formatDate value="${dto.order_date }" pattern="yyyy-MM-dd a hh:mm" />
-													</td>
-													<td style="text-overflow: ellipsis; overflow: hidden;"></td>
-												</tr>
-											</c:when>
-											<c:otherwise>
-												<tr>
-													<td>
-														<input type="checkbox" name="order_group" value="${dto.order_group }">
-													</td>
-													<td>${dto.order_num }</td>
-													<td style="text-overflow: ellipsis; overflow: hidden;">${dto.prod_name }</td>
-													<td>${dto.order_quantity }</td>
-													<td>${dto.order_price }</td>
-													<td>
-														<select name="order_step">
-															<c:if test="${dto.order_step eq '미결제'}">
-																<option value="미결제" selected>미결제</option>
-															</c:if>
-														</select>
-													</td>
-													<td>
-														<fmt:formatDate value="${dto.order_date }" pattern="yyyy-MM-dd a hh:mm" />
-													</td>
-													<td style="text-overflow: ellipsis; overflow: hidden;"></td>
-												</tr>
-											</c:otherwise>
-										</c:choose>
+										<tr>
+											<td>
+												<input type="checkbox" name="order_num" value="${dto.order_num }">
+											</td>
+											<td style="text-overflow: ellipsis; overflow: hidden;">${dto.prod_name }</td>
+											<td>${dto.order_quantity }</td>
+											<td>${dto.order_price }원</td>
+											<td>
+												<select name="order_step">
+													<c:if test="${dto.order_step eq '미결제'}">
+														<option value="미결제" selected>미결제</option>
+													</c:if>
+												</select>
+											</td>
+											<td style="text-overflow: ellipsis; overflow: hidden;"></td>
+										</tr>
 										<c:set var="tempname" value="${dto.order_group}" />
 
 									</c:forEach>
 									<tr>
-										<td colspan="8" align="right">
+										<td colspan="6" align="right">
 											<input type="submit" value="결제하기" class="s-btn" />
 											<input type="submit" value="목록삭제" class="s-btn" formaction="semi.do?command=order_my_delete" formmethod="post" />
 										</td>
