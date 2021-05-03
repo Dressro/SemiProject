@@ -40,9 +40,6 @@ response.setContentType("text/html; charset=UTF-8");
     padding-right: 45px;
 }
 </style>
-
-
-<link href="resources/css/head.css" rel=stylesheet type="text/css" />
 <style type="text/css">
 	.mymenus li {
 	float: left;

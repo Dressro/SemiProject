@@ -57,7 +57,7 @@
 <div class="row">
 <div class="col-lg-12 text-center">
 
-<p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This is made with by <a href="index.jsp" target="_blank">Family Pet</a>
+<p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This is made with by <a href="">Family Pet</a>
 </p>
 
 </div>

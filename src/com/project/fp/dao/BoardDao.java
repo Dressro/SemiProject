@@ -12,6 +12,8 @@ public interface BoardDao {
 	public int qna_allCount();
 	public int dec_allCount();
 
+	public List<BoardDto> index_free();
+	public List<BoardDto> index_notice();
 	public List<BoardDto> board_List();
 	public List<BoardDto> board_M_search(BoardDto dto);
 	public List<BoardDto> board_C_search(BoardDto dto);
