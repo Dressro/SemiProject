@@ -38,10 +38,7 @@
 		<nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom"> <a class="navbar-brand ml-2 font-weight-bold" href="#">MENU</a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor" aria-controls="navbarColor" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
     <div class="collapse navbar-collapse" id="navbarColor">
         <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link" href="#">멍멍이</a> </li>
-            <li class="nav-item"><a class="nav-link" href="#">야옹이</a> </li>
-            <li class="nav-item "><a class="nav-link" href="#">Home</a> </li>
-            <li class="nav-item "><a class="nav-link" href="#">Sale</a> </li>
+            <li class="nav-item "><a class="nav-link" href="semi.do?command=shopping">Home</a> </li>
         </ul>
     </div>
 </nav>

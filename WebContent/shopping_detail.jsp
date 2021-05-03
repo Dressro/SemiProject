@@ -51,10 +51,7 @@
 		<nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom"> <a class="navbar-brand ml-2 font-weight-bold" href="#">MENU</a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor" aria-controls="navbarColor" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
     <div class="collapse navbar-collapse" id="navbarColor">
         <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link" href="#">멍멍이</a> </li>
-            <li class="nav-item"><a class="nav-link" href="#">야옹이</a> </li>
-            <li class="nav-item "><a class="nav-link" href="#">Home</a> </li>
-            <li class="nav-item "><a class="nav-link" href="#">Sale</a> </li>
+            <li class="nav-item "><a class="nav-link" href="semi.do?command=shopping">Home</a> </li>
         </ul>
     </div>
 </nav>
@@ -64,12 +61,13 @@
     <div>
         <h6 class="p-1 border-bottom">SHOP</h6>
         <ul>
-           					 <li><a href="#">사료/간식</a>
-							 <li><a href="#">케어</a></li>
-							 <li><a href="#">리빙</a></li>
-							 <li><a href="#">외출</a></li>
-							 <li><a href="#">장난감</a></li>
-							 <li><a href="#">패션</a></li>
+           					  <li><a href="semi.do?command=category&prod_category=feed">사료/간식</a>
+							 <li><a href="semi.do?command=category&prod_category=care">케어</a></li>
+							 <li><a href="semi.do?command=category&prod_category=living">리빙</a></li>
+							 <li><a href="semi.do?command=category&prod_category=outing">외출</a></li>
+							 <li><a href="semi.do?command=category&prod_category=toy">장난감</a></li>
+							 <li><a href="semi.do?command=category&prod_category=fashion">패션</a></li>
+
         </ul>
     </div>
 </div>
