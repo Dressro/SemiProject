@@ -1257,6 +1257,41 @@ public class SemiProjectController extends HttpServlet {
 			request.setAttribute("f_dto", f_dto);
 			request.setAttribute("l_dto", l_dto);
 			dispatch(response, request, "dec_updateform.jsp");
+		} else if (command.equals("basket_list")) {
+			String member_id = request.getParameter("member_id");
+			List<Order_TableDto> list = o_t_biz.basketList(member_id);
+			List<Order_TableDto> s_list = o_t_biz.mypageList(member_id);
+			request.setAttribute("list", list);
+			request.setAttribute("s_list", s_list);
+			dispatch(response, request, "basket_list.jsp");
+		} else if (command.equals("order_my_update")) {
+			String[] order_group_str = request.getParameterValues("order_group");
+			
+			int res = 0;
+			int[] order_group = null;
+			String[] order_step = null;
+			if(order_group_str != null){
+				order_group = new int[order_group_str.length];
+				for(int i=0;i<order_group_str.length;i++) {
+					order_group[i] = Integer.parseInt(order_group_str[i]);
+				}
+			}
+			for (int j = 0; j < order_group.length; j++) {
+				order_step = new String[order_group.length];
+				order_step[j] = "취소요청";
+			}
+			for(int k=0;k<order_group.length;k++) {
+				Order_TableDto dto = new Order_TableDto();
+				dto.setOrder_group(order_group[k]);
+				dto.setOrder_step(order_step[k]);
+				res = o_t_biz.update(dto);
+				res++;
+			}
+			if(res > 0) {
+				jsResponse(response, "수정 성공", "index.jsp");
+			}else {
+				jsResponse(response, "수정 실패", "index.jsp");
+			}
 		}
 
 		if (command.equals("test")) {

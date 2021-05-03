@@ -299,7 +299,6 @@ if (dto == null) {
 			<input type="hidden" name="member_id" value="<%=dto.getMember_id()%>">
 			<h1>전체주문조회</h1>
 			<table border="1"  class="table custom-table" style="table-layout:fixed">
-				<col width="30"/>
 				<col width="100"/>
 				<col width="130"/>
 				<col width="80"/>
@@ -309,7 +308,6 @@ if (dto == null) {
 				<col width="200"/>
 				
 				<tr>
-					<th></th>
 					<th>주문번호</th>
 					<th>상품명</th>
 					<th>수량</th>
@@ -322,7 +320,7 @@ if (dto == null) {
 				<c:choose>
 								<c:when test="${empty list }">
 									<tr>
-										<th colspan="8">----------주문내역이 존재하지 않습니다----------</th>
+										<th colspan="7">----------주문내역이 존재하지 않습니다----------</th>
 									</tr>
 								</c:when>
 								<c:otherwise>
@@ -331,7 +329,6 @@ if (dto == null) {
 										<c:choose>
 										<c:when test="${dto.order_group eq tempname}">
 											<tr>
-											<td></td>
 											<td style="text-overflow:ellipsis; overflow:hidden;"></td>
 											<td style="text-overflow:ellipsis; overflow:hidden;">${dto.prod_name }</td>
 											<td>${dto.order_quantity }</td>
@@ -350,6 +347,9 @@ if (dto == null) {
 														<c:if test="${dto.order_step eq '배송완료'}">
 															<option value="배송완료" selected>배송완료</option>
 														</c:if>
+														<c:if test="${dto.order_step eq '취소요청'}">
+															<option value="취소요청" selected>취소요청</option>
+														</c:if>
 														</select>
 											</td>
 											<td><fmt:formatDate value="${dto.order_date }" pattern="yyyy-MM-dd a hh:mm"/></td>
@@ -358,11 +358,6 @@ if (dto == null) {
 										</c:when>	
 										<c:otherwise>
 										<tr>
-											<td>
-											<c:if test="${dto.order_step eq '결제완료' }">
-											<input type="checkbox" name="order_group" value="${dto.order_group }">
-											</c:if>
-											</td>
 											<td>${dto.order_num }</td>
 											<td style="text-overflow:ellipsis; overflow:hidden;">${dto.prod_name }</td>
 											<td>${dto.order_quantity }</td>
@@ -381,6 +376,9 @@ if (dto == null) {
 														<c:if test="${dto.order_step eq '배송완료'}">
 															<option value="배송완료" selected>배송완료</option>
 														</c:if>
+														<c:if test="${dto.order_step eq '취소요청'}">
+															<option value="취소요청" selected>취소요청</option>
+														</c:if>
 														</select>
 											</td>
 											<td><fmt:formatDate value="${dto.order_date }" pattern="yyyy-MM-dd a hh:mm"/></td>
@@ -389,14 +387,7 @@ if (dto == null) {
 										</c:otherwise>
 										</c:choose>
 										<c:set var="tempname" value="${dto.order_group}"/>
-										
 										</c:forEach>
-										<tr>
-											<td colspan="8" align="right">
-											<input type="submit" value="주문삭제" class="s-btn" formaction="semi.do?command=order_my_delete"
-										                          formmethod="post"/>
-											</td>
-										</tr>
 								</c:otherwise>
 							</c:choose>
 						</tbody>
@@ -721,7 +712,7 @@ if (dto == null) {
 										<td><textarea rows="10" cols="30" name="animal_unq"></textarea>
 										</td>
 									</tr>
-									</div>
+							
 						<%		
 							 }
 						%>
@@ -734,7 +725,7 @@ if (dto == null) {
 								onclick="location.href='index.jsp'" /></td>
 							</tr>
 							</table>
-
+						</div>
 
 	<script type="text/javascript">
 		var phone = "<%=dto.getMember_phone()%>";
@@ -787,6 +778,7 @@ if (dto == null) {
 					</table>
 			</form>
 		</div>
+		
 		<script type="text/javascript">
 		$(function(){
 			$('.member_password').keyup(function() {
