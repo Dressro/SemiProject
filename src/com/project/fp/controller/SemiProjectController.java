@@ -12,7 +12,9 @@ import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -32,6 +34,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+
+import org.apache.commons.collections.map.HashedMap;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -1302,20 +1306,17 @@ public class SemiProjectController extends HttpServlet {
 				} else {
 					jsResponse(response, "삭제 실패", "semi.do?command=adminpage");
 				}
-			}
-
-		} else if (command.equals("order_my_delete")) {
-			String[] order_group_str = request.getParameterValues("order_group");
-			int[] order_group = null;
-			int res = 0;
-			if (order_group_str != null) {
-				order_group = new int[order_group_str.length];
-				for (int i = 0; i < order_group_str.length; i++) {
-					order_group[i] = Integer.parseInt(order_group_str[i]);
-					res = o_t_biz.delete(order_group[i]);
-					res++;
+			}			
+		} else if(command.equals("order_my_delete")){
+			String[] order_num_str = request.getParameterValues("order_num");
+			int[] order_num = null;
+			if(order_num_str != null){
+				order_num = new int[order_num_str.length];
+				for(int i=0;i<order_num_str.length;i++) {
+					order_num[i] = Integer.parseInt(order_num_str[i]);
 				}
-				if (res > 0) {
+					int res = o_t_biz.mulDelete(order_num);
+				if(res > 0) {
 					jsResponse(response, "삭제 성공", "index.jsp");
 				} else {
 					jsResponse(response, "삭제 실패", "index.jsp");
@@ -1403,6 +1404,21 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				jsResponse(response, "수정 실패", "index.jsp");
 			}
+		} else if(command.equals("paylist")) {
+			String[] order_num_str = request.getParameterValues("order_num");
+			int[] order_num = null;
+			List<Order_TableDto> list = new ArrayList<Order_TableDto>();
+			if(order_num_str != null){
+				order_num = new int[order_num_str.length];
+				for(int i=0;i<order_num_str.length;i++) {
+					order_num[i] = Integer.parseInt(order_num_str[i]);
+				}
+			}
+			for(int j=0;j<order_num.length;j++) {
+				Order_TableDto dto = o_t_biz.selectOne(order_num[j]);
+				list.add(dto);
+			}
+			request.setAttribute("list", list);
 		}
 
 		if (command.equals("test")){

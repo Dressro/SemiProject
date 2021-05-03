@@ -9,6 +9,7 @@ public interface Order_TableBiz {
 	public List<Order_TableDto> selectList();
 	public List<Order_TableDto> mypageList(String member_id);
 	public List<Order_TableDto> basketList(String member_id);
+	public List<Order_TableDto> payList(Order_TableDto dto);
 	public List<Order_TableDto> selectbasketList(String member_id);
 	public List<Order_TableDto> selectpayList(String member_id);
 	public List<Order_TableDto> groupList();
@@ -22,5 +23,6 @@ public interface Order_TableBiz {
 	public int update_pay(int order_num);
 	public int delete(int order_group);
 	public int multiDelete(int[] order_groups);
+	public int mulDelete(int[] order_nums);
 
 }
