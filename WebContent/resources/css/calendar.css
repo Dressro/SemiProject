@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+	#myCalendar{
+		border-collapse: collapse;
+		border: 1px solid gray;
+	}
+	
+	#myCalendar th{
+		width: 80px;
+		border: 1px solid gray;
+	}
+	
+	#myCalendar td{
+		width: 80px;
+		height: 80px;
+		border: 1px solid gray;
+		text-align: left;
+		vertical-align: top;
+		position: relative;
+	}
+
+
+	.cpt {caption-side: top;}

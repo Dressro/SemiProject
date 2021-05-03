@@ -60,6 +60,8 @@ import com.project.fp.biz.Lost_AnimalBiz;
 import com.project.fp.biz.Lost_AnimalBizImpl;
 import com.project.fp.biz.MemberBiz;
 import com.project.fp.biz.MemberBizImpl;
+import com.project.fp.biz.MycalBiz;
+import com.project.fp.biz.MycalBizImpl;
 import com.project.fp.biz.Order_TableBiz;
 import com.project.fp.biz.Order_TableBizImpl;
 import com.project.fp.biz.ProductBiz;
@@ -75,6 +77,7 @@ import com.project.fp.dto.File_TableDto;
 import com.project.fp.dto.HospitalDto;
 import com.project.fp.dto.Lost_AnimalDto;
 import com.project.fp.dto.MemberDto;
+import com.project.fp.dto.MycalDto;
 import com.project.fp.dto.Order_TableDto;
 import com.project.fp.dto.PagingDto;
 import com.project.fp.dto.ProductDto;
@@ -109,6 +112,7 @@ public class SemiProjectController extends HttpServlet {
 		HospitalBiz h_biz = new HospitalBizImpl();
 		Board_ReplyBiz b_r_biz = new Board_ReplyBizImpl();
 		Lost_AnimalBiz l_biz = new Lost_AnimalBizImpl();
+		MycalBiz m_c_biz = new MycalBizImpl();
 		HttpSession session = request.getSession();
 
 		if (command.equals("signup")) {
@@ -1403,6 +1407,28 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				jsResponse(response, "수정 실패", "index.jsp");
 			}
+		} else if (command.equals("popup_r_check")) {
+			String member_id = request.getParameter("member_id");
+			request.setAttribute("member_id", member_id);
+			dispatch(response, request, "popup_r_check.jsp");
+		} else if (command.equals("popup_private")) {
+			String member_id = request.getParameter("member_id");
+			request.setAttribute("member_id", member_id);
+			dispatch(response, request, "popup_private.jsp");
+		}  else if (command.equals("popup_calList")) {
+			String member_id = request.getParameter("member_id");
+			String year = request.getParameter("year");
+			String month = request.getParameter("month");
+			String date = request.getParameter("date");
+			String yyyyMMdd = year + Util.isTwo(month) + Util.isTwo(date);
+			
+			MycalDto m_dto = new MycalDto();
+			m_dto.setMember_id(member_id);
+			m_dto.setCal_mdate(yyyyMMdd);
+			List<MycalDto> list = m_c_biz.selectList(m_dto);
+			request.setAttribute("list", list);
+			
+			dispatch(response, request, "popup_calList.jsp");
 		}
 
 		if (command.equals("test")){
