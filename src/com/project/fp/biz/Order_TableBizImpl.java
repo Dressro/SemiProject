@@ -81,7 +81,6 @@ public class Order_TableBizImpl implements Order_TableBiz {
 		return dao.multiDelete(order_groups);
 	}
 
-	
 	public List<Order_TableDto> selectbasketList(String member_id) {
 
 		return dao.selectbasketList(member_id);
@@ -105,6 +104,19 @@ public class Order_TableBizImpl implements Order_TableBiz {
 	}
 	
 	
+
+
+	@Override
+	public int direct_pay_insert(Order_TableDto dto) {
+
+		return dao.direct_pay_insert(dto);
+	}
+
+	@Override
+	public int update_pay(int order_num) {
+
+		return dao.update_pay(order_num);
+	}
 
 	
 

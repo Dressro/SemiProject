@@ -17,8 +17,10 @@ public interface Order_TableBiz {
 	public Order_TableDto selectOne(int order_num);
 	public int insert(Order_TableDto dto);
 	public int basket_insert(Order_TableDto dto);
+	public int direct_pay_insert(Order_TableDto dto);
 	public int update(Order_TableDto dto);
 	public int update_group(Order_TableDto dto);
+	public int update_pay(int order_num);
 	public int delete(int order_group);
 	public int multiDelete(int[] order_groups);
 	public int mulDelete(int[] order_nums);

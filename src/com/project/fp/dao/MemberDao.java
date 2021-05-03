@@ -28,6 +28,8 @@ public interface MemberDao {
 	
 	public int mypagemod (MemberDto dto);
 	
+	public int myanimalupdate(MemberDto dto);
+	
 	public int grade_update(MemberDto dto);
 
 }

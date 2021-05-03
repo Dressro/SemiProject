@@ -32,7 +32,6 @@ response.setContentType("text/html; charset=UTF-8");
 	.li_right {
 	float: right;
 	}
-
 	.li_rigit_a {
 	padding: 15px 20px 15px 0px;
 	}
@@ -85,8 +84,6 @@ response.setContentType("text/html; charset=UTF-8");
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
-
-
 $(function(){
 	
 	$(".detail").click(function(){
@@ -129,14 +126,11 @@ $(function(){
     });
     
 });
-
 </script>
 <style>
-
 #detailpop {
 	text-decoration:  underline;
 }
-
 </style>
 
 </head>

@@ -154,6 +154,14 @@ public class Order_TableDto {
 		this.member_id = member_id;
 	}
 
+	@Override
+	public String toString() {
+		return "Order_TableDto [order_num=" + order_num + ", order_date=" + order_date + ", order_quantity="
+				+ order_quantity + ", order_price=" + order_price + ", order_step=" + order_step + ", order_pay="
+				+ order_pay + ", order_group=" + order_group + ", prod_num=" + prod_num + ", member_id=" + member_id
+				+ ", prod_name=" + prod_name + ", total_price=" + total_price + "]";
+	}
 
 
+	
 }

@@ -84,6 +84,8 @@ insert into member values('admin','admin','관리자','관리자','admin@admin.c
 update member set member_animal = 'N' where member_id = '1';
 select * from member;
 select * from animal;
+delete from animal where member_id='111';
+
 CREATE TABLE BOARD(
 	BOARD_NO NUMBER PRIMARY KEY,
 	BOARD_FREE_NO NUMBER,
@@ -117,13 +119,12 @@ CREATE TABLE ORDER_TABLE(
 	ORDER_GROUP NUMBER NOT NULL,
 	PROD_NUM NUMBER NOT NULL,
 	MEMBER_ID VARCHAR2(500) NOT NULL,
-	CONSTRAINT ORDER_TABLE_ORDER_STEP_CHK CHECK (ORDER_STEP IN ('미결제','결제완료','배송준비중','배송중','배송완료')),
+	CONSTRAINT ORDER_TABLE_ORDER_STEP_CHK CHECK (ORDER_STEP IN ('미결제','결제완료','배송준비중','배송중','배송완료','취소요청')),
 	CONSTRAINT ORDER_TABLE_ORDER_PAY_CHK CHECK (ORDER_PAY IN ('Y','N')),
 	CONSTRAINT ORDER_TABLE_PROD_NUM_FK FOREIGN KEY (PROD_NUM) REFERENCES PRODUCT (PROD_NUM),
 	CONSTRAINT ORDER_TABLE_MEMBER_ID_FK FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER (MEMBER_ID)
 );
 SELECT COLUMN_NAME, DATA_TYPE FROM all_tab_columns where table_name='ORDER_TABLE'; 
-
 
 select * from ORDER_TABLE;
 select * from PRODUCT;

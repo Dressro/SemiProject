@@ -30,6 +30,28 @@
 		WHERE PROD_NUM = #{prod_num}
 	</select>
 	
+	<select id="product_allCount" resultType="int">
+		SELECT COUNT(*)
+		FROM PRODUCT
+	</select>
+	
+	<select id="product_selectList"
+		parameterType="com.project.fp.dto.PagingDto" resultType="ProductDto">
+		select
+		b.rnum,b.prod_num,b.prod_name,b.prod_category
+		from
+		(select rownum as rnum,
+		a.prod_num,a.prod_name,a.prod_category
+		from
+		(select
+		prod_num, prod_name, prod_category
+		from product
+		order by prod_num desc)a
+		where rownum <![CDATA[ <= ]]>
+		#{pageEnd})b
+		where b.rnum <![CDATA[ >= ]]>
+		#{pageBegin}
+	</select>	
 	
 	
 	<insert id="insert" parameterType="ProductDto">
@@ -42,6 +64,12 @@
 	<update id="update" parameterType="ProductDto">
 		UPDATE PRODUCT
 		SET PROD_NAME = #{prod_name}, PROD_EXPLAIN = #{prod_explain}, PROD_SALE = #{prod_sale}, PROD_PRICE = #{prod_price}, PROD_RECOMM = #{prod_recomm}, PROD_STOCK = #{prod_stock}, PROD_CATEGORY = #{prod_category}, PROD_IN = #{prod_in}, PROD_OUT = #{prod_out}, PROD_INDATE = #{prod_indate}, PROD_OUTDATE = #{prod_outdate}, PROD_MFR = #{prod_mfr}, PROD_CLIENT = #{prod_client}
+		WHERE PROD_NUM = #{prod_num}
+	</update>
+	
+	<update id="pay_update" parameterType="ProductDto">
+		UPDATE PRODUCT
+		SET PROD_STOCK = #{prod_stock}
 		WHERE PROD_NUM = #{prod_num}
 	</update>
 	

@@ -32,18 +32,13 @@ response.setContentType("text/html; charset=UTF-8");
 <link rel="icon" href="resources/images/logo/favicon.ico" type="image/x-icon">
 
 <style type="text/css">
-
 .animal {
 	display: none;
-
 }
-
 .orderIng ol li {
     left: 61px;
     padding-right: 45px;
 }
-
-
 </style>
 
 
@@ -52,7 +47,6 @@ response.setContentType("text/html; charset=UTF-8");
 	.mymenus li {
 	float: left;
 	}
-
 	.mymenu {
 	display: block;
 	color: black;
@@ -60,7 +54,6 @@ response.setContentType("text/html; charset=UTF-8");
 	padding: 15px 20px;
 	text-decoration: none;
 	}
-
 	.mymenus {
 	list-style-type: none;
 	margin: 0;
@@ -89,7 +82,6 @@ response.setContentType("text/html; charset=UTF-8");
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
-
 	function chk(value){
 		$('.animal').trigger('click');
 			if(value == "N"){
@@ -102,7 +94,6 @@ response.setContentType("text/html; charset=UTF-8");
 				$("input[name=animal_name]").attr("required","true");
 			}
 	}
-
 	function check() {
 		var member_email = $('input[name=member_email_1]').val() + "@"
 				+ $('select[name=member_email_2]').val();
@@ -115,7 +106,6 @@ response.setContentType("text/html; charset=UTF-8");
 				+ $('input[name=member_addr_2]').val();
 		$('input[name=member_addr]').attr('value', member_addr);
 	}
-
 	
 	function sendmailkey() {
 		var member_email = $('input[name=member_email_1]').val() + "@"
@@ -128,7 +118,6 @@ response.setContentType("text/html; charset=UTF-8");
 					"width=200 , height= 200");
 		}
 	}
-
 	function sendsms() {
 		var member_phone = $('input[name=member_phone_1]').val()
 				+ $('input[name=member_phone_2]').val()
@@ -141,31 +130,25 @@ response.setContentType("text/html; charset=UTF-8");
 					"width=200 , height= 200");
 		}
 	}
-
 	function address() {
 		new daum.Postcode(
 				{
 					oncomplete : function(data) {
 						var roadAddr = data.roadAddress;
 						var extraRoadAddr = '';
-
 						if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
 							extraRoadAddr += data.bname;
 						}
-
 						if (data.buildingName !== '' && data.apartment === 'Y') {
 							extraRoadAddr += (extraRoadAddr !== '' ? ', '
 									+ data.buildingName : data.buildingName);
 						}
-
 						if (extraRoadAddr !== '') {
 							extraRoadAddr = ' (' + extraRoadAddr + ')';
 						}
-
 						document.getElementById('postcode').value = data.zonecode;
 						document.getElementById("addr_1").value = roadAddr;
 						document.getElementById("addr_1").value = data.jibunAddress;
-
 						if (data.autoRoadAddress) {
 							document.getElementById("addr_1").value = roadAddr;
 						} else if (data.autoJibunAddress) {
@@ -175,7 +158,6 @@ response.setContentType("text/html; charset=UTF-8");
 					}
 				}).open();
 	}
-
 	$(function(){
 			$('.mymenus li').click(function(){
 			$('.mymenus li').find('a').removeClass('active');
@@ -219,13 +201,11 @@ response.setContentType("text/html; charset=UTF-8");
 			    });
 			    	
 	});
-
 	</script>
 
 
 
 <%
-
 MemberDto dto = (MemberDto) session.getAttribute("dto");
 List<Order_TableDto> list = (List<Order_TableDto>)request.getAttribute("list");
 if (dto == null) {
@@ -740,7 +720,6 @@ if (dto == null) {
 			document.getElementById("general_signup_email").value = emailsplit[0];
 			$('#select_mail').val(emailsplit[1]).prop("selected",true);
 		});
-
 		
 		
 		</script>
@@ -784,7 +763,6 @@ if (dto == null) {
 			$('.member_password').keyup(function() {
 				$('#chkNotice').html('');
 			});
-
 			$('.member_password_chk').keyup(function() {
 					if ($('.member_password').val() != $('.member_password_chk').val()) {
 						$('#chkNotice').html('비밀번호 일치하지 않음');
@@ -793,7 +771,6 @@ if (dto == null) {
 						$('#chkNotice').html('비밀번호 일치함');
 						$('#chkNotice').attr('color', '#199894b3');
 					}
-
 				});
 		})
 		</script>
