@@ -116,6 +116,7 @@ public class SemiProjectController extends HttpServlet {
 		Lost_AnimalBiz l_biz = new Lost_AnimalBizImpl();
 		HttpSession session = request.getSession();
 
+		
 		if (command.equals("signup")) {
 			response.sendRedirect("signup.jsp");
 		} else if(command.equals("index")){
