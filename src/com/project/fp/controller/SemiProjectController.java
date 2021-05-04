@@ -1094,13 +1094,14 @@ public class SemiProjectController extends HttpServlet {
 				jsResponse(response, "로그인 후 이용가능합니다.", "login.jsp");
 			} else {
 				String purch = request.getParameter("purch");
-				if (purch.equals("1")) {
+				if (purch.equals("one")) {
 					// 단일 물품 결제
 					int prod_price = Integer.parseInt(request.getParameter("prod_price"));
 					int prod_num = Integer.parseInt(request.getParameter("prod_num"));
 					int order_quantity = Integer.parseInt(request.getParameter("order_quantity"));
 					ProductDto p_dto = p_biz.selectOne(prod_num);
 					String product_name = p_dto.getProd_name();
+					product_name += " 등 1종";
 					int total_price = prod_price * order_quantity;
 					int pur = 1;
 

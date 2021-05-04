@@ -129,7 +129,7 @@
 					</div>
 						
 		      <input type="submit" class="btn" value="[장바구니 담기]" formaction="semi.do?command=basket_add">
-		      <input type="submit" class="btn" value="[바로 구매하기]" formaction="semi.do?command=paypage&purch=1">
+		      <input type="submit" class="btn" value="[바로 구매하기]" formaction="semi.do?command=paypage&purch=one">
 		      	</div>
 			</div>			
 			
