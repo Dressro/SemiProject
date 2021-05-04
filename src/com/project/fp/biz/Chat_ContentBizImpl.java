@@ -17,7 +17,7 @@ public class Chat_ContentBizImpl implements Chat_ContentBiz {
 	}
 
 	@Override
-	public Chat_ContentDto selectOne(int ch_num) {
+	public List<Chat_ContentDto> selectOne(int ch_num) {
 
 		return dao.selectOne(ch_num);
 	}
