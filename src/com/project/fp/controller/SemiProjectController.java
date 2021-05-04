@@ -1045,21 +1045,24 @@ public class SemiProjectController extends HttpServlet {
 			dispatch(response, request, "chatlist.jsp");
 		} else if (command.equals("chat_insert")) {
 			int ch_num = Integer.parseInt(request.getParameter("ch_num"));
-			String member_nickname = request.getParameter("member_nickname");
+			String member_nicname = request.getParameter("member_nickname");
 			String ch_content = request.getParameter("ch_content");
 			System.out.println(ch_content);
-			System.out.println(member_nickname);
+			System.out.println(member_nicname);
 
 			Chat_ContentDto c_c_dto = new Chat_ContentDto();
 			c_c_dto.setCh_num(ch_num);
 			c_c_dto.setCh_content(ch_content);
-			c_c_dto.setMember_nickname(member_nickname);
+			c_c_dto.setMember_nicname(member_nicname);
 			int res = c_c_biz.insert(c_c_dto);
 			if (res > 0) {
 				response.getWriter().append("통신 성공");
 			}
 		} else if (command.equals("chatboard")) {
 			int ch_num = Integer.parseInt(request.getParameter("ch_num"));
+			List<Chat_ContentDto> list = new ArrayList<Chat_ContentDto>();
+			list = c_c_biz.selectOne(ch_num);
+			request.setAttribute("list", list);
 			request.setAttribute("ch_num", ch_num);
 			dispatch(response, request, "ChatBoard.jsp");
 		} else if (command.equals("mailsend")) {
