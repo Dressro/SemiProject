@@ -263,7 +263,24 @@ public class ProductDaoImpl extends SqlMapConfig implements ProductDao {
 
 		return res;
 	}
-
+	
+	@Override
+	public List<ProductDto> prod_search(ProductDto dto) {
+		List<ProductDto> list = new ArrayList<ProductDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "product_search", dto);
+		}
+		return list;
+	}
+	
+	@Override
+	public List<ProductDto> product_all_search(PagingDto Pdto) {
+		List<ProductDto> list = new ArrayList<ProductDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "product_all_search", Pdto);
+		}
+		return list;
+	}
 	
 
 }

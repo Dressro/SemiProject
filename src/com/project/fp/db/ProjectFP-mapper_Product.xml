@@ -59,6 +59,35 @@
 		#{pageBegin}
 	</select>	
 	
+	<select id="product_search" parameterType="ProductDto"
+		resultType="ProductDto">
+		SELECT PROD_NUM, PROD_NAME, PROD_EXPLAIN, PROD_SALE, PROD_PRICE, PROD_RECOMM, PROD_STOCK, PROD_CATEGORY, PROD_IN, PROD_OUT, PROD_INDATE, PROD_OUTDATE, PROD_MFR, PROD_CLIENT
+		FROM product 
+		WHERE prod_name LIKE '%'||#{prod_name}||'%' 
+		order by prod_num desc
+	</select>
+	
+	<select id="product_all_search"
+		parameterType="com.project.fp.dto.PagingDto" resultType="ProductDto">
+		SELECT X.rnum,
+		X.PROD_NUM, X.PROD_NAME, X.PROD_EXPLAIN, X.PROD_SALE, X.PROD_PRICE, X.PROD_RECOMM, X.PROD_STOCK, X.PROD_CATEGORY, X.PROD_IN, X.PROD_OUT, X.PROD_INDATE, X.PROD_OUTDATE, X.PROD_MFR, X.PROD_CLIENT
+		FROM (
+		SELECT ROWNUM AS rnum,
+		A.PROD_NUM, A.PROD_NAME, A.PROD_EXPLAIN, A.PROD_SALE, A.PROD_PRICE, A.PROD_RECOMM, A.PROD_STOCK, A.PROD_CATEGORY, A.PROD_IN, A.PROD_OUT, A.PROD_INDATE, A.PROD_OUTDATE, A.PROD_MFR, A.PROD_CLIENT
+		FROM (
+		SELECT PROD_NUM, PROD_NAME, PROD_EXPLAIN, PROD_SALE, PROD_PRICE, PROD_RECOMM, PROD_STOCK, PROD_CATEGORY, PROD_IN, PROD_OUT, PROD_INDATE, PROD_OUTDATE, PROD_MFR, PROD_CLIENT
+		FROM product 
+		WHERE prod_name  LIKE '%'||#{s_t}||'%'
+		ORDER BY PROD_NUM DESC
+		) A
+		WHERE ROWNUM <![CDATA[ <= ]]>
+		#{pageEnd}
+		) X
+
+		WHERE X.rnum <![CDATA[ >= ]]>
+		#{pageBegin}
+	</select>
+	
 	<select id="feed_selectList" parameterType="com.project.fp.dto.PagingDto" resultType="ProductDto">
 		select
 		b.rnum,b.prod_num,b.prod_name, prod_category, prod_price

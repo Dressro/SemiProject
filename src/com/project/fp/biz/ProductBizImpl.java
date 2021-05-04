@@ -126,4 +126,18 @@ public class ProductBizImpl implements ProductBiz {
 		return dao.fashion_selectList(Pdto);
 	}
 
+
+	@Override
+	public List<ProductDto> prod_search(ProductDto dto) {
+		// TODO Auto-generated method stub
+		return dao.prod_search(dto);
+	}
+
+
+	@Override
+	public List<ProductDto> product_all_search(PagingDto Pdto) {
+		// TODO Auto-generated method stub
+		return dao.product_all_search(Pdto);
+	}
+
 }

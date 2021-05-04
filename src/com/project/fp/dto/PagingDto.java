@@ -51,6 +51,16 @@ public class PagingDto {
 	}
 	
 
+	public PagingDto(int count, int nowPage, String s_t) {
+		nowBlock = 1; // 현재 페이지 블록
+		this.nowPage = nowPage; // 현재 페이지
+		setTotalPage(count); // 전체 페이지 수 구하기
+		setPageRange(); // 페이지 번호 계산
+		setTotalBlock(); // 전체 블록 수 계산
+		setBlockRange(); // 페이지 블록 계산
+		this.s_t = s_t;
+	}
+
 	// 페이지 블록 계산
 	public void setBlockRange() {
 		// 1. 현재 페이지가 몇 번째 페이지 블록에 속하는지 계산

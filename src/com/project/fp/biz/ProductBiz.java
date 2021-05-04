@@ -25,4 +25,6 @@ public interface ProductBiz {
 	public List<ProductDto> toy_selectList(PagingDto Pdto);
 	public List<ProductDto> fashion_selectList(PagingDto Pdto);
 	public List<ProductDto> living_selectList(PagingDto Pdto);
+	public List<ProductDto> prod_search(ProductDto dto);
+	public List<ProductDto> product_all_search(PagingDto Pdto);
 }

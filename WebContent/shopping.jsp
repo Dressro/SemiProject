@@ -26,11 +26,12 @@
 	font-size: 20pt;
 }
 </style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 
-function search() {
+function searchname() {
 	var s_t = $(".search_text").val();
-	location.href = "semi.do?command=shopping&s_t=" + s_t;
+	location.href = "semi.do?command=shopping&s_t="+ s_t;
 }
 
 </script>
@@ -50,7 +51,7 @@ function search() {
         </ul>
     </div>
  		<input id="search" type="text" class="search_text" value="" placeholder="상품명을 입력하세요" style="width:300px; float: right;"/>
-    <button class="s-btn" type="button" onclick="search();" style="float: right;">검색</button>
+  	  <button type="button" style="float: right;" onclick="searchname();" >검색</button>
 </nav>
 		
 <div id="mobile-filter">

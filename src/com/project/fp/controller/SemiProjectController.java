@@ -561,15 +561,29 @@ public class SemiProjectController extends HttpServlet {
 			if (request.getParameter("nowPage") != null) {
 				nowPage = Integer.parseInt(request.getParameter("nowPage"));
 			}
-			int count = p_biz.count();
-			List<ProductDto> list = new ArrayList<ProductDto>();
-			PagingDto pdto = new PagingDto(count, nowPage);
-			list = p_biz.prod_selectList(pdto);
-			request.setAttribute("BoardCommand", command);
-			request.setAttribute("list", list);
-			request.setAttribute("Pdto", pdto);
-			dispatch(response, request, "shopping.jsp");
-			
+			String s_t = request.getParameter("s_t");
+			if (s_t == null) {
+				int count = p_biz.count();
+				List<ProductDto> list = new ArrayList<ProductDto>();
+				PagingDto pdto = new PagingDto(count, nowPage);
+				list = p_biz.prod_selectList(pdto);
+				request.setAttribute("BoardCommand", command);
+				request.setAttribute("list", list);
+				request.setAttribute("Pdto", pdto);
+				dispatch(response, request, "shopping.jsp");
+			} else {
+				ProductDto p_dto = new ProductDto();
+				p_dto.setProd_name(s_t);
+				List<ProductDto> slist = p_biz.prod_search(p_dto); 
+				int count = slist.size();
+				List<ProductDto> list = new ArrayList<ProductDto>();
+				PagingDto pdto = new PagingDto(count, nowPage, s_t);
+				list = p_biz.product_all_search(pdto);
+				request.setAttribute("BoardCommand", command);
+				request.setAttribute("list", list);
+				request.setAttribute("Pdto", pdto);
+				dispatch(response, request, "shopping.jsp");
+			}
 		} else if (command.equals("category")) {
 			int nowPage = 1;
 			if (request.getParameter("nowPage") != null) {
