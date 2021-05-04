@@ -11,5 +11,5 @@ public interface Lost_AnimalBiz {
 	public int insert(Lost_AnimalDto dto);
 	public int update(Lost_AnimalDto dto);
 	public int delete(int board_no);
-	
+	public int multiDelete(String[] board_nos);
 }

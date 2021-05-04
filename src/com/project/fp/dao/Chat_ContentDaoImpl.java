@@ -26,17 +26,17 @@ public class Chat_ContentDaoImpl extends SqlMapConfig implements Chat_ContentDao
 	}
 
 	@Override
-	public Chat_ContentDto selectOne(int ch_num) {
+	public List<Chat_ContentDto> selectOne(int ch_num) {
 		
-		Chat_ContentDto dto = null;
+		List<Chat_ContentDto> list = null;
 		
 		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
-			dto = session.selectOne(namespace+"selectOne", ch_num);
+			list = session.selectList(namespace+"selectOne", ch_num);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return dto;
+		return list;
 	}
 
 	@Override

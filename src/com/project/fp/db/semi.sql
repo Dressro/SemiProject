@@ -61,7 +61,7 @@ CREATE TABLE PRODUCT(
 	PROD_MFR VARCHAR2(100),
 	PROD_CLIENT VARCHAR2(2000)
 );
-
+select * from product;
 CREATE TABLE MEMBER(
 	MEMBER_ID VARCHAR2(500) PRIMARY KEY,
 	MEMBER_PASSWORD VARCHAR2(500) NOT NULL,
@@ -80,6 +80,25 @@ CREATE TABLE MEMBER(
 	CONSTRAINT MEMBER_MEMBER_ANIMAL_CHK CHECK(MEMBER_ANIMAL IN ('Y', 'N')),
 	CONSTRAINT MEMBER_MEMBER_NOTIFY_CHK CHECK(MEMBER_NOTIFY IN ('Y', 'N'))
 );
+
+select * from board order by board_readcount desc;
+		
+		SELECT
+		A.board_no,A.board_free_no,A.board_notice_no,A.board_qna_no,A.board_dec_no,
+		A.board_title,A.board_content,A.board_regdate,A.board_readcount,
+		A.board_groupno,A.board_groupseq,A.board_titletab,A.member_id
+		FROM (
+		SELECT
+		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
+		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
+		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname as
+		member_id
+		FROM BOARD b, MEMBER m
+		WHERE m.member_id = b.member_id and b.board_category = 'F'
+		ORDER BY BOARD_readcount DESC
+		) A
+		WHERE ROWNUM <5
+		
 insert into member values('admin','admin','관리자','관리자','admin@admin.com','010-0000-0000','관리시 관리동','관리자','Y','N',0,NULL,'Y');
 update member set member_animal = 'N' where member_id = '1';
 select * from member;
@@ -131,11 +150,12 @@ select * from PRODUCT;
 
 INSERT INTO ORDER_TABLE
 		VALUES(ORDER_NUM_SEQ.nextval, sysdate, '2', '20000', 
-		'결제완료', 'N','30' ,12, 'test');
+		'미결제', 'N','30' ,12, 'test');
 SELECT COLUMN_NAME, DATA_TYPE FROM all_tab_columns where table_name='ORDER_TABLE';
 UPDATE ORDER_TABLE SET ORDER_STEP = ''
 WHERE ORDER_GROUP = '1';
 select * from order_table;
+select * from order_table where order_group='40' and order_step = '미결제';
 
 CREATE TABLE CHAT (
 	CH_NUM NUMBER NOT NULL,
@@ -308,7 +328,6 @@ SELECT  board_no
 --실종신고 위치 정보 받아오기
 DROP SEQUENCE LOST_NO_SEQ;
 DROP TABLE LOST_ANIMAL;
-
 CREATE SEQUENCE LOST_NO_SEQ;
 CREATE TABLE LOST_ANIMAL(
 	LOST_NO NUMBER PRIMARY KEY,

@@ -1,5 +1,6 @@
 <%@page import="com.project.fp.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -101,7 +102,27 @@ int ch_num = (int) request.getAttribute("ch_num");
 <body>
 
 	<div id="main_con">
-		<div id="chat_con"></div>
+		<div id="chat_con">
+			<c:set var="name" value="<%=dto.getMember_nicname() %>"></c:set>
+			<c:forEach items="${list }" var ="dto">
+				<c:choose>
+					<c:when test="${dto.member_nicname eq name}">
+						<div class="my-chat-box">
+							<div class="chat my-chat">
+								${dto.ch_content }
+							</div>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class='chat-box'>
+							<div class="chat">
+								${dto.ch_content }
+							</div>
+						</div>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+		</div>
 		<div id="bottom_con">
 			<input id="ch_num" type="hidden" value="<%=ch_num%>">
 			<input id="member_nickname" type="hidden" value="<%=dto.getMember_nicname()%>" />
@@ -162,6 +183,7 @@ int ch_num = (int) request.getAttribute("ch_num");
 	webSocket.onmessage = function(event) {
 		onMessage(event)
 	};
+	
 	function onMessage(event) {
 		var c_msg = event.data;
 		var $chat = $("<div class='chat-box'><div class='chat'>" + c_msg + "</div></div>");
@@ -190,7 +212,7 @@ int ch_num = (int) request.getAttribute("ch_num");
 		$.ajax({
 			url:"semi.do",
 			method:"post",
-			data:{command:"chat_insert", member_nickname:member_nickname.value, ch_content:inputMessage.value},
+			data:{command:"chat_insert", member_nickname:member_nickname.value, ch_content:inputMessage.value,ch_num:ch_num},
 			dataType:"text",
 			success: function(data){
 				alert(data);

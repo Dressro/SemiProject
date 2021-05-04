@@ -7,7 +7,9 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.project.fp.dto.HospitalDto;
 import com.project.fp.dto.MemberDto;
+import com.project.fp.dto.PagingDto;
 
 public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 
@@ -29,6 +31,15 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 		List<MemberDto> list = new ArrayList<MemberDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "selectDoctorList");
+		}
+		return list;
+	}
+
+	@Override
+	public List<MemberDto> selectDoctorListPaging(PagingDto Pdto) {
+		List<MemberDto> list = new ArrayList<MemberDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "selectDoctorListPaging", Pdto);
 		}
 		return list;
 	}
