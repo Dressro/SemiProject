@@ -87,6 +87,7 @@ import com.project.fp.papago.papago;
 import com.project.fp.sms.SMS;
 
 import oracle.net.aso.b;
+import oracle.net.aso.l;
 
 @WebServlet("/SemiProjectController")
 @MultipartConfig(location = "", maxFileSize = -1, maxRequestSize = -1, fileSizeThreshold = 1024)
@@ -120,8 +121,10 @@ public class SemiProjectController extends HttpServlet {
 		} else if(command.equals("index")){
 			List<BoardDto> f_list = b_biz.index_free();
 			List<BoardDto> n_list = b_biz.index_notice();
+			List<BoardDto> l_list = b_biz.index_dec();
 			session.setAttribute("f_list", f_list);
 			session.setAttribute("n_list", n_list);
+			session.setAttribute("l_list", l_list);
 			dispatch(response, request, "index.jsp");
 		}else if (command.equals("general_signup")) {
 			response.sendRedirect("general_signup.jsp");
@@ -166,7 +169,7 @@ public class SemiProjectController extends HttpServlet {
 
 			int res = m_res + a_res;
 			if (res > 0) {
-				jsResponse(response, "회원가입 성공", "index.jsp");
+				jsResponse(response, "회원가입 성공", "index.html");
 			} else {
 				jsResponse(response, "회원가입 실패", "#");
 			}
@@ -420,7 +423,7 @@ public class SemiProjectController extends HttpServlet {
 				jsResponse(response, "회원탈퇴실패", "semi.do?command=mypage&member_id=" + member_id);
 			}
 			session.invalidate();
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("index.html");
 
 		} else if (command.equals("board_notice")) {
 			int nowPage = 1;
@@ -948,6 +951,7 @@ public class SemiProjectController extends HttpServlet {
 			String[] board_no = request.getParameterValues("board_no");
 			if (board_no == null || board_no.length == 0) {
 			} else {
+				int l_res = l_biz.multiDelete(board_no);
 				int f_res = f_t_biz.multiDelete(board_no);
 				int b_res = b_biz.multiDelete(board_no);
 				if (b_res == board_no.length) {
@@ -1332,9 +1336,9 @@ public class SemiProjectController extends HttpServlet {
 			
 			int res = o_t_biz.mulDelete(order_num);
 			if(res > 0) {
-				jsResponse(response, "삭제 성공", "index.jsp");
+				jsResponse(response, "삭제 성공", "index.html");
 			} else {
-				jsResponse(response, "삭제 실패", "index.jsp");
+				jsResponse(response, "삭제 실패", "");
 			}
 
 		} else if (command.equals("dec_insert")) {
@@ -1414,9 +1418,9 @@ public class SemiProjectController extends HttpServlet {
 				res++;
 			}
 			if (res > 0) {
-				jsResponse(response, "수정 성공", "index.jsp");
+				jsResponse(response, "수정 성공", "index.html");
 			} else {
-				jsResponse(response, "수정 실패", "index.jsp");
+				jsResponse(response, "수정 실패", "index.html");
 			}
 		} else if(command.equals("paylist")) {
 			String[] order_num_str = request.getParameterValues("order_num");

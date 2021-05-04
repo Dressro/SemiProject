@@ -321,57 +321,24 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 				</div>
 			</div>
 			<div class="row">
+			<c:set var="count" value="1" />
+				<c:forEach items="${l_list }" var="dto">
 				<div class="col-lg-4 col-md-6">
 					<div class="blog__item">
 						<div class="blog__item__pic">
-							<img src="resources/images/pet/pet_2.JPG" alt="" style="height: 293px;">
+							<a href="semi.do?command=dec_detail&board_no=${dto.board_no }"><img src="resources/images/pet/${count }.jpg" alt="" style="height: 293px;"></a>
 						</div>
 						<div class="blog__item__text">
 							<div class="label">
-								<span>서울시 강남구</span>
+								<span>${dto.member_id }</span>
 							</div>
-							<h4>
-								<a href="#">이름 : 멍뭉이 </a>
-							</h4>
-							<p>디테일 한 정보</p>
-							<span>MAY 22, 2020</span>
+							<div style="height: 200px;">${dto.board_content }</div>
+							<span><fmt:formatDate value="${dto.board_regdate }" pattern="yyyy-MM-dd" /></span>
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-4 col-md-6">
-					<div class="blog__item">
-						<div class="blog__item__pic">
-							<img src="resources/images/pet/pet_2.JPG" alt="" style="height: 293px;">
-						</div>
-						<div class="blog__item__text">
-							<div class="label">
-								<span>서울시 강남구</span>
-							</div>
-							<h4>
-								<a href="#">이름 : 멍뭉이 </a>
-							</h4>
-							<p>디테일 한 정보</p>
-							<span>MAY 22, 2020</span>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<div class="blog__item">
-						<div class="blog__item__pic">
-							<img src="resources/images/pet/pet_2.JPG" alt="" style="height: 293px;">
-						</div>
-						<div class="blog__item__text">
-							<div class="label">
-								<span>서울시 강남구</span>
-							</div>
-							<h4>
-								<a href="#">이름 : 멍뭉이 </a>
-							</h4>
-							<p>디테일 한 정보</p>
-							<span>MAY 22, 2020</span>
-						</div>
-					</div>
-				</div>
+				<c:set var="count" value="${count + 1}" />
+				</c:forEach>
 			</div>
 		</div>
 	</section>
