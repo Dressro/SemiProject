@@ -224,8 +224,8 @@ response.setContentType("text/html; charset=UTF-8");
 			<input type="button" value="정기검진 등록" onclick="popup_r_check();" />
 			<input type="button" value="개인일정 등록" onclick="popup_private();" />
 				<script type="text/javascript">
-					function popup_r_check() {window.open("semi.do?command=popup_r_check&member_id=${dto.member_id}", "정기검진 등록 팝업창", "width=800, height=300, left=1000, top=250");}
-					function popup_private() {window.open("semi.do?command=popup_private&member_id=${dto.member_id}", "개인일정 등록 팝업창", "width=800, height=300, left=1000, top=250");}
+					function popup_r_check() {window.open("semi.do?command=popup_r_check&member_id=${dto.member_id}", "정기검진 등록 팝업창", "width=800, height=300, left=500, top=250");}
+					function popup_private() {window.open("semi.do?command=popup_private&member_id=${dto.member_id}", "개인일정 등록 팝업창", "width=800, height=300, left=500, top=250");}
 				</script>
 			<br><br>
 			
@@ -264,7 +264,7 @@ response.setContentType("text/html; charset=UTF-8");
 					int lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 					MycalDao dao = new MycalDaoImpl();
 					String member_id = dto.getMember_id();
-					String yyyyMM = year + Util.isTwo(String.valueOf(month));
+					String yyyyMM = year +"-"+ Util.isTwo(String.valueOf(month));
 					MycalDto m_c_dto = new MycalDto(yyyyMM, member_id);
 					List<MycalDto> m_c_list = dao.selectViewList(m_c_dto);
 					
@@ -273,14 +273,14 @@ response.setContentType("text/html; charset=UTF-8");
 					<table id="myCalendar">
 					
 						<caption class="cpt">
-							<a href="">◁</a>
-							<a href="">◀</a>
+							<a href="mypage.jsp?year=<%=year-1%>&month=<%=month%>">◁</a>
+							<a href="mypage.jsp?year=<%=year %>&month=<%=month-1 %>">◀</a>
 							
 							<span class="y"><%=year %></span>년
 							<span class="m"><%=month %></span>월
 							
-							<a href="">▶</a>
-							<a href="">▷</a>
+							<a href="mypage.jsp?year=<%=year %>&month=<%=month+1 %>">▶</a>
+							<a href="mypage.jsp?year=<%=year+1%>&month=<%=month%>">▷</a>
 						</caption>
 						
 						<tr>
@@ -299,9 +299,6 @@ response.setContentType("text/html; charset=UTF-8");
 						
 						<td>
 							<a class="countview" href="semi.do?command=popup_calList&member_id=${dto.member_id}&year=<%=year %>&month=<%=month %>&date=<%=i %>" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;" style="color: <%=Util.fontColor(i, dayOfWeek) %>"><%=i %></a>
-							
-							<a href="popup_calList.jsp" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">
-							</a>
 							
 							<div class="list">
 								<%=Util.getCalView(i, m_c_list) %>

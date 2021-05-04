@@ -8,11 +8,12 @@
 	#myCalendar th{
 		width: 80px;
 		border: 1px solid gray;
+		text-align: center;
 	}
 	
 	#myCalendar td{
-		width: 80px;
-		height: 80px;
+		width: 100px;
+		height: 120px;
 		border: 1px solid gray;
 		text-align: left;
 		vertical-align: top;
@@ -21,3 +22,9 @@
 
 
 	.cpt {caption-side: top;}
+	
+	.list > p {
+		font-size: 5px;
+		margin: 1px;
+		background-color: #D0A9F5;
+	}

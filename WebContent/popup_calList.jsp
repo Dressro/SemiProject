@@ -7,19 +7,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <title>Family|Pet</title>
 </head>
 <body>
 
-	<jsp:useBean id="util" class="com.project.fp.controller.Util"></jsp:useBean>
+
 
 	<h1>일정 목록</h1>
-	
-	<form action="cal.do" method="post">
-		<input type="hidden" name="command" value="muldel" />
-		
+
 		<table border="1">
-			<col width="50" />
 			<col width="50" />
 			<col width="500" />
 			<col width="200" />
@@ -33,18 +30,16 @@
 			<c:choose>
 				<c:when test="${empty list }">
 					<tr>
-						<th colspan="4">---------일정이 없습니다-----------</th>
+						<td colspan="4">---------일정이 없습니다-----------</td>
 					</tr>
 				</c:when>
 				<c:otherwise>
 					<c:forEach items="${list }" var="m_c_dto">
 						<tr>
-							<th><input type="checkbox" name="chk" value="${m_c_dto.cal_no }"></th>
 							<td>${m_c_dto.cal_no }</td>
-							<td><a href="semi.do?command=calDeatil?cal_no=${m_c_dto.cal_no }" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;">${m_c_dto.cal_title }</a></td>
+							<td><a href="semi.do?command=calDetail&cal_no=${m_c_dto.cal_no }" >${m_c_dto.cal_title }</a></td>
 							<td>
-								<jsp:setProperty property="todates" name="util" value="${m_c_dto.cal_mdate } "/>
-								<jsp:getProperty property="todates" name="util"/>
+								${m_c_dto.cal_mdate }
 							</td>
 							<td><fmt:formatDate value="${m_c_dto.cal_regdate }" pattern="yyyy.MM.dd"/></td> 
 						</tr>
@@ -52,8 +47,6 @@
 				</c:otherwise>
 			</c:choose>
 		</table>
-		
-	</form>
 
 </body>
 </html>

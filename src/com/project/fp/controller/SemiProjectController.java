@@ -10,8 +10,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -1421,7 +1425,7 @@ public class SemiProjectController extends HttpServlet {
 			String month = request.getParameter("month");
 			String date = request.getParameter("date");
 			String yyyyMMdd = year + Util.isTwo(month) + Util.isTwo(date);
-			
+			System.out.println(yyyyMMdd);
 			MycalDto m_dto = new MycalDto();
 			m_dto.setMember_id(member_id);
 			m_dto.setCal_mdate(yyyyMMdd);
@@ -1429,6 +1433,73 @@ public class SemiProjectController extends HttpServlet {
 			request.setAttribute("list", list);
 			
 			dispatch(response, request, "popup_calList.jsp");
+		} else if (command.equals("private_insertres")) {
+			String member_id = request.getParameter("member_id");
+			String cal_title = request.getParameter("cal_title");
+			String cal_mdate = request.getParameter("cal_date");
+			//System.out.println(cal_mdate);
+			//String cal_mdate = cal_date.substring(0, 10);
+			String cal_content = request.getParameter("cal_content");
+			MycalDto m_dto = new MycalDto();
+			m_dto.setMember_id(member_id);
+			m_dto.setCal_title(cal_title);
+			m_dto.setCal_content(cal_content);
+			m_dto.setCal_mdate(cal_mdate);
+			m_c_biz.insertCal(m_dto);
+		} else if (command.equals("checkup_insertres")) {
+			String member_id = request.getParameter("member_id");
+			String cal_date = request.getParameter("cal_date");
+			int r_cycle = Integer.parseInt(request.getParameter("r_cycle"));
+			String next_check = null;
+			try {
+				SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
+				Date chekup = fm.parse(cal_date);
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(chekup);
+				cal.add(Calendar.DATE, r_cycle);
+				next_check = fm.format(cal.getTime());
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			MycalDto m_dto = new MycalDto();
+			m_dto.setMember_id(member_id);
+			m_dto.setCal_mdate(cal_date);
+			m_c_biz.insertCheck(m_dto);
+			
+			MycalDto m_c_dto = new MycalDto();
+			m_c_dto.setMember_id(member_id);
+			m_c_dto.setCal_mdate(next_check);
+			m_c_biz.insertNextCheck(m_c_dto);
+		} else if (command.equals("calDetail")) {
+			int cal_no = Integer.parseInt(request.getParameter("cal_no"));
+			System.out.println(cal_no);
+			MycalDto m_dto = new MycalDto();
+			m_dto.setCal_no(cal_no);
+			MycalDto m_c_dto = m_c_biz.selectOne(cal_no);
+			request.setAttribute("m_c_dto", m_c_dto);
+			dispatch(response, request, "popup_calDetail.jsp");
+		} else if (command.equals("calUpdate")) {
+			String member_id = request.getParameter("member_id");
+			int cal_no = Integer.parseInt(request.getParameter("cal_no"));
+			request.setAttribute("cal_no", cal_no);
+			dispatch(response, request, "popup_calUpdate.jsp");
+		} else if (command.equals("calDelete")) {
+			int cal_no = Integer.parseInt(request.getParameter("cal_no"));
+			MycalDto m_dto = new MycalDto();
+			m_dto.setCal_no(cal_no);
+			m_c_biz.deleteCal(cal_no);
+		} else if (command.equals("calUpdateRes")) {
+			int cal_no = Integer.parseInt(request.getParameter("cal_no"));
+			String cal_title = request.getParameter("cal_title");
+			String cal_date = request.getParameter("cal_date");
+			String cal_content = request.getParameter("cal_content");
+			String cal_mdate = cal_date.substring(0, 10);
+			MycalDto m_dto = new MycalDto();
+			m_dto.setCal_no(cal_no);
+			m_dto.setCal_title(cal_title);
+			m_dto.setCal_mdate(cal_mdate);
+			m_dto.setCal_content(cal_content);
+			m_c_biz.updateCal(m_dto);
 		}
 
 		if (command.equals("test")){

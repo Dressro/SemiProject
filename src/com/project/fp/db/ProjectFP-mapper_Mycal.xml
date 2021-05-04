@@ -6,10 +6,10 @@
 	<select id="selectViewList" resultType="MycalDto" parameterType="MycalDto">
 		SELECT *
 		FROM (
-				SELECT (ROW_NUMBER() OVER(PARTITION BY SUBSTR(CAL_MDATE, 1, 8) ORDER BY CAL_MDATE)) RN, CAL_NO, CAL_TITLE, CAL_CONTENT, CAL_MDATE, CAL_REGDATE, MEMBER_ID
+				SELECT (ROW_NUMBER() OVER(PARTITION BY SUBSTR(CAL_MDATE, 1, 10) ORDER BY CAL_MDATE)) RN, CAL_NO, CAL_TITLE, CAL_CONTENT, CAL_MDATE, CAL_REGDATE, MEMBER_ID
 				FROM MYCAL
 				WHERE MEMBER_ID = #{member_id}
-				AND SUBSTR(CAL_MDATE, 1, 8) = #{cal_mdate}
+				AND SUBSTR(CAL_MDATE, 1, 7) = #{cal_mdate}
 			 )
 		WHERE RN BETWEEN 1 AND 3
 	</select>
@@ -18,7 +18,7 @@
 		SELECT CAL_NO, CAL_TITLE, CAL_CONTENT, CAL_MDATE, CAL_REGDATE, MEMBER_ID
 		FROM MYCAL
 		WHERE MEMBER_ID = #{member_id}
-		AND SUBSTR(CAL_MDATE, 1, 8) = #{cal_mdate}
+		AND REPLACE(CAL_MDATE, '-', '') = #{cal_mdate}
 	</select>
 
 	<select id="selectOne" resultType="MycalDto" parameterType="int">
