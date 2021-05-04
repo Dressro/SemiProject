@@ -84,6 +84,15 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<BoardDto> index_dec() {
+		List<BoardDto> list = new ArrayList<BoardDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "index_dec");
+		}
+		return list;
+	}
 
 	@Override
 	public List<BoardDto> board_List() {
@@ -478,6 +487,8 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		
 		return count;
 	}
+
+	
 
 	
 	

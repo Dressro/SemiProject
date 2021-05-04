@@ -110,7 +110,7 @@ public class ProductDaoImpl extends SqlMapConfig implements ProductDao {
 
 	@Override
 	public int multiDelete(String[] prod_nums) {
-int count = 0;
+		int count = 0;
 		
 		Map<String, String[]> map = new HashMap<String, String[]>();
 		map.put("prod_nums", prod_nums);
@@ -179,14 +179,27 @@ int count = 0;
 			List<ProductDto> list = new ArrayList<ProductDto>();
 			
 			try(SqlSession session = getSqlSessionFactory().openSession(false)) {
-				list = session.selectList(namespace+"product_selectList", Pdto);
+				list = session.selectList(namespace+"prod_selectList", Pdto);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
 			return list;
 		}
-	
+
+	@Override
+	public int category_count(String prod_category) {
+		int res = 0;
+
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.selectOne(namespace + "product_categoryCount",prod_category );
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	}
+
 	
 
 }

@@ -85,7 +85,7 @@ if (dto == null) {
 <%
 } else {
 		if(dto.getMember_grade().equals("관리자")){%>
-					<li class="active"><a href="index.jsp">Home</a></li>
+					<li class="active"><a href="semi.do?command=index">Home</a></li>
 					<li><a href="semi.do?command=board_notice">공지사항</a>
 					<li><a href="semi.do?command=board_free">자유게시판</a>
 					<li><a href="semi.do?command=animal_hospital">동물병원검색</a>

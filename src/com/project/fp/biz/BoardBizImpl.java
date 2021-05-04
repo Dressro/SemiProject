@@ -53,6 +53,12 @@ public class BoardBizImpl implements BoardBiz {
 	}
 	
 	@Override
+	public List<BoardDto> index_dec() {
+		// TODO Auto-generated method stub
+		return dao.index_dec();
+	}
+
+	@Override
 	public List<BoardDto> board_List() {
 		// TODO Auto-generated method stub
 		return dao.board_List();
@@ -227,6 +233,7 @@ public class BoardBizImpl implements BoardBiz {
 		return dao.multiDelete(board_nos);
 	}
 
+	
 	
 
 	

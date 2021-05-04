@@ -82,6 +82,13 @@ public class ProductBizImpl implements ProductBiz {
 	}
 
 
+	@Override
+	public int category_count(String prod_category) {
+		// TODO Auto-generated method stub
+		return dao.category_count(prod_category);
+	}
+
+
 	
 	
 	

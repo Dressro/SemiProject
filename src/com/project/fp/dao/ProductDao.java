@@ -19,4 +19,5 @@ public interface ProductDao {
 	public int count();
 	
 	public int multiDelete(String[] prod_nums);
+	public int category_count(String prod_category);
 }
