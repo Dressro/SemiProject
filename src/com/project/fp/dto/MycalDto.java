@@ -26,7 +26,12 @@ public class MycalDto {
 		this.cal_regdate = cal_regdate;
 		this.member_id = member_id;
 	}
-
+	
+	public MycalDto(String cal_mdate, String member_id) {
+		this.cal_mdate = cal_mdate;
+		this.member_id = member_id;
+	}
+	
 	public int getCal_no() {
 		return cal_no;
 	}

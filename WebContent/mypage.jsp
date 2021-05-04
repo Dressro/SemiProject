@@ -262,10 +262,10 @@ response.setContentType("text/html; charset=UTF-8");
 					int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 					// 해당 월의 마지막 날
 					int lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-					MycalDto m_c_dto = new MycalDto();
 					MycalDao dao = new MycalDaoImpl();
-					
+					String member_id = dto.getMember_id();
 					String yyyyMM = year + Util.isTwo(String.valueOf(month));
+					MycalDto m_c_dto = new MycalDto(yyyyMM, member_id);
 					List<MycalDto> m_c_list = dao.selectViewList(m_c_dto);
 					
 				%>
