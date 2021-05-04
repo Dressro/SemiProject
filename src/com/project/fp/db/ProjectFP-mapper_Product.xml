@@ -44,13 +44,13 @@
 	<select id="product_selectList"
 		parameterType="com.project.fp.dto.PagingDto" resultType="ProductDto">
 		select
-		b.rnum,b.prod_num,b.prod_name,prod_category
+		b.rnum,b.prod_num,b.prod_name, prod_category, prod_price
 		from
 		(select rownum as rnum,
-		a.prod_num,a.prod_name,a.prod_category
+		a.prod_num,a.prod_name,a.prod_category,a.prod_price
 		from
 		(select
-		prod_num, prod_name, prod_category
+		prod_num, prod_name, prod_category, prod_price
 		from product
 		order by prod_num desc)a
 		where rownum <![CDATA[ <= ]]>
@@ -59,6 +59,117 @@
 		#{pageBegin}
 	</select>	
 	
+	<select id="feed_selectList" parameterType="com.project.fp.dto.PagingDto" resultType="ProductDto">
+		select
+		b.rnum,b.prod_num,b.prod_name, prod_category, prod_price
+		from
+		(select rownum as rnum,
+		a.prod_num,a.prod_name,a.prod_category, a.prod_price
+		from
+		(select
+		prod_num, prod_name, prod_category, prod_price
+		from product
+		where PROD_CATEGORY = 'feed'
+		order by prod_num desc)a
+		where rownum <![CDATA[ <= ]]>
+		#{pageEnd})b
+		where b.rnum <![CDATA[ >= ]]>
+		#{pageBegin}
+	</select>	
+	
+		
+	<select id="care_selectList" parameterType="com.project.fp.dto.PagingDto" resultType="ProductDto">
+		select
+		b.rnum,b.prod_num,b.prod_name, prod_category, prod_price
+		from
+		(select rownum as rnum,
+		a.prod_num,a.prod_name,a.prod_category, a.prod_price
+		from
+		(select
+		prod_num, prod_name, prod_category, prod_price
+		from product
+		where PROD_CATEGORY = 'care'
+		order by prod_num desc)a
+		where rownum <![CDATA[ <= ]]>
+		#{pageEnd})b
+		where b.rnum <![CDATA[ >= ]]>
+		#{pageBegin}
+	</select>	
+	
+	<select id="living_selectList" parameterType="com.project.fp.dto.PagingDto" resultType="ProductDto">
+		select
+		b.rnum,b.prod_num,b.prod_name, prod_category, prod_price
+		from
+		(select rownum as rnum,
+		a.prod_num,a.prod_name,a.prod_category, a.prod_price
+		from
+		(select
+		prod_num, prod_name, prod_category, prod_price
+		from product
+		where PROD_CATEGORY = 'living'
+		order by prod_num desc)a
+		where rownum <![CDATA[ <= ]]>
+		#{pageEnd})b
+		where b.rnum <![CDATA[ >= ]]>
+		#{pageBegin}
+	</select>	
+	
+	
+	<select id="outing_selectList" parameterType="com.project.fp.dto.PagingDto" resultType="ProductDto">
+		select
+		b.rnum,b.prod_num,b.prod_name, prod_category, prod_price
+		from
+		(select rownum as rnum,
+		a.prod_num,a.prod_name,a.prod_category, a.prod_price
+		from
+		(select
+		prod_num, prod_name, prod_category, prod_price
+		from product
+		where PROD_CATEGORY = 'outing'
+		order by prod_num desc)a
+		where rownum <![CDATA[ <= ]]>
+		#{pageEnd})b
+		where b.rnum <![CDATA[ >= ]]>
+		#{pageBegin}
+	</select>	
+
+	
+	<select id="toy_selectList" parameterType="com.project.fp.dto.PagingDto" resultType="ProductDto">
+		select
+		b.rnum,b.prod_num,b.prod_name, prod_category, prod_price
+		from
+		(select rownum as rnum,
+		a.prod_num,a.prod_name,a.prod_category, a.prod_price
+		from
+		(select
+		prod_num, prod_name, prod_category, prod_price
+		from product
+		where PROD_CATEGORY = 'toy'
+		order by prod_num desc)a
+		where rownum <![CDATA[ <= ]]>
+		#{pageEnd})b
+		where b.rnum <![CDATA[ >= ]]>
+		#{pageBegin}
+	</select>	
+	
+		
+	<select id="fashion_selectList" parameterType="com.project.fp.dto.PagingDto" resultType="ProductDto">
+		select
+		b.rnum,b.prod_num,b.prod_name, prod_category, prod_price
+		from
+		(select rownum as rnum,
+		a.prod_num,a.prod_name,a.prod_category, a.prod_price
+		from
+		(select
+		prod_num, prod_name, prod_category, prod_price
+		from product
+		where PROD_CATEGORY = 'fashion'
+		order by prod_num desc)a
+		where rownum <![CDATA[ <= ]]>
+		#{pageEnd})b
+		where b.rnum <![CDATA[ >= ]]>
+		#{pageBegin}
+	</select>	
 	
 	<insert id="insert" parameterType="ProductDto">
 		INSERT INTO PRODUCT

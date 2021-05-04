@@ -569,19 +569,76 @@ public class SemiProjectController extends HttpServlet {
 			request.setAttribute("list", list);
 			request.setAttribute("Pdto", pdto);
 			dispatch(response, request, "shopping.jsp");
+			
 		} else if (command.equals("category")) {
 			int nowPage = 1;
 			if (request.getParameter("nowPage") != null) {
 				nowPage = Integer.parseInt(request.getParameter("nowPage"));
 			}
 			String prod_category = request.getParameter("prod_category");
-			int count = p_biz.category_count(prod_category);
-			List<ProductDto> list = new ArrayList<ProductDto>();
-			PagingDto pdto = new PagingDto(count, nowPage);
-			list = p_biz.prod_selectList(pdto);
-			request.setAttribute("list", list);
-			request.setAttribute("Pdto", pdto);
-			dispatch(response, request, "shopping.jsp");
+			
+			if (prod_category.equals("feed")) {
+			
+				int count = p_biz.category_count(prod_category);
+				List<ProductDto> list = new ArrayList<ProductDto>();
+				PagingDto pdto = new PagingDto(count, nowPage);
+				list = p_biz.feed_selectList(pdto);
+				request.setAttribute("BoardCommand", command);
+				request.setAttribute("list", list);
+				request.setAttribute("Pdto", pdto);
+				dispatch(response, request, "shopping.jsp");
+			} else if (prod_category.equals("care")) {
+
+				int count = p_biz.category_count(prod_category);
+				List<ProductDto> list = new ArrayList<ProductDto>();
+				PagingDto pdto = new PagingDto(count, nowPage);
+				list = p_biz.care_selectList(pdto);
+				request.setAttribute("BoardCommand", command);
+				request.setAttribute("list", list);
+				request.setAttribute("Pdto", pdto);
+				dispatch(response, request, "shopping.jsp");
+			}	else if (prod_category.equals("living")) {
+
+				int count = p_biz.category_count(prod_category);
+				List<ProductDto> list = new ArrayList<ProductDto>();
+				PagingDto pdto = new PagingDto(count, nowPage);
+				list = p_biz.living_selectList(pdto);
+				request.setAttribute("BoardCommand", command);
+				request.setAttribute("list", list);
+				request.setAttribute("Pdto", pdto);
+				dispatch(response, request, "shopping.jsp");
+			}	else if (prod_category.equals("outing")) {
+
+				int count = p_biz.category_count(prod_category);
+				List<ProductDto> list = new ArrayList<ProductDto>();
+				PagingDto pdto = new PagingDto(count, nowPage);
+				list = p_biz.outing_selectList(pdto);
+				request.setAttribute("BoardCommand", command);
+				request.setAttribute("list", list);
+				request.setAttribute("Pdto", pdto);
+				dispatch(response, request, "shopping.jsp");
+			}	else if (prod_category.equals("toy")) {
+
+				int count = p_biz.category_count(prod_category);
+				List<ProductDto> list = new ArrayList<ProductDto>();
+				PagingDto pdto = new PagingDto(count, nowPage);
+				list = p_biz.toy_selectList(pdto);
+				request.setAttribute("BoardCommand", command);
+				request.setAttribute("list", list);
+				request.setAttribute("Pdto", pdto);
+				dispatch(response, request, "shopping.jsp");
+			}	else if (prod_category.equals("fashion")) {
+
+				int count = p_biz.category_count(prod_category);
+				List<ProductDto> list = new ArrayList<ProductDto>();
+				PagingDto pdto = new PagingDto(count, nowPage);
+				list = p_biz.fashion_selectList(pdto);
+				request.setAttribute("BoardCommand", command);
+				request.setAttribute("list", list);
+				request.setAttribute("Pdto", pdto);
+				dispatch(response, request, "shopping.jsp");
+			}
+			
 		} else if (command.equals("shopping_detail")) {
 			int prod_num = Integer.parseInt(request.getParameter("prod_num"));
 			ProductDto p_dto = p_biz.selectOne(prod_num);
