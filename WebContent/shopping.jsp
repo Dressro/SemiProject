@@ -21,7 +21,6 @@
 	text-align: center;
 	font-size: 20pt;
 }
-
 #paging a {
 	font-size: 20pt;
 }

@@ -44,7 +44,7 @@
 						var $li = $("<li class='Doctor_list' ondblclick='chat_go("+list[i].ch_num+");'>");
 						$li.append($("<div class='Doctor_list_info'><span>"+list[i].doctor_id+" 님과의 채팅방 </span></div>"));
 						$li.append($("<div class='Doctor_list_info'><span>"+list[i].ch_date+"</span></div>"));
-						$li.append($("<button type='button' onclick='chat_delete("+list[i].ch_num+");'>채팅방 삭제</button>"));
+						$li.append($("<button type='button' class='btn btn-outline-secondary' style='font-weight: bold' onclick='chat_delete("+list[i].ch_num+");'>채팅방 삭제</button>"));
 						$('.chat_ul').append($li);
 					}
 				},
@@ -66,7 +66,7 @@
 						var $li = $("<li class='Doctor_list' ondblclick='chat_go("+list[i].ch_num+");'>");
 						$li.append($("<div class='Doctor_list_info'><span>"+list[i].member_id+" 님과의 채팅방 </span></div>"));
 						$li.append($("<div class='Doctor_list_info'><span>"+list[i].ch_date+"</span></div>"));
-						$li.append($("<button type='button'>채팅방 삭제</button>"));
+						$li.append($("<button type='button' class='btn btn-outline-secondary' style='font-weight: bold' onclick='chat_delete("+list[i].ch_num+");'>채팅방 삭제</button>"));
 						$('.chat_ul').append($li);
 					}
 				},
@@ -78,7 +78,7 @@
 	}
 </script>
 <style type="text/css">
-#chat_mid{
+#chat_mid {
 	width: 1200px;
 	margin: 0 auto;
 	min-height: 1000px;
@@ -89,10 +89,12 @@
 	width: 100%;
 	border-top: 1px solid #dadada;
 }
-.Doctor_list:last-child{
+
+.Doctor_list:last-child {
 	border-bottom: 1px solid #dadada;
 }
-.Doctor_list:hover{
+
+.Doctor_list:hover {
 	background: #e2e2e2;
 }
 
@@ -109,6 +111,15 @@
 	font-size: 14px;
 	font-weight: bolder;
 }
+
+#paging {
+	text-align: center;
+	font-size: 20pt;
+}
+
+#paging a {
+	font-size: 20pt;
+}
 </style>
 </head>
 <%
@@ -118,10 +129,10 @@ String member_grade = (String) request.getAttribute("member_grade");
 <body>
 	<jsp:include page="header.jsp" />
 	<div id="semipage">
-		<input type="hidden" id="member_grade" value="<%=member_grade %>"/>
+		<input type="hidden" id="member_grade" value="<%=member_grade%>" />
 		<!-- 전문의 회원이 아닌 아이디 -->
-		<input type="hidden" id="member_id" value="<%=dto.getMember_id()%>"/>
-		<div id ="chat_mid">
+		<input type="hidden" id="member_id" value="<%=dto.getMember_id()%>" />
+		<div id="chat_mid">
 			<section>
 				<nav>
 					<ul class="mymenus">
@@ -133,28 +144,37 @@ String member_grade = (String) request.getAttribute("member_grade");
 			</section>
 			<div>
 				<section class="mypage">
-						<c:choose>
-							<c:when test="${empty m_list }">
-								<span>현재 회원중에 전문의가 없습니다.</span>
-							</c:when>
-							<c:otherwise>
-								<ul class = "Doctor_ul">
+					<c:choose>
+						<c:when test="${empty m_list }">
+							<span>현재 회원중에 전문의가 없습니다.</span>
+						</c:when>
+						<c:otherwise>
+							<ul class="Doctor_ul">
 								<c:forEach items="${m_list }" var="m_dto">
-									<li class="Doctor_list"  ondblclick="chat_create('${m_dto.member_id}');">
-										<div class = "Doctor_list_div">
-											img
+									<li class="Doctor_list" ondblclick="chat_create('${m_dto.member_id}');">
+										<div class="Doctor_list_div">img</div>
+										<div class="Doctor_list_info">
+											<span>${m_dto.member_name }</span>
 										</div>
 										<div class="Doctor_list_info">
-											<span>${m_dto.member_name }</span>	
-										</div>
-										<div class="Doctor_list_info">
-											<span>${m_dto.member_dr_info}</span>	
+											<span>${m_dto.member_dr_info}</span>
 										</div>
 									</li>
 								</c:forEach>
-								</ul>
-							</c:otherwise>
-						</c:choose>
+							</ul>
+						</c:otherwise>
+					</c:choose>
+					<jsp:include page="/chat_list_paging.jsp">
+						<jsp:param value="${Chat_Command }" name="command" />
+						<jsp:param value="${member_grade }" name="member_grade" />
+						<jsp:param value="${Pdto.nowBlock}" name="nowBlock" />
+						<jsp:param value="${Pdto.blockBegin }" name="blockBegin" />
+						<jsp:param value="${Pdto.blockEnd }" name="blockEnd" />
+						<jsp:param value="${Pdto.nowPage}" name="nowPage" />
+						<jsp:param value="${Pdto.blockBegin}" name="blockBegin" />
+						<jsp:param value="${Pdto.blockEnd}" name="blockEnd" />
+						<jsp:param value="${Pdto.totalBlock}" name="totalBlock" />
+					</jsp:include>
 				</section>
 			</div>
 			<script type="text/javascript">
@@ -177,15 +197,15 @@ String member_grade = (String) request.getAttribute("member_grade");
 			</script>
 			<div>
 				<section class="mypage">
-						<c:choose>
-							<c:when test="${empty m_list }">
-								<span>현재 채팅방이 없습니다.</span>
-							</c:when>
-							<c:otherwise>
-								<ul class = "chat_ul">
-								</ul>
-							</c:otherwise>
-						</c:choose>
+					<c:choose>
+						<c:when test="${empty m_list }">
+							<span>현재 채팅방이 없습니다.</span>
+						</c:when>
+						<c:otherwise>
+							<ul class="chat_ul">
+							</ul>
+						</c:otherwise>
+					</c:choose>
 				</section>
 			</div>
 		</div>

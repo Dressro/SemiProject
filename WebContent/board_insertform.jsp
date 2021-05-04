@@ -73,6 +73,12 @@ response.setContentType("text/html; charset=UTF-8");
 							<textarea class="form-control" id="p_content" name="board_content"></textarea>
 							<script type="text/javascript">
 								CKEDITOR.replace('p_content', {
+									text = text.replace(/<br\/>/ig, "\n");
+									text = text.replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig, "");
+
+
+									text = text.replace(/(<([^>]+)>)/gi, "");
+									text = text.replace(/&nbsp;/gi,"");
 									height : 500,
 									width : 700
 								});

@@ -68,22 +68,30 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 <div class="header__options">
 <nav class="header__menu mobile-menu">
 <ul>
-<li class="active"><a href="index.jsp">Home</a></li>
-<li><a href="semi.do?command=board_notice">공지사항</a>
-<li><a href="semi.do?command=board_free">자유게시판</a>
-<li><a href="semi.do?command=animal_hospital">동물병원검색</a>
-<li><a href="semi.do?command=board_dec">실종신고</a>
-<li><a href="semi.do?command=shopping">쇼핑</a>
-<li><a href="semi.do?command=board_qna">상품문의</a>
+
 
 <%
 if (dto == null) {
-%>
+%>					
+					<li class="active"><a href="index.jsp">Home</a></li>
+					<li><a href="semi.do?command=board_notice">공지사항</a>
+					<li><a href="semi.do?command=board_free">자유게시판</a>
+					<li><a href="semi.do?command=animal_hospital">동물병원검색</a>
+					<li><a href="semi.do?command=board_dec">실종신고</a>
+					<li><a href="semi.do?command=shopping">쇼핑</a>
+					<li><a href="semi.do?command=board_qna">상품문의</a>
 					<li id="login"><a class="li_rigit_a" href="semi.do?command=login">로그인</a></li>
 					<li><a href="semi.do?command=signup">회원가입</a></li>
 <%
 } else {
 		if(dto.getMember_grade().equals("관리자")){%>
+					<li class="active"><a href="semi.do?command=index">Home</a></li>
+					<li><a href="semi.do?command=board_notice">공지사항</a>
+					<li><a href="semi.do?command=board_free">자유게시판</a>
+					<li><a href="semi.do?command=animal_hospital">동물병원검색</a>
+					<li><a href="semi.do?command=board_dec">실종신고</a>
+					<li><a href="semi.do?command=shopping">쇼핑</a>
+					<li><a href="semi.do?command=board_qna">상품문의</a>
 					<li><a href="semi.do?command=chatlist&member_id=<%=dto.getMember_id()%>&member_grade=<%=dto.getMember_grade()%>">채팅</a>
 					<li><a href="semi.do?command=adminpage">관리자페이지</a>
 					<li><a href="semi.do?command=logout">로그아웃</a>
@@ -91,7 +99,13 @@ if (dto == null) {
 <%
 
 		}else{
-%>
+%>	
+					<li><a href="semi.do?command=board_notice">공지사항</a>
+					<li><a href="semi.do?command=board_free">자유게시판</a>
+					<li><a href="semi.do?command=animal_hospital">동물병원검색</a>
+					<li><a href="semi.do?command=board_dec">실종신고</a>
+					<li><a href="semi.do?command=shopping">쇼핑</a>
+					<li><a href="semi.do?command=board_qna">상품문의</a>
 					<li><a href="semi.do?command=chatlist&member_id=<%=dto.getMember_id()%>&member_grade=<%=dto.getMember_grade()%>">채팅</a>
 					<li><a href="semi.do?command=mypage&member_id=<%=dto.getMember_id()%>">마이페이지</a>
 					<li><a href="semi.do?command=basket_list&member_id=<%=dto.getMember_id()%>">장바구니</a>

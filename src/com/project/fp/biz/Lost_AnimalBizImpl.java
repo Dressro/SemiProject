@@ -40,4 +40,10 @@ public class Lost_AnimalBizImpl implements Lost_AnimalBiz {
 		return dao.delete(board_no);
 	}
 
+	@Override
+	public int multiDelete(String[] board_nos) {
+		// TODO Auto-generated method stub
+		return dao.multiDelete(board_nos);
+	}
+
 }

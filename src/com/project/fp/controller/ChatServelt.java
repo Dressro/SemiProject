@@ -12,38 +12,43 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
-class member{
+class member {
 	Session session;
 	int num;
+
 	public member(Session session, int num) {
 		this.session = session;
 		this.num = num;
 	}
+
 	public Session getSession() {
 		return session;
 	}
+
 	public void setSession(Session session) {
 		this.session = session;
 	}
+
 	public int getNum() {
 		return num;
 	}
+
 	public void setNum(int num) {
 		this.num = num;
 	}
-	
-	
+
 }
+
 /**
  * Servlet implementation class ChatServelt
  */
 @ServerEndpoint("/ChatServelt/{ch_num}")
-public class ChatServelt  {
+public class ChatServelt {
 	int chat_num = 0;
 	private static Set<member> clients = Collections.synchronizedSet(new HashSet<member>());
-	
+
 	@OnOpen
-	public void onOpen(Session session , @PathParam("ch_num") int ch_num) {
+	public void onOpen(Session session, @PathParam("ch_num") int ch_num) {
 		chat_num = ch_num;
 		System.out.println(session);
 		System.out.println(session.getId());
@@ -51,28 +56,26 @@ public class ChatServelt  {
 		System.out.println("성공");
 		member m = new member(session, ch_num);
 		clients.add(m);
-		System.out.println("크기는 : "+clients.size());
+		System.out.println("크기는 : " + clients.size());
 	}
-	
+
 	@OnMessage
 	public void onMessage(String message, Session session) throws IOException {
 		System.out.println(message);
 		synchronized (clients) {
-			for(member client : clients) {
-				if(!client.getSession().equals(session) && client.getNum() == chat_num) {
+			for (member client : clients) {
+				if (!client.getSession().equals(session) && client.getNum() == chat_num) {
 					client.session.getBasicRemote().sendText(message);
 				}
 			}
 		}
 	}
-	
+
 	@OnClose
 	public void onClose(Session session) {
-		synchronized (clients) {
-			for(member client : clients) {
-				if(client.getSession().equals(session) && client.getNum() == chat_num) {
-					clients.remove(client);
-				}
+		for (member client : clients) {
+			if (client.getSession().equals(session) && client.getNum() == chat_num) {
+				clients.remove(client);
 			}
 		}
 	}

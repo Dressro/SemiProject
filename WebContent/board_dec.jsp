@@ -82,14 +82,22 @@ response.setContentType("text/html; charset=UTF-8");
 		
 			// 지도를 생성합니다    
 			var map = new kakao.maps.Map(mapContainer, mapOption);
-				
+			
+			<c:set var="count" value="1" />
 			<c:forEach items="${l_list }" var="l_dto">
+			var imageSrc = 'resources/images/pet/${count}.jpg', // 마커이미지의 주소입니다    
+		    imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
+		    imageOption = {offset: new kakao.maps.Point(27, 69)};
+			
+			var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
 			// 마커가 표시될 위치입니다 
-			var markerPosition  = new kakao.maps.LatLng(${l_dto.lost_lat},${l_dto.lost_lng}); 
+			
+			markerPosition  = new kakao.maps.LatLng(${l_dto.lost_lat},${l_dto.lost_lng}); 
 
 			// 마커를 생성합니다
 			var marker = new kakao.maps.Marker({
 			    position: markerPosition,
+			    image: markerImage,
 			    clickable: true
 			});
 
@@ -115,6 +123,7 @@ response.setContentType("text/html; charset=UTF-8");
 			      // 마커 위에 인포윈도우를 표시합니다
 			      infowindow.open(map, marker);  
 			});
+			<c:set var="count" value="${count+1}"/> 
 			</c:forEach>
 		</script>
 
@@ -128,7 +137,6 @@ response.setContentType("text/html; charset=UTF-8");
 			<input id="search" type="text" class="search_text" value="" />
 			<button class="s-btn" type="button" onclick="search();">검색</button>
 		</div>
-
 		<div class="table-responsive">
 			<form action="semi.do" method="post" id="muldelform">
 				<input type="hidden" name="command" value="board_All_delete"> 

@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.project.fp.dto.BoardDto;
 import com.project.fp.dto.PagingDto;
 import com.project.fp.dto.ProductDto;
 
