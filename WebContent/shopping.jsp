@@ -24,6 +24,14 @@
 #paging a {
 	font-size: 20pt;
 }
+.category {
+	float: left;
+	padding: 15px 30px 15px 30px;
+}
+#mobile-filter{
+	width: 100%;
+	height: 100px;
+}
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
@@ -55,13 +63,13 @@ function searchname() {
 		
 <div id="mobile-filter">
     <div>
-        <ul>
-           					 <li><a href="semi.do?command=category&prod_category=feed">사료/간식</a>
-							 <li><a href="semi.do?command=category&prod_category=care">케어</a></li>
-							 <li><a href="semi.do?command=category&prod_category=living">리빙</a></li>
-							 <li><a href="semi.do?command=category&prod_category=outing">외출</a></li>
-							 <li><a href="semi.do?command=category&prod_category=toy">장난감</a></li>
-							 <li><a href="semi.do?command=category&prod_category=fashion">패션</a></li>
+        <ul style="list-style: none;">
+           					 <li class="category"><a href="semi.do?command=category&prod_category=feed">사료/간식</a>
+							 <li class="category"><a href="semi.do?command=category&prod_category=care">케어</a></li>
+							 <li class="category"><a href="semi.do?command=category&prod_category=living">리빙</a></li>
+							 <li class="category"><a href="semi.do?command=category&prod_category=outing">외출</a></li>
+							 <li class="category"><a href="semi.do?command=category&prod_category=toy">장난감</a></li>
+							 <li class="category"><a href="semi.do?command=category&prod_category=fashion">패션</a></li>
         </ul>
       
     </div>
