@@ -3,6 +3,12 @@
 <%@page import="com.project.fp.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+request.setCharacterEncoding("UTF-8");
+%>
+<%
+response.setContentType("text/html; charset=UTF-8");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -99,6 +105,10 @@
 a {
 	color: #f45d96;
 }
+.hospital_img{
+	width: 100px;
+	height: 100px;
+}
 </style>
 
 
@@ -125,7 +135,8 @@ a {
 
 
 		<script>
-			<%--
+			
+		<%--
 			var latitude = 0;
 			var longitude = 0;
 			if (navigator.geolocation) { // GPS를 지원하면
@@ -147,7 +158,6 @@ a {
 			}
 			alert(latitude + ' ' + longitude);
 			--%>
-
 			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 			mapOption = {
 				center : new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -158,49 +168,57 @@ a {
 			// 지도를 생성합니다    
 			var map = new kakao.maps.Map(mapContainer, mapOption);
 			// 주소-좌표 변환 객체를 생성합니다
-			var geocoder = new kakao.maps.services.Geocoder();		
+			var geocoder = new kakao.maps.services.Geocoder();
 			<c:forEach items="${list }" var="h_dto">
 			// 주소로 좌표를 검색합니다
-			geocoder.addressSearch('${h_dto.hospital_addr}',function(result, status) {
-				// 정상적으로 검색이 완료됐으면 
-				if (status === kakao.maps.services.Status.OK) {
-						var coords = new kakao.maps.LatLng(
-						result[0].y, result[0].x);
+			geocoder
+					.addressSearch(
+							'${h_dto.hospital_addr}',
+							function(result, status) {
+								// 정상적으로 검색이 완료됐으면 
+								if (status === kakao.maps.services.Status.OK) {
+									var coords = new kakao.maps.LatLng(
+											result[0].y, result[0].x);
 
-						// 결과값으로 받은 위치를 마커로 표시합니다
-						var marker = new kakao.maps.Marker({
-							map : map,
-							position : coords
-						});
-						// 인포윈도우로 장소에 대한 설명을 표시합니다
-						var infowindow = new kakao.maps.InfoWindow({
-							content : '<div style="width:150px;text-align:center;padding:6px 0;">${h_dto.hospital_name}</div>'
-						});
-							infowindow.open(map, marker);
-							map.setCenter(coords);
-				}
-			});
+									// 결과값으로 받은 위치를 마커로 표시합니다
+									var marker = new kakao.maps.Marker({
+										map : map,
+										position : coords
+									});
+									// 인포윈도우로 장소에 대한 설명을 표시합니다
+									var infowindow = new kakao.maps.InfoWindow(
+											{
+												content : '<div style="width:150px;text-align:center;padding:6px 0;">${h_dto.hospital_name}</div>'
+											});
+									infowindow.open(map, marker);
+									map.setCenter(coords);
+								}
+							});
 			</c:forEach>
-			geocoder.addressSearch('강남구 테헤란로 14길 6',function(result, status) {
-				// 정상적으로 검색이 완료됐으면 
-				if (status === kakao.maps.services.Status.OK) {
-						var coords = new kakao.maps.LatLng(
-						result[0].y, result[0].x);
+			geocoder
+					.addressSearch(
+							'강남구 테헤란로 14길 6',
+							function(result, status) {
+								// 정상적으로 검색이 완료됐으면 
+								if (status === kakao.maps.services.Status.OK) {
+									var coords = new kakao.maps.LatLng(
+											result[0].y, result[0].x);
 
-						// 결과값으로 받은 위치를 마커로 표시합니다
-						var marker = new kakao.maps.Marker({
-							map : map,
-							position : coords
-						});
-						// 인포윈도우로 장소에 대한 설명을 표시합니다
-						var infowindow = new kakao.maps.InfoWindow({
-							content : '<div style="width:150px;text-align:center;padding:6px 0;">내 위치</div>'
-						});
-							infowindow.open(map, marker);
-							map.setCenter(coords);
-				}
-			});
-			</script>
+									// 결과값으로 받은 위치를 마커로 표시합니다
+									var marker = new kakao.maps.Marker({
+										map : map,
+										position : coords
+									});
+									// 인포윈도우로 장소에 대한 설명을 표시합니다
+									var infowindow = new kakao.maps.InfoWindow(
+											{
+												content : '<div style="width:150px;text-align:center;padding:6px 0;">내 위치</div>'
+											});
+									infowindow.open(map, marker);
+									map.setCenter(coords);
+								}
+							});
+		</script>
 
 		<div>
 			<div>
@@ -211,7 +229,9 @@ a {
 					<ul class="animal_hospital_name_ul">
 						<c:forEach items="${list }" var="h_dto">
 							<li class="animal_hospital_list" onclick="animal_hospital_loc('${h_dto.hospital_addr}');">
-								<div class="animal_hospital_list_div">img</div>
+								<div class="animal_hospital_list_div">
+									<img class="hospital_img" alt="img" src="resources/images/Hospital/${h_dto.hospital_num }.png">
+								</div>
 								<div class="animal_hospital_list_info">
 									<span>${h_dto.hospital_addr}</span>
 								</div>
@@ -239,24 +259,25 @@ a {
 			</jsp:include>
 		</div>
 		<script type="text/javascript">
-					function animal_hospital_loc(loc) {
-						var location = loc
-						var geocoder = new kakao.maps.services.Geocoder();
+			function animal_hospital_loc(loc) {
+				var location = loc
+				var geocoder = new kakao.maps.services.Geocoder();
 
-						// 주소로 좌표를 검색합니다
-						geocoder.addressSearch(location, function(result, status) {
+				// 주소로 좌표를 검색합니다
+				geocoder.addressSearch(location, function(result, status) {
 
-						    // 정상적으로 검색이 완료됐으면 
-						     if (status === kakao.maps.services.Status.OK) {
+					// 정상적으로 검색이 완료됐으면 
+					if (status === kakao.maps.services.Status.OK) {
 
-						        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+						var coords = new kakao.maps.LatLng(result[0].y,
+								result[0].x);
 
-						        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-						        map.setCenter(coords);
-						    } 
-						});
+						// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+						map.setCenter(coords);
 					}
-				</script>
+				});
+			}
+		</script>
 	</div>
 
 	<jsp:include page="bottom.jsp" />

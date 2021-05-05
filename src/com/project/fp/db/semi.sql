@@ -246,6 +246,7 @@ SELECT * FROM FILE_TABLE;
 
 SELECT * FROM MEMBER;
 
+select * from HOSPITAL;
 
 select * from ORDER_TABLE;
 
