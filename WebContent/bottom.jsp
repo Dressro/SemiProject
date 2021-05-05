@@ -11,7 +11,46 @@
 <title>Family|Pet</title>
 <link rel="icon" href="resources/images/logo/favicon.ico" type="image/x-icon">
 </head>
+<style>
+.footer_chat {
+	width: 80px;
+	position: fixed;
+	z-index: 30; 
+	margin-left: 90%;
+}
+</style>
+
+<script type="text/javascript">
+
+	$(function(){
+		stickyFooter();
+		$(window).scroll(stickyFooter).resize(stickyFooter);
+	});
+
+
+	function stickyFooter(){
+		document_height = $(document).height(); // 문서 전체 높이
+		document_scrollTop = $(document).scrollTop(); // 문서 전체 높이 중 스크롤 위치
+		window_height = $(window).height(); // 창 높이
+		footer_height = $("footer").height();
+
+		gap = document_height - footer_height - window_height; 
+		bottom = document_scrollTop - gap ; 
+
+		if(document_scrollTop > gap){
+			$(".footer_chat").css("bottom", bottom+"px");
+		}else{
+			$(".footer_chat").css("bottom","0");
+		}
+	}
+
+</script>
+
 <body>
+<div class="footer_chat">
+     <a href="semi.do?command=chatlist"><img src="resources/images/icon/chatimg.png" onmouseover="this.src='resources/images/icon/chatimg2.png';" onmouseout="this.src='resources/images/icon/chatimg.png';"/></a>
+</div>
+</body>
 <footer class="footer">
 <div class="container">
 <div class="footer__options">
@@ -65,5 +104,5 @@
 </div>
 </div>
 </footer>
-</body>
+
 </html>
