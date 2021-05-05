@@ -130,18 +130,7 @@ public class ProductDaoImpl extends SqlMapConfig implements ProductDao {
 		
 		return count;
 	}
-
-	@Override
-	public List<ProductDto> selectcategory(String prod_category) {
-			List<ProductDto> list = null;
-			try(SqlSession session = getSqlSessionFactory().openSession(false)) {
-				list = session.selectList(namespace+"selectcategoryList",prod_category);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			return list;
-		}
+	
 
 	@Override
 	public int pay_update(ProductDto dto) {
@@ -174,19 +163,93 @@ public class ProductDaoImpl extends SqlMapConfig implements ProductDao {
 		return res;
 	}
 
+	
+
 	@Override
-	public List<ProductDto> prod_selectList(PagingDto Pdto) {
-			List<ProductDto> list = new ArrayList<ProductDto>();
-			
+	public List<ProductDto> selectcategory(String prod_category) {
+			List<ProductDto> list = null;
 			try(SqlSession session = getSqlSessionFactory().openSession(false)) {
-				list = session.selectList(namespace+"prod_selectList", Pdto);
+				list = session.selectList(namespace+"selectcategoryList",prod_category);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
 			return list;
 		}
+	
+	@Override
+	public List<ProductDto> prod_selectList(PagingDto Pdto) {
+			List<ProductDto> list = new ArrayList<ProductDto>();
+			
+			try(SqlSession session = getSqlSessionFactory().openSession(false)) {
+				list = session.selectList(namespace+"product_selectList", Pdto);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
+			return list;
+		}
+	
+	@Override
+	public List<ProductDto> feed_selectList(PagingDto Pdto) {
+
+		List<ProductDto> list = new ArrayList<ProductDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "feed_selectList", Pdto);
+		}
+		return list;
+	}
+	
+	@Override
+	public List<ProductDto> care_selectList(PagingDto Pdto) {
+
+		List<ProductDto> list = new ArrayList<ProductDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "care_selectList", Pdto);
+		}
+		return list;
+	}
+	
+	@Override
+	public List<ProductDto> living_selectList(PagingDto Pdto) {
+
+		List<ProductDto> list = new ArrayList<ProductDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "living_selectList", Pdto);
+		}
+		return list;
+	}
+	
+	@Override
+	public List<ProductDto> outing_selectList(PagingDto Pdto) {
+
+		List<ProductDto> list = new ArrayList<ProductDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "outing_selectList", Pdto);
+		}
+		return list;
+	}
+	
+	@Override
+	public List<ProductDto> toy_selectList(PagingDto Pdto) {
+
+		List<ProductDto> list = new ArrayList<ProductDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "toy_selectList", Pdto);
+		}
+		return list;
+	}
+	
+	@Override
+	public List<ProductDto> fashion_selectList(PagingDto Pdto) {
+
+		List<ProductDto> list = new ArrayList<ProductDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "fashion_selectList", Pdto);
+		}
+		return list;
+	}
+	
 	@Override
 	public int category_count(String prod_category) {
 		int res = 0;
@@ -199,7 +262,24 @@ public class ProductDaoImpl extends SqlMapConfig implements ProductDao {
 
 		return res;
 	}
-
+	
+	@Override
+	public List<ProductDto> prod_search(ProductDto dto) {
+		List<ProductDto> list = new ArrayList<ProductDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "product_search", dto);
+		}
+		return list;
+	}
+	
+	@Override
+	public List<ProductDto> product_all_search(PagingDto Pdto) {
+		List<ProductDto> list = new ArrayList<ProductDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "product_all_search", Pdto);
+		}
+		return list;
+	}
 	
 
 }

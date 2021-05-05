@@ -19,4 +19,12 @@ public interface ProductBiz {
 	public int multiDelete(String[] prod_nums);
 	public int count();
 	public int category_count(String prod_category);
+	public List<ProductDto> feed_selectList(PagingDto Pdto);
+	public List<ProductDto> care_selectList(PagingDto Pdto);
+	public List<ProductDto> outing_selectList(PagingDto Pdto);
+	public List<ProductDto> toy_selectList(PagingDto Pdto);
+	public List<ProductDto> fashion_selectList(PagingDto Pdto);
+	public List<ProductDto> living_selectList(PagingDto Pdto);
+	public List<ProductDto> prod_search(ProductDto dto);
+	public List<ProductDto> product_all_search(PagingDto Pdto);
 }

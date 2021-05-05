@@ -89,8 +89,55 @@ public class ProductBizImpl implements ProductBiz {
 	}
 
 
+	@Override
+	public List<ProductDto> feed_selectList(PagingDto Pdto) {
+		// TODO Auto-generated method stub
+		return dao.feed_selectList(Pdto);
+	}
 	
+	@Override
+	public List<ProductDto> care_selectList(PagingDto Pdto) {
+		// TODO Auto-generated method stub
+		return dao.care_selectList(Pdto);
+	}
 	
+	@Override
+	public List<ProductDto> living_selectList(PagingDto Pdto) {
+		// TODO Auto-generated method stub
+		return dao.living_selectList(Pdto);
+	}
+
+	@Override
+	public List<ProductDto> outing_selectList(PagingDto Pdto) {
+		// TODO Auto-generated method stub
+		return dao.outing_selectList(Pdto);
+	}
+
+	@Override
+	public List<ProductDto> toy_selectList(PagingDto Pdto) {
+		// TODO Auto-generated method stub
+		return dao.toy_selectList(Pdto);
+	}
 	
+
+	@Override
+	public List<ProductDto> fashion_selectList(PagingDto Pdto) {
+		// TODO Auto-generated method stub
+		return dao.fashion_selectList(Pdto);
+	}
+
+
+	@Override
+	public List<ProductDto> prod_search(ProductDto dto) {
+		// TODO Auto-generated method stub
+		return dao.prod_search(dto);
+	}
+
+
+	@Override
+	public List<ProductDto> product_all_search(PagingDto Pdto) {
+		// TODO Auto-generated method stub
+		return dao.product_all_search(Pdto);
+	}
 
 }

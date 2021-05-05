@@ -601,28 +601,98 @@ public class SemiProjectController extends HttpServlet {
 			if (request.getParameter("nowPage") != null) {
 				nowPage = Integer.parseInt(request.getParameter("nowPage"));
 			}
-			int count = p_biz.count();
-			List<ProductDto> list = new ArrayList<ProductDto>();
-			PagingDto pdto = new PagingDto(count, nowPage);
-			list = p_biz.prod_selectList(pdto);
-			request.setAttribute("ProdCommand", command);
-			request.setAttribute("list", list);
-			request.setAttribute("Pdto", pdto);
-			dispatch(response, request, "shopping.jsp");
+			String s_t = request.getParameter("s_t");
+			if (s_t == null) {
+				int count = p_biz.count();
+				List<ProductDto> list = new ArrayList<ProductDto>();
+				PagingDto pdto = new PagingDto(count, nowPage);
+				list = p_biz.prod_selectList(pdto);
+				request.setAttribute("BoardCommand", command);
+				request.setAttribute("list", list);
+				request.setAttribute("Pdto", pdto);
+				dispatch(response, request, "shopping.jsp");
+			} else {
+				ProductDto p_dto = new ProductDto();
+				p_dto.setProd_name(s_t);
+				List<ProductDto> slist = p_biz.prod_search(p_dto); 
+				int count = slist.size();
+				List<ProductDto> list = new ArrayList<ProductDto>();
+				PagingDto pdto = new PagingDto(count, nowPage, s_t);
+				list = p_biz.product_all_search(pdto);
+				request.setAttribute("BoardCommand", command);
+				request.setAttribute("list", list);
+				request.setAttribute("Pdto", pdto);
+				dispatch(response, request, "shopping.jsp");
+			}
 		} else if (command.equals("category")) {
 			int nowPage = 1;
 			if (request.getParameter("nowPage") != null) {
 				nowPage = Integer.parseInt(request.getParameter("nowPage"));
 			}
 			String prod_category = request.getParameter("prod_category");
-			int count = p_biz.category_count(prod_category);
-			List<ProductDto> list = new ArrayList<ProductDto>();
-			PagingDto pdto = new PagingDto(count, nowPage, prod_category);
-			list = p_biz.prod_selectList(pdto);
-			request.setAttribute("ProdCommand", command);
-			request.setAttribute("list", list);
-			request.setAttribute("Pdto", pdto);
-			dispatch(response, request, "shopping.jsp");
+			
+			if (prod_category.equals("feed")) {
+
+				int count = p_biz.category_count(prod_category);
+				List<ProductDto> list = new ArrayList<ProductDto>();
+				PagingDto pdto = new PagingDto(count, nowPage);
+				list = p_biz.feed_selectList(pdto);
+				request.setAttribute("BoardCommand", command);
+				request.setAttribute("list", list);
+				request.setAttribute("Pdto", pdto);
+				dispatch(response, request, "shopping.jsp");
+			} else if (prod_category.equals("care")) {
+
+				int count = p_biz.category_count(prod_category);
+				List<ProductDto> list = new ArrayList<ProductDto>();
+				PagingDto pdto = new PagingDto(count, nowPage);
+				list = p_biz.care_selectList(pdto);
+				request.setAttribute("BoardCommand", command);
+				request.setAttribute("list", list);
+				request.setAttribute("Pdto", pdto);
+				dispatch(response, request, "shopping.jsp");
+			}	else if (prod_category.equals("living")) {
+
+				int count = p_biz.category_count(prod_category);
+				List<ProductDto> list = new ArrayList<ProductDto>();
+				PagingDto pdto = new PagingDto(count, nowPage);
+				list = p_biz.living_selectList(pdto);
+				request.setAttribute("BoardCommand", command);
+				request.setAttribute("list", list);
+				request.setAttribute("Pdto", pdto);
+				dispatch(response, request, "shopping.jsp");
+			}	else if (prod_category.equals("outing")) {
+
+				int count = p_biz.category_count(prod_category);
+				List<ProductDto> list = new ArrayList<ProductDto>();
+				PagingDto pdto = new PagingDto(count, nowPage);
+				list = p_biz.outing_selectList(pdto);
+				request.setAttribute("BoardCommand", command);
+				request.setAttribute("list", list);
+				request.setAttribute("Pdto", pdto);
+				dispatch(response, request, "shopping.jsp");
+			}	else if (prod_category.equals("toy")) {
+
+				int count = p_biz.category_count(prod_category);
+				List<ProductDto> list = new ArrayList<ProductDto>();
+				PagingDto pdto = new PagingDto(count, nowPage);
+				list = p_biz.toy_selectList(pdto);
+				request.setAttribute("BoardCommand", command);
+				request.setAttribute("list", list);
+				request.setAttribute("Pdto", pdto);
+				dispatch(response, request, "shopping.jsp");
+			}	else if (prod_category.equals("fashion")) {
+
+				int count = p_biz.category_count(prod_category);
+				List<ProductDto> list = new ArrayList<ProductDto>();
+				PagingDto pdto = new PagingDto(count, nowPage);
+				list = p_biz.fashion_selectList(pdto);
+				request.setAttribute("BoardCommand", command);
+				request.setAttribute("list", list);
+				request.setAttribute("Pdto", pdto);
+				dispatch(response, request, "shopping.jsp");
+			}
+
 		} else if (command.equals("shopping_detail")) {
 			int prod_num = Integer.parseInt(request.getParameter("prod_num"));
 			ProductDto p_dto = p_biz.selectOne(prod_num);
@@ -1071,21 +1141,24 @@ public class SemiProjectController extends HttpServlet {
 			dispatch(response, request, "chatlist.jsp");
 		} else if (command.equals("chat_insert")) {
 			int ch_num = Integer.parseInt(request.getParameter("ch_num"));
-			String member_nickname = request.getParameter("member_nickname");
+			String member_nicname = request.getParameter("member_nickname");
 			String ch_content = request.getParameter("ch_content");
 			System.out.println(ch_content);
-			System.out.println(member_nickname);
+			System.out.println(member_nicname);
 
 			Chat_ContentDto c_c_dto = new Chat_ContentDto();
 			c_c_dto.setCh_num(ch_num);
 			c_c_dto.setCh_content(ch_content);
-			c_c_dto.setMember_nickname(member_nickname);
+			c_c_dto.setMember_nicname(member_nicname);
 			int res = c_c_biz.insert(c_c_dto);
 			if (res > 0) {
 				response.getWriter().append("통신 성공");
 			}
 		} else if (command.equals("chatboard")) {
 			int ch_num = Integer.parseInt(request.getParameter("ch_num"));
+			List<Chat_ContentDto> list = new ArrayList<Chat_ContentDto>();
+			list = c_c_biz.selectOne(ch_num);
+			request.setAttribute("list", list);
 			request.setAttribute("ch_num", ch_num);
 			dispatch(response, request, "ChatBoard.jsp");
 		} else if (command.equals("mailsend")) {
