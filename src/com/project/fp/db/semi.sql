@@ -27,7 +27,6 @@ DROP SEQUENCE HOSPITAL_NUM_SEQ;
 DROP SEQUENCE REPLY_NO_SEQ;
 DROP SEQUENCE REPLY_GROUPNO_SEQ;
 
-
 CREATE SEQUENCE PRODUCT_NUM_SEQ;
 CREATE SEQUENCE BOARD_NO_SEQ;
 CREATE SEQUENCE BOARD_FREE_NO_SEQ;
@@ -167,7 +166,7 @@ CREATE TABLE CHAT (
 	CONSTRAINT CHAT_PK PRIMARY KEY (DOCTOR_ID,MEMBER_ID)
 );
 select * from order_table
-
+select * from chat;
 CREATE TABLE RECEIVE(
 	ORDER_NUM NUMBER PRIMARY KEY,
 	RECEIVE_NAME VARCHAR2(20) NOT NULL,
@@ -184,7 +183,7 @@ CREATE TABLE CHAT_CONTENT(
 	CH_CONTENT_DATE DATE NOT NULL,
 	CONSTRAINT CHAT_CONTENT_CH_NUM_FK FOREIGN KEY (CH_NUM) REFERENCES CHAT (CH_NUM)
 );
-
+select * from chat_content;
 CREATE TABLE ANIMAL(
 	ANIMAL_NO NUMBER PRIMARY KEY,
 	ANIMAL_NAME VARCHAR2(100) NOT NULL,
@@ -217,7 +216,7 @@ CREATE TABLE FILE_TABLE(
 	CONSTRAINT FILE_TABLE_ANIMAL_NO_KF FOREIGN KEY (ANIMAL_NO) REFERENCES ANIMAL (ANIMAL_NO)
 );
 
-
+select * from file_table; where member_id = 'test' and ch_num is null;
 CREATE TABLE BOARD_REPLY (
 	REPLY_NO NUMBER PRIMARY KEY,
 	REPLY_GROUPNO NUMBER NOT NULL,
@@ -248,8 +247,8 @@ SELECT * FROM MEMBER;
 
 select * from HOSPITAL;
 
-select * from ORDER_TABLE;
-
+delete from file_table where prod_num = '12';
+update order_table set order_step = '결제완료' where member_id = 'test';
 select * from member m , file_table f
 where m.member_id = f.member_id
 and board_no = '64';
@@ -257,15 +256,14 @@ select * from member;  dhksdn486
 select * from board;
 select * from file_table
 SELECT * FROM ANIMAL;
-
-
-
+delete from member where member_grade = '전문의';
+select * from member where member_grade = '전문의';
 select * from chat;
 select * from CHAT_CONTENT;
-
 update member set member_grade = '관리자' where member_id = 'admin';
-
-
+select * from product;
+select * from order_table;
+update order_table set order_step = '결제완료' where order_num = '24';
 
 
 select * from product;
@@ -359,3 +357,6 @@ CREATE TABLE MYCAL(
 	MEMBER_ID VARCHAR2(500) NOT NULL,
 	CONSTRAINT MYCAL_MEMBER_ID_FK FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER (MEMBER_ID)
 );
+
+select * from product;
+alter sequence PRODUCT_NUM_SEQ increment by +1;

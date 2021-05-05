@@ -41,7 +41,8 @@
 	<jsp:include page="header.jsp" />
 	<form action="semi.do" method="post">
 		<input type="hidden" name="command" value="shopping_detail">
-
+		<input type="hidden" name="member_id" value="<%=dto.getMember_id()%>">
+		<input type="hidden" name="prod_num" value="${p_dto.prod_num }">
 		<nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom">
 			<a class="navbar-brand ml-2 font-weight-bold" href="#">MENU</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor" aria-controls="navbarColor" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,7 +79,7 @@
 				<div>
 					<div>
 						<span class="prod_img">
-							<img src="resources/images/product/280.jfif">
+							<img src="resources/images/product/${p_dto.prod_num }.jfif">
 						</span>
 					</div>
 					<div class="prod_info">

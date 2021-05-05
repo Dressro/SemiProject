@@ -56,6 +56,12 @@
 		#{member_id},null,null,null,#{prod_num})
 	</insert>
 	
+	<insert id="member_insert" parameterType="File_TableDto">
+		INSERT INTO FILE_TABLE
+		VALUES(FILE_NUM_SEQ.nextval, #{file_path}, #{file_ori_name},
+		#{file_new_name}, #{file_type}, SYSDATE, #{file_size},
+		#{member_id},null,null,null,null)
+	</insert>
 	<delete id="delete" parameterType="File_TableDto">
 		DELETE FROM FILE_TABLE
 		WHERE

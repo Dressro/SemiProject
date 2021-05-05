@@ -96,7 +96,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 			<div class="row product__filter">
 				<div class="d-col mix bouquet">
 					<div class="product__item">
-						<div class="product__item__pic set-bg" data-setbg="resources/images/product/280.jfif">
+						<div class="product__item__pic set-bg" data-setbg="resources/images/product/23.jfif">
 							<div class="label">New</div>
 						</div>
 						<div class="product__item__text">
@@ -110,7 +110,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 				</div>
 				<div class="d-col mix flower-box">
 					<div class="product__item">
-						<div class="product__item__pic set-bg" data-setbg="resources/images/product/286.jfif">
+						<div class="product__item__pic set-bg" data-setbg="resources/images/product/29.jfif">
 						</div>
 						<div class="product__item__text">
 							<h5>강아지 바르는치약 구강 청결제</h5>
@@ -123,7 +123,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 				</div>
 				<div class="d-col mix flower-shelf">
 					<div class="product__item">
-						<div class="product__item__pic set-bg" data-setbg="resources/images/product/289.jfif">
+						<div class="product__item__pic set-bg" data-setbg="resources/images/product/32.jfif">
 							<div class="label">Sale</div>
 						</div>
 						<div class="product__item__text">
@@ -137,7 +137,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 				</div>
 				<div class="d-col mix bouquet">
 					<div class="product__item">
-						<div class="product__item__pic set-bg" data-setbg="resources/images/product/283.jfif">
+						<div class="product__item__pic set-bg" data-setbg="resources/images/product/26.jfif">
 							<div class="label">New</div>
 						</div>
 						<div class="product__item__text">
@@ -151,7 +151,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 				</div>
 				<div class="d-col mix basket">
 					<div class="product__item">
-						<div class="product__item__pic set-bg" data-setbg="resources/images/product/284.jfif">
+						<div class="product__item__pic set-bg" data-setbg="resources/images/product/27.jfif">
 						</div>
 						<div class="product__item__text">
 							<h5>셀프치카봉 강아지 고양이 셀프</h5>
@@ -164,7 +164,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 				</div>
 				<div class="d-col mix gift">
 					<div class="product__item">
-						<div class="product__item__pic set-bg" data-setbg="resources/images/product/290.jfif">
+						<div class="product__item__pic set-bg" data-setbg="resources/images/product/33.jfif">
 						</div>
 						<div class="product__item__text">
 							<h5>강아지 고양이 옷 귀여운 토끼</h5>
@@ -177,7 +177,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 				</div>
 				<div class="d-col mix bouquet">
 					<div class="product__item">
-						<div class="product__item__pic set-bg" data-setbg="resources/images/product/282.jfif">
+						<div class="product__item__pic set-bg" data-setbg="resources/images/product/25.jfif">
 						</div>
 						<div class="product__item__text">
 							<h5>요세라 그레인프리 캣 2kg</h5>
@@ -190,7 +190,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 				</div>
 				<div class="d-col mix flower-box">
 					<div class="product__item">
-						<div class="product__item__pic set-bg" data-setbg="resources/images/product/287.jfif">
+						<div class="product__item__pic set-bg" data-setbg="resources/images/product/30.jfif">
 							<div class="label">Out Of Stock</div>
 						</div>
 						<div class="product__item__text">
@@ -204,7 +204,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 				</div>
 				<div class="d-col mix flower-shelf">
 					<div class="product__item">
-						<div class="product__item__pic set-bg" data-setbg="resources/images/product/288.jfif">
+						<div class="product__item__pic set-bg" data-setbg="resources/images/product/31.jfif">
 							<div class="label">New</div>
 						</div>
 						<div class="product__item__text">
@@ -218,7 +218,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 				</div>
 				<div class="d-col mix bouquet">
 					<div class="product__item">
-						<div class="product__item__pic set-bg" data-setbg="resources/images/product/281.jfif">
+						<div class="product__item__pic set-bg" data-setbg="resources/images/product/24.jfif">
 							<div class="label">New</div>
 						</div>
 						<div class="product__item__text">
@@ -232,7 +232,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 				</div>
 				<div class="d-col mix basket">
 					<div class="product__item">
-						<div class="product__item__pic set-bg" data-setbg="resources/images/product/285.jfif">
+						<div class="product__item__pic set-bg" data-setbg="resources/images/product/28.jfif">
 						</div>
 						<div class="product__item__text">
 							<h5>고양이 훈련용 분리불안해소</h5>
@@ -245,7 +245,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 				</div>
 				<div class="d-col mix gift">
 					<div class="product__item">
-						<div class="product__item__pic set-bg" data-setbg="resources/images/product/291.jfif">
+						<div class="product__item__pic set-bg" data-setbg="resources/images/product/34.jfif">
 							<div class="label">New</div>
 						</div>
 						<div class="product__item__text">

@@ -152,11 +152,45 @@ public class SemiProjectController extends HttpServlet {
 			String member_dr_info = request.getParameter("member_dr_info");
 			String member_notify = request.getParameter("member_notify");
 
-			System.out.println(member_animal);
 
 			MemberDto m_dto = new MemberDto(member_id, member_password, member_name, member_nicname, member_email,
 					member_phone, member_addr, member_grade, "Y", member_animal, 0, member_dr_info, member_notify);
 			int m_res = m_biz.insert(m_dto);
+			if(member_grade.equals("전문의")) {
+				String file_path = request.getSession().getServletContext().getRealPath("fileupload");
+
+				File Folder = new File(file_path);
+				if (!Folder.exists()) {
+					Folder.mkdir();
+				}
+
+				String contentType = request.getContentType();
+				
+				if (contentType != null && contentType.toLowerCase().startsWith("multipart/")) {
+					Collection<Part> parts = request.getParts();
+					File_TableDto f_dto = new File_TableDto();
+
+					for (Part part : parts) {
+						if (part.getHeader("Content-Disposition").contains("filename=")) {
+							String file_ori_name = extractFileName(part.getHeader("Content-Disposition"));
+							if (part.getSize() > 0) {
+								String file_type = file_ori_name.substring(file_ori_name.lastIndexOf("."));
+								String file_size = Long.toString(part.getSize());
+								file_new_name = getRandomFileName(5) + file_ori_name;
+								part.write(file_path + File.separator + file_new_name);
+								part.delete();
+								f_dto.setFile_path(file_path);
+								f_dto.setFile_ori_name(file_ori_name);
+								f_dto.setFile_new_name(file_new_name);
+								f_dto.setFile_type(file_type);
+								f_dto.setFile_size(file_size);
+								f_dto.setMember_id(member_id);
+								int f_res = f_t_biz.member_insert(f_dto);
+							}
+						}
+					}
+				}
+			}
 			int a_res = 0;
 			if (member_animal.equals("Y")) {
 				String animal_name = request.getParameter("animal_name");
@@ -321,14 +355,6 @@ public class SemiProjectController extends HttpServlet {
 			dto.setMember_animal(member_animal);
 			dto.setMember_id(member_id);
 			dto.setMember_password(member_password);
-
-			System.out.println(member_nicname);
-			System.out.println(member_email);
-			System.out.println(member_phone);
-			System.out.println(member_addr);
-			System.out.println(member_animal);
-			System.out.println(member_id);
-			System.out.println(member_password);
 
 			int m_res = m_biz.mypagemod(dto);
 			int a_res = 0;

@@ -85,7 +85,7 @@ public class Lost_AnimalDaoImpl extends SqlMapConfig implements Lost_AnimalDao {
 
 	@Override
 	public int multiDelete(String[] board_nos) {
-int count = 0;
+		int count = 0;
 		
 		Map<String, String[]> map = new HashMap<String, String[]>();
 		map.put("board_nos", board_nos);

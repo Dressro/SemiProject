@@ -273,7 +273,7 @@ response.setContentType("text/html; charset=UTF-8");
 		<h3>회원가입(전문의)</h3>
 		<div class="join_table">
 			<div id="member_join">
-				<form action="semi.do" method="POST">
+				<form action="semi.do" method="POST" enctype="multipart/form-data">
 					<input type="hidden" name="command" value="signupres" />
 					<input type="hidden" name="member_notify" value="N" />
 					<input type="hidden" name="member_grade" value="전문의" />
@@ -371,6 +371,13 @@ response.setContentType("text/html; charset=UTF-8");
 							<h4 class="general_signup_title">소속기관(병원 등) *</h4>
 							<div class="general_signup_aff">
 								<span class="general_signup_span"> <input class="general_signup_text" type="text" name="member_dr_info" maxlength="10" onclick="idCheckConfirm();">
+								</span>
+							</div>
+						</div>
+						<div class="general_signup_row">
+							<h4 class="general_signup_title">전문의 사진 *</h4>
+							<div class="general_signup_aff">
+								<span class="general_signup_span"> <input type="file" name="file" />
 								</span>
 							</div>
 						</div>
