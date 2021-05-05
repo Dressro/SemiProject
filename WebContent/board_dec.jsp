@@ -47,6 +47,19 @@ response.setContentType("text/html; charset=UTF-8");
 .content {
 	min-height: 1300px;
 }
+
+#paging {
+	text-align: center;
+	font-size: 20pt;
+}
+
+#paging a {
+	font-size: 20pt;
+}
+
+a {
+	color: #f45d96;
+}
 </style>
 <script type="text/javascript">
 	function go_dec_detail(num) {
@@ -192,6 +205,18 @@ response.setContentType("text/html; charset=UTF-8");
 						</c:if>
 					</tbody>
 				</table>
+
+					<jsp:include page="/board_paging.jsp">
+						<jsp:param value="${BoardCommand }" name="command" />
+						<jsp:param value="${Pdto.nowBlock}" name="nowBlock" />
+						<jsp:param value="${Pdto.blockBegin }" name="blockBegin" />
+						<jsp:param value="${Pdto.blockEnd }" name="blockEnd" />
+						<jsp:param value="${Pdto.nowPage}" name="nowPage" />
+						<jsp:param value="${Pdto.blockBegin}" name="blockBegin" />
+						<jsp:param value="${Pdto.blockEnd}" name="blockEnd" />
+						<jsp:param value="${Pdto.totalBlock}" name="totalBlock" />
+					</jsp:include>
+
 			</form>
 
 		</div>

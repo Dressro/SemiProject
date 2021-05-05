@@ -536,7 +536,9 @@ public class SemiProjectController extends HttpServlet {
 				int count = b_biz.dec_allCount();
 				PagingDto Pdto = new PagingDto(count, nowPage);
 				List<BoardDto> list = b_biz.dec_selectList(Pdto);
+				request.setAttribute("BoardCommand", command);
 				request.setAttribute("list", list);
+				request.setAttribute("Pdto", Pdto);
 				dispatch(response, request, "board_dec.jsp");
 			} else {
 				if (s_c.equals("W")) {
