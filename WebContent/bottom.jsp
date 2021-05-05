@@ -50,11 +50,17 @@ response.setContentType("text/html; charset=UTF-8");
 MemberDto dto = (MemberDto) session.getAttribute("dto");
 %>
 <body>
+	<%
+	if (dto != null) {
+	%>
 	<div class="footer_chat">
 		<a href="semi.do?command=chatlist&member_id=<%=dto.getMember_id()%>&member_grade=<%=dto.getMember_grade()%>">
 			<img src="resources/images/icon/chatimg.png" onmouseover="this.src='resources/images/icon/chatimg2.png';" onmouseout="this.src='resources/images/icon/chatimg.png';" />
 		</a>
 	</div>
+	<%
+	}
+	%>
 </body>
 <footer class="footer">
 	<div class="container">
