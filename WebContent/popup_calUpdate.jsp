@@ -50,7 +50,7 @@
 			<tr>
 				<th>일정</th>
 				<td>
-					<input type="datetime-local" class="cal_date" name="private_date">
+					<input type="date" class="cal_date" name="private_date">
 				</td>
 			</tr>
 			
