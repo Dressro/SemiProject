@@ -152,7 +152,7 @@ String member_grade = (String) request.getAttribute("member_grade");
 							<ul class="Doctor_ul">
 								<c:forEach items="${m_list }" var="m_dto">
 									<li class="Doctor_list" ondblclick="chat_create('${m_dto.member_id}');">
-										<div class="Doctor_list_div">img</div>
+										<div class="Doctor_list_div"><img src="resources/images/doctor/${m_dto.member_id }.jfif"></div>
 										<div class="Doctor_list_info">
 											<span>${m_dto.member_name }</span>
 										</div>

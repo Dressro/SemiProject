@@ -103,6 +103,22 @@ public class File_TableDaoImpl extends SqlMapConfig implements File_TableDao {
 	}
 	
 	@Override
+	public int member_insert(File_TableDto dto) {
+
+		int res = 0;
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.insert(namespace + "member_insert", dto);
+			if (res > 0) {
+				session.commit();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	}
+	
+	@Override
 	public int prod_insert(File_TableDto dto) {
 
 		int res = 0;
@@ -178,6 +194,8 @@ int count = 0;
 		
 		return count;
 	}
+
+	
 
 	
 

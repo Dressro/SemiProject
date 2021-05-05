@@ -70,7 +70,7 @@ function search() {
         <div class="row">
 		<c:forEach items="${list }" var="dto"> 
             <div class="col-lg-3 col-sm-4 col-11 offset-sm-0 offset-1">
-                <div class="card"> <img class="card-img-top" src="resources/images/product/280.jfif" alt="shopimage">
+                <div class="card"> <img class="card-img-top" src="resources/images/product/${dto.prod_num }.jfif" alt="shopimage">
                     <div class="card-body">
                         <p class="card-text"><a href="semi.do?command=shopping_detail&prod_num=${dto.prod_num }">${dto.prod_name }</a></p>
                         <p><fmt:formatNumber value="${dto.prod_price }" pattern="#,###.##"/>

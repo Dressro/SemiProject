@@ -59,6 +59,12 @@ public class File_TableBizImpl implements File_TableBiz {
 	}
 	
 	@Override
+	public int member_insert(File_TableDto dto) {
+
+		return dao.member_insert(dto);
+	}
+
+	@Override
 	public int update(File_TableDto dto) {
 
 		return dao.update(dto);
@@ -82,6 +88,7 @@ public class File_TableBizImpl implements File_TableBiz {
 		return dao.multiDelete(board_nos);
 	}
 
+	
 	
 
 	
