@@ -7,10 +7,39 @@
 <meta charset="UTF-8">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <title>Family|Pet</title>
+<style type="text/css">
+	#title{
+		background: #F9F7F6; border-left: 0.5em solid #8E0370; padding: 0.5em;
+	}
+	.calUpdate, .btn_cancel{
+		width:60px;
+		height:25px;
+		background-color: #F4A3E2;
+    	border: none;
+    	color:#fff;
+    	padding: 10px 0;
+    	text-align: center;
+    	text-decoration: none;
+    	display: inline-block;
+    	font-size: 13px;
+    	margin: 1px;
+    	cursor: pointer;
+    	border-radius:10px;
+    	line-height: 5px;
+	}
+	
+	.calUpdate:hover{
+		background-color: #e83e8c;
+	}
+	
+	.btn_cancel:hover{
+		background-color: #e83e8c;
+	}
+</style>
 </head>
 <body>
 
-	<h3>일정 수정하기</h3>
+	<h3 id="title">일정 수정하기</h3>
 	
 		<table>
 			<tr>
@@ -31,9 +60,9 @@
 			</tr>
 		
 		</table>
-		
+		<br>
 		<input type="button" class="calUpdate" name="${cal_no }" value="완료">
-		<input type="button" value="취소" onClick="window.close()">
+		<input type="button" class="btn_cancel" value="취소" onClick="window.close()">
 
 	
 	<script type="text/javascript">

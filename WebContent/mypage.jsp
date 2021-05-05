@@ -230,14 +230,16 @@ response.setContentType("text/html; charset=UTF-8");
 
 		<div class="mypage">
 			<h2>캘린더</h2>
-			<br><br>
-			<input type="button" value="정기검진 등록" onclick="popup_r_check();" />
-			<input type="button" value="개인일정 등록" onclick="popup_private();" />
+			<br>
+			<div class="btn_R">
+			<input type="button" class="reg_btn" value="정기검진 등록" onclick="popup_r_check();" />
+			<input type="button" class="reg_btn" value="개인일정 등록" onclick="popup_private();" />
+			</div>
 				<script type="text/javascript">
 					function popup_r_check() {window.open("semi.do?command=popup_r_check&member_id=${dto.member_id}", "정기검진 등록 팝업창", "width=800, height=300, left=500, top=250");}
-					function popup_private() {window.open("semi.do?command=popup_private&member_id=${dto.member_id}", "개인일정 등록 팝업창", "width=800, height=300, left=500, top=250");}
+					function popup_private() {window.open("semi.do?command=popup_private&member_id=${dto.member_id}", "개인일정 등록 팝업창", "width=600, height=400, left=500, top=250");}
 				</script>
-			<br><br>
+
 			
 			<%
 					Calendar cal = Calendar.getInstance();

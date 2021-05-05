@@ -9,15 +9,45 @@
 <meta charset="UTF-8">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <title>Family|Pet</title>
+<style type="text/css">
+	#title{
+		background: #F9F7F6; border-left: 0.5em solid #8E0370; padding: 0.5em;
+	}
+	
+	.tab{
+		border-collapse: collapse;
+  		border-top: 3px solid #8E0370;
+	}
+	
+	.tab th{
+		color: #0a0a0a;
+  		background: #ffebfb;
+	}
+	
+	.tab th, .tab td{
+	  padding: 10px;
+
+	}
+	
+	.tab th:first-child, .tab td:first-child{
+		border-left: 0;
+	}
+	
+	.tab th:last-child, .tab td:last-child{
+		border-right: 0;
+	}
+	
+	a { text-decoration:none } 
+</style>
 </head>
 <body>
 
 
 
-	<h1>일정 목록</h1>
+	<h3 id="title">일정 목록</h3>
 
-		<table border="1">
-			<col width="50" />
+		<table class="tab" border="1">
+			<col width="60" />
 			<col width="500" />
 			<col width="200" />
 			<col width="100" />

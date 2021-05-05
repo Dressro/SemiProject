@@ -89,7 +89,7 @@ a {
 
 			<div class="table-responsive">
 				<form action="semi.do" method="post" id="muldelform">
-					<input type="hidden" name="command" value="board_All_delete">
+					<input type="hidden" name="command" value="board_delete">
 					<input type="hidden" name="userNicname" value="${dto.member_nicname }">
 					<input type="hidden" name="userGrade" value="${dto.member_grade }">
 					<%-- 삭제 후 장소 이동 --%>

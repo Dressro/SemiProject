@@ -8,12 +8,44 @@
 <meta charset="UTF-8">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <title>Family|Pet</title>
+
+<style type="text/css">
+	#title{
+		background: #F9F7F6; border-left: 0.5em solid #8E0370; padding: 0.5em;
+	}
+
+	.calInsert, .btn_cancel{
+		width:60px;
+		height:25px;
+		background-color: #F4A3E2;
+    	border: none;
+    	color:#fff;
+    	padding: 10px 0;
+    	text-align: center;
+    	text-decoration: none;
+    	display: inline-block;
+    	font-size: 13px;
+    	margin: 1px;
+    	cursor: pointer;
+    	border-radius:10px;
+    	line-height: 5px;
+	}
+	
+	.calInsert:hover{
+		background-color: #e83e8c;
+	}
+	
+	.btn_cancel:hover{
+		background-color: #e83e8c;
+	}
+</style>
+
 </head>
 <body>
 
-		<h3>일정 등록하기</h3>
+		<h3 id="title">개인일정 등록</h3>
 		
-		<table>
+		<table class="tab">
 			<tr>
 				<th>제목</th>
 				<td><input type="text" class="cal_title" name="title"></td>
@@ -32,9 +64,9 @@
 			</tr>
 		
 		</table>
-		
+		<br>
 		<input type="button" class="calInsert" name="${member_id }" value="완료">
-		<input type="button" value="취소" onClick="window.close()">
+		<input type="button" class="btn_cancel" value="취소" onClick="window.close()">
 
 	
 	<script type="text/javascript">
