@@ -10,8 +10,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +68,8 @@ import com.project.fp.biz.Lost_AnimalBiz;
 import com.project.fp.biz.Lost_AnimalBizImpl;
 import com.project.fp.biz.MemberBiz;
 import com.project.fp.biz.MemberBizImpl;
+import com.project.fp.biz.MycalBiz;
+import com.project.fp.biz.MycalBizImpl;
 import com.project.fp.biz.Order_TableBiz;
 import com.project.fp.biz.Order_TableBizImpl;
 import com.project.fp.biz.ProductBiz;
@@ -79,6 +85,7 @@ import com.project.fp.dto.File_TableDto;
 import com.project.fp.dto.HospitalDto;
 import com.project.fp.dto.Lost_AnimalDto;
 import com.project.fp.dto.MemberDto;
+import com.project.fp.dto.MycalDto;
 import com.project.fp.dto.Order_TableDto;
 import com.project.fp.dto.PagingDto;
 import com.project.fp.dto.ProductDto;
@@ -114,6 +121,7 @@ public class SemiProjectController extends HttpServlet {
 		HospitalBiz h_biz = new HospitalBizImpl();
 		Board_ReplyBiz b_r_biz = new Board_ReplyBizImpl();
 		Lost_AnimalBiz l_biz = new Lost_AnimalBizImpl();
+		MycalBiz m_c_biz = new MycalBizImpl();
 		HttpSession session = request.getSession();
 
 		
@@ -528,7 +536,9 @@ public class SemiProjectController extends HttpServlet {
 				int count = b_biz.dec_allCount();
 				PagingDto Pdto = new PagingDto(count, nowPage);
 				List<BoardDto> list = b_biz.dec_selectList(Pdto);
+				request.setAttribute("BoardCommand", command);
 				request.setAttribute("list", list);
+				request.setAttribute("Pdto", Pdto);
 				dispatch(response, request, "board_dec.jsp");
 			} else {
 				if (s_c.equals("W")) {
@@ -1019,18 +1029,32 @@ public class SemiProjectController extends HttpServlet {
 				}
 			}
 		} else if (command.equals("board_delete")) {
+			String where = request.getParameter("where");
 			String[] board_no = request.getParameterValues("board_no");
-			if (board_no == null || board_no.length == 0) {
-			} else {
-				int l_res = l_biz.multiDelete(board_no);
-				int f_res = f_t_biz.multiDelete(board_no);
-				int b_res = b_biz.multiDelete(board_no);
-				if (b_res == board_no.length) {
-					jsResponse(response, "선택된 글들이 모두 삭제되었습니다.", "semi.do?command=boardlist");
+			String userNicname = request.getParameter("userNicname");
+			String userGrade = request.getParameter("userGrade");
+			for(int i = 0; i < board_no.length; i++) {
+
+				BoardDto b_dto = b_biz.board_selectOne(Integer.parseInt(board_no[i]));
+
+				if(board_no[i] == null || board_no[i].length() == 0) {
+				} else if (b_dto.getMember_id().equals(userNicname) || userGrade.equals("관리자")) {
+						f_t_biz.board_delete(Integer.parseInt(board_no[i]));
+						b_r_biz.board_delete(Integer.parseInt(board_no[i]));
+						l_biz.delete(Integer.parseInt(board_no[i]));
+						int b_res = b_biz.delete(Integer.parseInt(board_no[i]));
+						if (b_res > 0) {
+							System.out.println("삭제 성공");
+						} else {
+							jsResponse(response, "선택된 글들이 삭제되지 않았습니다.", "semi.do?command=" + where);
+							return;
+						}
 				} else {
-					jsResponse(response, "선택된 글들이 삭제되지 않았습니다.", "semi.do?command=adminpage");
+					jsResponse(response, "다른 사용자의 게시물은 삭제되지 않았습니다.", "semi.do?command=" + where);
 				}
 			}
+			
+			jsResponse(response, "선택된 글들이 모두 삭제되었습니다.", "semi.do?command=" +where);
 		} else if (command.equals("board_detail")) {
 			int board_no = Integer.parseInt(request.getParameter("board_no"));
 			BoardDto b_dto = b_biz.board_selectOne(board_no);
@@ -1563,6 +1587,95 @@ public class SemiProjectController extends HttpServlet {
 			int purch = order_num.length;
 			request.setAttribute("list", list);
 			dispatch(response, request, "semi.do?command=paypage&member_id="+member_id+"&purch="+purch);
+		} else if (command.equals("popup_r_check")) {
+			String member_id = request.getParameter("member_id");
+			request.setAttribute("member_id", member_id);
+			dispatch(response, request, "popup_r_check.jsp");
+		} else if (command.equals("popup_private")) {
+			String member_id = request.getParameter("member_id");
+			request.setAttribute("member_id", member_id);
+			dispatch(response, request, "popup_private.jsp");
+		}  else if (command.equals("popup_calList")) {
+			String member_id = request.getParameter("member_id");
+			String year = request.getParameter("year");
+			String month = request.getParameter("month");
+			String date = request.getParameter("date");
+			String yyyyMMdd = year + Util.isTwo(month) + Util.isTwo(date);
+			System.out.println(yyyyMMdd);
+			MycalDto m_dto = new MycalDto();
+			m_dto.setMember_id(member_id);
+			m_dto.setCal_mdate(yyyyMMdd);
+			List<MycalDto> list = m_c_biz.selectList(m_dto);
+			request.setAttribute("list", list);
+			
+			dispatch(response, request, "popup_calList.jsp");
+		} else if (command.equals("private_insertres")) {
+			String member_id = request.getParameter("member_id");
+			String cal_title = request.getParameter("cal_title");
+			String cal_mdate = request.getParameter("cal_date");
+			//System.out.println(cal_mdate);
+			//String cal_mdate = cal_date.substring(0, 10);
+			String cal_content = request.getParameter("cal_content");
+			MycalDto m_dto = new MycalDto();
+			m_dto.setMember_id(member_id);
+			m_dto.setCal_title(cal_title);
+			m_dto.setCal_content(cal_content);
+			m_dto.setCal_mdate(cal_mdate);
+			m_c_biz.insertCal(m_dto);
+		} else if (command.equals("checkup_insertres")) {
+			String member_id = request.getParameter("member_id");
+			String cal_date = request.getParameter("cal_date");
+			int r_cycle = Integer.parseInt(request.getParameter("r_cycle"));
+			String next_check = null;
+			try {
+				SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
+				Date chekup = fm.parse(cal_date);
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(chekup);
+				cal.add(Calendar.DATE, r_cycle);
+				next_check = fm.format(cal.getTime());
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			MycalDto m_dto = new MycalDto();
+			m_dto.setMember_id(member_id);
+			m_dto.setCal_mdate(cal_date);
+			m_c_biz.insertCheck(m_dto);
+			
+			MycalDto m_c_dto = new MycalDto();
+			m_c_dto.setMember_id(member_id);
+			m_c_dto.setCal_mdate(next_check);
+			m_c_biz.insertNextCheck(m_c_dto);
+		} else if (command.equals("calDetail")) {
+			int cal_no = Integer.parseInt(request.getParameter("cal_no"));
+			System.out.println(cal_no);
+			MycalDto m_dto = new MycalDto();
+			m_dto.setCal_no(cal_no);
+			MycalDto m_c_dto = m_c_biz.selectOne(cal_no);
+			request.setAttribute("m_c_dto", m_c_dto);
+			dispatch(response, request, "popup_calDetail.jsp");
+		} else if (command.equals("calUpdate")) {
+			String member_id = request.getParameter("member_id");
+			int cal_no = Integer.parseInt(request.getParameter("cal_no"));
+			request.setAttribute("cal_no", cal_no);
+			dispatch(response, request, "popup_calUpdate.jsp");
+		} else if (command.equals("calDelete")) {
+			int cal_no = Integer.parseInt(request.getParameter("cal_no"));
+			MycalDto m_dto = new MycalDto();
+			m_dto.setCal_no(cal_no);
+			m_c_biz.deleteCal(cal_no);
+		} else if (command.equals("calUpdateRes")) {
+			int cal_no = Integer.parseInt(request.getParameter("cal_no"));
+			String cal_title = request.getParameter("cal_title");
+			String cal_date = request.getParameter("cal_date");
+			String cal_content = request.getParameter("cal_content");
+			String cal_mdate = cal_date.substring(0, 10);
+			MycalDto m_dto = new MycalDto();
+			m_dto.setCal_no(cal_no);
+			m_dto.setCal_title(cal_title);
+			m_dto.setCal_mdate(cal_mdate);
+			m_dto.setCal_content(cal_content);
+			m_c_biz.updateCal(m_dto);
 		}
 
 		if (command.equals("test")) {

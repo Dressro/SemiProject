@@ -1,3 +1,8 @@
+<%@page import="com.project.fp.dto.MycalDto"%>
+<%@page import="com.project.fp.dao.MycalDaoImpl"%>
+<%@page import="com.project.fp.dao.MycalDao"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="com.project.fp.controller.Util"%>
 <%@page import="com.project.fp.biz.AnimalBizImpl"%>
 <%@page import="com.project.fp.biz.AnimalBiz"%>
 <%@page import="com.project.fp.dto.AnimalDto"%>
@@ -30,6 +35,7 @@ response.setContentType("text/html; charset=UTF-8");
 <title>Family|Pet</title>
 <link rel="icon" href="resources/images/logo/favicon.ico" type="image/x-icon">
 <link href="resources/css/mypage.css" rel="stylesheet" type="text/css" />
+<link href="resources/css/calendar.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
@@ -92,7 +98,6 @@ response.setContentType("text/html; charset=UTF-8");
 					"width=200 , height= 200");
 		}
 	}
-
 	function sendsms() {
 		var member_phone = $('input[name=member_phone_1]').val()
 				+ $('input[name=member_phone_2]').val()
@@ -105,31 +110,25 @@ response.setContentType("text/html; charset=UTF-8");
 					"width=200 , height= 200");
 		}
 	}
-
 	function address() {
 		new daum.Postcode(
 				{
 					oncomplete : function(data) {
 						var roadAddr = data.roadAddress;
 						var extraRoadAddr = '';
-
 						if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
 							extraRoadAddr += data.bname;
 						}
-
 						if (data.buildingName !== '' && data.apartment === 'Y') {
 							extraRoadAddr += (extraRoadAddr !== '' ? ', '
 									+ data.buildingName : data.buildingName);
 						}
-
 						if (extraRoadAddr !== '') {
 							extraRoadAddr = ' (' + extraRoadAddr + ')';
 						}
-
 						document.getElementById('postcode').value = data.zonecode;
 						document.getElementById("addr_1").value = roadAddr;
 						document.getElementById("addr_1").value = data.jibunAddress;
-
 						if (data.autoRoadAddress) {
 							document.getElementById("addr_1").value = roadAddr;
 						} else if (data.autoJibunAddress) {
@@ -150,11 +149,9 @@ response.setContentType("text/html; charset=UTF-8");
 		$('.mymenus li').eq(0).trigger('click');
 		var $checkHead = $("#adminBoard tr th input[type='checkbox']");
 		var $checkBody = $("#adminBoard tr td input[type='checkbox']");
-
 		/* 전체선택 */
 		$checkHead.click(function() {
 			var $bodyPutCk = $checkHead.is(":checked");
-
 			if ($bodyPutCk == true) {
 				$checkBody.attr("checked", true);
 				$checkBody.prop("checked", true);
@@ -163,16 +160,13 @@ response.setContentType("text/html; charset=UTF-8");
 				$checkBody.prop("checked", false);
 			}
 		});
-
 		/* 하위 전체 선택시 전체버튼 선택 */
 		$checkBody
 				.click(function() {
 					var tdInput_Length = $checkBody.length;
 					var tdInput_Check_Length = $("#adminBoard tr td input[type='checkbox']:checked").length;
-
 					console.log(tdInput_Length);
 					console.log(tdInput_Check_Length);
-
 					if (tdInput_Length == tdInput_Check_Length) {
 						$checkHead.attr("checked", true);
 						$checkHead.prop("checked", true);
@@ -181,7 +175,6 @@ response.setContentType("text/html; charset=UTF-8");
 						$checkHead.prop("checked", false);
 					}
 				});
-
 	});
 </script>
 </head>
@@ -237,6 +230,107 @@ response.setContentType("text/html; charset=UTF-8");
 
 		<div class="mypage">
 			<h2>캘린더</h2>
+			<br>
+			<div class="btn_R">
+			<input type="button" class="reg_btn" value="정기검진 등록" onclick="popup_r_check();" />
+			<input type="button" class="reg_btn" value="개인일정 등록" onclick="popup_private();" />
+			</div>
+				<script type="text/javascript">
+					function popup_r_check() {window.open("semi.do?command=popup_r_check&member_id=${dto.member_id}", "정기검진 등록 팝업창", "width=800, height=300, left=500, top=250");}
+					function popup_private() {window.open("semi.do?command=popup_private&member_id=${dto.member_id}", "개인일정 등록 팝업창", "width=600, height=400, left=500, top=250");}
+				</script>
+
+			
+			<%
+					Calendar cal = Calendar.getInstance();
+					
+					int year = cal.get(Calendar.YEAR);
+					int month = cal.get(Calendar.MONTH) + 1;
+					
+					String paramYear = request.getParameter("year");
+					String paramMonth = request.getParameter("month");
+					
+					if (paramYear != null) {
+						year = Integer.parseInt(paramYear);
+					}
+					
+					if (paramMonth != null) {
+						month = Integer.parseInt(paramMonth);
+					}
+					
+					if (month > 12) {
+						year++;
+						month = 1;
+					}
+					if (month < 1) {
+						year--;
+						month = 12;
+					}	
+					
+					// 날짜 설정하기
+					cal.set(year, month-1, 1);
+					
+					// 해당 년,월의 1일의 요일값
+					int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+					// 해당 월의 마지막 날
+					int lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+					MycalDao dao = new MycalDaoImpl();
+					String member_id = dto.getMember_id();
+					String yyyyMM = year +"-"+ Util.isTwo(String.valueOf(month));
+					MycalDto m_c_dto = new MycalDto(yyyyMM, member_id);
+					List<MycalDto> m_c_list = dao.selectViewList(m_c_dto);
+					
+				%>
+
+					<table id="myCalendar">
+					
+						<caption class="cpt">
+							<a href="mypage.jsp?year=<%=year-1%>&month=<%=month%>">◁</a>
+							<a href="mypage.jsp?year=<%=year %>&month=<%=month-1 %>">◀</a>
+							
+							<span class="y"><%=year %></span>년
+							<span class="m"><%=month %></span>월
+							
+							<a href="mypage.jsp?year=<%=year %>&month=<%=month+1 %>">▶</a>
+							<a href="mypage.jsp?year=<%=year+1%>&month=<%=month%>">▷</a>
+						</caption>
+						
+						<tr>
+							<th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
+						</tr>
+						
+						<tr>
+						
+						<%
+							for (int i = 0; i < dayOfWeek-1; i++) {
+								out.print("<td></td>");
+							}
+						
+							for (int i = 1; i <= lastDay; i++) {
+						%>
+						
+						<td>
+							<a class="countview" href="semi.do?command=popup_calList&member_id=${dto.member_id}&year=<%=year %>&month=<%=month %>&date=<%=i %>" onclick="window.open(this.href, '_blank', 'width=800, height=600'); return false;" style="color: <%=Util.fontColor(i, dayOfWeek) %>"><%=i %></a>
+							
+							<div class="list">
+								<%=Util.getCalView(i, m_c_list) %>
+							</div>
+							
+						</td>
+						
+					<%
+								if ((dayOfWeek-1+i)%7 == 0) {
+									out.print("</tr><tr>");
+								}
+							}
+							
+							for (int i = 0; i < (7-(dayOfWeek-1 + lastDay)%7)%7 ; i++) {
+								out.print("<td></td>");
+							}
+					%>
+							</tr>
+					</table>			
+			
 		</div>
 
 		<div class="mypage">
@@ -358,7 +452,6 @@ response.setContentType("text/html; charset=UTF-8");
 								else if("<%=email_addr%>" == "nate.com"){
 									$('#addr option:eq(3)').prop("selected",true);
 								}
-
 						</script>
 							<%
 							String[] phone_num = dto.getMember_phone().split("-");
@@ -601,4 +694,3 @@ response.setContentType("text/html; charset=UTF-8");
 	<jsp:include page="bottom.jsp" />
 </body>
 </html>
-

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.project.fp.mycal">
+
+	<select id="selectViewList" resultType="MycalDto" parameterType="MycalDto">
+		SELECT *
+		FROM (
+				SELECT (ROW_NUMBER() OVER(PARTITION BY SUBSTR(CAL_MDATE, 1, 10) ORDER BY CAL_MDATE)) RN, CAL_NO, CAL_TITLE, CAL_CONTENT, CAL_MDATE, CAL_REGDATE, MEMBER_ID
+				FROM MYCAL
+				WHERE MEMBER_ID = #{member_id}
+				AND SUBSTR(CAL_MDATE, 1, 7) = #{cal_mdate}
+			 )
+		WHERE RN BETWEEN 1 AND 3
+	</select>
+
+	<select id="selectList" resultType="MycalDto" parameterType="MycalDto">
+		SELECT CAL_NO, CAL_TITLE, CAL_CONTENT, CAL_MDATE, CAL_REGDATE, MEMBER_ID
+		FROM MYCAL
+		WHERE MEMBER_ID = #{member_id}
+		AND REPLACE(CAL_MDATE, '-', '') = #{cal_mdate}
+	</select>
+
+	<select id="selectOne" resultType="MycalDto" parameterType="int">
+		SELECT CAL_NO, CAL_TITLE, CAL_CONTENT, CAL_MDATE, CAL_REGDATE, MEMBER_ID
+		FROM MYCAL
+		WHERE CAL_NO = #{cal_no}
+	</select>
+
+	<select id="selectCount" resultType="int" parameterType="MycalDto">
+		SELECT COUNT(*) 
+		FROM MYCAL
+		WHERE MEMBER_ID = #{member_id}
+		AND SUBSTR(CAL_MDATE, 1, 8) = #{cal_mdate}
+	</select>
+
+	<insert id="insertCal" parameterType="MycalDto">
+		INSERT INTO MYCAL
+		VALUES(
+			CAL_NO_SEQ.NEXTVAL, #{cal_title}, #{cal_content}, #{cal_mdate}, SYSDATE, #{member_id}
+		)
+	</insert>
+	
+	<insert id="insertCheck" parameterType="MycalDto">
+		INSERT INTO MYCAL
+		VALUES(
+			CAL_NO_SEQ.NEXTVAL, '[완료]정기검진', '정기검진 진행 완료!', #{cal_mdate}, SYSDATE, #{member_id}
+		)
+	</insert>
+	
+	<insert id="insertNextCheck" parameterType="MycalDto">
+		INSERT INTO MYCAL
+		VALUES(
+			CAL_NO_SEQ.NEXTVAL, '[예정]정기검진', '정기검진 진행 예정일', #{cal_mdate}, SYSDATE, #{member_id}
+		)
+	</insert>
+
+	<update id="updateCal" parameterType="MycalDto">
+		UPDATE MYCAL
+		SET
+		CAL_TITLE = #{cal_title},
+		CAL_CONTENT = #{cal_content},
+		CAL_MDATE = #{cal_mdate},
+		CAL_REGDATE = SYSDATE
+		WHERE CAL_NO = #{cal_no}
+	</update>
+	
+	<delete id="deleteCal" parameterType="int">
+		DELETE
+		FROM MYCAL
+		WHERE CAL_NO = #{cal_no}
+	</delete>
+
+</mapper>
