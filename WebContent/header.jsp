@@ -46,7 +46,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 <div class="price">Family Pet</div>
 </div>
 <div class="offcanvas__logo">
-<a href="index.jsp">
+<a href="semi.do?command=index">
 <img src="resources/images/logo/logo.png" width="160" height="60" alt="메인화면" />
 </a>
 </div>
@@ -59,7 +59,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 <div class="row">
 <div class="col-lg-2">
 <div class="header__logo">
-<a href="index.jsp">
+<a href="semi.do?command=index">
 <img src="resources/images/logo/logo.png" width="160" height="60" alt="메인화면" />
 </a>
 </div>
@@ -92,7 +92,6 @@ if (dto == null) {
 					<li><a href="semi.do?command=board_dec">실종신고</a>
 					<li><a href="semi.do?command=shopping">쇼핑</a>
 					<li><a href="semi.do?command=board_qna">상품문의</a>
-					<li><a href="semi.do?command=chatlist&member_id=<%=dto.getMember_id()%>&member_grade=<%=dto.getMember_grade()%>">채팅</a>
 					<li><a href="semi.do?command=adminpage">관리자페이지</a>
 					<li><a href="semi.do?command=logout">로그아웃</a>
 
@@ -106,7 +105,6 @@ if (dto == null) {
 					<li><a href="semi.do?command=board_dec">실종신고</a>
 					<li><a href="semi.do?command=shopping">쇼핑</a>
 					<li><a href="semi.do?command=board_qna">상품문의</a>
-					<li><a href="semi.do?command=chatlist&member_id=<%=dto.getMember_id()%>&member_grade=<%=dto.getMember_grade()%>">채팅</a>
 					<li><a href="semi.do?command=mypage&member_id=<%=dto.getMember_id()%>">마이페이지</a>
 					<li><a href="semi.do?command=basket_list&member_id=<%=dto.getMember_id()%>">장바구니</a>
 					<li><a href="semi.do?command=logout">로그아웃</a> 
