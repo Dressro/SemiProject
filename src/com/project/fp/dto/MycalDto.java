@@ -10,6 +10,7 @@ public class MycalDto {
 	private String cal_mdate;
 	private String next_mdate;
 	private Date cal_regdate;
+	private String cal_chk;
 	private String member_id;
 	
 	public MycalDto() {
@@ -86,6 +87,14 @@ public class MycalDto {
 
 	public void setMember_id(String member_id) {
 		this.member_id = member_id;
+	}
+
+	public String getCal_chk() {
+		return cal_chk;
+	}
+
+	public void setCal_chk(String cal_chk) {
+		this.cal_chk = cal_chk;
 	}
 	
 }

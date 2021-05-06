@@ -261,7 +261,7 @@ select count(*) from hospital order by hospital_num desc;
 select * from member;  
 select * from file_table;
 select * from board order by board_no desc;
-
+select * from mycal;
 
 SELECT X.rnum, X.board_no,X.board_free_no,X.board_notice_no,X.board_qna_no,X.board_dec_no,
 		X.board_title,X.board_content,X.board_regdate,X.board_readcount,

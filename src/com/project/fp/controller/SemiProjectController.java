@@ -50,6 +50,7 @@ import com.google.gson.JsonParser;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.oreilly.servlet.multipart.FileRenamePolicy;
+import com.project.fp.alarm.Cal_alarm;
 import com.project.fp.biz.AnimalBiz;
 import com.project.fp.biz.AnimalBizImpl;
 import com.project.fp.biz.BoardBiz;
@@ -123,7 +124,29 @@ public class SemiProjectController extends HttpServlet {
 		Lost_AnimalBiz l_biz = new Lost_AnimalBizImpl();
 		MycalBiz m_c_biz = new MycalBizImpl();
 		HttpSession session = request.getSession();
-
+		List<MycalDto> cal_list = m_c_biz.selectAllList();
+		String check_date = null;
+		for (MycalDto cal_dto : cal_list) {
+			check_date = cal_dto.getCal_mdate();
+			if (Cal_alarm.day_compare(check_date)) {
+				if (cal_dto.getCal_chk().equals("N")) {
+					String member_id = cal_dto.getMember_id();
+					MemberDto m_dto = m_biz.selectDetail(member_id);
+					if (m_dto.getMember_notify().equals("Y")) {
+						String member_phone = m_dto.getMember_phone();
+						member_phone = member_phone.replace("-", "");
+						String content = "FamilyPet 입니다.\n" + "내일 " + cal_dto.getCal_title() + " 일정이 있습니다.";
+						SMS.sendSMS(member_phone, content);
+						int res = m_c_biz.updateCalChk(cal_dto.getCal_no());
+						if (res > 0) {
+							System.out.println("알람 전송 후 체크성공");
+						} else {
+							System.out.println("알람 전송 후 체크실패");
+						}
+					}
+				}
+			}
+		}
 		if (command.equals("signup")) {
 			response.sendRedirect("signup.jsp");
 		} else if (command.equals("index")) {
