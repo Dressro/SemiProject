@@ -3,6 +3,12 @@
 
 <mapper namespace="com.project.fp.mycal">
 
+	<select id="selectAllList" resultType="MycalDto">
+		SELECT CAL_NO, CAL_TITLE, CAL_CONTENT, CAL_MDATE, CAL_REGDATE, CAL_CHK, MEMBER_ID
+		FROM MYCAL
+		ORDER BY CAL_NO DESC
+	</select>
+	
 	<select id="selectViewList" resultType="MycalDto" parameterType="MycalDto">
 		SELECT *
 		FROM (
@@ -37,21 +43,21 @@
 	<insert id="insertCal" parameterType="MycalDto">
 		INSERT INTO MYCAL
 		VALUES(
-			CAL_NO_SEQ.NEXTVAL, #{cal_title}, #{cal_content}, #{cal_mdate}, SYSDATE, #{member_id}
+			CAL_NO_SEQ.NEXTVAL, #{cal_title}, #{cal_content}, #{cal_mdate}, SYSDATE, 'N', #{member_id}
 		)
 	</insert>
 	
 	<insert id="insertCheck" parameterType="MycalDto">
 		INSERT INTO MYCAL
 		VALUES(
-			CAL_NO_SEQ.NEXTVAL, '[완료]정기검진', '정기검진 진행 완료!', #{cal_mdate}, SYSDATE, #{member_id}
+			CAL_NO_SEQ.NEXTVAL, '[완료]정기검진', '정기검진 진행 완료!', #{cal_mdate}, SYSDATE, 'Y', #{member_id}
 		)
 	</insert>
 	
 	<insert id="insertNextCheck" parameterType="MycalDto">
 		INSERT INTO MYCAL
 		VALUES(
-			CAL_NO_SEQ.NEXTVAL, '[예정]정기검진', '정기검진 진행 예정일', #{cal_mdate}, SYSDATE, #{member_id}
+			CAL_NO_SEQ.NEXTVAL, '[예정]정기검진', '정기검진 진행 예정일', #{cal_mdate}, SYSDATE, 'N', #{member_id}
 		)
 	</insert>
 
@@ -62,6 +68,12 @@
 		CAL_CONTENT = #{cal_content},
 		CAL_MDATE = #{cal_mdate},
 		CAL_REGDATE = SYSDATE
+		WHERE CAL_NO = #{cal_no}
+	</update>
+	
+	<update id="updateCalChk" parameterType="int">
+		UPDATE MYCAL
+		SET CAL_CHK = 'Y'
 		WHERE CAL_NO = #{cal_no}
 	</update>
 	

@@ -6,6 +6,7 @@ import com.project.fp.dto.MycalDto;
 
 public interface MycalBiz {
 	
+	public List<MycalDto> selectAllList();
 	public List<MycalDto> selectViewList(MycalDto dto);
 	public List<MycalDto> selectList(MycalDto dto);
 	public MycalDto selectOne(int cal_no);
@@ -15,5 +16,6 @@ public interface MycalBiz {
 	public int insertNextCheck(MycalDto dto);
 	public int updateCal(MycalDto dto);
 	public int deleteCal(int cal_no);
+	public int updateCalChk(int cal_no);
 
 }
