@@ -3,31 +3,35 @@
 <mapper namespace="com.project.fp.product">
 
 	<select id="selectList" resultType="ProductDto">
-		SELECT PROD_NUM, PROD_NAME, PROD_EXPLAIN, PROD_SALE, PROD_PRICE, PROD_RECOMM, PROD_STOCK, PROD_CATEGORY, PROD_IN, PROD_OUT, PROD_INDATE, PROD_OUTDATE, PROD_MFR, PROD_CLIENT
-		FROM PRODUCT
-		ORDER BY PROD_NUM DESC
+		SELECT p.PROD_NUM, p.PROD_NAME, p.PROD_EXPLAIN, p.PROD_SALE, p.PROD_PRICE, p.PROD_RECOMM, p.PROD_STOCK, p.PROD_CATEGORY, p.PROD_IN, p.PROD_OUT, p.PROD_INDATE, p.PROD_OUTDATE, p.PROD_MFR, p.PROD_CLIENT,f.file_new_name
+		FROM product p , file_table f 
+		WHERE p.prod_num = f.prod_num
+		ORDER BY p.PROD_NUM DESC
 	</select>
 	
 	
 	<select id="selectcategoryList" resultType="ProductDto">
-		SELECT PROD_NUM, PROD_NAME, PROD_EXPLAIN, PROD_SALE, PROD_PRICE, PROD_RECOMM, PROD_STOCK, PROD_CATEGORY, PROD_IN, PROD_OUT, PROD_INDATE, PROD_OUTDATE, PROD_MFR, PROD_CLIENT
-		FROM PRODUCT
-		WHERE PROD_CATEGORY = #{prod_category}
-		ORDER BY PROD_NUM DESC
+		SELECT p.PROD_NUM, p.PROD_NAME, p.PROD_EXPLAIN, p.PROD_SALE, p.PROD_PRICE, p.PROD_RECOMM, p.PROD_STOCK, p.PROD_CATEGORY, p.PROD_IN, p.PROD_OUT, p.PROD_INDATE, p.PROD_OUTDATE, p.PROD_MFR, p.PROD_CLIENT,f.file_new_name
+		FROM product p , file_table f 
+		WHERE p.PROD_CATEGORY = #{prod_category}
+		AND p.prod_num = f.prod_num
+		ORDER BY p.PROD_NUM DESC
 	</select>
 	
 	
 	
 	<select id="prod_selectone" resultType="ProductDto" parameterType="String">
-		SELECT PROD_NUM, PROD_NAME, PROD_EXPLAIN, PROD_SALE, PROD_PRICE, PROD_RECOMM, PROD_STOCK, PROD_CATEGORY, PROD_IN, PROD_OUT, PROD_INDATE, PROD_OUTDATE, PROD_MFR, PROD_CLIENT
-		FROM PRODUCT
-		WHERE PROD_name = #{prod_name}
+		SELECT p.PROD_NUM, p.PROD_NAME, p.PROD_EXPLAIN, p.PROD_SALE, p.PROD_PRICE, p.PROD_RECOMM, p.PROD_STOCK, p.PROD_CATEGORY, p.PROD_IN, p.PROD_OUT, p.PROD_INDATE, p.PROD_OUTDATE, p.PROD_MFR, p.PROD_CLIENT,f.file_new_name
+		FROM product p , file_table f 
+		WHERE p.PROD_name = #{prod_name}
+		AND p.prod_num = f.prod_num
 	</select>
 	
 	<select id="selectOne" resultType="ProductDto" parameterType="int">
-		SELECT PROD_NUM, PROD_NAME, PROD_EXPLAIN, PROD_SALE, PROD_PRICE, PROD_RECOMM, PROD_STOCK, PROD_CATEGORY, PROD_IN, PROD_OUT, PROD_INDATE, PROD_OUTDATE, PROD_MFR, PROD_CLIENT
-		FROM PRODUCT
-		WHERE PROD_NUM = #{prod_num}
+		SELECT p.PROD_NUM, p.PROD_NAME, p.PROD_EXPLAIN, p.PROD_SALE, p.PROD_PRICE, p.PROD_RECOMM, p.PROD_STOCK, p.PROD_CATEGORY, p.PROD_IN, p.PROD_OUT, p.PROD_INDATE, p.PROD_OUTDATE, p.PROD_MFR, p.PROD_CLIENT,f.file_new_name
+		FROM product p , file_table f 
+		WHERE p.PROD_NUM = #{prod_num}
+		AND p.prod_num = f.prod_num
 	</select>
 	
 	<select id="product_allCount" resultType="int">
@@ -44,15 +48,16 @@
 	<select id="product_selectList"
 		parameterType="com.project.fp.dto.PagingDto" resultType="ProductDto">
 		select
-		b.rnum,b.prod_num,b.prod_name, prod_category, prod_price
+		b.rnum,b.prod_num,b.prod_name, b.prod_category, b.prod_price, b.file_new_name
 		from
 		(select rownum as rnum,
-		a.prod_num,a.prod_name,a.prod_category,a.prod_price
+		a.prod_num,a.prod_name,a.prod_category,a.prod_price,a.file_new_name
 		from
 		(select
-		prod_num, prod_name, prod_category, prod_price
-		from product
-		order by prod_num desc)a
+		p.prod_num, p.prod_name, p.prod_category, p.prod_price,f.file_new_name
+		from product p, file_table f
+		where p.prod_num = f.prod_num
+		order by p.prod_num desc)a
 		where rownum <![CDATA[ <= ]]>
 		#{pageEnd})b
 		where b.rnum <![CDATA[ >= ]]>
@@ -61,23 +66,25 @@
 	
 	<select id="product_search" parameterType="ProductDto"
 		resultType="ProductDto">
-		SELECT PROD_NUM, PROD_NAME, PROD_EXPLAIN, PROD_SALE, PROD_PRICE, PROD_RECOMM, PROD_STOCK, PROD_CATEGORY, PROD_IN, PROD_OUT, PROD_INDATE, PROD_OUTDATE, PROD_MFR, PROD_CLIENT
-		FROM product 
-		WHERE prod_name LIKE '%'||#{prod_name}||'%' 
+		SELECT p.PROD_NUM, p.PROD_NAME, p.PROD_EXPLAIN, p.PROD_SALE, p.PROD_PRICE, p.PROD_RECOMM, p.PROD_STOCK, p.PROD_CATEGORY, p.PROD_IN, p.PROD_OUT, p.PROD_INDATE, p.PROD_OUTDATE, p.PROD_MFR, p.PROD_CLIENT,f.file_new_name
+		FROM product p , file_table f 
+		WHERE p.prod_name LIKE '%'||#{prod_name}||'%' 
+		and p.prod_num = f.prod_num
 		order by prod_num desc
 	</select>
 	
 	<select id="product_all_search"
 		parameterType="com.project.fp.dto.PagingDto" resultType="ProductDto">
 		SELECT X.rnum,
-		X.PROD_NUM, X.PROD_NAME, X.PROD_EXPLAIN, X.PROD_SALE, X.PROD_PRICE, X.PROD_RECOMM, X.PROD_STOCK, X.PROD_CATEGORY, X.PROD_IN, X.PROD_OUT, X.PROD_INDATE, X.PROD_OUTDATE, X.PROD_MFR, X.PROD_CLIENT
+		X.PROD_NUM, X.PROD_NAME, X.PROD_EXPLAIN, X.PROD_SALE, X.PROD_PRICE, X.PROD_RECOMM, X.PROD_STOCK, X.PROD_CATEGORY, X.PROD_IN, X.PROD_OUT, X.PROD_INDATE, X.PROD_OUTDATE, X.PROD_MFR, X.PROD_CLIENT, X.FILE_NEW_NAME
 		FROM (
 		SELECT ROWNUM AS rnum,
-		A.PROD_NUM, A.PROD_NAME, A.PROD_EXPLAIN, A.PROD_SALE, A.PROD_PRICE, A.PROD_RECOMM, A.PROD_STOCK, A.PROD_CATEGORY, A.PROD_IN, A.PROD_OUT, A.PROD_INDATE, A.PROD_OUTDATE, A.PROD_MFR, A.PROD_CLIENT
+		A.PROD_NUM, A.PROD_NAME, A.PROD_EXPLAIN, A.PROD_SALE, A.PROD_PRICE, A.PROD_RECOMM, A.PROD_STOCK, A.PROD_CATEGORY, A.PROD_IN, A.PROD_OUT, A.PROD_INDATE, A.PROD_OUTDATE, A.PROD_MFR, A.PROD_CLIENT,A.file_new_name
 		FROM (
-		SELECT PROD_NUM, PROD_NAME, PROD_EXPLAIN, PROD_SALE, PROD_PRICE, PROD_RECOMM, PROD_STOCK, PROD_CATEGORY, PROD_IN, PROD_OUT, PROD_INDATE, PROD_OUTDATE, PROD_MFR, PROD_CLIENT
-		FROM product 
-		WHERE prod_name  LIKE '%'||#{s_t}||'%'
+		SELECT p.PROD_NUM, p.PROD_NAME, p.PROD_EXPLAIN, p.PROD_SALE, p.PROD_PRICE, p.PROD_RECOMM, p.PROD_STOCK, p.PROD_CATEGORY, p.PROD_IN, p.PROD_OUT, p.PROD_INDATE, p.PROD_OUTDATE, p.PROD_MFR, p.PROD_CLIENT,f.file_new_name
+		FROM product p, file_table f
+		WHERE p.prod_name  LIKE '%'||#{s_t}||'%'
+		and p.prod_num = f.prod_num
 		ORDER BY PROD_NUM DESC
 		) A
 		WHERE ROWNUM <![CDATA[ <= ]]>
@@ -90,15 +97,15 @@
 	
 	<select id="feed_selectList" parameterType="com.project.fp.dto.PagingDto" resultType="ProductDto">
 		select
-		b.rnum,b.prod_num,b.prod_name, prod_category, prod_price
+		b.rnum,b.prod_num,b.prod_name, prod_category, prod_price, file_new_name
 		from
 		(select rownum as rnum,
-		a.prod_num,a.prod_name,a.prod_category, a.prod_price
+		a.prod_num,a.prod_name,a.prod_category, a.prod_price, a.file_new_name
 		from
 		(select
-		prod_num, prod_name, prod_category, prod_price
-		from product
-		where PROD_CATEGORY = 'feed'
+		p.prod_num, p.prod_name, p.prod_category, p.prod_price,f.file_new_name
+		from product p, file_table f
+		where p.PROD_CATEGORY = 'feed' and p.prod_num = f.prod_num
 		order by prod_num desc)a
 		where rownum <![CDATA[ <= ]]>
 		#{pageEnd})b
@@ -109,15 +116,15 @@
 		
 	<select id="care_selectList" parameterType="com.project.fp.dto.PagingDto" resultType="ProductDto">
 		select
-		b.rnum,b.prod_num,b.prod_name, prod_category, prod_price
+		b.rnum,b.prod_num,b.prod_name, prod_category, prod_price, file_new_name
 		from
 		(select rownum as rnum,
-		a.prod_num,a.prod_name,a.prod_category, a.prod_price
+		a.prod_num,a.prod_name,a.prod_category, a.prod_price, a.file_new_name
 		from
 		(select
-		prod_num, prod_name, prod_category, prod_price
-		from product
-		where PROD_CATEGORY = 'care'
+		p.prod_num, p.prod_name, p.prod_category, p.prod_price,f.file_new_name
+		from product p, file_table f
+		where p.PROD_CATEGORY = 'care' and p.prod_num = f.prod_num
 		order by prod_num desc)a
 		where rownum <![CDATA[ <= ]]>
 		#{pageEnd})b
@@ -127,15 +134,15 @@
 	
 	<select id="living_selectList" parameterType="com.project.fp.dto.PagingDto" resultType="ProductDto">
 		select
-		b.rnum,b.prod_num,b.prod_name, prod_category, prod_price
+		b.rnum,b.prod_num,b.prod_name, prod_category, prod_price, file_new_name
 		from
 		(select rownum as rnum,
-		a.prod_num,a.prod_name,a.prod_category, a.prod_price
+		a.prod_num,a.prod_name,a.prod_category, a.prod_price, a.file_new_name
 		from
 		(select
-		prod_num, prod_name, prod_category, prod_price
-		from product
-		where PROD_CATEGORY = 'living'
+		p.prod_num, p.prod_name, p.prod_category, p.prod_price,f.file_new_name
+		from product p, file_table f
+		where p.PROD_CATEGORY = 'living' and p.prod_num = f.prod_num
 		order by prod_num desc)a
 		where rownum <![CDATA[ <= ]]>
 		#{pageEnd})b
@@ -146,15 +153,15 @@
 	
 	<select id="outing_selectList" parameterType="com.project.fp.dto.PagingDto" resultType="ProductDto">
 		select
-		b.rnum,b.prod_num,b.prod_name, prod_category, prod_price
+		b.rnum,b.prod_num,b.prod_name, prod_category, prod_price, file_new_name
 		from
 		(select rownum as rnum,
-		a.prod_num,a.prod_name,a.prod_category, a.prod_price
+		a.prod_num,a.prod_name,a.prod_category, a.prod_price, a.file_new_name
 		from
 		(select
-		prod_num, prod_name, prod_category, prod_price
-		from product
-		where PROD_CATEGORY = 'outing'
+		p.prod_num, p.prod_name, p.prod_category, p.prod_price,f.file_new_name
+		from product p, file_table f
+		where p.PROD_CATEGORY = 'outing' and p.prod_num = f.prod_num
 		order by prod_num desc)a
 		where rownum <![CDATA[ <= ]]>
 		#{pageEnd})b
@@ -165,15 +172,15 @@
 	
 	<select id="toy_selectList" parameterType="com.project.fp.dto.PagingDto" resultType="ProductDto">
 		select
-		b.rnum,b.prod_num,b.prod_name, prod_category, prod_price
+		b.rnum,b.prod_num,b.prod_name, prod_category, prod_price, file_new_name
 		from
 		(select rownum as rnum,
-		a.prod_num,a.prod_name,a.prod_category, a.prod_price
+		a.prod_num,a.prod_name,a.prod_category, a.prod_price, a.file_new_name
 		from
 		(select
-		prod_num, prod_name, prod_category, prod_price
-		from product
-		where PROD_CATEGORY = 'toy'
+		p.prod_num, p.prod_name, p.prod_category, p.prod_price,f.file_new_name
+		from product p, file_table f
+		where p.PROD_CATEGORY = 'toy' and p.prod_num = f.prod_num
 		order by prod_num desc)a
 		where rownum <![CDATA[ <= ]]>
 		#{pageEnd})b
@@ -184,15 +191,15 @@
 		
 	<select id="fashion_selectList" parameterType="com.project.fp.dto.PagingDto" resultType="ProductDto">
 		select
-		b.rnum,b.prod_num,b.prod_name, prod_category, prod_price
+		b.rnum,b.prod_num,b.prod_name, prod_category, prod_price, file_new_name
 		from
 		(select rownum as rnum,
-		a.prod_num,a.prod_name,a.prod_category, a.prod_price
+		a.prod_num,a.prod_name,a.prod_category, a.prod_price, a.file_new_name
 		from
 		(select
-		prod_num, prod_name, prod_category, prod_price
-		from product
-		where PROD_CATEGORY = 'fashion'
+		p.prod_num, p.prod_name, p.prod_category, p.prod_price,f.file_new_name
+		from product p, file_table f
+		where p.PROD_CATEGORY = 'fashion' and p.prod_num = f.prod_num
 		order by prod_num desc)a
 		where rownum <![CDATA[ <= ]]>
 		#{pageEnd})b

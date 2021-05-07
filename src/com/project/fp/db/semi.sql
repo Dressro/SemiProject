@@ -236,13 +236,13 @@ CREATE TABLE MYCAL(
 );
 
 
-
+delete from member where member_id = 'doctor5';
 SELECT * FROM FILE_TABLE;
 SELECT * FROM MEMBER;
 select * from HOSPITAL;
 delete from file_table where prod_num = '4';
 update order_table set order_step = '결제완료' where member_id = 'test';
-select * from member m , file_table f
+select * from  file_table;
 where m.member_id = f.member_id
 and board_no = '64';
 select * from member;  dhksdn486  
@@ -257,7 +257,7 @@ update member set member_grade = '관리자' where member_id = 'admin';
 select * from product;
 select * from order_table;
 update order_table set order_step = '결제완료' where order_num = '24';
-
+update product set prod_category = 'outing' where prod_num = '46';
 
 select * from product;
 select count(*) from hospital order by hospital_num desc;
@@ -320,9 +320,9 @@ select * from member;
 --실종신고 위치 정보 받아오기
 
 --마이페이지 캘린더
-
+delete from product where prod_num = '27';
 select * from product;
-alter sequence PRODUCT_NUM_SEQ increment by +1;
+alter sequence PRODUCT_NUM_SEQ increment by -1;
 select * from order_table o, product p 
 select * fr
 

@@ -83,7 +83,7 @@
 				<div>
 					<div>
 						<span class="prod_img">
-							<img src="resources/images/product/${p_dto.prod_num }.jfif">
+							<img src="fileupload/${p_dto.file_new_name }">
 						</span>
 					</div>
 					<div class="prod_info">
