@@ -102,9 +102,6 @@ public class Order_TableBizImpl implements Order_TableBiz {
 		// TODO Auto-generated method stub
 		return dao.mulDelete(order_nums);
 	}
-	
-	
-
 
 	@Override
 	public int direct_pay_insert(Order_TableDto dto) {
@@ -116,6 +113,16 @@ public class Order_TableBizImpl implements Order_TableBiz {
 	public int update_pay(int order_num) {
 
 		return dao.update_pay(order_num);
+	}
+	@Override
+	public int update_group_pay(Order_TableDto dto) {
+
+		return dao.update_group_pay(dto);
+	}
+	@Override
+	public int selectMaxGroup() {
+
+		return dao.selectMaxGroup();
 	}
 
 	

@@ -1342,6 +1342,17 @@ public class SemiProjectController extends HttpServlet {
 				} else {
 					System.out.println("결제 후 주문 기록 실패");
 				}
+				
+				
+				int o_g = o_t_biz.selectMaxGroup() + 1;
+				o_dto.setOrder_group(o_g);
+				int g_res = o_t_biz.update_group_pay(o_dto);
+				if (g_res > 0) {
+					System.out.println("주문 그룹 변경 성공");
+				} else {
+					System.out.println("주문 그룹 변경 실패");
+				}
+				
 				response.sendRedirect("semi.do?command=shopping_detail&prod_num=" + prod_num);
 			} else {
 				List<Order_TableDto> o_list = (List<Order_TableDto>) session.getAttribute("o_list");
@@ -1353,6 +1364,10 @@ public class SemiProjectController extends HttpServlet {
 				int o_res = 0;
 				int pr_count = 0;
 				int o_count = 0;
+				int o_g = o_t_biz.selectMaxGroup() + 1;
+				int g_res = 0;
+				int g_count = 0;
+				
 				for (Order_TableDto o_dto : o_list) {
 					pr_res = 0;
 					o_res = 0;
@@ -1380,6 +1395,15 @@ public class SemiProjectController extends HttpServlet {
 						System.out.println("주문 기록 수정 실패 - " + o_count);
 					}
 					o_count++;
+					
+					o_dto.setOrder_group(o_g);
+					g_res = o_t_biz.update_group_pay(o_dto);
+					if (g_res > 0) {
+						System.out.println("주문 그룹 변경 성공 - "  + g_count);
+					} else {
+						System.out.println("주문 그룹 변경 실패 - "  + g_count);
+					}
+					g_count++;
 				}
 
 				MemberDto m_dto = (MemberDto) session.getAttribute("dto");

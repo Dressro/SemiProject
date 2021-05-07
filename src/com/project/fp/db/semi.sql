@@ -252,9 +252,11 @@ select * from chat;
 select * from CHAT_CONTENT;
 update member set member_grade = '관리자' where member_id = 'admin';
 select * from product;
-select * from order_table;
-update order_table set order_step = '결제완료' where order_num = '24';
+select max(order_group) as max_group from order_table;
 
+update order_table set order_step = '결제완료' where order_num = '24';
+insert into order_table
+values(order_num_seq.nextval, sysdate, 1, 100, '미결제', 'N', order_group_seq.nextval, 1, 'test');
 
 select * from product;
 select count(*) from hospital order by hospital_num desc;

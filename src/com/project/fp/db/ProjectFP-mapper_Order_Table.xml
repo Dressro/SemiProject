@@ -10,6 +10,10 @@
 		and o.order_step != '미결제'
 		ORDER BY ORDER_NUM DESC
 	</select>
+	<select id="selectMaxGroup" resultType="int">
+		SELECT MAX(ORDER_GROUP) AS MAX_GROUP
+		FROM ORDER_TABLE
+	</select>
 	<select id="mypageList" parameterType="String" resultType="Order_TableDto">
 		SELECT o.ORDER_NUM, o.ORDER_DATE, o.ORDER_QUANTITY, o.ORDER_PRICE, o.ORDER_STEP, o.ORDER_PAY, o.order_group,o.prod_num, p.PROD_NAME, o.MEMBER_ID
 		FROM ORDER_TABLE o, product p
@@ -96,6 +100,11 @@
 	<update id="update_pay" parameterType="int">
 		UPDATE ORDER_TABLE
 		SET ORDER_STEP = '결제완료', ORDER_PAY = 'Y'
+		WHERE ORDER_NUM = #{order_num}
+ 	</update>
+ 	<update id="update_group_pay" parameterType="Order_TableDto">
+		UPDATE ORDER_TABLE
+		SET ORDER_group = #{order_group}
 		WHERE ORDER_NUM = #{order_num}
  	</update>
 
