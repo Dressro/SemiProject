@@ -32,6 +32,18 @@
 	width: 100%;
 	height: 100px;
 }
+.s-btn {
+	border: none;
+	display: inline-block;
+	padding: 5px 5px 5px 8px;
+	background: #f45d96;
+	font-size: 14px;
+	color: #ffffff;
+	font-weight: 600;
+	letter-spacing: 4px;
+	text-transform: uppercase;
+	margin-left: 5px;
+}
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
@@ -57,8 +69,8 @@ function searchname() {
             <li class="nav-item"><a class="nav-link" href="semi.do?command=shopping">Home</a> </li>
         </ul>
     </div>
- 		<input id="search" type="text" class="search_text" value="" placeholder="상품명을 입력하세요" style="width:300px; float: right;"/>
-  	  <button type="button" style="float: right;" onclick="searchname();" >검색</button>
+ 		<input id="search" type="text" class="search_text" value="" placeholder="상품명을 입력하세요" style="width:200px; float: right;"/>
+  	  <button type="button" class="s-btn" style="float: right;" onclick="searchname();" >검색</button>
 </nav>
 		
 <div id="mobile-filter">

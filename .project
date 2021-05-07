@@ -3,6 +3,7 @@
 	<name>SemiProject</name>
 	<comment></comment>
 	<projects>
+		<project>PyDev</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
