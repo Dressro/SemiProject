@@ -485,12 +485,12 @@ response.setContentType("text/html; charset=UTF-8");
 									</span>
 								</div>
 							</div>
-							<%--
+						<%-- 
 						<script type="text/javascript">
 							$("#addr_1").val("<%=addr[0]%>");
 							$("#addr_2").val("<%=addr[1]%>");
 						</script>
-						 --%>
+						--%>
 							<div class="general_signup_row">
 								<h4 class="general_signup_animal_yn">반려동물 여부</h4>
 								<div class="general_signup_animal_yn">
