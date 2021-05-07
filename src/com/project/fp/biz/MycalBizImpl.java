@@ -55,4 +55,16 @@ public class MycalBizImpl implements MycalBiz {
 		return dao.deleteCal(cal_no);
 	}
 
+	@Override
+	public List<MycalDto> selectAllList() {
+
+		return dao.selectAllList();
+	}
+
+	@Override
+	public int updateCalChk(int cal_no) {
+
+		return dao.updateCalChk(cal_no);
+	}
+
 }

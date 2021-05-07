@@ -299,7 +299,7 @@ response.setContentType("text/html; charset=UTF-8");
 			<div id="member_join">
 				<form action="semi.do" method="POST">
 					<input type="hidden" name="command" value="signupres" />
-					<input type="hidden" name="member_notify" value="N" />
+					<input type="hidden" name="member_notify" value="Y" />
 					<input type="hidden" name="member_grade" value="개인" />
 					<input type="hidden" name="member_dr_info" value="없음" />
 					<div id="general_signup_idpw">

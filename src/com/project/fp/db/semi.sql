@@ -10,6 +10,8 @@ drop table file_TABLE;
 drop table hospital;
 DROP TABLE BOARD_REPLY;
 DROP TABLE RECOMMEND;
+DROP TABLE LOST_ANIMAL;
+DROP TABLE MYCAL;
 
 DROP SEQUENCE RECOMMEND_NUM_SEQ;
 DROP SEQUENCE PRODUCT_NUM_SEQ;
@@ -28,6 +30,8 @@ DROP SEQUENCE FILE_NUM_SEQ;
 DROP SEQUENCE HOSPITAL_NUM_SEQ;
 DROP SEQUENCE REPLY_NO_SEQ;
 DROP SEQUENCE REPLY_GROUPNO_SEQ;
+DROP SEQUENCE LOST_NO_SEQ;
+DROP SEQUENCE CAL_NO_SEQ;
 
 CREATE SEQUENCE RECOMMEND_NUM;
 CREATE SEQUENCE PRODUCT_NUM_SEQ;
@@ -46,6 +50,8 @@ CREATE SEQUENCE FILE_NUM_SEQ;
 CREATE SEQUENCE HOSPITAL_NUM_SEQ;
 CREATE SEQUENCE REPLY_NO_SEQ;
 CREATE SEQUENCE REPLY_GROUPNO_SEQ;
+CREATE SEQUENCE LOST_NO_SEQ;
+CREATE SEQUENCE CAL_NO_SEQ;
 
 CREATE TABLE PRODUCT(
 	PROD_NUM NUMBER PRIMARY KEY,
@@ -82,30 +88,7 @@ CREATE TABLE MEMBER(
 	CONSTRAINT MEMBER_MEMBER_ANIMAL_CHK CHECK(MEMBER_ANIMAL IN ('Y', 'N')),
 	CONSTRAINT MEMBER_MEMBER_NOTIFY_CHK CHECK(MEMBER_NOTIFY IN ('Y', 'N'))
 );
-
-select * from board order by board_readcount desc;
-		
-		SELECT
-		A.board_no,A.board_free_no,A.board_notice_no,A.board_qna_no,A.board_dec_no,
-		A.board_title,A.board_content,A.board_regdate,A.board_readcount,
-		A.board_groupno,A.board_groupseq,A.board_titletab,A.member_id
-		FROM (
-		SELECT
-		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
-		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
-		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname as
-		member_id
-		FROM BOARD b, MEMBER m
-		WHERE m.member_id = b.member_id and b.board_category = 'F'
-		ORDER BY BOARD_readcount DESC
-		) A
-		WHERE ROWNUM <5
-		
-insert into member values('admin','admin','관리자','관리자','admin@admin.com','010-0000-0000','관리시 관리동','관리자','Y','N',0,NULL,'Y');
-update member set member_animal = 'N' where member_id = '1';
-select * from member;
-select * from animal;
-delete from animal where member_id='111';
+alter sequence PRODUCT_NUM_SEQ increment by +1;
 
 CREATE TABLE BOARD(
 	BOARD_NO NUMBER PRIMARY KEY,
@@ -128,7 +111,6 @@ CREATE TABLE BOARD(
 	CONSTRAINT BOARD_MEMBER_ID_FK FOREIGN KEY (MEMBER_ID)
 	REFERENCES MEMBER (MEMBER_ID)
 );
-select * from BOARD;
 
 CREATE TABLE ORDER_TABLE(
 	ORDER_NUM NUMBER PRIMARY KEY,
@@ -145,19 +127,7 @@ CREATE TABLE ORDER_TABLE(
 	CONSTRAINT ORDER_TABLE_PROD_NUM_FK FOREIGN KEY (PROD_NUM) REFERENCES PRODUCT (PROD_NUM),
 	CONSTRAINT ORDER_TABLE_MEMBER_ID_FK FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER (MEMBER_ID)
 );
-SELECT COLUMN_NAME, DATA_TYPE FROM all_tab_columns where table_name='ORDER_TABLE'; 
 
-select * from ORDER_TABLE;
-select * from PRODUCT;
-
-INSERT INTO ORDER_TABLE
-		VALUES(ORDER_NUM_SEQ.nextval, sysdate, '2', '20000', 
-		'미결제', 'N','30' ,12, 'test');
-SELECT COLUMN_NAME, DATA_TYPE FROM all_tab_columns where table_name='ORDER_TABLE';
-UPDATE ORDER_TABLE SET ORDER_STEP = ''
-WHERE ORDER_GROUP = '1';
-select * from order_table;
-select * from order_table where order_group='40' and order_step = '미결제';
 
 CREATE TABLE CHAT (
 	CH_NUM NUMBER NOT NULL,
@@ -168,8 +138,7 @@ CREATE TABLE CHAT (
 	CONSTRAINT CH_NUM_UK UNIQUE (CH_NUM),
 	CONSTRAINT CHAT_PK PRIMARY KEY (DOCTOR_ID,MEMBER_ID)
 );
-select * from order_table
-select * from chat;
+
 CREATE TABLE RECEIVE(
 	ORDER_NUM NUMBER PRIMARY KEY,
 	RECEIVE_NAME VARCHAR2(20) NOT NULL,
@@ -213,12 +182,17 @@ CREATE TABLE FILE_TABLE(
 	BOARD_NO NUMBER ,
 	CH_NUM NUMBER,
 	ANIMAL_NO NUMBER ,
+	PROD_NUM,
 	CONSTRAINT FILE_TALBE_MEMBER_ID_FK FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER (MEMBER_ID),
 	CONSTRAINT FILE_TABLE_BOARD_NO_FK FOREIGN KEY (BOARD_NO) REFERENCES BOARD (BOARD_NO),
 	CONSTRAINT FILE_TABLE_CH_NUM_FK FOREIGN KEY (CH_NUM) REFERENCES CHAT (CH_NUM),
-	CONSTRAINT FILE_TABLE_ANIMAL_NO_KF FOREIGN KEY (ANIMAL_NO) REFERENCES ANIMAL (ANIMAL_NO)
+	CONSTRAINT FILE_TABLE_ANIMAL_NO_FK FOREIGN KEY (ANIMAL_NO) REFERENCES ANIMAL (ANIMAL_NO),
+	CONSTRAINT FILE_TABLE_PROD_NUM_FK FOREIGN KEY (PROD_NUM) REFERENCES PRODUCT (PROD_NUM)
 );
-
+alter table file_table add prod_num number;
+alter table file_table add constraint FILE_TABLE_PROD_NUM FOREIGN KEY (PROD_NUM) REFERENCES PRODUCT(PROD_NUM); 
+select * from order_table;
+delete from order_table where order_num !='6';
 select * from file_table; where member_id = 'test' and ch_num is null;
 CREATE TABLE BOARD_REPLY (
 	REPLY_NO NUMBER PRIMARY KEY,
@@ -241,23 +215,39 @@ CREATE TABLE HOSPITAL(
 	HOSPITAL_PHONE VARCHAR2(100)
 );
 
-alter table file_table add prod_num number;
-alter table file_table add constraint FILE_TABLE_PROD_NUM FOREIGN KEY (PROD_NUM) REFERENCES PRODUCT(PROD_NUM); 
+CREATE TABLE LOST_ANIMAL(
+	LOST_NO NUMBER PRIMARY KEY,
+	LOST_LAT NUMBER NOT NULL,
+	LOST_LNG NUMBER NOT NULL,
+	BOARD_NO NUMBER NOT NULL,
+	CONSTRAINT LOST_ANIMAL_BOARD_NO_FK FOREIGN KEY (BOARD_NO) REFERENCES BOARD (BOARD_NO)
+);
+
+CREATE TABLE MYCAL(
+	CAL_NO NUMBER PRIMARY KEY,
+	CAL_TITLE VARCHAR2(1000) NOT NULL,
+	CAL_CONTENT VARCHAR2(4000),
+	CAL_MDATE VARCHAR2(12) NOT NULL,
+	CAL_REGDATE DATE NOT NULL,
+	CAL_CHK VARCHAR2(10) NOT NULL,
+	MEMBER_ID VARCHAR2(500) NOT NULL,
+	CONSTRAINT MYCAL_MEMBER_ID_FK FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER (MEMBER_ID),
+	CONSTRAINT MYCAL_CAL_CHK_CK CHECK (CAL_CHK IN ('Y', 'N'))
+);
+
+
 
 SELECT * FROM FILE_TABLE;
-
 SELECT * FROM MEMBER;
-
 select * from HOSPITAL;
-
-delete from file_table where prod_num = '12';
+delete from file_table where prod_num = '4';
 update order_table set order_step = '결제완료' where member_id = 'test';
 select * from member m , file_table f
 where m.member_id = f.member_id
 and board_no = '64';
 select * from member;  dhksdn486  
 select * from board;
-select * from file_table
+select * from file_table;
 SELECT * FROM ANIMAL;
 delete from member where member_grade = '전문의';
 select * from member where member_grade = '전문의';
@@ -274,7 +264,7 @@ select count(*) from hospital order by hospital_num desc;
 select * from member;  
 select * from file_table;
 select * from board order by board_no desc;
-
+select * from mycal;
 
 SELECT X.rnum, X.board_no,X.board_free_no,X.board_notice_no,X.board_qna_no,X.board_dec_no,
 		X.board_title,X.board_content,X.board_regdate,X.board_readcount,
@@ -328,38 +318,8 @@ SELECT  board_no
 		order by board_no desc
 select * from member;
 --실종신고 위치 정보 받아오기
-DROP SEQUENCE LOST_NO_SEQ;
-DROP TABLE LOST_ANIMAL;
-CREATE SEQUENCE LOST_NO_SEQ;
-CREATE TABLE LOST_ANIMAL(
-	LOST_NO NUMBER PRIMARY KEY,
-	LOST_LAT NUMBER NOT NULL,
-	LOST_LNG NUMBER NOT NULL,
-	BOARD_NO NUMBER NOT NULL,
-	CONSTRAINT LOST_ANIMAL_BOARD_NO_FK FOREIGN KEY (BOARD_NO) REFERENCES BOARD (BOARD_NO)
-);
-select * from lost_animal;
-SELECT o.ORDER_NUM, o.ORDER_DATE, o.ORDER_QUANTITY, o.ORDER_PRICE, o.ORDER_STEP, o.ORDER_PAY, o.order_group, p.PROD_NAME, o.MEMBER_ID
-		FROM ORDER_TABLE o, product p
-		WHERE o.MEMBER_ID = 'test'
-		and o.prod_num = p.prod_num
-		AND o.ORDER_STEP != '미결제'
-		ORDER BY ORDER_NUM DESC
 
 --마이페이지 캘린더
-DROP SEQUENCE CAL_NO_SEQ;
-DROP TABLE MYCAL;
-
-CREATE SEQUENCE CAL_NO_SEQ;
-CREATE TABLE MYCAL(
-	CAL_NO NUMBER PRIMARY KEY,
-	CAL_TITLE VARCHAR2(1000) NOT NULL,
-	CAL_CONTENT VARCHAR2(4000),
-	CAL_MDATE VARCHAR2(12) NOT NULL,
-	CAL_REGDATE DATE NOT NULL,
-	MEMBER_ID VARCHAR2(500) NOT NULL,
-	CONSTRAINT MYCAL_MEMBER_ID_FK FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER (MEMBER_ID)
-);
 
 select * from product;
 alter sequence PRODUCT_NUM_SEQ increment by +1;

@@ -125,4 +125,29 @@ public class MycalDaoImpl extends SqlMapConfig implements MycalDao {
 		return res;
 	}
 
+	@Override
+	public List<MycalDto> selectAllList() {
+		List<MycalDto> list = new ArrayList<MycalDto>();
+		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace+"selectAllList");
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public int updateCalChk(int cal_no) {
+		int res = 0;
+		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.delete(namespace+"updateCalChk",cal_no);
+			if (res > 0) {
+				session.commit();
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+
 }
