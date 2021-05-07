@@ -1279,6 +1279,9 @@ public class SemiProjectController extends HttpServlet {
 					o_dto.setProd_num(prod_num);
 					o_dto.setMember_id(member_id);
 					session.setAttribute("o_dto", o_dto);
+					
+					MemberDto dto = (MemberDto)session.getAttribute("dto");
+					System.out.println(dto);
 
 					dispatch(response, request, "paypage.jsp");
 				} else {
