@@ -7,6 +7,12 @@
 		select count(*)
 		from hospital
 	</select>
+	<select id="hospital_selectAllList" resultType="HospitalDto">
+		select hospital_num,hospital_name,hospital_addr,hospital_phone
+		from
+		hospital
+		order by hospital_num desc
+	</select>
 	<select id="hospital_selectList"
 		parameterType="com.project.fp.dto.PagingDto" resultType="HospitalDto">
 		select
