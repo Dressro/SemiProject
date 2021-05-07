@@ -153,9 +153,11 @@ public class SemiProjectController extends HttpServlet {
 			List<BoardDto> f_list = b_biz.index_free();
 			List<BoardDto> n_list = b_biz.index_notice();
 			List<BoardDto> l_list = b_biz.index_dec();
+			List<HospitalDto> h_list = h_biz.selectList();
 			request.setAttribute("f_list", f_list);
 			request.setAttribute("n_list", n_list);
 			request.setAttribute("l_list", l_list);
+			request.setAttribute("h_list", h_list);
 			dispatch(response, request, "index.jsp");
 		} else if (command.equals("general_signup")) {
 			response.sendRedirect("general_signup.jsp");

@@ -36,6 +36,12 @@ public class HospitalBizImpl implements HospitalBiz {
 		return dao.insert(dto);
 	}
 
+	@Override
+	public List<HospitalDto> selectList() {
+		// TODO Auto-generated method stub
+		return dao.selectList();
+	}
+
 	
 
 }
