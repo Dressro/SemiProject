@@ -20,7 +20,7 @@ import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 public class Recommand {
 
 	public static void main(String[] args) throws IOException, TasteException {
-		DataModel dm = new FileDataModel(new File("./src/ratings.csv"));
+		DataModel dm = new FileDataModel(new File("./src/result.csv"));
 		
 		UserSimilarity sim = new PearsonCorrelationSimilarity(dm);
 		
@@ -32,12 +32,12 @@ public class Recommand {
 		
 		for(LongPrimitiveIterator users = dm.getUserIDs(); users.hasNext();) {
 			long userId = users.nextLong();
-			List<RecommendedItem> recommendations = recommender.recommend(userId, 10);
+			List<RecommendedItem> recommendations = recommender.recommend(userId, 5);
 			for(RecommendedItem recommenation:recommendations) {
-				System.out.println(userId+","+recommenation.getItemID()+","+recommenation.getValue());
+				System.out.println(userId+","+recommenation.getItemID());
 			}
 			
-			if(++x > 5) break;
+			if(++x > 20) break;
 		}
 	}
 }

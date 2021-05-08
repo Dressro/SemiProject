@@ -6,7 +6,21 @@ import java.io.File;
 import java.io.FileReader;
 
 import java.io.FileInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
+import org.apache.mahout.cf.taste.common.TasteException;
+import org.apache.mahout.cf.taste.impl.common.LongPrimitiveIterator;
+import org.apache.mahout.cf.taste.impl.model.file.FileDataModel;
+import org.apache.mahout.cf.taste.impl.neighborhood.ThresholdUserNeighborhood;
+import org.apache.mahout.cf.taste.impl.recommender.GenericUserBasedRecommender;
+import org.apache.mahout.cf.taste.impl.similarity.PearsonCorrelationSimilarity;
+import org.apache.mahout.cf.taste.model.DataModel;
+import org.apache.mahout.cf.taste.neighborhood.UserNeighborhood;
+import org.apache.mahout.cf.taste.recommender.RecommendedItem;
+import org.apache.mahout.cf.taste.recommender.UserBasedRecommender;
+import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
@@ -77,6 +91,8 @@ import com.project.fp.biz.ProductBiz;
 import com.project.fp.biz.ProductBizImpl;
 import com.project.fp.biz.ReceiveBiz;
 import com.project.fp.biz.ReceiveBizImpl;
+import com.project.fp.biz.RecommendBiz;
+import com.project.fp.biz.RecommendBizImpl;
 import com.project.fp.dto.AnimalDto;
 import com.project.fp.dto.BoardDto;
 import com.project.fp.dto.Board_ReplyDto;
@@ -90,12 +106,11 @@ import com.project.fp.dto.MycalDto;
 import com.project.fp.dto.Order_TableDto;
 import com.project.fp.dto.PagingDto;
 import com.project.fp.dto.ProductDto;
+import com.project.fp.dto.RecommendDto;
 import com.project.fp.gmail.MailSend;
 import com.project.fp.papago.papago;
 import com.project.fp.sms.SMS;
 
-import oracle.net.aso.b;
-import oracle.net.aso.l;
 
 @WebServlet("/SemiProjectController")
 @MultipartConfig(location = "", maxFileSize = -1, maxRequestSize = -1, fileSizeThreshold = 1024)
@@ -122,6 +137,7 @@ public class SemiProjectController extends HttpServlet {
 		HospitalBiz h_biz = new HospitalBizImpl();
 		Board_ReplyBiz b_r_biz = new Board_ReplyBizImpl();
 		Lost_AnimalBiz l_biz = new Lost_AnimalBizImpl();
+		RecommendBiz re_biz = new RecommendBizImpl();
 		MycalBiz m_c_biz = new MycalBizImpl();
 		HttpSession session = request.getSession();
 		List<MycalDto> cal_list = m_c_biz.selectAllList();
@@ -429,7 +445,7 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				jsResponse(response, "수정 실패", "semi.do?command=mypage&member_id=" + member_id);
 			}
-		} else if (command.equals("memberupdate")) {
+			} else if (command.equals("memberupdate")) {
 			String member_nicname = request.getParameter("member_nicname");
 			String member_email = request.getParameter("member_email");
 			String member_phone = request.getParameter("member_phone");
@@ -1759,6 +1775,23 @@ public class SemiProjectController extends HttpServlet {
 			m_dto.setCal_mdate(cal_mdate);
 			m_dto.setCal_content(cal_content);
 			m_c_biz.updateCal(m_dto);
+		} else if (command.equals("recommend")) {
+			List<MemberDto> list = m_biz.selectList();
+			int res = 0;
+			for(int k=0;k<50;k++) {
+				System.out.println("DB 가져오는중...");
+			}
+			for(int i=0;i<list.size();i++) {
+				RecommendDto dto = new RecommendDto();
+				dto.setMember_id(list.get(i).getMember_id());
+				int re_res = re_biz.insertRec(dto);
+				res += re_res;
+			}
+			if(res > 0) {
+				jsResponse(response, "성공", "adminpage.jsp");
+			}else {
+				jsResponse(response, "실패", "adminpage.jsp");
+			}
 		}
 
 		if (command.equals("test")) {
@@ -1837,6 +1870,28 @@ public class SemiProjectController extends HttpServlet {
 				int index = fileName.lastIndexOf(File.separator);
 				return fileName.substring(index + 1);
 			}
+		}
+		return null;
+	}
+	private String recommend(int count) throws IOException, TasteException {
+		DataModel dm = new FileDataModel(new File("./src/result.csv"));
+		
+		UserSimilarity sim = new PearsonCorrelationSimilarity(dm);
+		
+		UserNeighborhood neighborhood = new ThresholdUserNeighborhood(0.1, sim, dm);
+		
+		UserBasedRecommender recommender = new GenericUserBasedRecommender(dm, neighborhood, sim);
+		
+		int x=1;
+		
+		for(LongPrimitiveIterator users = dm.getUserIDs(); users.hasNext();) {
+			long userId = users.nextLong();
+			List<RecommendedItem> recommendations = recommender.recommend(userId, 5);
+			for(RecommendedItem recommenation:recommendations) {
+				System.out.println(userId+","+recommenation.getItemID()+","+recommenation.getValue());
+			}
+			
+			if(++x > count) break;
 		}
 		return null;
 	}
