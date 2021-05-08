@@ -23,6 +23,16 @@ public class HospitalDaoImpl extends SqlMapConfig implements HospitalDao {
 	}
 	
 	@Override
+	public List<HospitalDto> selectList() {
+		// TODO Auto-generated method stub
+		List<HospitalDto> list = new ArrayList<HospitalDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "hospital_selectAllList");
+		}
+		return list;
+	}
+	
+	@Override
 	public List<HospitalDto> selectList(PagingDto Pdto) {
 		// TODO Auto-generated method stub
 		List<HospitalDto> list = new ArrayList<HospitalDto>();
