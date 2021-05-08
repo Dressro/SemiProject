@@ -215,11 +215,9 @@
 	
 	<update id="pay_update" parameterType="ProductDto">
 		UPDATE PRODUCT
-		SET PROD_STOCK = #{prod_stock}
+		SET PROD_STOCK = #{prod_stock}, PROD_OUT = #{prod_out}, PROD_OUTDATE = SYSDATE
 		WHERE PROD_NUM = #{prod_num}
 	</update>
-	
-	
 	
 	<delete id="delete" parameterType="ProductDto">
 		DELETE FROM PRODUCT

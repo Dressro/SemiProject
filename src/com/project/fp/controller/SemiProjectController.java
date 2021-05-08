@@ -1329,7 +1329,10 @@ public class SemiProjectController extends HttpServlet {
 				ProductDto p_dto = p_biz.selectOne(prod_num);
 				int prod_stock = p_dto.getProd_stock();
 				prod_stock -= order_quantity;
+				int prod_out = p_dto.getProd_out();
+				prod_out += order_quantity;
 				p_dto.setProd_stock(prod_stock);
+				p_dto.setProd_out(prod_out);
 
 				int pr_res = p_biz.pay_update(p_dto);
 				if (pr_res > 0) {
@@ -1360,6 +1363,7 @@ public class SemiProjectController extends HttpServlet {
 				List<Order_TableDto> o_list = (List<Order_TableDto>) session.getAttribute("o_list");
 				int prod_num = 0;
 				int order_quantity = 0;
+				int prod_out = 0;
 				int prod_stock = 0;
 				int order_num = 0;
 				int pr_res = 0;
@@ -1377,9 +1381,12 @@ public class SemiProjectController extends HttpServlet {
 					prod_num = o_dto.getProd_num();
 					order_quantity = o_dto.getOrder_quantity();
 					ProductDto p_dto = p_biz.selectOne(prod_num);
+					prod_out = p_dto.getProd_out();
+					prod_out += order_quantity;
 					prod_stock = p_dto.getProd_stock();
 					prod_stock -= order_quantity;
 					p_dto.setProd_stock(prod_stock);
+					p_dto.setProd_out(prod_out);
 
 					pr_res = p_biz.pay_update(p_dto);
 					if (pr_res > 0) {
