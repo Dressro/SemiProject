@@ -1,5 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.project.fp.recommend">
-	
+	<select id="selectList" resultType="RecommendDto">
+		SELECT MEMBER_NO,MEMBER_ID,
+		RECOMMEND_FIRST,RECOMMEND_SECOND,RECOMMEND_THIRD,
+		RECOMMEND_FOURTH,RECOMMEND_FIFTH
+		FROM RECOMMEND
+		ORDER BY MEMBER_NO
+	</select>
+	<select id="selectOne" resultType="RecommendDto" parameterType="RecommendDto">
+		SELECT MEMBER_NO,MEMBER_ID,
+		RECOMMEND_FIRST,RECOMMEND_SECOND,RECOMMEND_THIRD,
+		RECOMMEND_FOURTH,RECOMMEND_FIFTH
+		FROM RECOMMEND
+		WHERE MEMBER_ID = #{member_id}
+		ORDER BY MEMBER_NO
+	</select>
+	<insert id="insert" parameterType="RecommendDto">
+		INSERT INTO RECOMMEND
+		VALUES 
+		(recommend_num_seq.nextval,#{member_id},#{recommend_first},#{recommend_second},#{recommend_third},
+		#{recommend_fourth},#{recommend_fifth})
+	</insert>
+	<update id="update" parameterType="RecommendDto">
+		UPDATE RECOMMEND
+		SET RECOMMEND_FIRST = #{recommend_first},
+		RECOMMEND_SECOND = #{recommend_second},RECOMMEND_THIRD = #{recommend_third},
+		RECOMMEND_FOURTH = #{recommend_fourth},RECOMMEND_FIFTH = #{recommend_fifth}
+		WHERE MEMBER_NO = #{member_no}
+	</update>
+	<delete id="delete" parameterType="int">
+		DELETE FROM RECOMMEND
+		WHERE MEMBER_NO = #{member_no}
+	</delete>
 </mapper>
