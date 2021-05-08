@@ -485,6 +485,18 @@ response.setContentType("text/html; charset=UTF-8");
 									</span>
 								</div>
 							</div>
+							
+						<div class="general_signup_row">
+							<h4 class="general_signup_notify">캘린더 일정알림 수신여부</h4>
+							<div class="general_signup_notify">
+								<span class="general_signup_notify">
+									<input type="radio" name="member_notify" value="Y" >
+									수신
+									<input type="radio" name="member_notify" value="N" >
+									수신안함
+								</span>
+							</div>
+						</div>
 						<%-- 
 						<script type="text/javascript">
 							$("#addr_1").val("<%=addr[0]%>");
