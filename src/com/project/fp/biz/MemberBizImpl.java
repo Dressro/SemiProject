@@ -114,7 +114,7 @@ public class MemberBizImpl implements MemberBiz {
 	
 	@Override
 	public MemberDto selectOne(MemberDto dto) {
-		
+		System.out.println("selectOne");
 		MemberDto onedto = new MemberDto();
 		try {
 			dto.setMember_password(AES256_str.Encrypt(dto.getMember_password()));

@@ -198,11 +198,11 @@
 					<script type="text/javascript">
 						var naver_id_login = new naver_id_login(
 								"3FogXXVNeg3aYw15VPrY",
-								"http://localhost:8787/SemiProject/naver_callback.jsp");
+								"http://220.87.13.143:8787/SemiProject/naver_callback.jsp");
 						var state = naver_id_login.getUniqState();
 						naver_id_login.setButton("green", 10, 40);
 						naver_id_login
-								.setDomain("http://localhost:8787/SemiProject/login.jsp");
+								.setDomain("http://220.87.13.143:8787/SemiProject/naver_callback.jsp");
 						naver_id_login.setState(state);
 						//naver_id_login.setPopup();
 						naver_id_login.init_naver_id_login();
