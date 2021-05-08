@@ -15,6 +15,7 @@
 		<typeAlias type="com.project.fp.dto.HospitalDto" alias="HospitalDto" />
 		<typeAlias type="com.project.fp.dto.Lost_AnimalDto" alias="Lost_AnimalDto" />
 		<typeAlias type="com.project.fp.dto.MycalDto" alias="MycalDto" />
+		<typeAlias type="com.project.fp.dto.RecommendDto" alias="RecommendDto" />
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -40,5 +41,6 @@
 		<mapper resource="com/project/fp/db/ProjectFP-mapper_Product.xml"/>
 		<mapper resource="com/project/fp/db/ProjectFP-mapper_Lost_Animal.xml"/>
 		<mapper resource="com/project/fp/db/ProjectFP-mapper_Mycal.xml"/>
+		<mapper resource="com/project/fp/db/ProjectFP-mapper_Recommend.xml"/>
 	</mappers>
 </configuration>

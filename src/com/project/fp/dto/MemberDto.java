@@ -15,7 +15,7 @@ public class MemberDto {
 	private int member_point;
 	private String member_dr_info;
 	private String member_notify;
-
+	private String file_new_name;
 	public MemberDto() {
 	}
 
@@ -38,6 +38,34 @@ public class MemberDto {
 		this.member_notify = member_notify;
 	}
 
+
+	public MemberDto(String member_id, String member_password, String member_name, String member_nicname,
+			String member_email, String member_phone, String member_addr, String member_grade, String member_join,
+			String member_animal, int member_point, String member_dr_info, String member_notify, String file_new_name) {
+		super();
+		this.member_id = member_id;
+		this.member_password = member_password;
+		this.member_name = member_name;
+		this.member_nicname = member_nicname;
+		this.member_email = member_email;
+		this.member_phone = member_phone;
+		this.member_addr = member_addr;
+		this.member_grade = member_grade;
+		this.member_join = member_join;
+		this.member_animal = member_animal;
+		this.member_point = member_point;
+		this.member_dr_info = member_dr_info;
+		this.member_notify = member_notify;
+		this.file_new_name = file_new_name;
+	}
+
+	public String getFile_new_name() {
+		return file_new_name;
+	}
+
+	public void setFile_new_name(String file_new_name) {
+		this.file_new_name = file_new_name;
+	}
 
 	public String getMember_id() {
 		return member_id;

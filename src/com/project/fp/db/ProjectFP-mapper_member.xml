@@ -45,7 +45,8 @@
 		b.MEMBER_JOIN, b.MEMBER_ANIMAL,
 		b.MEMBER_POINT,
 		b.MEMBER_DR_INFO,
-		b.MEMBER_NOTIFY
+		b.MEMBER_NOTIFY,
+		b.file_new_name
 		FROM
 		(SELECT rownum as rnum
 		,a.MEMBER_ID,
@@ -54,20 +55,23 @@
 		a.MEMBER_PHONE, a.MEMBER_ADDR, a.MEMBER_GRADE,
 		a.MEMBER_JOIN, a.MEMBER_ANIMAL,
 		a.MEMBER_POINT, a.MEMBER_DR_INFO,
-		a.MEMBER_NOTIFY
+		a.MEMBER_NOTIFY, a.file_new_name
 		FROM(
-		SELECT MEMBER_ID,
-		MEMBER_PASSWORD, MEMBER_NAME,
-		MEMBER_NICNAME,
-		MEMBER_EMAIL,
-		MEMBER_PHONE, MEMBER_ADDR, MEMBER_GRADE,
-		MEMBER_JOIN, MEMBER_ANIMAL,
-		MEMBER_POINT, MEMBER_DR_INFO,
-		MEMBER_NOTIFY
-		FROM MEMBER
+		SELECT m.MEMBER_ID,
+		m.MEMBER_PASSWORD, m.MEMBER_NAME,
+		m.MEMBER_NICNAME,
+		m.MEMBER_EMAIL,
+		m.MEMBER_PHONE, m.MEMBER_ADDR, m.MEMBER_GRADE,
+		m.MEMBER_JOIN, m.MEMBER_ANIMAL,
+		m.MEMBER_POINT, m.MEMBER_DR_INFO,
+		m.MEMBER_NOTIFY, f.file_new_name
+		FROM MEMBER m, file_table f
 		WHERE MEMBER_GRADE = '전문의'
+		and m.member_id = f.member_id 
+		and f.board_no is null and f.ch_num is null
+		and f.animal_no is null and f.prod_num is null
 		ORDER BY
-		MEMBER_ID DESC)a
+		m.MEMBER_ID DESC)a
 		where
 		rownum <![CDATA[ <= ]]>
 		#{pageEnd})b
