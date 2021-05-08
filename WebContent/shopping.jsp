@@ -44,6 +44,18 @@
 	text-transform: uppercase;
 	margin-left: 5px;
 }
+#recommend_product{
+	width:1200px;
+	margin: 0 auto;
+	height: 400px;
+}
+.recommend_div{
+	width: 18%;
+	margin-left: 10px;
+	margin-right: 10px;
+	float: left;
+	border: 1px solid #dadada;
+}
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
@@ -86,6 +98,48 @@ function searchname() {
       
     </div>
 </div>
+<hr>
+<div id="recommend_product">
+	<div style="height: 50px;">
+		<h3>추천 상품</h3>
+	</div>
+	<div class="recommend_div">
+	 	<img class="card-img-top" src="resources/images/product/61.jfif" alt="shopimage">
+	<div class="card-body">
+	  					<p class="card-text" style="height:40px; width:20%;"><a href="#"></a></p>
+                        <p><fmt:formatNumber value="${dto.prod_price }" pattern="#,###.##"/>원
+	</div>
+	</div>
+	<div class="recommend_div">
+	 	<img class="card-img-top" src="resources/images/product/61.jfif" alt="shopimage">
+	<div class="card-body">
+	  					<p class="card-text" style="height:40px; width:20%;"><a href="#"></a></p>
+                        <p><fmt:formatNumber value="${dto.prod_price }" pattern="#,###.##"/>원
+	</div>
+	</div>
+	<div class="recommend_div">
+	 	<img class="card-img-top" src="resources/images/product/61.jfif" alt="shopimage">
+	<div class="card-body">
+	  					<p class="card-text" style="height:40px; width:20%;"><a href="#"></a></p>
+                        <p><fmt:formatNumber value="${dto.prod_price }" pattern="#,###.##"/>원
+	</div>
+	</div>
+	<div class="recommend_div">
+	 	<img class="card-img-top" src="resources/images/product/61.jfif" alt="shopimage">
+	<div class="card-body">
+	  					<p class="card-text" style="height:40px; width:20%;"><a href="#"></a></p>
+                        <p><fmt:formatNumber value="${dto.prod_price }" pattern="#,###.##"/>원
+	</div>
+	</div>
+	<div class="recommend_div">
+	 	<img class="card-img-top" src="resources/images/product/61.jfif" alt="shopimage">
+	<div class="card-body">
+	  					<p class="card-text" style="height:40px; width:20%;"><a href="#"></a></p>
+                        <p><fmt:formatNumber value="${dto.prod_price }" pattern="#,###.##"/>원
+	</div>
+	</div>
+</div>
+<hr>
 <section id="products">
     <div class="container">
     	
