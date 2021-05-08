@@ -118,7 +118,9 @@ public class MemberBizImpl implements MemberBiz {
 		MemberDto onedto = new MemberDto();
 		try {
 			dto.setMember_password(AES256_str.Encrypt(dto.getMember_password()));
+			System.out.println(dto);
 			onedto = dao.selectOne(dto);
+			System.out.println(onedto);
 			onedto.setMember_password(AES256_str.Decrypt(onedto.getMember_password()));
 			onedto.setMember_name(AES256_str.Decrypt(onedto.getMember_name()));
 			onedto.setMember_email(AES256_str.Decrypt(onedto.getMember_email()));
@@ -126,6 +128,7 @@ public class MemberBizImpl implements MemberBiz {
 			onedto.setMember_addr(AES256_str.Decrypt(onedto.getMember_addr()));
 			onedto.setMember_point(RSA_num.decryption(onedto.getMember_point()));
 			onedto.setMember_dr_info(AES256_str.Decrypt(onedto.getMember_dr_info()));
+			System.out.println(onedto);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

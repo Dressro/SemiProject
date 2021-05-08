@@ -450,6 +450,7 @@ public class SemiProjectController extends HttpServlet {
 				System.out.println("animal update 성공");
 			}
 			System.out.println(m_res);
+			System.out.println(dto);
 			MemberDto m_dto = m_biz.selectOne(dto);
 			session.setAttribute("dto", m_dto);
 			session.setMaxInactiveInterval(3600);
