@@ -195,6 +195,20 @@ public class SemiProjectController extends HttpServlet {
 			MemberDto m_dto = new MemberDto(member_id, member_password, member_name, member_nicname, member_email,
 					member_phone, member_addr, member_grade, "Y", member_animal, 0, member_dr_info, member_notify);
 			int m_res = m_biz.insert(m_dto);
+			List<ProductDto> p_list = p_biz.rank_list();
+			
+			for(int k=0;k<50;k++) {
+				System.out.println("DB 가져오는중...");
+			}
+				RecommendDto dto = new RecommendDto();
+				dto.setMember_id(member_id);
+				dto.setRecommend_first(p_list.get(0).getProd_num());
+				dto.setRecommend_second(p_list.get(1).getProd_num());
+				dto.setRecommend_third(p_list.get(2).getProd_num());
+				dto.setRecommend_fourth(p_list.get(3).getProd_num());
+				dto.setRecommend_fifth(p_list.get(4).getProd_num());
+				int re_res = re_biz.insert(dto);
+			
 			if (member_grade.equals("전문의")) {
 				String file_path = request.getSession().getServletContext().getRealPath("fileupload");
 
@@ -651,10 +665,31 @@ public class SemiProjectController extends HttpServlet {
 				nowPage = Integer.parseInt(request.getParameter("nowPage"));
 			}
 			String s_t = request.getParameter("s_t");
+			String member_id = request.getParameter("member_id");
 			if (s_t == null) {
 				int count = p_biz.count();
 				List<ProductDto> list = new ArrayList<ProductDto>();
 				PagingDto pdto = new PagingDto(count, nowPage);
+				RecommendDto re_dto = new RecommendDto();
+				re_dto.setMember_id(member_id);
+				RecommendDto dto = re_biz.selectOne(re_dto);
+				List<ProductDto> re_list = new ArrayList<ProductDto>();
+				for(int i=0;i<50;i++) {
+					System.out.println("DB 가져오는중...");
+				}
+				if(dto != null) {
+					ProductDto first = p_biz.selectOne(dto.getRecommend_first());
+					ProductDto second = p_biz.selectOne(dto.getRecommend_second());
+					ProductDto third = p_biz.selectOne(dto.getRecommend_third());
+					ProductDto fourth = p_biz.selectOne(dto.getRecommend_fourth());
+					ProductDto fifth = p_biz.selectOne(dto.getRecommend_fifth());
+					re_list.add(first);
+					re_list.add(second);
+					re_list.add(third);
+					re_list.add(fourth);
+					re_list.add(fifth);
+					request.setAttribute("re_list", re_list);
+				}
 				list = p_biz.prod_selectList(pdto);
 				request.setAttribute("BoardCommand", command);
 				request.setAttribute("list", list);
@@ -1345,10 +1380,7 @@ public class SemiProjectController extends HttpServlet {
 				ProductDto p_dto = p_biz.selectOne(prod_num);
 				int prod_stock = p_dto.getProd_stock();
 				prod_stock -= order_quantity;
-				int prod_out = p_dto.getProd_out();
-				prod_out += order_quantity;
 				p_dto.setProd_stock(prod_stock);
-				p_dto.setProd_out(prod_out);
 
 				int pr_res = p_biz.pay_update(p_dto);
 				if (pr_res > 0) {
@@ -1363,33 +1395,17 @@ public class SemiProjectController extends HttpServlet {
 				} else {
 					System.out.println("결제 후 주문 기록 실패");
 				}
-				
-				
-				int o_g = o_t_biz.selectMaxGroup() + 1;
-				o_dto.setOrder_group(o_g);
-				int g_res = o_t_biz.update_group_pay(o_dto);
-				if (g_res > 0) {
-					System.out.println("주문 그룹 변경 성공");
-				} else {
-					System.out.println("주문 그룹 변경 실패");
-				}
-				
 				response.sendRedirect("semi.do?command=shopping_detail&prod_num=" + prod_num);
 			} else {
 				List<Order_TableDto> o_list = (List<Order_TableDto>) session.getAttribute("o_list");
 				int prod_num = 0;
 				int order_quantity = 0;
-				int prod_out = 0;
 				int prod_stock = 0;
 				int order_num = 0;
 				int pr_res = 0;
 				int o_res = 0;
 				int pr_count = 0;
 				int o_count = 0;
-				int o_g = o_t_biz.selectMaxGroup() + 1;
-				int g_res = 0;
-				int g_count = 0;
-				
 				for (Order_TableDto o_dto : o_list) {
 					pr_res = 0;
 					o_res = 0;
@@ -1397,12 +1413,9 @@ public class SemiProjectController extends HttpServlet {
 					prod_num = o_dto.getProd_num();
 					order_quantity = o_dto.getOrder_quantity();
 					ProductDto p_dto = p_biz.selectOne(prod_num);
-					prod_out = p_dto.getProd_out();
-					prod_out += order_quantity;
 					prod_stock = p_dto.getProd_stock();
 					prod_stock -= order_quantity;
 					p_dto.setProd_stock(prod_stock);
-					p_dto.setProd_out(prod_out);
 
 					pr_res = p_biz.pay_update(p_dto);
 					if (pr_res > 0) {
@@ -1420,15 +1433,6 @@ public class SemiProjectController extends HttpServlet {
 						System.out.println("주문 기록 수정 실패 - " + o_count);
 					}
 					o_count++;
-					
-					o_dto.setOrder_group(o_g);
-					g_res = o_t_biz.update_group_pay(o_dto);
-					if (g_res > 0) {
-						System.out.println("주문 그룹 변경 성공 - "  + g_count);
-					} else {
-						System.out.println("주문 그룹 변경 실패 - "  + g_count);
-					}
-					g_count++;
 				}
 
 				MemberDto m_dto = (MemberDto) session.getAttribute("dto");
@@ -1776,21 +1780,24 @@ public class SemiProjectController extends HttpServlet {
 			m_dto.setCal_content(cal_content);
 			m_c_biz.updateCal(m_dto);
 		} else if (command.equals("recommend")) {
-			List<MemberDto> list = m_biz.selectList();
-			int res = 0;
-			for(int k=0;k<50;k++) {
-				System.out.println("DB 가져오는중...");
-			}
-			for(int i=0;i<list.size();i++) {
-				RecommendDto dto = new RecommendDto();
-				dto.setMember_id(list.get(i).getMember_id());
-				int re_res = re_biz.insertRec(dto);
-				res += re_res;
-			}
-			if(res > 0) {
-				jsResponse(response, "성공", "adminpage.jsp");
-			}else {
-				jsResponse(response, "실패", "adminpage.jsp");
+			List<MemberDto> m_list = m_biz.selectList();
+			try {
+				int res = 0;
+				List<RecommendDto> list = recommend(m_list.size());
+				for(RecommendDto dto : list) {
+					System.out.println(dto);
+					int re_res = re_biz.update(dto);
+					res += re_res;
+				}
+				if(res > 0) {
+					jsResponse(response, "성공", "semi.do?command=adminpage");
+				}else {
+					jsResponse(response, "실패", "semi.do?command=adminpage");
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (TasteException e) {
+				e.printStackTrace();
 			}
 		}
 
@@ -1873,26 +1880,53 @@ public class SemiProjectController extends HttpServlet {
 		}
 		return null;
 	}
-	private String recommend(int count) throws IOException, TasteException {
-		DataModel dm = new FileDataModel(new File("./src/result.csv"));
-		
-		UserSimilarity sim = new PearsonCorrelationSimilarity(dm);
-		
-		UserNeighborhood neighborhood = new ThresholdUserNeighborhood(0.1, sim, dm);
-		
-		UserBasedRecommender recommender = new GenericUserBasedRecommender(dm, neighborhood, sim);
-		
-		int x=1;
-		
-		for(LongPrimitiveIterator users = dm.getUserIDs(); users.hasNext();) {
-			long userId = users.nextLong();
-			List<RecommendedItem> recommendations = recommender.recommend(userId, 5);
-			for(RecommendedItem recommenation:recommendations) {
-				System.out.println(userId+","+recommenation.getItemID()+","+recommenation.getValue());
-			}
-			
-			if(++x > count) break;
-		}
-		return null;
+	private List<RecommendDto> recommend(int count) throws IOException, TasteException {
+		  ProductBiz p_biz = new ProductBizImpl();
+	      DataModel dm = new FileDataModel(new File("result.csv"));
+	      UserSimilarity sim = new PearsonCorrelationSimilarity(dm);
+	      UserNeighborhood neighborhood = new ThresholdUserNeighborhood(0.1, sim, dm);
+	      UserBasedRecommender recommender = new GenericUserBasedRecommender(dm, neighborhood, sim);
+	      int x=1;
+	      List<RecommendDto> list = new ArrayList<RecommendDto>();
+	      List<ProductDto> p_list = p_biz.rank_list();
+	      for(LongPrimitiveIterator users = dm.getUserIDs(); users.hasNext();) {
+	         long userId = users.nextLong();
+	         List<RecommendedItem> recommendations = recommender.recommend(userId, 5);
+	            if(recommendations.size() != 0) {
+	                 RecommendDto dto = new RecommendDto();
+	                 	dto.setMember_no((int)userId);
+	                 for(int i=0;i<recommendations.size();i++) {
+	                       switch(i) {
+	                          case 0:
+	                        	  dto.setRecommend_first((int)recommendations.get(0).getItemID());
+	                        	  break;
+	                          case 1:
+	                        	  dto.setRecommend_second((int)recommendations.get(1).getItemID());	 
+	                        	  break;
+	                          case 2:
+	                        	  dto.setRecommend_third((int)recommendations.get(2).getItemID());
+	                        	  break;
+	                          case 3:
+	                        	  dto.setRecommend_fourth((int)recommendations.get(3).getItemID());
+	                        	  break;
+	                          case 4:
+	                        	  dto.setRecommend_fifth((int)recommendations.get(4).getItemID());
+	                        	  break;
+	                       }
+	                  }
+	              list.add(dto);
+	         }
+	         if(++x > count) break;
+	      }
+	      return list;
+	   }
+
+	@Override
+	public String toString() {
+		return "SemiProjectController [getInitParameterNames()=" + getInitParameterNames() + ", getServletConfig()="
+				+ getServletConfig() + ", getServletContext()=" + getServletContext() + ", getServletInfo()="
+				+ getServletInfo() + ", getServletName()=" + getServletName() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 	}
+	
 }

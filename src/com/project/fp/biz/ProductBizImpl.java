@@ -140,4 +140,11 @@ public class ProductBizImpl implements ProductBiz {
 		return dao.product_all_search(Pdto);
 	}
 
+
+	@Override
+	public List<ProductDto> rank_list() {
+		// TODO Auto-generated method stub
+		return dao.rank_list();
+	}
+
 }

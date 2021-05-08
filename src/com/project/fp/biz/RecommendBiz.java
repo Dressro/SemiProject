@@ -6,5 +6,7 @@ import com.project.fp.dto.RecommendDto;
 
 public interface RecommendBiz {
 	
-	public int insertRec(RecommendDto dto);
+	public int insert(RecommendDto dto);
+	public RecommendDto selectOne(RecommendDto dto);
+	public int update(RecommendDto dto);
 }

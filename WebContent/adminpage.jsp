@@ -152,7 +152,7 @@ $(function(){
       <li><a class="adminmenu" href="javascript:adminpage_2();">전체주문조회</a></li>
       <li><a class="adminmenu" href="javascript:adminpage_3();">게시글관리</a></li>
      <li><a class="adminmenu" href="javascript:adminpage_4();">상품관리</a></li>
-     <li><a class="adminmenu" href="semi.do?command=recommend">상품추천</a></li>
+     <li><a class="adminmenu" href="semi.do?command=recommend">고객상품추천</a></li>
     </ul>
   </nav>
   
