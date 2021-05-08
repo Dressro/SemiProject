@@ -6,9 +6,20 @@ public class Lost_AnimalDto {
 	private double lost_lat;
 	private double lost_lng;
 	private int board_no;
-
+	private String file_new_name;
 	public Lost_AnimalDto() {
 	}
+	
+	
+	public Lost_AnimalDto(int lost_no, double lost_lat, double lost_lng, int board_no, String file_new_name) {
+		super();
+		this.lost_no = lost_no;
+		this.lost_lat = lost_lat;
+		this.lost_lng = lost_lng;
+		this.board_no = board_no;
+		this.file_new_name = file_new_name;
+	}
+
 
 	public Lost_AnimalDto(int lost_no, double lost_lat, double lost_lng, int board_no) {
 		super();
@@ -17,6 +28,17 @@ public class Lost_AnimalDto {
 		this.lost_lng = lost_lng;
 		this.board_no = board_no;
 	}
+	
+	
+	public String getFile_new_name() {
+		return file_new_name;
+	}
+
+
+	public void setFile_new_name(String file_new_name) {
+		this.file_new_name = file_new_name;
+	}
+
 
 	public int getLost_no() {
 		return lost_no;

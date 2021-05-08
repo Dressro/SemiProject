@@ -88,8 +88,17 @@ CREATE TABLE MEMBER(
 	CONSTRAINT MEMBER_MEMBER_ANIMAL_CHK CHECK(MEMBER_ANIMAL IN ('Y', 'N')),
 	CONSTRAINT MEMBER_MEMBER_NOTIFY_CHK CHECK(MEMBER_NOTIFY IN ('Y', 'N'))
 );
+select * from order_table;
+SELECT o.ORDER_NUM, o.ORDER_DATE, o.ORDER_QUANTITY, o.ORDER_PRICE, o.ORDER_STEP, o.ORDER_PAY, o.order_group,o.prod_num, p.PROD_NAME, o.MEMBER_ID,f.file_new_name
+		FROM ORDER_TABLE o, product p, file_table f
+		WHERE o.MEMBER_ID = 'ks12'
+		and o.prod_num = p.prod_num
+		and p.prod_num = f.prod_num
+		and o.order_step != '미결제'
+		order by o.order_num desc;
+update order_table set order_step='결제완료',order_group='1' where order_num = '2';
 alter sequence PRODUCT_NUM_SEQ increment by +1;
-
+select * from member;
 CREATE TABLE BOARD(
 	BOARD_NO NUMBER PRIMARY KEY,
 	BOARD_FREE_NO NUMBER,
@@ -192,7 +201,9 @@ CREATE TABLE FILE_TABLE(
 alter table file_table add prod_num number;
 alter table file_table add constraint FILE_TABLE_PROD_NUM FOREIGN KEY (PROD_NUM) REFERENCES PRODUCT(PROD_NUM); 
 select * from order_table;
-delete from order_table where order_num !='6';
+select * from board;
+delete from board where board_no ='4';
+select * from lost_animal
 select * from file_table; where member_id = 'test' and ch_num is null;
 CREATE TABLE BOARD_REPLY (
 	REPLY_NO NUMBER PRIMARY KEY,
@@ -214,7 +225,6 @@ CREATE TABLE HOSPITAL(
 	HOSPITAL_ADDR VARCHAR2(500) NOT NULL,
 	HOSPITAL_PHONE VARCHAR2(100)
 );
-
 CREATE TABLE LOST_ANIMAL(
 	LOST_NO NUMBER PRIMARY KEY,
 	LOST_LAT NUMBER NOT NULL,
@@ -222,7 +232,8 @@ CREATE TABLE LOST_ANIMAL(
 	BOARD_NO NUMBER NOT NULL,
 	CONSTRAINT LOST_ANIMAL_BOARD_NO_FK FOREIGN KEY (BOARD_NO) REFERENCES BOARD (BOARD_NO)
 );
-
+select * from lost_animal;
+delete from lost_animal where lost_no='1';
 CREATE TABLE MYCAL(
 	CAL_NO NUMBER PRIMARY KEY,
 	CAL_TITLE VARCHAR2(1000) NOT NULL,

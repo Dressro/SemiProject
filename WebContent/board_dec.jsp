@@ -96,9 +96,8 @@ a {
 			// 지도를 생성합니다    
 			var map = new kakao.maps.Map(mapContainer, mapOption);
 			
-			<c:set var="count" value="1" />
 			<c:forEach items="${l_list }" var="l_dto">
-			var imageSrc = 'resources/images/pet/${count}.jpg', // 마커이미지의 주소입니다    
+			var imageSrc = 'fileupload/${l_dto.file_new_name}', // 마커이미지의 주소입니다    
 		    imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
 		    imageOption = {offset: new kakao.maps.Point(27, 69)};
 			
@@ -136,7 +135,6 @@ a {
 			      // 마커 위에 인포윈도우를 표시합니다
 			      infowindow.open(map, marker);  
 			});
-			<c:set var="count" value="${count+1}"/> 
 			</c:forEach>
 		</script>
 

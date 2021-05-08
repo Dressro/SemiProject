@@ -346,7 +346,7 @@ response.setContentType("text/html; charset=UTF-8");
 							<c:forEach items="${list }" var="dto">
 								<li class="order_list">
 									<div class="order_img_div">
-										<img class="order_img" src="resources/images/product/${dto.prod_num }.jfif" alt="shopimage">
+										<img class="order_img" src="fileupload/${dto.file_new_name }" alt="shopimage">
 									</div>
 									<div class="order_info">
 										<span class="order_info_num">${dto.order_num }</span>
