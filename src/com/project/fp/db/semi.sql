@@ -337,14 +337,14 @@ SELECT  board_no
 		order by board_no desc
 select * from member;
 --실종신고 위치 정보 받아오기
-
 --마이페이지 캘린더
+delete from member where member_id = 'gg'
 delete from product where prod_num = '27';
 select * from product;
 alter sequence PRODUCT_NUM_SEQ increment by -1;
 select * from order_table o, product p 
 select * from file_table;
-
+update product set prod_out = '1' , prod_outdate = sysdate where prod_num = '40';
 CREATE TABLE RECOMMEND(
 	MEMBER_NO NUMBER PRIMARY KEY,
 	MEMBER_ID VARCHAR2(500) NOT NULL,
@@ -360,4 +360,4 @@ CREATE TABLE RECOMMEND(
 	CONSTRAINT RECOMMEND_RECOMMEND_FOU_FK FOREIGN KEY (RECOMMEND_FOURTH) REFERENCES PRODUCT (PROD_NUM),
 	CONSTRAINT RECOMMEND_RECOMMEND_FIF_FK FOREIGN KEY (RECOMMEND_FIFTH) REFERENCES PRODUCT (PROD_NUM)
 );
-
+select * from recommend;

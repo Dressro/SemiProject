@@ -2,6 +2,7 @@ package com.project.fp.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.mahout.cf.taste.common.TasteException;
@@ -16,6 +17,8 @@ import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.apache.mahout.cf.taste.recommender.UserBasedRecommender;
 import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 
+import com.project.fp.dto.RecommendDto;
+
 
 public class Recommand {
 
@@ -29,14 +32,13 @@ public class Recommand {
 		UserBasedRecommender recommender = new GenericUserBasedRecommender(dm, neighborhood, sim);
 		
 		int x=1;
-		
 		for(LongPrimitiveIterator users = dm.getUserIDs(); users.hasNext();) {
 			long userId = users.nextLong();
-			List<RecommendedItem> recommendations = recommender.recommend(userId, 5);
+			List<RecommendedItem> recommendations = recommender.recommend(userId, 10);
 			for(RecommendedItem recommenation:recommendations) {
-				System.out.println(userId+","+recommenation.getItemID());
+				System.out.println(userId+","+recommenation.getItemID()+","+recommenation.getValue());
 			}
-			
+
 			if(++x > 20) break;
 		}
 	}

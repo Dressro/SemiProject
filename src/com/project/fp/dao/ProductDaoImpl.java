@@ -295,5 +295,12 @@ public class ProductDaoImpl extends SqlMapConfig implements ProductDao {
 		return list;
 	}
 	
-
+	@Override
+	public List<ProductDto> rank_list() {
+		List<ProductDto> list = new ArrayList<ProductDto>();
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace + "rank_list");
+		}
+		return list;
+	}
 }

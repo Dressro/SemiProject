@@ -63,6 +63,12 @@ public class RecommendDto {
 	public void setRecommend_fifth(int recommend_fifth) {
 		this.recommend_fifth = recommend_fifth;
 	}
+	@Override
+	public String toString() {
+		return "RecommendDto [member_no=" + member_no + ", member_id=" + member_id + ", recommend_first="
+				+ recommend_first + ", recommend_second=" + recommend_second + ", recommend_third=" + recommend_third
+				+ ", recommend_fourth=" + recommend_fourth + ", recommend_fifth=" + recommend_fifth + "]";
+	}
 	
 	
 }

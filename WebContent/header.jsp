@@ -103,7 +103,7 @@ if (dto == null) {
 					<li><a href="semi.do?command=board_free">자유게시판</a>
 					<li><a href="semi.do?command=animal_hospital">동물병원검색</a>
 					<li><a href="semi.do?command=board_dec">실종신고</a>
-					<li><a href="semi.do?command=shopping">쇼핑</a>
+					<li><a href="semi.do?command=shopping&member_id=<%=dto.getMember_id()%>">쇼핑</a>
 					<li><a href="semi.do?command=board_qna">상품문의</a>
 					<li><a href="semi.do?command=mypage&member_id=<%=dto.getMember_id()%>">마이페이지</a>
 					<li><a href="semi.do?command=basket_list&member_id=<%=dto.getMember_id()%>">장바구니</a>

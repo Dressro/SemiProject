@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.project.fp.recommend">
+	
 	<select id="selectList" resultType="RecommendDto">
 		SELECT MEMBER_NO,MEMBER_ID,
 		RECOMMEND_FIRST,RECOMMEND_SECOND,RECOMMEND_THIRD,
@@ -14,7 +15,6 @@
 		RECOMMEND_FOURTH,RECOMMEND_FIFTH
 		FROM RECOMMEND
 		WHERE MEMBER_ID = #{member_id}
-		ORDER BY MEMBER_NO
 	</select>
 	<insert id="insert" parameterType="RecommendDto">
 		INSERT INTO RECOMMEND

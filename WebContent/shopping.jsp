@@ -30,7 +30,7 @@
 }
 #mobile-filter{
 	width: 100%;
-	height: 100px;
+	height: 50px;
 }
 .s-btn {
 	border: none;
@@ -78,7 +78,7 @@ function searchname() {
 		<nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom"> <a class="navbar-brand ml-2 font-weight-bold" href="#">MENU</a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor" aria-controls="navbarColor" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
     <div class="collapse navbar-collapse" id="navbarColor">
         <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link" href="semi.do?command=shopping">Home</a> </li>
+            <li class="nav-item"><a class="nav-link" href="semi.do?command=shopping<%if(dto!=null){%>&member_id=<%=dto.getMember_id()%><%}%>">Home</a> </li>
         </ul>
     </div>
  		<input id="search" type="text" class="search_text" value="" placeholder="상품명을 입력하세요" style="width:200px; float: right;"/>
@@ -99,58 +99,35 @@ function searchname() {
     </div>
 </div>
 <hr>
-<div id="recommend_product">
-	<div style="height: 50px;">
-		<h3>추천 상품</h3>
-	</div>
-	<div class="recommend_div">
-	 	<img class="card-img-top" src="resources/images/product/61.jfif" alt="shopimage">
-	<div class="card-body">
-	  					<p class="card-text" style="height:40px; width:20%;"><a href="#"></a></p>
-                        <p><fmt:formatNumber value="${dto.prod_price }" pattern="#,###.##"/>원
-	</div>
-	</div>
-	<div class="recommend_div">
-	 	<img class="card-img-top" src="resources/images/product/61.jfif" alt="shopimage">
-	<div class="card-body">
-	  					<p class="card-text" style="height:40px; width:20%;"><a href="#"></a></p>
-                        <p><fmt:formatNumber value="${dto.prod_price }" pattern="#,###.##"/>원
-	</div>
-	</div>
-	<div class="recommend_div">
-	 	<img class="card-img-top" src="resources/images/product/61.jfif" alt="shopimage">
-	<div class="card-body">
-	  					<p class="card-text" style="height:40px; width:20%;"><a href="#"></a></p>
-                        <p><fmt:formatNumber value="${dto.prod_price }" pattern="#,###.##"/>원
-	</div>
-	</div>
-	<div class="recommend_div">
-	 	<img class="card-img-top" src="resources/images/product/61.jfif" alt="shopimage">
-	<div class="card-body">
-	  					<p class="card-text" style="height:40px; width:20%;"><a href="#"></a></p>
-                        <p><fmt:formatNumber value="${dto.prod_price }" pattern="#,###.##"/>원
-	</div>
-	</div>
-	<div class="recommend_div">
-	 	<img class="card-img-top" src="resources/images/product/61.jfif" alt="shopimage">
-	<div class="card-body">
-	  					<p class="card-text" style="height:40px; width:20%;"><a href="#"></a></p>
-                        <p><fmt:formatNumber value="${dto.prod_price }" pattern="#,###.##"/>원
-	</div>
-	</div>
-</div>
-<hr>
 <section id="products">
     <div class="container">
     	
         <div class="row">
+<%if(request.getAttribute("re_list") != null){ %>        
+        <div style="width:100%; height: 50px;">
+		<h3>추천 상품</h3>
+		</div>
+		<c:forEach items="${re_list }" var="re_dto"> 
+		<div class="col-2 col-sm-2 col-11 offset-sm-0 offset-1" style="margin: 0px 14px;">
+		<div class="card"><a href="semi.do?command=shopping_detail&prod_num=${re_dto.prod_num }"><img class="card-img-top" src="fileupload/${re_dto.file_new_name }" alt="shopimage"></a>
+		<div class="card-body">
+                        <p><fmt:formatNumber value="${re_dto.prod_price }" pattern="#,###.##"/>원
+		</div>
+		</div>
+		</div>
+		</c:forEach>
+		
+		
+<%} %>		
+		<div style="width:100%; height: 50px; margin: 30px;">
+		<h3>상품</h3>
+		</div>
 		<c:forEach items="${list }" var="dto"> 
             <div class="col-lg-3 col-sm-4 col-11 offset-sm-0 offset-1">
                 <div class="card"> <img class="card-img-top" src="fileupload/${dto.file_new_name }" alt="shopimage">
-                
                     <div class="card-body">
                         <p class="card-text" style="height:40px;"><a href="semi.do?command=shopping_detail&prod_num=${dto.prod_num }">${dto.prod_name }</a></p>
-                        <p><fmt:formatNumber value="${dto.prod_price }" pattern="#,###.##"/>원
+                        <p><fmt:formatNumber value="${dto.prod_price }" pattern="#,###.##"/>원</p>
                     </div>
                 </div>
             </div>

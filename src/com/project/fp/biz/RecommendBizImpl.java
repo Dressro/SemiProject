@@ -11,9 +11,21 @@ public class RecommendBizImpl implements RecommendBiz {
 	private RecommendDao dao = new RecommendDaoImpl();
 
 	@Override
-	public int insertRec(RecommendDto dto) {
+	public int insert(RecommendDto dto) {
 		// TODO Auto-generated method stub
-		return dao.insertRec(dto);
+		return dao.insert(dto);
+	}
+
+	@Override
+	public RecommendDto selectOne(RecommendDto dto) {
+		// TODO Auto-generated method stub
+		return dao.selectOne(dto);
+	}
+
+	@Override
+	public int update(RecommendDto dto) {
+		// TODO Auto-generated method stub
+		return dao.update(dto);
 	}
 
 	
