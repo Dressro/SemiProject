@@ -4,8 +4,9 @@
 <mapper namespace="com.project.fp.lost_animal">
 
 	<select id="selectList" resultType="Lost_AnimalDto">
-		SELECT LOST_NO, LOST_LAT, LOST_LNG, BOARD_NO
-		FROM LOST_ANIMAL
+		SELECT l.LOST_NO, l.LOST_LAT, l.LOST_LNG, l.BOARD_NO,f.file_new_name
+		FROM LOST_ANIMAL l, FILE_TABLE f
+		where l.board_no = f.board_no
 	</select>
 	
 	<select id="selectOne" resultType="Lost_AnimalDto" parameterType="int">

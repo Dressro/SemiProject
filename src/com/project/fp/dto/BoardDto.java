@@ -19,10 +19,36 @@ public class BoardDto {
 	private String board_delflag;
 	private String board_category;
 	private String member_id;
-
+	private String file_new_name;
+	
 	public BoardDto() {
 
 	}
+	
+	
+	public BoardDto(int board_no, int board_free_no, int board_notice_no, int board_qna_no, int board_dec_no,
+			String board_title, String board_content, Date board_regdate, int board_readcount, int board_groupno,
+			int board_groupseq, int board_titletab, String board_delflag, String board_category, String member_id,
+			String file_new_name) {
+		super();
+		this.board_no = board_no;
+		this.board_free_no = board_free_no;
+		this.board_notice_no = board_notice_no;
+		this.board_qna_no = board_qna_no;
+		this.board_dec_no = board_dec_no;
+		this.board_title = board_title;
+		this.board_content = board_content;
+		this.board_regdate = board_regdate;
+		this.board_readcount = board_readcount;
+		this.board_groupno = board_groupno;
+		this.board_groupseq = board_groupseq;
+		this.board_titletab = board_titletab;
+		this.board_delflag = board_delflag;
+		this.board_category = board_category;
+		this.member_id = member_id;
+		this.file_new_name = file_new_name;
+	}
+
 
 	public BoardDto(int board_no, int board_free_no, int board_notice_no, int board_qna_no, int board_dec_no,
 			String board_title, String board_content, Date board_regdate, int board_readcount, int board_groupno,
@@ -44,6 +70,17 @@ public class BoardDto {
 		this.board_category = board_category;
 		this.member_id = member_id;
 	}
+
+	
+	public String getFile_new_name() {
+		return file_new_name;
+	}
+
+
+	public void setFile_new_name(String file_new_name) {
+		this.file_new_name = file_new_name;
+	}
+
 
 	public int getBoard_no() {
 		return board_no;

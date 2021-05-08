@@ -11,10 +11,11 @@
 		ORDER BY ORDER_NUM DESC
 	</select>
 	<select id="mypageList" parameterType="String" resultType="Order_TableDto">
-		SELECT o.ORDER_NUM, o.ORDER_DATE, o.ORDER_QUANTITY, o.ORDER_PRICE, o.ORDER_STEP, o.ORDER_PAY, o.order_group,o.prod_num, p.PROD_NAME, o.MEMBER_ID
-		FROM ORDER_TABLE o, product p
+		SELECT o.ORDER_NUM, o.ORDER_DATE, o.ORDER_QUANTITY, o.ORDER_PRICE, o.ORDER_STEP, o.ORDER_PAY, o.order_group,o.prod_num, p.PROD_NAME, o.MEMBER_ID,f.file_new_name
+		FROM ORDER_TABLE o, product p, file_table f
 		WHERE o.MEMBER_ID = #{member_id}
 		and o.prod_num = p.prod_num
+		and p.prod_num = f.prod_num
 		and o.order_step != '미결제'
 		order by o.order_num desc
 	</select>

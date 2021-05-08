@@ -104,7 +104,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 							<h5>엔젤스독 전연령5kg 강아지사료</h5>
 							<div class="price">12600원</div>
 							<%if(dto!=null){ %>
-							<a href="semi.do?command=shopping_detail&prod_num=23" class="cart-btn">Add to cart</a>
+							<a href="semi.do?command=shopping_detail&prod_num=1" class="cart-btn">Add to cart</a>
 							<%} %>
 						</div>
 					</div>
@@ -117,7 +117,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 							<h5>강아지 바르는치약 구강 청결제</h5>
 							<div class="price">11700원</div>
 							<%if(dto!=null){ %>
-							<a href="semi.do?command=shopping_detail&prod_num=29" class="cart-btn">Add to cart</a>
+							<a href="semi.do?command=shopping_detail&prod_num=7" class="cart-btn">Add to cart</a>
 							<%} %>
 						</div>
 					</div>
@@ -131,7 +131,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 							<h5>리터박스 고양이 대형화장실 집</h5>
 							<div class="price">30500원</div>
 							<%if(dto!=null){ %>
-							<a href="semi.do?command=shopping_detail&prod_num=32" class="cart-btn">Add to cart</a>
+							<a href="semi.do?command=shopping_detail&prod_num=10" class="cart-btn">Add to cart</a>
 							<%} %>
 						</div>
 					</div>
@@ -145,7 +145,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 							<h5>로얄캐닌인도어4kg 고양이사료</h5>
 							<div class="price">46910원</div>
 							<%if(dto!=null){ %>
-							<a href="semi.do?command=shopping_detail&prod_num=26" class="cart-btn">Add to cart</a>
+							<a href="semi.do?command=shopping_detail&prod_num=4" class="cart-btn">Add to cart</a>
 							<%} %>
 						</div>
 					</div>
@@ -158,7 +158,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 							<h5>셀프치카봉 강아지 고양이 셀프</h5>
 							<div class="price">8720원</div>
 							<%if(dto!=null){ %>
-							<a href="semi.do?command=shopping_detail&prod_num=27" class="cart-btn">Add to cart</a>
+							<a href="semi.do?command=shopping_detail&prod_num=5" class="cart-btn">Add to cart</a>
 							<%} %>
 						</div>
 					</div>
@@ -171,7 +171,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 							<h5>강아지 고양이 옷 귀여운 토끼</h5>
 							<div class="price">6900원</div>
 							<%if(dto!=null){ %>
-							<a href="semi.do?command=shopping_detail&prod_num=33" class="cart-btn">Add to cart</a>
+							<a href="semi.do?command=shopping_detail&prod_num=11" class="cart-btn">Add to cart</a>
 							<%} %>
 						</div>
 					</div>
@@ -184,7 +184,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 							<h5>요세라 그레인프리 캣 2kg</h5>
 							<div class="price">36220원</div>
 							<%if(dto!=null){ %>
-							<a href="semi.do?command=shopping_detail&prod_num=25" class="cart-btn">Add to cart</a>
+							<a href="semi.do?command=shopping_detail&prod_num=3" class="cart-btn">Add to cart</a>
 							<%} %>
 						</div>
 					</div>
@@ -198,7 +198,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 							<h5>켄코케어 강아지 손가락칫솔</h5>
 							<div class="price">7200원</div>
 							<%if(dto!=null){ %>
-							<a href="semi.do?command=shopping_detail&prod_num=30" class="cart-btn">Add to cart</a>
+							<a href="semi.do?command=shopping_detail&prod_num=8" class="cart-btn">Add to cart</a>
 							<%} %>
 						</div>
 					</div>
@@ -212,7 +212,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 							<h5>고양이 벤토나이트 모래9kg</h5>
 							<div class="price">34870원</div>
 							<%if(dto!=null){ %>
-							<a href="semi.do?command=shopping_detail&prod_num=31" class="cart-btn">Add to cart</a>
+							<a href="semi.do?command=shopping_detail&prod_num=9" class="cart-btn">Add to cart</a>
 							<%} %>
 						</div>
 					</div>
@@ -226,7 +226,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 							<h5>트루라인 도그 피쉬 2kg사료	</h5>
 							<div class="price">37000원</div>
 							<%if(dto!=null){ %>
-							<a href="semi.do?command=shopping_detail&prod_num=24" class="cart-btn">Add to cart</a>
+							<a href="semi.do?command=shopping_detail&prod_num=2" class="cart-btn">Add to cart</a>
 							<%} %>
 						</div>
 					</div>
@@ -239,7 +239,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 							<h5>고양이 훈련용 분리불안해소</h5>
 							<div class="price">9900원</div>
 							<%if(dto!=null){ %>
-							<a href="semi.do?command=shopping_detail&prod_num=28" class="cart-btn">Add to cart</a>
+							<a href="semi.do?command=shopping_detail&prod_num=6" class="cart-btn">Add to cart</a>
 							<%} %>
 						</div>
 					</div>
@@ -253,7 +253,7 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 							<h5>펫스츄리 강아지 앞섬방지 고리</h5>
 							<div class="price">14800원</div>
 							<%if(dto!=null){ %>
-							<a href="semi.do?command=shopping_detail&prod_num=34" class="cart-btn">Add to cart</a>
+							<a href="semi.do?command=shopping_detail&prod_num=12" class="cart-btn">Add to cart</a>
 							<%} %>
 						</div>
 					</div>
@@ -349,12 +349,11 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 				</div>
 			</div>
 			<div class="row">
-			<c:set var="count" value="1" />
 				<c:forEach items="${l_list }" var="dto">
 				<div class="col-lg-4 col-md-6">
 					<div class="blog__item">
 						<div class="blog__item__pic">
-							<a href="semi.do?command=dec_detail&board_no=${dto.board_no }"><img src="resources/images/pet/${count }.jpg" alt="" style="height: 293px;"></a>
+							<a href="semi.do?command=dec_detail&board_no=${dto.board_no }"><img src="fileupload/${dto.file_new_name }" alt="" style="height: 293px;"></a>
 						</div>
 						<div class="blog__item__text">
 							<div class="label">
@@ -365,7 +364,6 @@ MemberDto dto = (MemberDto) session.getAttribute("dto");
 						</div>
 					</div>
 				</div>
-				<c:set var="count" value="${count + 1}" />
 				</c:forEach>
 			</div>
 		</div>

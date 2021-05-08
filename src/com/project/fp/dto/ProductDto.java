@@ -18,8 +18,30 @@ public class ProductDto {
 	private Date prod_outdate;
 	private String prod_mfr;
 	private String prod_client;
+	private String file_new_name;
 	
 	public ProductDto() {
+	}
+
+	public ProductDto(int prod_num, String prod_name, String prod_explain, int prod_sale, int prod_price,
+			int prod_recomm, int prod_stock, String prod_category, int prod_in, int prod_out, Date prod_indate,
+			Date prod_outdate, String prod_mfr, String prod_client, String file_ori_name) {
+		super();
+		this.prod_num = prod_num;
+		this.prod_name = prod_name;
+		this.prod_explain = prod_explain;
+		this.prod_sale = prod_sale;
+		this.prod_price = prod_price;
+		this.prod_recomm = prod_recomm;
+		this.prod_stock = prod_stock;
+		this.prod_category = prod_category;
+		this.prod_in = prod_in;
+		this.prod_out = prod_out;
+		this.prod_indate = prod_indate;
+		this.prod_outdate = prod_outdate;
+		this.prod_mfr = prod_mfr;
+		this.prod_client = prod_client;
+		this.file_new_name = file_new_name;
 	}
 
 	public ProductDto(int prod_num, String prod_name, String prod_explain, int prod_sale, int prod_price, int prod_recomm,
@@ -39,6 +61,15 @@ public class ProductDto {
 		this.prod_outdate = prod_outdate;
 		this.prod_mfr = prod_mfr;
 		this.prod_client = prod_client;
+	}
+	
+
+	public String getFile_new_name() {
+		return file_new_name;
+	}
+
+	public void setFile_new_name(String file_new_name) {
+		this.file_new_name = file_new_name;
 	}
 
 	public int getProd_num() {

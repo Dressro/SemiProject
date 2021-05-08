@@ -71,15 +71,16 @@
 		SELECT
 		A.board_no,A.board_free_no,A.board_notice_no,A.board_qna_no,A.board_dec_no,
 		A.board_title,A.board_content,A.board_regdate,A.board_readcount,
-		A.board_groupno,A.board_groupseq,A.board_titletab,A.member_id
+		A.board_groupno,A.board_groupseq,A.board_titletab,A.member_id,A.file_new_name
 		FROM (
 		SELECT
 		b.board_no,b.board_free_no,b.board_notice_no,b.board_qna_no,b.board_dec_no,
 		b.board_title,b.board_content,b.board_regdate,b.board_readcount,
 		b.board_groupno,b.board_groupseq,b.board_titletab,m.member_nicname as
-		member_id
-		FROM BOARD b, MEMBER m
+		member_id,f.file_new_name
+		FROM BOARD b, MEMBER m,file_table f
 		WHERE m.member_id = b.member_id and b.board_category = 'D'
+		and b.board_no = f.board_no
 		ORDER BY BOARD_readcount DESC
 		) A
 		WHERE ROWNUM <![CDATA[ < ]]> 4

@@ -15,8 +15,26 @@ public class Order_TableDto {
 	private String member_id;
 	private String prod_name;
 	private int total_price;
+	private String file_new_name;
 	
-	
+
+	public Order_TableDto(int order_num, Date order_date, int order_quantity, int order_price, String order_step,
+			String order_pay, int order_group, int prod_num, String member_id, String prod_name, int total_price,
+			String file_new_name) {
+		super();
+		this.order_num = order_num;
+		this.order_date = order_date;
+		this.order_quantity = order_quantity;
+		this.order_price = order_price;
+		this.order_step = order_step;
+		this.order_pay = order_pay;
+		this.order_group = order_group;
+		this.prod_num = prod_num;
+		this.member_id = member_id;
+		this.prod_name = prod_name;
+		this.total_price = total_price;
+		this.file_new_name = file_new_name;
+	}
 
 	public Order_TableDto(int order_num, Date order_date, int order_quantity, int order_price, String order_step,
 			String order_pay, int order_group, int prod_num, String member_id, String prod_name) {
@@ -60,6 +78,14 @@ public class Order_TableDto {
 		this.member_id = member_id;
 		this.prod_name = prod_name;
 		this.total_price = total_price;
+	}
+	
+	public String getFile_new_name() {
+		return file_new_name;
+	}
+
+	public void setFile_new_name(String file_new_name) {
+		this.file_new_name = file_new_name;
 	}
 
 	public int getTotal_price() {
