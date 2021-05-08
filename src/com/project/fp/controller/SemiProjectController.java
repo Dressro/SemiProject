@@ -1329,7 +1329,10 @@ public class SemiProjectController extends HttpServlet {
 				ProductDto p_dto = p_biz.selectOne(prod_num);
 				int prod_stock = p_dto.getProd_stock();
 				prod_stock -= order_quantity;
+				int prod_out = p_dto.getProd_out();
+				prod_out += order_quantity;
 				p_dto.setProd_stock(prod_stock);
+				p_dto.setProd_out(prod_out);
 
 				int pr_res = p_biz.pay_update(p_dto);
 				if (pr_res > 0) {
@@ -1344,17 +1347,33 @@ public class SemiProjectController extends HttpServlet {
 				} else {
 					System.out.println("결제 후 주문 기록 실패");
 				}
+				
+				
+				int o_g = o_t_biz.selectMaxGroup() + 1;
+				o_dto.setOrder_group(o_g);
+				int g_res = o_t_biz.update_group_pay(o_dto);
+				if (g_res > 0) {
+					System.out.println("주문 그룹 변경 성공");
+				} else {
+					System.out.println("주문 그룹 변경 실패");
+				}
+				
 				response.sendRedirect("semi.do?command=shopping_detail&prod_num=" + prod_num);
 			} else {
 				List<Order_TableDto> o_list = (List<Order_TableDto>) session.getAttribute("o_list");
 				int prod_num = 0;
 				int order_quantity = 0;
+				int prod_out = 0;
 				int prod_stock = 0;
 				int order_num = 0;
 				int pr_res = 0;
 				int o_res = 0;
 				int pr_count = 0;
 				int o_count = 0;
+				int o_g = o_t_biz.selectMaxGroup() + 1;
+				int g_res = 0;
+				int g_count = 0;
+				
 				for (Order_TableDto o_dto : o_list) {
 					pr_res = 0;
 					o_res = 0;
@@ -1362,9 +1381,12 @@ public class SemiProjectController extends HttpServlet {
 					prod_num = o_dto.getProd_num();
 					order_quantity = o_dto.getOrder_quantity();
 					ProductDto p_dto = p_biz.selectOne(prod_num);
+					prod_out = p_dto.getProd_out();
+					prod_out += order_quantity;
 					prod_stock = p_dto.getProd_stock();
 					prod_stock -= order_quantity;
 					p_dto.setProd_stock(prod_stock);
+					p_dto.setProd_out(prod_out);
 
 					pr_res = p_biz.pay_update(p_dto);
 					if (pr_res > 0) {
@@ -1382,6 +1404,15 @@ public class SemiProjectController extends HttpServlet {
 						System.out.println("주문 기록 수정 실패 - " + o_count);
 					}
 					o_count++;
+					
+					o_dto.setOrder_group(o_g);
+					g_res = o_t_biz.update_group_pay(o_dto);
+					if (g_res > 0) {
+						System.out.println("주문 그룹 변경 성공 - "  + g_count);
+					} else {
+						System.out.println("주문 그룹 변경 실패 - "  + g_count);
+					}
+					g_count++;
 				}
 
 				MemberDto m_dto = (MemberDto) session.getAttribute("dto");

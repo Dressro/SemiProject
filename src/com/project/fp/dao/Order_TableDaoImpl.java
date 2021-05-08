@@ -317,4 +317,33 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 		return res;
 	}
 
+	@Override
+	public int update_group_pay(Order_TableDto dto) {
+		int res = 0;
+
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.update(namespace + "update_group_pay", dto);
+			if (res > 0) {
+				session.commit();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	}
+
+	@Override
+	public int selectMaxGroup() {
+		int res = 0;
+
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			res = session.selectOne(namespace + "selectMaxGroup");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
+	}
+
 }
