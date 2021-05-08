@@ -13,6 +13,7 @@
 		SELECT CH_NUM, MEMBER_NICNAME, CH_CONTENT, CH_CONTENT_DATE
 		FROM CHAT_CONTENT
 		WHERE CH_NUM = #{ch_num}
+		ORDER BY CH_CONTENT_DATE
 	</select>
 	
 	<insert id="insert" parameterType="Chat_ContentDto">

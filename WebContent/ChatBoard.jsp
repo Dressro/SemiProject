@@ -168,7 +168,7 @@ int ch_num = (int) request.getAttribute("ch_num");
 <script type="text/javascript">
 	var ch_num = document.getElementById('ch_num').value;
 	var textarea = document.getElementById("messageWindow");
-	var webSocket = new WebSocket('ws://localhost:8787/SemiProject/ChatServelt/'+ch_num);
+	var webSocket = new WebSocket('ws://220.87.13.143:8787//SemiProject/ChatServelt/'+ch_num);
 	var inputMessage = document.getElementById('inputMessage');
 	var member_nickname = document.getElementById('member_nickname');
 	

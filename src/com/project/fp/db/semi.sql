@@ -263,7 +263,7 @@ SELECT * FROM ANIMAL;
 delete from member where member_grade = '전문의';
 select * from member where member_grade = '전문의';
 select * from chat;
-select * from CHAT_CONTENT;
+select * from CHAT_CONTENT order by ch_content_date;
 update member set member_grade = '관리자' where member_id = 'admin';
 select * from product;
 select * from order_table;
