@@ -21,6 +21,7 @@ public class ProductDaoImpl extends SqlMapConfig implements ProductDao {
 		
 		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace+"selectList");
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -35,6 +36,7 @@ public class ProductDaoImpl extends SqlMapConfig implements ProductDao {
 		
 		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
 			dto = session.selectOne(namespace + "prod_selectone", prod_name);
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -49,6 +51,7 @@ public class ProductDaoImpl extends SqlMapConfig implements ProductDao {
 		
 		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
 			dto = session.selectOne(namespace + "selectOne", prod_num);
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -66,6 +69,7 @@ public class ProductDaoImpl extends SqlMapConfig implements ProductDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -84,6 +88,7 @@ public class ProductDaoImpl extends SqlMapConfig implements ProductDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -101,6 +106,7 @@ public class ProductDaoImpl extends SqlMapConfig implements ProductDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -142,6 +148,7 @@ public class ProductDaoImpl extends SqlMapConfig implements ProductDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -156,6 +163,7 @@ public class ProductDaoImpl extends SqlMapConfig implements ProductDao {
 
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			res = session.selectOne(namespace + "product_allCount");
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -170,6 +178,7 @@ public class ProductDaoImpl extends SqlMapConfig implements ProductDao {
 			List<ProductDto> list = null;
 			try(SqlSession session = getSqlSessionFactory().openSession(false)) {
 				list = session.selectList(namespace+"selectcategoryList",prod_category);
+				session.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -183,6 +192,7 @@ public class ProductDaoImpl extends SqlMapConfig implements ProductDao {
 			
 			try(SqlSession session = getSqlSessionFactory().openSession(false)) {
 				list = session.selectList(namespace+"product_selectList", Pdto);
+				session.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -196,6 +206,7 @@ public class ProductDaoImpl extends SqlMapConfig implements ProductDao {
 		List<ProductDto> list = new ArrayList<ProductDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "feed_selectList", Pdto);
+			session.close();
 		}
 		return list;
 	}
@@ -206,6 +217,7 @@ public class ProductDaoImpl extends SqlMapConfig implements ProductDao {
 		List<ProductDto> list = new ArrayList<ProductDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "care_selectList", Pdto);
+			session.close();
 		}
 		return list;
 	}
@@ -216,6 +228,7 @@ public class ProductDaoImpl extends SqlMapConfig implements ProductDao {
 		List<ProductDto> list = new ArrayList<ProductDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "living_selectList", Pdto);
+			session.close();
 		}
 		return list;
 	}
@@ -226,6 +239,7 @@ public class ProductDaoImpl extends SqlMapConfig implements ProductDao {
 		List<ProductDto> list = new ArrayList<ProductDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "outing_selectList", Pdto);
+			session.close();
 		}
 		return list;
 	}

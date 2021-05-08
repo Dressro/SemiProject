@@ -21,6 +21,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			res = session.selectOne(namespace + "free_allCount");
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -34,6 +35,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			res = session.selectOne(namespace + "notice_allCount");
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -47,6 +49,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			res = session.selectOne(namespace + "qna_allCount");
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -60,6 +63,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			res = session.selectOne(namespace + "dec_allCount");
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -72,6 +76,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "index_free");
+			session.close();
 		}
 		return list;
 	}
@@ -81,6 +86,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "index_notice");
+			session.close();
 		}
 		return list;
 	}
@@ -90,6 +96,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "index_dec");
+			session.close();
 		}
 		return list;
 	}
@@ -99,6 +106,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "board_List");
+			session.close();
 		}
 		return list;
 	}
@@ -108,6 +116,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "board_M_search", dto);
+			session.close();
 		}
 		return list;
 	}
@@ -117,6 +126,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "board_C_search", dto);
+			session.close();
 		}
 		return list;
 	}
@@ -126,6 +136,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "board_MC_search", dto);
+			session.close();
 		}
 		return list;
 	}
@@ -135,6 +146,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "board_selectList", dto);
+			session.close();
 		}
 		return list;
 	}
@@ -144,6 +156,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "Board_All_M_search", Pdto);
+			session.close();
 		}
 		return list;
 	}
@@ -153,6 +166,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "Board_All_C_search", Pdto);
+			session.close();
 		}
 		return list;
 	}
@@ -162,6 +176,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "Board_All_MC_search", Pdto);
+			session.close();
 		}
 		return list;
 	}
@@ -172,6 +187,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "free_selectList", Pdto);
+			session.close();
 		}
 		return list;
 	}
@@ -181,6 +197,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "notice_selectList", Pdto);
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -192,6 +209,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "qna_selectList", Pdto);
+			session.close();
 		}
 		return list;
 	}
@@ -201,6 +219,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "dec_selectList", Pdto);
+			session.close();
 		}
 		return list;
 	}
@@ -210,6 +229,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 		BoardDto dto = null;
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			dto = session.selectOne(namespace + "board_selectOne", board_no);
+			session.close();
 		}
 		return dto;
 	}
@@ -222,6 +242,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -237,6 +258,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -252,6 +274,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -267,6 +290,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -282,6 +306,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -297,6 +322,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -312,6 +338,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 			if(res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -326,6 +353,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 			if(res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -340,6 +368,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 			if(res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -354,6 +383,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 			if(res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -368,6 +398,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -383,6 +414,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -398,6 +430,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -413,6 +446,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -428,6 +462,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -443,6 +478,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -458,6 +494,7 @@ public class BoardDaoImpl extends SqlMapConfig implements BoardDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

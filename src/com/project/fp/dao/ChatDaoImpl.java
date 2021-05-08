@@ -18,6 +18,7 @@ public class ChatDaoImpl extends SqlMapConfig implements ChatDao {
 
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "selectUserList", dto);
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -32,6 +33,7 @@ public class ChatDaoImpl extends SqlMapConfig implements ChatDao {
 
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "selectDoctorList", dto);
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -46,6 +48,7 @@ public class ChatDaoImpl extends SqlMapConfig implements ChatDao {
 
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			dto = session.selectOne(namespace + "selectOne", ch_num);
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -63,6 +66,7 @@ public class ChatDaoImpl extends SqlMapConfig implements ChatDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -80,6 +84,7 @@ public class ChatDaoImpl extends SqlMapConfig implements ChatDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -97,6 +102,7 @@ public class ChatDaoImpl extends SqlMapConfig implements ChatDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

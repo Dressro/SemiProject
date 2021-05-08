@@ -18,6 +18,7 @@ public class Board_ReplyDaoImpl extends SqlMapConfig implements Board_ReplyDao {
 		
 		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace+"reply_selectList",board_no);
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -35,6 +36,7 @@ public class Board_ReplyDaoImpl extends SqlMapConfig implements Board_ReplyDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -52,6 +54,7 @@ public class Board_ReplyDaoImpl extends SqlMapConfig implements Board_ReplyDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -69,6 +72,7 @@ public class Board_ReplyDaoImpl extends SqlMapConfig implements Board_ReplyDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -86,6 +90,7 @@ public class Board_ReplyDaoImpl extends SqlMapConfig implements Board_ReplyDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -103,6 +108,7 @@ public class Board_ReplyDaoImpl extends SqlMapConfig implements Board_ReplyDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -119,6 +125,7 @@ public class Board_ReplyDaoImpl extends SqlMapConfig implements Board_ReplyDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

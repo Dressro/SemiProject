@@ -19,6 +19,7 @@ public class Lost_AnimalDaoImpl extends SqlMapConfig implements Lost_AnimalDao {
 		
 		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace+"selectList");
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -31,6 +32,7 @@ public class Lost_AnimalDaoImpl extends SqlMapConfig implements Lost_AnimalDao {
 		Lost_AnimalDto dto = null;
 		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
 			dto = session.selectOne(namespace+"selectOne", board_no);
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -46,6 +48,7 @@ public class Lost_AnimalDaoImpl extends SqlMapConfig implements Lost_AnimalDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -61,6 +64,7 @@ public class Lost_AnimalDaoImpl extends SqlMapConfig implements Lost_AnimalDao {
 			if(res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -76,6 +80,7 @@ public class Lost_AnimalDaoImpl extends SqlMapConfig implements Lost_AnimalDao {
 			if(res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

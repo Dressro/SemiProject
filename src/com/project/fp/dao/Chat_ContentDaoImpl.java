@@ -18,6 +18,7 @@ public class Chat_ContentDaoImpl extends SqlMapConfig implements Chat_ContentDao
 		
 		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace+"selectList");
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -32,6 +33,7 @@ public class Chat_ContentDaoImpl extends SqlMapConfig implements Chat_ContentDao
 		
 		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace+"selectOne", ch_num);
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -49,6 +51,7 @@ public class Chat_ContentDaoImpl extends SqlMapConfig implements Chat_ContentDao
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -66,6 +69,7 @@ public class Chat_ContentDaoImpl extends SqlMapConfig implements Chat_ContentDao
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -83,6 +87,7 @@ public class Chat_ContentDaoImpl extends SqlMapConfig implements Chat_ContentDao
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

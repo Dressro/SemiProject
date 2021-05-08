@@ -16,6 +16,7 @@ public class MycalDaoImpl extends SqlMapConfig implements MycalDao {
 		List<MycalDto> list = new ArrayList<MycalDto>();
 		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace+"selectViewList",dto);
+			session.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -27,6 +28,7 @@ public class MycalDaoImpl extends SqlMapConfig implements MycalDao {
 		List<MycalDto> list = new ArrayList<MycalDto>();
 		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace+"selectList",dto);
+			session.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -38,6 +40,7 @@ public class MycalDaoImpl extends SqlMapConfig implements MycalDao {
 		MycalDto dto = null;
 		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
 			dto = session.selectOne(namespace+"selectOne", cal_no);
+			session.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -49,6 +52,7 @@ public class MycalDaoImpl extends SqlMapConfig implements MycalDao {
 		int res = 0;
 		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
 			res = session.selectOne(namespace+"selectCount",dto);
+			session.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -63,6 +67,7 @@ public class MycalDaoImpl extends SqlMapConfig implements MycalDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -77,6 +82,7 @@ public class MycalDaoImpl extends SqlMapConfig implements MycalDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -91,6 +97,7 @@ public class MycalDaoImpl extends SqlMapConfig implements MycalDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -105,6 +112,7 @@ public class MycalDaoImpl extends SqlMapConfig implements MycalDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -119,6 +127,7 @@ public class MycalDaoImpl extends SqlMapConfig implements MycalDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -130,6 +139,7 @@ public class MycalDaoImpl extends SqlMapConfig implements MycalDao {
 		List<MycalDto> list = new ArrayList<MycalDto>();
 		try(SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace+"selectAllList");
+			session.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -144,6 +154,7 @@ public class MycalDaoImpl extends SqlMapConfig implements MycalDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

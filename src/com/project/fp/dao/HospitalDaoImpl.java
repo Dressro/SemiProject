@@ -18,6 +18,7 @@ public class HospitalDaoImpl extends SqlMapConfig implements HospitalDao {
 		int res = 0;
 		try(SqlSession session = getSqlSessionFactory().openSession(false)){
 			res = session.selectOne(namespace+"hospital_allCount");
+			session.close();
 		}
 		return res;
 	}
@@ -28,6 +29,7 @@ public class HospitalDaoImpl extends SqlMapConfig implements HospitalDao {
 		List<HospitalDto> list = new ArrayList<HospitalDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "hospital_selectAllList");
+			session.close();
 		}
 		return list;
 	}
@@ -38,6 +40,7 @@ public class HospitalDaoImpl extends SqlMapConfig implements HospitalDao {
 		List<HospitalDto> list = new ArrayList<HospitalDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "hospital_selectList",Pdto);
+			session.close();
 		}
 		return list;
 	}
@@ -48,6 +51,7 @@ public class HospitalDaoImpl extends SqlMapConfig implements HospitalDao {
 		List<HospitalDto> list = new ArrayList<HospitalDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "hospital_search_selectList",dto);
+			session.close();
 		}
 		return list;
 	}
@@ -61,6 +65,7 @@ public class HospitalDaoImpl extends SqlMapConfig implements HospitalDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		}
 		return 0;
 	}

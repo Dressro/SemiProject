@@ -20,6 +20,7 @@ public class File_TableDaoImpl extends SqlMapConfig implements File_TableDao {
 
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "selectList");
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -34,26 +35,28 @@ public class File_TableDaoImpl extends SqlMapConfig implements File_TableDao {
 
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			dto = session.selectOne(namespace + "selectOne", file_num);
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return dto;
 	}
-	
+
 	@Override
 	public File_TableDto board_selectOne(int board_no) {
 		File_TableDto dto = null;
 
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			dto = session.selectOne(namespace + "board_selectOne", board_no);
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return dto;
 	}
-	
+
 	@Override
 	public int board_insert(File_TableDto dto) {
 
@@ -63,6 +66,7 @@ public class File_TableDaoImpl extends SqlMapConfig implements File_TableDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -79,6 +83,7 @@ public class File_TableDaoImpl extends SqlMapConfig implements File_TableDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -95,13 +100,14 @@ public class File_TableDaoImpl extends SqlMapConfig implements File_TableDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return res;
 	}
-	
+
 	@Override
 	public int member_insert(File_TableDto dto) {
 
@@ -111,13 +117,14 @@ public class File_TableDaoImpl extends SqlMapConfig implements File_TableDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return res;
 	}
-	
+
 	@Override
 	public int prod_insert(File_TableDto dto) {
 
@@ -127,13 +134,14 @@ public class File_TableDaoImpl extends SqlMapConfig implements File_TableDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return res;
 	}
-	
+
 	@Override
 	public int update(File_TableDto dto) {
 		return 0;
@@ -149,6 +157,7 @@ public class File_TableDaoImpl extends SqlMapConfig implements File_TableDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -165,6 +174,7 @@ public class File_TableDaoImpl extends SqlMapConfig implements File_TableDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -174,16 +184,16 @@ public class File_TableDaoImpl extends SqlMapConfig implements File_TableDao {
 
 	@Override
 	public int multiDelete(String[] board_nos) {
-int count = 0;
-		
+		int count = 0;
+
 		Map<String, String[]> map = new HashMap<String, String[]>();
 		map.put("board_nos", board_nos);
-		
+
 		SqlSession session = null;
 		try {
 			session = getSqlSessionFactory().openSession(false);
-			count = session.delete(namespace+"multiDelete",map);
-			if(count == board_nos.length) {
+			count = session.delete(namespace + "multiDelete", map);
+			if (count == board_nos.length) {
 				session.commit();
 			}
 		} catch (Exception e) {
@@ -191,14 +201,8 @@ int count = 0;
 		} finally {
 			session.close();
 		}
-		
+
 		return count;
 	}
-
-	
-
-	
-
-	
 
 }

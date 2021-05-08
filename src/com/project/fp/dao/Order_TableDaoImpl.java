@@ -20,6 +20,7 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "selectList");
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -34,6 +35,7 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "mypageList", member_id);
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -48,6 +50,7 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "basketList", member_id);
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -62,6 +65,7 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "payList", dto);
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -76,6 +80,7 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "groupList");
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -90,6 +95,7 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			dto = session.selectOne(namespace + "group_del_select", order_num);
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -104,6 +110,7 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			dto = session.selectOne(namespace + "selectOne", order_num);
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -121,6 +128,7 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -138,6 +146,7 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -155,6 +164,7 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -172,6 +182,7 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -186,6 +197,7 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "selectList", member_id);
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -200,6 +212,7 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "selectList", member_id);
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -217,6 +230,7 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -278,6 +292,7 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -294,6 +309,7 @@ public class Order_TableDaoImpl extends SqlMapConfig implements Order_TableDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

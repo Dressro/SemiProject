@@ -21,6 +21,7 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 		List<MemberDto> list = new ArrayList<MemberDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "selectList");
+			session.close();
 		}
 		return list;
 	}
@@ -31,6 +32,7 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 		List<MemberDto> list = new ArrayList<MemberDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "selectDoctorList");
+			session.close();
 		}
 		return list;
 	}
@@ -40,6 +42,7 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 		List<MemberDto> list = new ArrayList<MemberDto>();
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			list = session.selectList(namespace + "selectDoctorListPaging", Pdto);
+			session.close();
 		}
 		return list;
 	}
@@ -50,6 +53,7 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 		MemberDto m_dto = null;
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			m_dto = session.selectOne(namespace + "selectSerch", dto);
+			session.close();
 		}
 		return m_dto;
 	}
@@ -60,6 +64,7 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 		MemberDto m_dto = null;
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			m_dto = session.selectOne(namespace + "selectIdSerch", dto);
+			session.close();
 		}
 		return m_dto;
 	}
@@ -70,6 +75,7 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 		MemberDto m_dto = null;
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			m_dto = session.selectOne(namespace + "selectOne", dto);
+			session.close();
 		}
 		return m_dto;
 	}
@@ -83,6 +89,7 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		}
 		return res;
 	}
@@ -96,6 +103,7 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		}
 		return res;
 	}
@@ -108,6 +116,7 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		}
 		return res;
 	}
@@ -117,6 +126,7 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 		MemberDto m_dto = null;
 		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
 			m_dto = session.selectOne(namespace + "selectDetail", member_id);
+			session.close();
 		}
 		return m_dto;
 	}
@@ -129,6 +139,7 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -144,6 +155,7 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		}
 		return res;
 	}
@@ -156,6 +168,7 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		}
 		return res;
 	}
@@ -168,6 +181,7 @@ public class MemberDaoImpl extends SqlMapConfig implements MemberDao {
 			if (res > 0) {
 				session.commit();
 			}
+			session.close();
 		}
 		return res;
 	}
