@@ -384,7 +384,7 @@ response.setContentType("text/html; charset=UTF-8");
 								<h4 class="general_signup_title">비밀번호</h4>
 								<div class="general_signup_pw">
 									<span class="general_signup_span">
-										<input class="general_signup_text" type="password" name="member_password" value="<%=dto.getMember_password()%>">
+										<input class="general_signup_text" type="text" name="member_password" value="<%=dto.getMember_password()%>">
 									</span>
 								</div>
 							</div>
@@ -674,7 +674,7 @@ response.setContentType("text/html; charset=UTF-8");
 						<h4 class="general_signup_title">아이디</h4>
 						<div class="general_signup_id">
 							<span class="general_signup_span">
-								<input class="general_signup_text" type="text" value="<%=dto.getMember_id()%>" readonly="readonly" />
+								<input class="general_signup_text" type="password" value="<%=dto.getMember_id()%>" readonly="readonly" />
 							</span>
 						</div>
 					</div>

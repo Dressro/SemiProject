@@ -111,7 +111,6 @@ import com.project.fp.gmail.MailSend;
 import com.project.fp.papago.papago;
 import com.project.fp.sms.SMS;
 
-
 @WebServlet("/SemiProjectController")
 @MultipartConfig(location = "", maxFileSize = -1, maxRequestSize = -1, fileSizeThreshold = 1024)
 public class SemiProjectController extends HttpServlet {
@@ -196,19 +195,19 @@ public class SemiProjectController extends HttpServlet {
 					member_phone, member_addr, member_grade, "Y", member_animal, 0, member_dr_info, member_notify);
 			int m_res = m_biz.insert(m_dto);
 			List<ProductDto> p_list = p_biz.rank_list();
-			
-			for(int k=0;k<50;k++) {
+
+			for (int k = 0; k < 50; k++) {
 				System.out.println("DB 가져오는중...");
 			}
-				RecommendDto dto = new RecommendDto();
-				dto.setMember_id(member_id);
-				dto.setRecommend_first(p_list.get(0).getProd_num());
-				dto.setRecommend_second(p_list.get(1).getProd_num());
-				dto.setRecommend_third(p_list.get(2).getProd_num());
-				dto.setRecommend_fourth(p_list.get(3).getProd_num());
-				dto.setRecommend_fifth(p_list.get(4).getProd_num());
-				int re_res = re_biz.insert(dto);
-			
+			RecommendDto dto = new RecommendDto();
+			dto.setMember_id(member_id);
+			dto.setRecommend_first(p_list.get(0).getProd_num());
+			dto.setRecommend_second(p_list.get(1).getProd_num());
+			dto.setRecommend_third(p_list.get(2).getProd_num());
+			dto.setRecommend_fourth(p_list.get(3).getProd_num());
+			dto.setRecommend_fifth(p_list.get(4).getProd_num());
+			int re_res = re_biz.insert(dto);
+
 			if (member_grade.equals("전문의")) {
 				String file_path = request.getSession().getServletContext().getRealPath("fileupload");
 
@@ -278,9 +277,13 @@ public class SemiProjectController extends HttpServlet {
 			m_dto.setMember_id(member_id);
 			m_dto.setMember_password(member_password);
 			MemberDto dto = m_biz.selectOne(m_dto);
-			session.setAttribute("dto", dto);
-			session.setMaxInactiveInterval(3600);
-			jsResponse(response, "로그인 성공", "index.html");
+			if (dto != null) {
+				session.setAttribute("dto", dto);
+				session.setMaxInactiveInterval(3600);
+				jsResponse(response, "로그인 성공", "index.html");
+			} else {
+				jsResponse(response, "로그인 실패", "index.html");
+			}
 		} else if (command.equals("sns_signup")) {
 			String member_id = request.getParameter("member_id");
 			MemberDto m_dto = new MemberDto();
@@ -408,8 +411,8 @@ public class SemiProjectController extends HttpServlet {
 			dto.setMember_animal(member_animal);
 			dto.setMember_id(member_id);
 			dto.setMember_password(member_password);
-
 			int m_res = m_biz.mypagemod(dto);
+			dto.setMember_password(member_password);
 			int a_res = 0;
 			if (request.getParameter("animalN_Y") != null && member_animal.equals("Y")) {
 				m_res += m_biz.myanimalupdate(dto);
@@ -460,7 +463,7 @@ public class SemiProjectController extends HttpServlet {
 			} else {
 				jsResponse(response, "수정 실패", "semi.do?command=mypage&member_id=" + member_id);
 			}
-			} else if (command.equals("memberupdate")) {
+		} else if (command.equals("memberupdate")) {
 			String member_nicname = request.getParameter("member_nicname");
 			String member_email = request.getParameter("member_email");
 			String member_phone = request.getParameter("member_phone");
@@ -675,10 +678,10 @@ public class SemiProjectController extends HttpServlet {
 				re_dto.setMember_id(member_id);
 				RecommendDto dto = re_biz.selectOne(re_dto);
 				List<ProductDto> re_list = new ArrayList<ProductDto>();
-				for(int i=0;i<50;i++) {
+				for (int i = 0; i < 50; i++) {
 					System.out.println("DB 가져오는중...");
 				}
-				if(dto != null) {
+				if (dto != null) {
 					ProductDto first = p_biz.selectOne(dto.getRecommend_first());
 					ProductDto second = p_biz.selectOne(dto.getRecommend_second());
 					ProductDto third = p_biz.selectOne(dto.getRecommend_third());
@@ -1333,8 +1336,8 @@ public class SemiProjectController extends HttpServlet {
 					o_dto.setProd_num(prod_num);
 					o_dto.setMember_id(member_id);
 					session.setAttribute("o_dto", o_dto);
-					
-					MemberDto dto = (MemberDto)session.getAttribute("dto");
+
+					MemberDto dto = (MemberDto) session.getAttribute("dto");
 					System.out.println(dto);
 
 					dispatch(response, request, "paypage.jsp");
@@ -1785,14 +1788,14 @@ public class SemiProjectController extends HttpServlet {
 			try {
 				int res = 0;
 				List<RecommendDto> list = recommend(m_list.size());
-				for(RecommendDto dto : list) {
+				for (RecommendDto dto : list) {
 					System.out.println(dto);
 					int re_res = re_biz.update(dto);
 					res += re_res;
 				}
-				if(res > 0) {
+				if (res > 0) {
 					jsResponse(response, "성공", "semi.do?command=adminpage");
-				}else {
+				} else {
 					jsResponse(response, "실패", "semi.do?command=adminpage");
 				}
 			} catch (IOException e) {
@@ -1881,46 +1884,48 @@ public class SemiProjectController extends HttpServlet {
 		}
 		return null;
 	}
+
 	private List<RecommendDto> recommend(int count) throws IOException, TasteException {
-		  ProductBiz p_biz = new ProductBizImpl();
-	      DataModel dm = new FileDataModel(new File("result.csv"));
-	      UserSimilarity sim = new PearsonCorrelationSimilarity(dm);
-	      UserNeighborhood neighborhood = new ThresholdUserNeighborhood(0.1, sim, dm);
-	      UserBasedRecommender recommender = new GenericUserBasedRecommender(dm, neighborhood, sim);
-	      int x=1;
-	      List<RecommendDto> list = new ArrayList<RecommendDto>();
-	      List<ProductDto> p_list = p_biz.rank_list();
-	      for(LongPrimitiveIterator users = dm.getUserIDs(); users.hasNext();) {
-	         long userId = users.nextLong();
-	         List<RecommendedItem> recommendations = recommender.recommend(userId, 5);
-	            if(recommendations.size() != 0) {
-	                 RecommendDto dto = new RecommendDto();
-	                 	dto.setMember_no((int)userId);
-	                 for(int i=0;i<recommendations.size();i++) {
-	                       switch(i) {
-	                          case 0:
-	                        	  dto.setRecommend_first((int)recommendations.get(0).getItemID());
-	                        	  break;
-	                          case 1:
-	                        	  dto.setRecommend_second((int)recommendations.get(1).getItemID());	 
-	                        	  break;
-	                          case 2:
-	                        	  dto.setRecommend_third((int)recommendations.get(2).getItemID());
-	                        	  break;
-	                          case 3:
-	                        	  dto.setRecommend_fourth((int)recommendations.get(3).getItemID());
-	                        	  break;
-	                          case 4:
-	                        	  dto.setRecommend_fifth((int)recommendations.get(4).getItemID());
-	                        	  break;
-	                       }
-	                  }
-	              list.add(dto);
-	         }
-	         if(++x > count) break;
-	      }
-	      return list;
-	   }
+		ProductBiz p_biz = new ProductBizImpl();
+		DataModel dm = new FileDataModel(new File("result.csv"));
+		UserSimilarity sim = new PearsonCorrelationSimilarity(dm);
+		UserNeighborhood neighborhood = new ThresholdUserNeighborhood(0.1, sim, dm);
+		UserBasedRecommender recommender = new GenericUserBasedRecommender(dm, neighborhood, sim);
+		int x = 1;
+		List<RecommendDto> list = new ArrayList<RecommendDto>();
+		List<ProductDto> p_list = p_biz.rank_list();
+		for (LongPrimitiveIterator users = dm.getUserIDs(); users.hasNext();) {
+			long userId = users.nextLong();
+			List<RecommendedItem> recommendations = recommender.recommend(userId, 5);
+			if (recommendations.size() != 0) {
+				RecommendDto dto = new RecommendDto();
+				dto.setMember_no((int) userId);
+				for (int i = 0; i < recommendations.size(); i++) {
+					switch (i) {
+					case 0:
+						dto.setRecommend_first((int) recommendations.get(0).getItemID());
+						break;
+					case 1:
+						dto.setRecommend_second((int) recommendations.get(1).getItemID());
+						break;
+					case 2:
+						dto.setRecommend_third((int) recommendations.get(2).getItemID());
+						break;
+					case 3:
+						dto.setRecommend_fourth((int) recommendations.get(3).getItemID());
+						break;
+					case 4:
+						dto.setRecommend_fifth((int) recommendations.get(4).getItemID());
+						break;
+					}
+				}
+				list.add(dto);
+			}
+			if (++x > count)
+				break;
+		}
+		return list;
+	}
 
 	@Override
 	public String toString() {
@@ -1929,5 +1934,5 @@ public class SemiProjectController extends HttpServlet {
 				+ getServletInfo() + ", getServletName()=" + getServletName() + ", getClass()=" + getClass()
 				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 	}
-	
+
 }
