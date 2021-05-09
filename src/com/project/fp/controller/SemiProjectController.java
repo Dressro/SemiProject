@@ -1785,7 +1785,6 @@ public class SemiProjectController extends HttpServlet {
 				int res = 0;
 				List<RecommendDto> list = recommend(m_list.size());
 				for(RecommendDto dto : list) {
-					System.out.println(dto);
 					int re_res = re_biz.update(dto);
 					res += re_res;
 				}
@@ -1881,14 +1880,12 @@ public class SemiProjectController extends HttpServlet {
 		return null;
 	}
 	private List<RecommendDto> recommend(int count) throws IOException, TasteException {
-		  ProductBiz p_biz = new ProductBizImpl();
 	      DataModel dm = new FileDataModel(new File("result.csv"));
 	      UserSimilarity sim = new PearsonCorrelationSimilarity(dm);
 	      UserNeighborhood neighborhood = new ThresholdUserNeighborhood(0.1, sim, dm);
 	      UserBasedRecommender recommender = new GenericUserBasedRecommender(dm, neighborhood, sim);
 	      int x=1;
 	      List<RecommendDto> list = new ArrayList<RecommendDto>();
-	      List<ProductDto> p_list = p_biz.rank_list();
 	      for(LongPrimitiveIterator users = dm.getUserIDs(); users.hasNext();) {
 	         long userId = users.nextLong();
 	         List<RecommendedItem> recommendations = recommender.recommend(userId, 5);
